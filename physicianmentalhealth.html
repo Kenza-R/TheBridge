@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Context-Aware Physician Support Layer | VC Market Memo</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --card: #ffffff;
+      --ink: #16181d;
+      --muted: #5d6472;
+      --line: #dfe3eb;
+      --accent: #284bff;
+      --accent-soft: #eef1ff;
+      --green: #0f7b55;
+      --red: #9f2d2d;
+      --gold: #8a6418;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+    }
+
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 44px 24px 64px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #10182d 0%, #263d9c 100%);
+      color: white;
+      border-radius: 28px;
+      padding: 42px;
+      box-shadow: 0 16px 44px rgba(18, 31, 73, 0.18);
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 12px;
+      font-weight: 700;
+      opacity: 0.82;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(30px, 5vw, 54px);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+    }
+
+    .subtitle {
+      max-width: 850px;
+      font-size: 18px;
+      opacity: 0.91;
+      margin: 0;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .metric {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 18px;
+      padding: 16px;
+      min-height: 104px;
+    }
+
+    .metric .value {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .metric .label {
+      font-size: 13px;
+      opacity: 0.86;
+    }
+
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 28px;
+      margin: 18px 0;
+      box-shadow: 0 8px 28px rgba(24, 33, 55, 0.045);
+    }
+
+    h2 {
+      font-size: 24px;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin: 0 0 14px;
+    }
+
+    h3 {
+      font-size: 17px;
+      margin: 22px 0 8px;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    .direct {
+      border-left: 5px solid var(--accent);
+      padding: 18px 20px;
+      background: var(--accent-soft);
+      border-radius: 16px;
+      font-weight: 650;
+      margin: 18px 0 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      background: #fff;
+    }
+
+    .card h3 {
+      margin-top: 0;
+    }
+
+    .tag {
+      display: inline-block;
+      background: var(--accent-soft);
+      color: #2033a4;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      margin: 3px 4px 3px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 4px;
+      overflow: hidden;
+      border-radius: 16px;
+      font-size: 14px;
+    }
+
+    th, td {
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+      padding: 12px 11px;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f2f4f8;
+      color: #2e3440;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    ul {
+      padding-left: 22px;
+      margin: 10px 0 0;
+    }
+
+    li {
+      margin-bottom: 7px;
+    }
+
+    .good {
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .risk {
+      color: var(--red);
+      font-weight: 700;
+    }
+
+    .watch {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .ladder {
+      display: grid;
+      gap: 10px;
+      counter-reset: step;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 12px;
+      align-items: start;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+      background: #fff;
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #10182d;
+      color: white;
+      font-weight: 800;
+    }
+
+    .step strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .quote {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      padding: 20px;
+      border-radius: 20px;
+      background: #10182d;
+      color: white;
+      margin: 14px 0 0;
+    }
+
+    .footer {
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+      margin-top: 24px;
+    }
+
+    @media (max-width: 860px) {
+      header {
+        padding: 30px;
+      }
+
+      .hero-grid, .grid-2, .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      table {
+        font-size: 13px;
+      }
+
+      th, td {
+        padding: 10px 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div class="eyebrow">VC Market Memo</div>
+      <h1>Context-Aware Physician Support Layer</h1>
+      <p class="subtitle">
+        A confidential, workflow-aware support platform that detects high-stress clinical moments and routes physicians to the right support before burnout becomes crisis.
+      </p>
+
+      <div class="hero-grid">
+        <div class="metric">
+          <div class="value">$300M-$900M</div>
+          <div class="label">Estimated U.S. physician/resident ARR TAM depending on PMPM pricing</div>
+        </div>
+        <div class="metric">
+          <div class="value">$1.5B-$5.5B</div>
+          <div class="label">Expanded U.S. clinician and hospital workforce ARR opportunity</div>
+        </div>
+        <div class="metric">
+          <div class="value">~1.2M</div>
+          <div class="label">U.S. physicians + residents/fellows as premium beachhead</div>
+        </div>
+        <div class="metric">
+          <div class="value">~15M+</div>
+          <div class="label">Broader U.S. healthcare workforce expansion pool</div>
+        </div>
+      </div>
+    </header>
+
+    <section>
+      <h2>1. Core Thesis</h2>
+      <p>
+        The opportunity is not another generic mental health app. The sharper thesis is that doctors often need support at the exact moment when something difficult happens, but existing benefits are passive, fragmented, and underused.
+      </p>
+      <div class="direct">
+        Build the confidential support layer between clinical operations, peer support, and behavioral health. Start with physicians after high-stress clinical events, then expand into hospital-wide workforce resilience and risk intelligence.
+      </div>
+    </section>
+
+    <section>
+      <h2>2. Product Definition</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>What it is</h3>
+          <p>
+            A private, physician-only support platform connected to schedule and workflow context. It detects high-risk moments and offers the right next step.
+          </p>
+          <span class="tag">AI-guided debrief</span>
+          <span class="tag">Peer support</span>
+          <span class="tag">Human escalation</span>
+          <span class="tag">Aggregate analytics</span>
+        </div>
+        <div class="card">
+          <h3>What it is not</h3>
+          <p>
+            It should not be positioned as an “AI therapist for doctors.” That framing creates trust, clinical safety, and liability problems.
+          </p>
+          <span class="tag">Not surveillance</span>
+          <span class="tag">Not generic wellness</span>
+          <span class="tag">Not EAP replacement</span>
+          <span class="tag">Not AI-only therapy</span>
+        </div>
+      </div>
+
+      <h3>Example high-stress triggers</h3>
+      <div>
+        <span class="tag">Patient death</span>
+        <span class="tag">Surgical complication</span>
+        <span class="tag">Hostile family encounter</span>
+        <span class="tag">Night shift stretch</span>
+        <span class="tag">Litigation threat</span>
+        <span class="tag">Bad outcome disclosure</span>
+        <span class="tag">Heavy patient load</span>
+        <span class="tag">Late charting burden</span>
+        <span class="tag">Resident humiliation</span>
+        <span class="tag">Moral injury</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. Why Now</h2>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Buyer pain is economic</h3>
+          <p>
+            Burnout drives physician turnover, reduced clinical hours, staffing instability, and replacement costs. Hospitals already feel this in retention and labor budgets.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Support is poorly timed</h3>
+          <p>
+            Current resources usually wait for the clinician to ask for help. The product intervenes when the clinical day itself signals risk.
+          </p>
+        </div>
+        <div class="card">
+          <h3>AI can route, not replace</h3>
+          <p>
+            The AI layer can triage, listen, summarize, and guide the user to peer, coach, therapist, crisis, or institutional resources.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. Market Sizing</h2>
+      <h3>U.S. beachhead TAM</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Segment</th>
+            <th>Approx. users</th>
+            <th>Realistic PMPM</th>
+            <th>ARR opportunity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Residents/fellows only</td>
+            <td>~167K</td>
+            <td>$20-$50</td>
+            <td>~$40M-$100M</td>
+          </tr>
+          <tr>
+            <td>Physicians + residents/fellows</td>
+            <td>~1.2M</td>
+            <td>$25-$50</td>
+            <td>~$300M-$700M+</td>
+          </tr>
+          <tr>
+            <td>Nurses + APPs</td>
+            <td>~3.9M</td>
+            <td>$10-$25</td>
+            <td>~$470M-$1.2B</td>
+          </tr>
+          <tr>
+            <td>Broad healthcare workforce</td>
+            <td>~15.3M</td>
+            <td>$5-$20</td>
+            <td>~$920M-$3.7B</td>
+          </tr>
+          <tr>
+            <td>High-stress adjacent professions</td>
+            <td>~3.6M</td>
+            <td>$10-$30</td>
+            <td>~$440M-$1.3B</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>VC interpretation</h3>
+      <ul>
+        <li><strong>Physician-only:</strong> credible but likely more acquisition-scale than IPO-scale.</li>
+        <li><strong>Clinician workforce:</strong> venture-scale, especially after nurses and APP expansion.</li>
+        <li><strong>Hospital-wide workforce + analytics:</strong> potential category leader if trust and ROI are proven.</li>
+        <li><strong>Broader high-stress professions:</strong> attractive later expansion, especially first responders.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>5. Business Model</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Tier</th>
+            <th>Offer</th>
+            <th>Pricing logic</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Basic support layer</td>
+            <td>AI check-ins, decompression, resource routing</td>
+            <td>$10-$20 PMPM</td>
+          </tr>
+          <tr>
+            <td>Physician context-aware layer</td>
+            <td>Schedule-aware support, specialty-specific debriefs, peer routing</td>
+            <td>$25-$50 PMPM</td>
+          </tr>
+          <tr>
+            <td>High-touch clinical support</td>
+            <td>Human peer support, coaching, therapist escalation</td>
+            <td>$50-$100 PMPM</td>
+          </tr>
+          <tr>
+            <td>Risk/retention analytics</td>
+            <td>Aggregate burnout, shift burden, and workforce risk dashboards</td>
+            <td>10%-20% ARR uplift or fixed enterprise fee</td>
+          </tr>
+          <tr>
+            <td>Post-event module</td>
+            <td>Adverse event, patient death, malpractice threat, sentinel event workflows</td>
+            <td>Enterprise add-on</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="small">
+        Example: 3,000 covered clinicians at $25 PMPM equals $900K ARR. Ten similar systems equals $9M ARR. Fifty equals $45M ARR.
+      </p>
+    </section>
+
+    <section>
+      <h2>6. Expansion Ladder</h2>
+      <div class="ladder">
+        <div class="step">
+          <div>
+            <strong>Physicians</strong>
+            Premium wedge. Highest replacement cost, highest acuity, strongest clinical credibility.
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <strong>Residents and fellows</strong>
+            Concentrated institutional buyer through GME. Strong need, clear well-being pressure.
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <strong>Nurses and APPs</strong>
+            Much larger workforce. Pricing may be lower, but the volume and retention ROI are stronger.
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <strong>Hospital-wide workforce support</strong>
+            Expand to technicians, pharmacists, social workers, respiratory therapists, care coordinators, and patient-facing staff.
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <strong>Risk and retention analytics</strong>
+            Aggregate insights for CHRO, CMO, COO, department chairs, and GME leaders without individual surveillance.
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <strong>Broader high-stress professions</strong>
+            First responders, military units, lawyers, crisis teams, pilots, air traffic controllers, and other event-driven stress environments.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>7. Competitive Landscape</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Examples</th>
+            <th>Threat</th>
+            <th>Whitespace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Direct clinician mental health</td>
+            <td>Marvin, VITAL WorkLife, physician coaches, peer-support programs</td>
+            <td class="risk">High</td>
+            <td>More workflow-aware, event-triggered, specialty-specific support</td>
+          </tr>
+          <tr>
+            <td>Employer mental health platforms</td>
+            <td>Lyra, Spring Health, Modern Health, Headspace, ComPsych</td>
+            <td class="watch">Medium-high</td>
+            <td>They own benefits budgets but are less clinically specific</td>
+          </tr>
+          <tr>
+            <td>Burnout measurement tools</td>
+            <td>Mayo Clinic Well-Being Index, Press Ganey, internal surveys</td>
+            <td class="watch">Medium</td>
+            <td>They measure distress; this product intervenes in real time</td>
+          </tr>
+          <tr>
+            <td>Healthcare workforce platforms</td>
+            <td>QGenda, AMN, Aya, UKG, Workday</td>
+            <td class="watch">Medium-high</td>
+            <td>They own schedule context; partner first, compete later if needed</td>
+          </tr>
+          <tr>
+            <td>EHR / clinical workflow incumbents</td>
+            <td>Epic, Oracle Health, Meditech, ambient AI scribes</td>
+            <td class="risk">High</td>
+            <td>They own context but may lack clinician trust as emotional support channels</td>
+          </tr>
+          <tr>
+            <td>Risk and patient safety platforms</td>
+            <td>RLDatix, incident reporting tools, malpractice insurers</td>
+            <td class="watch">Medium-high</td>
+            <td>Strong overlap with post-adverse-event support</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Closest competitor</h3>
+      <p>
+        <strong>Marvin</strong> is the clearest direct competitor because it is clinician-specific and already combines behavioral health, AI coaching, workshops, and organizational well-being analytics.
+      </p>
+
+      <h3>Most dangerous strategic threats</h3>
+      <ul>
+        <li><strong>QGenda:</strong> owns scheduling and workforce context.</li>
+        <li><strong>Epic:</strong> owns EHR activity and clinical workflow metadata.</li>
+        <li><strong>Lyra/Spring/Headspace:</strong> own enterprise mental health budgets and provider networks.</li>
+        <li><strong>RLDatix:</strong> sits close to adverse events, risk, and peer support.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>8. Differentiation</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3 class="good">Winning wedge</h3>
+          <ul>
+            <li>Event-triggered rather than user-initiated</li>
+            <li>Clinician-specific rather than generic mental health</li>
+            <li>Routing layer rather than chatbot-only</li>
+            <li>Specialty-specific debrief protocols</li>
+            <li>Peer + human escalation infrastructure</li>
+            <li>Aggregate analytics without individual surveillance</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 class="risk">Avoid this positioning</h3>
+          <ul>
+            <li>“AI therapist for doctors”</li>
+            <li>“Another wellness app”</li>
+            <li>“Hospital dashboard that monitors stressed doctors”</li>
+            <li>“EAP replacement”</li>
+            <li>“Generic mental health benefit for clinicians”</li>
+          </ul>
+        </div>
+      </div>
+      <div class="quote">
+        Best positioning: “The confidential support layer for clinicians after the hardest moments in care.”
+      </div>
+    </section>
+
+    <section>
+      <h2>9. Go-to-Market</h2>
+      <h3>Best initial wedges</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Wedge</th>
+            <th>Why it works</th>
+            <th>Buyer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Residency programs</td>
+            <td>High need, concentrated buyer, clear well-being obligations</td>
+            <td>GME leadership, program directors, academic medical centers</td>
+          </tr>
+          <tr>
+            <td>High-acuity specialties</td>
+            <td>Clear high-stress events and high replacement cost</td>
+            <td>Department chairs, CMOs, service line leaders</td>
+          </tr>
+          <tr>
+            <td>Post-adverse-event support</td>
+            <td>Sharp pain, ties emotional support to safety and risk</td>
+            <td>Risk management, quality/safety, malpractice partners</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Initial ICP</h3>
+      <p>
+        Academic medical centers, large health systems, surgical departments, emergency medicine groups, OB-GYN departments, ICUs, oncology groups, and GME programs.
+      </p>
+    </section>
+
+    <section>
+      <h2>10. Moat</h2>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Trust architecture</h3>
+          <p>Employer cannot read individual logs. Only aggregate, anonymized signals are shared. Clinician controls disclosure.</p>
+        </div>
+        <div class="card">
+          <h3>Workflow context</h3>
+          <p>Schedule, call burden, shift load, and event metadata become a proprietary context layer if integrated safely.</p>
+        </div>
+        <div class="card">
+          <h3>Specialty playbooks</h3>
+          <p>Support scripts and escalation pathways become more defensible when tailored to surgery, ICU, OB-GYN, EM, oncology, and trainees.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>11. Key Risks</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Risk</th>
+            <th>Why it matters</th>
+            <th>Mitigation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Trust/privacy</td>
+            <td>Physicians will not use it if they fear employer visibility or licensing consequences.</td>
+            <td>Extreme privacy posture, aggregate-only analytics, clinician-controlled sharing.</td>
+          </tr>
+          <tr>
+            <td>AI safety/liability</td>
+            <td>Mental health support can escalate into crisis situations.</td>
+            <td>Human escalation, clear crisis protocols, licensed partner network, no AI-only therapy claims.</td>
+          </tr>
+          <tr>
+            <td>Low engagement</td>
+            <td>Benefits products often go unused.</td>
+            <td>Trigger support from real clinical moments instead of waiting for self-referral.</td>
+          </tr>
+          <tr>
+            <td>Long enterprise sales</td>
+            <td>Hospitals buy slowly and require security, compliance, and ROI proof.</td>
+            <td>Start with department/GME pilots, measurable retention and engagement outcomes.</td>
+          </tr>
+          <tr>
+            <td>Incumbent copy risk</td>
+            <td>Large benefits, EHR, and workforce platforms can add clinician wellness modules.</td>
+            <td>Move fast into specialty workflows, peer network, data partnerships, and trusted brand.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>12. Exit Opportunities</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Likely strategic acquirers</h3>
+          <ul>
+            <li>Employer mental health: Lyra, Spring Health, Headspace, Modern Health</li>
+            <li>EAP/benefits: ComPsych, Optum, Evernorth, CVS/Aetna</li>
+            <li>Healthcare workforce: QGenda, AMN, Aya, Workday/UKG healthcare</li>
+            <li>Risk/safety: RLDatix, malpractice insurers, professional liability carriers</li>
+            <li>Virtual care/provider enablement: Teladoc, Included Health, Amwell</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Exit logic</h3>
+          <ul>
+            <li><strong>Physician-only:</strong> likely acquisition outcome.</li>
+            <li><strong>Clinician workforce platform:</strong> strong strategic acquisition or growth equity outcome.</li>
+            <li><strong>Healthcare workforce + analytics:</strong> potential IPO narrative if it reaches large ARR and strong net retention.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>13. Investor Verdict</h2>
+      <p>
+        This is investable if the company is built as clinician workforce infrastructure, not a wellness app. The strongest venture story is that physician burnout is the wedge, but retention and risk intelligence are the enterprise value.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Question</th>
+            <th>Answer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Is physician-only big enough?</td>
+            <td>Yes for a credible company, but probably more acquisition-scale than IPO-scale.</td>
+          </tr>
+          <tr>
+            <td>Is clinician workforce big enough?</td>
+            <td>Yes. Expansion into nurses, APPs, and hospital-wide support creates a $1B+ ARR opportunity.</td>
+          </tr>
+          <tr>
+            <td>Is buyer pain real?</td>
+            <td>Yes. Burnout and turnover are financially material for health systems.</td>
+          </tr>
+          <tr>
+            <td>Is the market crowded?</td>
+            <td>Yes around mental health broadly, less crowded at workflow-aware, event-triggered clinician support.</td>
+          </tr>
+          <tr>
+            <td>What is the biggest risk?</td>
+            <td>Trust. If clinicians think the hospital can see their data, the product fails.</td>
+          </tr>
+          <tr>
+            <td>What is the biggest unlock?</td>
+            <td>Becoming the confidential routing layer across peer support, behavioral health, and workforce risk analytics.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="quote">
+        Final thesis: Physicians are the premium wedge. Context-aware support is the product. Retention and risk analytics are the enterprise value. Nurses, APPs, and hospital-wide support create the scale.
+      </div>
+    </section>
+
+    <section>
+      <h2>14. Sources to Recheck Before External Use</h2>
+      <p class="small">
+        Figures and market references in this memo were consolidated from the prior discussion and should be revalidated before investor use. Key sources to check: AMA physician burnout reports, AAMC physician workforce data, ACGME resident/fellow statistics, BLS healthcare occupation data, AHA hospital statistics, AHRQ health system compendium, NSI nursing retention report, Mayo Clinic Well-Being Index, Marvin public materials, RLDatix Peer Support, QGenda, IBISWorld EAP market estimates, and public reporting on Lyra, Spring Health, Headspace/Ginger, and healthcare workforce platform valuations.
+      </p>
+    </section>
+
+    <div class="footer">
+      Prepared as a compact VC-style HTML memo for the context-aware physician support layer startup concept.
+    </div>
+  </main>
+</body>
+</html>
