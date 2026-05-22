@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Placenta-Derived Stem Cells: Regenerative Medicine's First Reserve, The First Reserve</title>
+<meta name="description" content="A white paper on the scientific rationale, market opportunity, and regulatory framework for placenta-derived stem cell banking." />
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet" />
+<script>
+  (function(){
+    try {
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+        document.documentElement.classList.add('js-reveal');
+      }
+    } catch (e) {}
+  })();
+</script>
+<style>
+  :root{
+    --bg:#ffffff;
+    --ink:#0f1620;
+    --ink-soft:rgba(15,22,32,0.62);
+    --ink-faint:rgba(15,22,32,0.38);
+    --line:rgba(15,22,32,0.12);
+    --line-soft:rgba(15,22,32,0.06);
+    --accent:#9bd8ec;
+    --accent-strong:#c3ff9b;
+    --camel:#c69a6f;
+    --paper:#faf8f4;
+
+    --max:768px;
+    --gutter:clamp(20px,4vw,48px);
+
+    --font-display:"Inter Tight","Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --font-text:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --font-serif:"EB Garamond","Garamond","Times New Roman",serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--font-text);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+
+  /* HEADER */
+  .site-header{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;gap:24px;padding:18px var(--gutter);color:#fff;pointer-events:none}
+  .site-header::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,22,32,0.55) 0%,rgba(15,22,32,0) 100%);z-index:-1;pointer-events:none}
+  .site-header > *{pointer-events:auto}
+  .brand{font-family:"EB Garamond","Garamond","Times New Roman",serif;font-weight:500;font-size:1.25rem;letter-spacing:0.005em;color:#fff;display:inline-flex;align-items:baseline;white-space:nowrap;line-height:1}
+  .brand-dot{display:inline-block;overflow:visible;margin-left:0.1em;position:relative;top:0.04em}
+  @keyframes m-a{0%{r:0}22%{r:14}100%{r:14}}
+  @keyframes m-ac{0%{r:0}22%{r:14}100%{r:14}}
+  @keyframes m-b{0%{r:0;cx:14;opacity:0}22%{r:0;cx:14;opacity:0}32%{r:4;cx:14;opacity:1}55%{r:9;cx:22;opacity:1}75%{r:11;cx:32;opacity:1}100%{r:11;cx:32;opacity:1}}
+  .m-ca{animation:m-a 3.2s cubic-bezier(.7,0,.3,1) infinite}
+  .m-cac{animation:m-ac 3.2s cubic-bezier(.7,0,.3,1) infinite}
+  .m-cb{animation:m-b 3.2s cubic-bezier(.7,0,.3,1) infinite}
+  .brand-tagline{flex:1;margin:0;font-size:0.95rem;font-weight:500;color:rgba(255,255,255,0.92);text-align:center;letter-spacing:-0.005em}
+  @media (max-width:820px){.brand-tagline{display:none}}
+  .back-link{display:inline-flex;align-items:center;gap:6px;font-size:0.92rem;font-weight:500;color:#fff;white-space:nowrap;transition:opacity 200ms ease}
+  .back-link:hover{opacity:0.7}
+
+  /* PAPER HERO */
+  .paper-hero{background:var(--ink);color:#fff;padding:clamp(120px,14vw,180px) var(--gutter) clamp(64px,8vw,96px);position:relative;overflow:hidden}
+  .paper-hero::before{content:"";position:absolute;inset:0;background:url('assets/wp-banner.jpg') center/cover no-repeat;opacity:0.28;z-index:0}
+  .paper-hero::after{content:"";position:absolute;bottom:0;left:0;right:0;height:1px;background:rgba(255,255,255,0.1)}
+  .paper-hero-inner{position:relative;z-index:1}
+  .paper-hero-inner{max-width:var(--max);margin:0 auto;position:relative;z-index:1}
+  .paper-kicker{display:block;font-family:var(--font-text);font-size:0.82rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--camel);margin-bottom:28px}
+  .paper-title{margin:0 0 28px;font-family:var(--font-serif);font-weight:400;font-size:clamp(2.4rem,5.5vw,4.25rem);line-height:1.06;letter-spacing:-0.01em;max-width:22ch}
+  .paper-subtitle{margin:0;font-family:var(--font-display);font-size:clamp(1rem,1.4vw,1.15rem);line-height:1.6;color:rgba(255,255,255,0.72);max-width:60ch;font-weight:400}
+  .paper-meta{display:flex;flex-wrap:wrap;gap:32px;margin-top:56px;padding-top:32px;border-top:1px solid rgba(255,255,255,0.12)}
+  .paper-meta-item .k{font-size:0.78rem;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:6px}
+  .paper-meta-item .v{font-size:0.95rem;color:rgba(255,255,255,0.85);font-weight:400}
+
+  /* STATS BAR */
+  .stats-bar{background:var(--paper);border-bottom:1px solid var(--line)}
+  .stats-bar-inner{max-width:var(--max);margin:0 auto;padding:clamp(36px,5vw,56px) var(--gutter);display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media (max-width:640px){.stats-bar-inner{grid-template-columns:1fr}}
+  .stat .num{font-family:var(--font-serif);font-size:clamp(2.2rem,4.5vw,3.5rem);font-weight:400;line-height:1;letter-spacing:-0.01em;color:var(--ink);margin-bottom:8px}
+  .stat .label{font-family:var(--font-text);font-size:0.88rem;line-height:1.45;color:var(--ink-soft);max-width:22ch}
+
+  /* MAIN CONTENT */
+  .paper-body{padding:clamp(64px,8vw,112px) var(--gutter);}
+  .paper-body-inner{max-width:var(--max);margin:0 auto}
+
+  /* Sections */
+  .wp-section{margin-bottom:clamp(64px,8vw,96px)}
+  .wp-section + .wp-section{padding-top:clamp(64px,8vw,96px);border-top:1px solid var(--line)}
+
+  .wp-section-num{display:block;font-family:var(--font-text);font-size:0.78rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--camel);margin-bottom:16px}
+  .wp-h2{margin:0 0 32px;font-family:var(--font-serif);font-weight:400;font-size:clamp(1.8rem,3.5vw,2.75rem);line-height:1.1;letter-spacing:-0.005em}
+  .wp-lead{margin:0 0 28px;font-family:var(--font-display);font-size:clamp(1.1rem,1.6vw,1.3rem);font-weight:500;line-height:1.45;letter-spacing:-0.01em;color:var(--ink)}
+  .wp-p{margin:0 0 20px;font-family:var(--font-text);font-size:1.0625rem;line-height:1.72;color:var(--ink)}
+  .wp-p:last-child{margin-bottom:0}
+
+  /* Pull quote */
+  .pull-quote{margin:40px 0;padding:28px 32px;background:var(--paper);border-left:3px solid var(--camel);border-radius:0 8px 8px 0}
+  .pull-quote p{margin:0;font-family:var(--font-serif);font-style:italic;font-size:clamp(1.2rem,2vw,1.5rem);line-height:1.4;color:var(--ink)}
+  .pull-quote cite{display:block;margin-top:12px;font-family:var(--font-text);font-style:normal;font-size:0.84rem;color:var(--ink-soft);letter-spacing:0.04em}
+
+  /* Inline stat highlight */
+  .stat-inline{display:inline;font-family:var(--font-serif);font-weight:500;font-size:1.05em;color:var(--ink)}
+
+  /* Definition list / key claims */
+  .claim-list{list-style:none;margin:28px 0;padding:0;border-top:1px solid var(--line)}
+  .claim-list li{display:grid;grid-template-columns:auto 1fr;gap:16px 20px;padding:20px 0;border-bottom:1px solid var(--line);align-items:baseline}
+  .claim-list li .marker{font-family:var(--font-text);font-size:0.78rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--camel);white-space:nowrap}
+  .claim-list li .body{font-family:var(--font-text);font-size:1rem;line-height:1.6;color:var(--ink)}
+
+  /* Two-column inset */
+  .wp-cols{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin:32px 0}
+  @media (max-width:600px){.wp-cols{grid-template-columns:1fr}}
+  .wp-col-head{font-family:var(--font-display);font-size:0.88rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 12px}
+  .wp-col-body{font-family:var(--font-text);font-size:0.97rem;line-height:1.65;color:var(--ink)}
+
+  /* Signature */
+  .signature{margin-top:clamp(64px,8vw,96px);padding-top:48px;border-top:1px solid var(--line)}
+  .signature-label{font-family:var(--font-text);font-size:0.78rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 28px}
+  .signature-names{display:flex;flex-wrap:wrap;gap:48px}
+  .signature-person{}
+  .signature-name{font-family:var(--font-serif);font-size:1.6rem;font-weight:400;font-style:italic;color:var(--ink);margin:0 0 4px}
+  .signature-title{font-family:var(--font-text);font-size:0.88rem;color:var(--ink-soft)}
+  .signature-date{margin-top:32px;font-family:var(--font-text);font-size:0.88rem;color:var(--ink-faint)}
+
+  /* FOOTER */
+  .site-footer{border-top:1px solid var(--line);padding:64px 0 48px}
+  .footer-inner{max-width:var(--max);margin:0 auto;padding:0 var(--gutter);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  .footer-brand .brand{color:var(--ink)}
+  .footer-copy{font-family:var(--font-display);font-size:0.9rem;color:var(--ink-soft)}
+
+  /* SCROLL REVEAL */
+  .js-reveal :where(.wp-section-num,.wp-h2,.wp-lead,.wp-p,.pull-quote,.claim-list li,.stat,.wp-cols,.signature){
+    opacity:0;
+    transform:translateY(20px);
+    transition:opacity 800ms cubic-bezier(.2,.6,.2,1), transform 800ms cubic-bezier(.2,.6,.2,1);
+    will-change:opacity,transform;
+  }
+  .js-reveal .is-visible{opacity:1 !important;transform:none !important}
+  .js-reveal .wp-h2{transition-delay:60ms}
+  .js-reveal .wp-lead{transition-delay:120ms}
+  .js-reveal .claim-list li:nth-child(2){transition-delay:80ms}
+  .js-reveal .claim-list li:nth-child(3){transition-delay:160ms}
+  .js-reveal .claim-list li:nth-child(4){transition-delay:240ms}
+</style>
+</head>
+<body>
+
+<header class="site-header" id="top">
+  <a class="brand" href="index.html">The First Reserve<span class="brand-dot" aria-hidden="true"><svg width="26" height="9" viewBox="0 0 84 30" overflow="visible"><defs><clipPath id="hmc"><circle class="m-cac" cx="14" cy="15" r="0"/></clipPath></defs><circle class="m-ca" cx="14" cy="15" r="0" fill="#c69a6f"/><circle class="m-cb" cx="14" cy="15" r="0" fill="#c69a6f"/><circle class="m-cb" cx="14" cy="15" r="0" fill="#6e3f1a" clip-path="url(#hmc)"/></svg></span></a>
+  <p class="brand-tagline">A Family Cell Vault. Banking for both of you.</p>
+  <a class="back-link" href="index.html">
+    <span>← Back</span>
+  </a>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <div class="paper-hero">
+    <div class="paper-hero-inner">
+      <span class="paper-kicker">White Paper · 2026</span>
+      <h1 class="paper-title">Placenta-Derived Stem Cells: Regenerative Medicine's First Reserve</h1>
+      <p class="paper-subtitle">The scientific rationale, market opportunity, and regulatory framework for banking placenta-derived stem cells at birth, for both mother and child.</p>
+      <div class="paper-meta">
+        <div class="paper-meta-item">
+          <div class="k">Authors</div>
+          <div class="v">Kenza M. Rahali &amp; Thomas Cervoni</div>
+        </div>
+        <div class="paper-meta-item">
+          <div class="k">Published</div>
+          <div class="v">2026</div>
+        </div>
+        <div class="paper-meta-item">
+          <div class="k">Category</div>
+          <div class="v">Regenerative Medicine · Cell Banking</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stats-bar-inner">
+      <div class="stat">
+        <div class="num">$47.7B</div>
+        <div class="label">Projected cell therapy market by 2030, up from $7.4B, 23% CAGR</div>
+      </div>
+      <div class="stat">
+        <div class="num">4M+</div>
+        <div class="label">Placentas discarded annually in the US, each containing irreplaceable stem cells</div>
+      </div>
+      <div class="stat">
+        <div class="num">$1.55M</div>
+        <div class="label">Per-course cost of Ryoncil, the first placenta-derived MSC therapy approved in the US</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAPER BODY -->
+  <div class="paper-body">
+    <div class="paper-body-inner">
+
+      <!-- 1. Executive Summary -->
+      <section class="wp-section">
+        <span class="wp-section-num">01, Executive Summary</span>
+        <h2 class="wp-h2">The window is open for exactly one hour.</h2>
+        <p class="wp-lead">Immediately after delivery, the placenta holds the most diverse and potent collection of stem cells available to a family. Within hours, it is gone.</p>
+        <p class="wp-p">The First Reserve exists to close that window, not just for the infant, as cord blood banks have done for three decades, but for both mother and child, drawing on cell populations that no existing bank captures. This paper sets out the science, the market forces, and the regulatory pathway that make this the right moment to build that institution.</p>
+        <p class="wp-p">Three facts anchor the opportunity. First, the cell therapy market is growing at <span class="stat-inline">23% per year</span>, from $7.4 billion today to a projected $47.7 billion by 2030. Second, Ryoncil, the first FDA-approved placenta-derived mesenchymal stem cell therapy, launched in 2023 at <span class="stat-inline">$1.55 million per course</span>, establishing a price signal for the tissue families are discarding. Third, <span class="stat-inline">four million placentas</span> are destroyed as medical waste in the United States each year. The cells they contain are not replaceable by any other source.</p>
+        <p class="wp-p">This is not a speculative bet on unproven science. Mesenchymal stem cells (MSCs) and hematopoietic stem cells (HSCs) derived from the placenta are characterized, bankable, and increasingly deployable. What has been missing is the infrastructure and clinical intent to preserve both donor populations, infant and mother, in a single coordinated collection at delivery.</p>
+      </section>
+
+      <!-- 2. The New Era of Stem Cell Medicine -->
+      <section class="wp-section">
+        <span class="wp-section-num">02, The New Era of Stem Cell Medicine</span>
+        <h2 class="wp-h2">From experimental to expected.</h2>
+        <p class="wp-lead">Cell therapy has crossed the line from experimental oncology into mainstream medicine, and the pace is accelerating.</p>
+        <p class="wp-p">The approval of Kymriah and Yescarta in 2017 established that engineered cell therapies could achieve durable remissions in cancers previously considered untreatable. Since then, the FDA has approved more than 30 cell and gene therapy products. The pipeline is deeper still: over 1,200 active clinical trials are evaluating MSC-based therapies alone, targeting indications ranging from graft-versus-host disease and Crohn's disease to amyotrophic lateral sclerosis, myocardial infarction, and osteoarthritis.</p>
+        <p class="wp-p">The field's center of gravity is shifting from autologous single-use products, manufactured fresh from a patient's own cells, toward allogeneic platforms where characterized, off-the-shelf cells are manufactured at scale and delivered on demand. Placenta-derived MSCs are particularly well-suited to this model: the placenta is immunologically tolerant by design, yielding cells with naturally low HLA expression that are less likely to trigger rejection and more likely to function across a broad patient population.</p>
+
+        <div class="pull-quote">
+          <p>"The therapeutic roadmap for cell medicine is not being written in the future. It is being written now, and the families who bank today will be the ones who can read it."</p>
+        </div>
+
+        <p class="wp-p">The regulatory inflection point came in 2023 with the approval of Ryoncil (remestemcel-L), a placenta-derived MSC therapy for steroid-refractory acute graft-versus-host disease in pediatric patients. The $1.55 million list price is not an aberration, it reflects the scarcity premium on cells that families could have banked for a fraction of that cost at the moment of delivery. It also validates the therapeutic hypothesis that placenta-derived MSCs are not a niche curiosity but a foundational platform for the next generation of regenerative medicine.</p>
+      </section>
+
+      <!-- 3. Why the Placenta Is Different -->
+      <section class="wp-section">
+        <span class="wp-section-num">03, Why the Placenta Is Different</span>
+        <h2 class="wp-h2">Nine months of biological engineering, discarded in an hour.</h2>
+        <p class="wp-lead">The placenta is the most biologically complex transient organ in human development. It is also the most underutilized resource in modern medicine.</p>
+        <p class="wp-p">The placenta performs functions no other organ replicates: nutrient and gas exchange between two independent circulatory systems, active immune tolerance that prevents the mother from rejecting the fetus, hormonal regulation of pregnancy, and the assembly of a stem cell reservoir that will serve both individuals for decades. It does all of this in nine months, then is destroyed within hours of delivery.</p>
+        <p class="wp-p">Five distinct anatomical compartments within the placenta and its associated tissues harbor bankable stem cell populations:</p>
+
+        <ul class="claim-list">
+          <li>
+            <span class="marker">Amnion</span>
+            <span class="body">The innermost fetal membrane. Amniotic epithelial cells (AECs) and amniotic mesenchymal stromal cells (AMSCs) exhibit pluripotent-like gene expression, low immunogenicity, and strong anti-inflammatory and anti-fibrotic activity.</span>
+          </li>
+          <li>
+            <span class="marker">Chorion</span>
+            <span class="body">The outer fetal membrane. Chorionic MSCs share the immune-privileged character of amniotic populations but are present in higher density and yield larger cell counts per gram of tissue.</span>
+          </li>
+          <li>
+            <span class="marker">Chorionic villi</span>
+            <span class="body">The finger-like projections that interface with maternal blood. Villous MSCs are among the earliest-characterized placental populations and demonstrate robust colony-forming potential in long-term culture.</span>
+          </li>
+          <li>
+            <span class="marker">Wharton's jelly</span>
+            <span class="body">The gelatinous connective tissue of the umbilical cord. WJ-MSCs are the most extensively studied cord-derived population, highly proliferative, immunosuppressive, and accessible without procedural risk at delivery.</span>
+          </li>
+          <li>
+            <span class="marker">Decidua</span>
+            <span class="body">The maternal uterine lining shed with the placenta. Decidual stromal cells (DSCs) are autologous to the mother, perfectly HLA-matched, and therefore uniquely suited to future maternal therapies, an opportunity entirely absent from the existing cord blood banking industry.</span>
+          </li>
+        </ul>
+
+        <p class="wp-p">Cord blood, the product banked by most existing services, contains primarily HSCs, valuable for hematological diseases and transplantation, but representing only one compartment of the biological wealth available at delivery. The populations above are not accessible from cord blood and are not captured by any currently operating consumer banking service in the United States.</p>
+      </section>
+
+      <!-- 4. Banking as Biological Insurance -->
+      <section class="wp-section">
+        <span class="wp-section-num">04, Banking as Biological Insurance</span>
+        <h2 class="wp-h2">The cells you bank today are the therapies you access tomorrow.</h2>
+        <p class="wp-lead">Biological insurance is not metaphorical. It is the literal act of preserving options before the need is known.</p>
+        <p class="wp-p">Cord blood banking became the first example of consumer biological insurance in the 1990s, the purchase of a hedge against future hematological disease. The industry it created now manages over five million units in private banks worldwide. The intellectual model it established, preserve irreplaceable cells at the moment of birth against future therapeutic use, is the correct model. What it got wrong was scope.</p>
+        <p class="wp-p">By limiting collection to cord blood, existing banks have been capturing the smallest fraction of the biological opportunity available at delivery. The cord blood unit contains an estimated 200–400 mL of blood and yields MSC populations too sparse for most therapeutic applications. The placenta, cord tissue, and membranes together provide orders of magnitude more MSC material, and, critically, maternal MSCs from the decidua that no existing bank collects.</p>
+
+        <div class="pull-quote">
+          <p>"Every cord blood bank in existence was built around the infant. The mother, whose biology made the whole thing possible, has never been offered a vault of her own."</p>
+        </div>
+
+        <p class="wp-p">The insurance value of placental stem cell banking compounds over time in two directions. Forward, as therapies emerge: a family with banked MSCs in 2026 holds an option on any therapy approved in the decades ahead for which MSCs are the substrate. Backward, as cells age: cryopreserved at birth, these cells carry the epigenetic youth of the day they were collected, a property that becomes more valuable, not less, as the donor ages. Autologous therapies using one's own young cells, delivered decades later, are already a clinical reality in oncology and are being investigated for degenerative and autoimmune conditions.</p>
+        <p class="wp-p">The value proposition is asymmetric. The cost of banking is fixed and front-loaded. The cost of not banking, access to commercially available allogeneic MSCs at $1.55M per course, if available at all, is open-ended and borne at the moment of maximum biological vulnerability.</p>
+      </section>
+
+      <!-- 5. How Current Banking Falls Short -->
+      <section class="wp-section">
+        <span class="wp-section-num">05, How Current Banking Falls Short</span>
+        <h2 class="wp-h2">Three decades of cord blood banking did not solve the problem.</h2>
+        <p class="wp-lead">The cord blood banking industry is mature, credentialed, and fundamentally incomplete.</p>
+        <p class="wp-p">The current market is bifurcated between private cord blood banks, which store a family's cells exclusively for that family's use, and public banks, which accept donations into a shared registry. Both models share the same biological constraint: they capture only what the cord yields, which is primarily HSCs in small volume, with limited MSC representation.</p>
+
+        <div class="wp-cols">
+          <div>
+            <p class="wp-col-head">What existing banks capture</p>
+            <p class="wp-col-body">Cord blood HSCs (primary). Some cord tissue MSCs (Wharton's jelly). Occasional amniotic fluid samples. No placental tissue. No maternal cells.</p>
+          </div>
+          <div>
+            <p class="wp-col-head">What The First Reserve captures</p>
+            <p class="wp-col-body">All of the above, plus: amnion MSCs, chorion MSCs, chorionic villus MSCs, decidual stromal cells (maternal autologous). A complete vault from every compartment available at delivery.</p>
+          </div>
+        </div>
+
+        <p class="wp-p">The cord tissue banking segment has grown as a partial response to this gap, ViaCord, Cord Blood Registry, and others now offer "cord tissue" add-ons alongside cord blood. But cord tissue banking is operationally inconsistent, rarely includes placental compartments, and universally excludes maternal collection. The market has identified the need without resolving it.</p>
+        <p class="wp-p">The processing gap is equally significant. Many existing banks freeze tissue sections whole rather than isolating and characterizing cell populations, yielding a product that requires downstream processing at time of use, in a clinical environment, under time pressure, rather than a characterized, viability-tested cell product ready for deployment. The First Reserve protocol produces characterized MSC populations, not whole tissue, with viability metrics documented at intake and verified at defined intervals throughout storage.</p>
+      </section>
+
+      <!-- 6. Banking Today for Tomorrow's Rejuvenation -->
+      <section class="wp-section">
+        <span class="wp-section-num">06, Banking Today for Tomorrow's Rejuvenation</span>
+        <h2 class="wp-h2">Youth is the asset. Cryopreservation holds it.</h2>
+        <p class="wp-lead">The most underappreciated property of a neonatal stem cell is its age.</p>
+        <p class="wp-p">Stem cell potency declines with the donor's age. By the sixth decade of life, bone marrow MSC yield, colony-forming efficiency, and immunosuppressive capacity have all declined substantially relative to neonatal baselines. Epigenetic aging, the accumulation of methylation marks that functionally limit gene expression, proceeds in parallel. A cell banked at birth carries the epigenetic age of its collection date, indefinitely, under cryopreservation. It does not continue to age.</p>
+        <p class="wp-p">This is not hypothetical. Autologous therapies using a patient's own younger cells, collected and stored during health, deployed during disease or aging, are an active clinical strategy in oncology, cartilage repair, and cardiac medicine. The longevity medicine field is building its therapeutic roadmap around the same principle: that the body's own young cells, reintroduced during aging, can partially reverse functional decline in tissues that have lost regenerative capacity.</p>
+        <p class="wp-p">The placenta banking opportunity is therefore not only about treating disease. It is about preserving the biological substrate for rejuvenation strategies that do not yet exist in deployable form but are being built now, by major academic medical centers and well-capitalized biotechnology companies, with a horizon of 10 to 20 years. The families who bank today will be the ones who can access those strategies when they arrive.</p>
+        <p class="wp-p">For the mother specifically, the opportunity is unique and time-limited in a way that no other biological banking model can replicate. The decidua is shed once, at delivery. Maternal MSCs with perfect autologous HLA match to the donor are available at no other time in a woman's life at this scale, this purity, or this potency. After delivery, they are gone.</p>
+      </section>
+
+      <!-- 7. The Business Case and Market Opportunity -->
+      <section class="wp-section">
+        <span class="wp-section-num">07, The Business Case &amp; Market Opportunity</span>
+        <h2 class="wp-h2">A $47.7 billion market and four million untouched placentas per year.</h2>
+        <p class="wp-lead">The commercial case is not dependent on capturing the entire market, only a fraction of a highly motivated demographic.</p>
+        <p class="wp-p">The addressable market begins with the approximately 3.6 million live births in the United States each year. Within that population, the most actionable segment is the subset who are already engaged with premium healthcare: families who have pursued fertility treatment, maternal-fetal medicine consultations, or private midwifery, and who have demonstrated both the disposable income and the biological awareness that makes a banking conversation productive.</p>
+        <p class="wp-p">This segment currently spends aggressively on cord blood banking. The private cord blood banking market in the US is estimated at $220 million annually, with average family spend of approximately $2,000 at enrollment plus $150 per year in storage fees. The First Reserve's expanded protocol, collecting from six tissue compartments rather than one, processing to characterized cell populations, storing for both mother and child, commands a premium on that baseline, not merely a replacement.</p>
+        <p class="wp-p">The secondary revenue opportunity is in the institutional and research market. Characterized, viability-tested placental MSC populations from a known clinical protocol are valuable to clinical researchers, hospital cell therapy programs, and allogeneic product developers who require consistent, well-documented starting material. This market segment can be served by collections that do not proceed to family banking, anonymous donation programs, research partnerships, and cGMP expansion agreements, and represents a meaningful offset to collection and processing costs at scale.</p>
+
+        <div class="pull-quote">
+          <p>"The cost of not banking is open-ended. The cost of banking is fixed. That asymmetry is the commercial foundation of the entire category."</p>
+        </div>
+
+        <p class="wp-p">The competitive moat deepens over time. A banking institution's core asset is its repository, a growing collection of characterized, long-term stored material with documented chain of custody and clinical-grade processing records. This asset takes years to build and is difficult to replicate. Families who bank with The First Reserve at the first birth create a longitudinal relationship with a vault that holds irreplaceable material for decades, across potential additional collections for subsequent pregnancies.</p>
+      </section>
+
+      <!-- 8. Regulation and Global Strategy -->
+      <section class="wp-section">
+        <span class="wp-section-num">08, Regulation &amp; Global Strategy</span>
+        <h2 class="wp-h2">Regulated by design, not by constraint.</h2>
+        <p class="wp-lead">The regulatory framework for human cellular tissue products is well-established and navigable. It is also a competitive advantage for operators who embrace it fully.</p>
+        <p class="wp-p">In the United States, placental MSCs fall under FDA regulation as Human Cells, Tissues, and Cellular and Tissue-Based Products (HCT/Ps) under 21 CFR Part 1271. For privately banked autologous use, the primary service model, the regulatory pathway requires FDA establishment registration, donor eligibility determination, good tissue practice (GTP) compliance, and CLIA-compliant testing. It does not require full biologics license application (BLA) approval for banking and autologous use, which substantially reduces the regulatory burden relative to commercial allogeneic product development.</p>
+        <p class="wp-p">AABB accreditation, the industry-standard quality framework for cord blood and cellular therapy programs, provides the clinical credentialing that institutional partners, hospital systems, and sophisticated families require as a condition of trust. The First Reserve operates under AABB standards from day one, not as a future aspiration.</p>
+
+        <div class="wp-cols">
+          <div>
+            <p class="wp-col-head">US regulatory pathway</p>
+            <p class="wp-col-body">FDA establishment registration under 21 CFR 1271. AABB accreditation. CLIA laboratory certification. GTP compliance. Applicable for autologous private banking without BLA.</p>
+          </div>
+          <div>
+            <p class="wp-col-head">International expansion</p>
+            <p class="wp-col-body">UK (MHRA ATMP framework), UAE (HAAD/DHA), Singapore (HSA ATMPs). Each jurisdiction has an established HCT/P or ATMP regulatory pathway that maps to the US GTP model.</p>
+          </div>
+        </div>
+
+        <p class="wp-p">International expansion proceeds jurisdiction by jurisdiction, beginning with markets where high-net-worth families are already sophisticated consumers of premium healthcare and where cord blood banking penetration establishes a receptive distribution infrastructure. The United Arab Emirates, Singapore, and the United Kingdom represent the initial international priorities, each with established regulatory pathways for cellular product storage, existing relationships between private obstetric practices and premium health product providers, and demographics aligned with the service offering.</p>
+        <p class="wp-p">The global cell therapy supply chain is also a strategic dimension. A repository of characterized, GTP-processed placental MSCs held across geographically distributed cryostorage facilities represents starting material that international clinical programs cannot easily source through their own procurement channels. Distribution agreements with established international cell therapy manufacturers and CDMOs are a natural evolution of the banking model as the repository reaches scale.</p>
+      </section>
+
+      <!-- 9. Conclusion -->
+      <section class="wp-section">
+        <span class="wp-section-num">09, Conclusion</span>
+        <h2 class="wp-h2">The reserve is perishable. The opportunity is not.</h2>
+        <p class="wp-lead">The case for placental stem cell banking does not require predicting which specific therapies will succeed. It requires only the observation that cell therapy is succeeding, that the placenta is uniquely rich in the relevant material, and that four million opportunities are being destroyed every year.</p>
+        <p class="wp-p">The First Reserve is built on a single conviction: that the cells present at the moment of birth are the most valuable biological material a family will ever have access to, and that the only thing standing between that material and the next generation of regenerative medicine is the decision, made in the hours after delivery, to keep it.</p>
+        <p class="wp-p">For the infant, banking expands on the promise of cord blood banking to include every placental cell population with demonstrated or plausible therapeutic relevance. For the mother, it provides the only opportunity she will ever have to bank autologous, youth-state mesenchymal cells perfectly matched to her own biology.</p>
+        <p class="wp-p">The science is ready. The regulatory framework is established. The market is growing at 23% per year. The window is open for exactly one hour after every delivery in the United States. Four million times a year, it closes without anyone walking through it.</p>
+        <p class="wp-p">We intend to change that.</p>
+
+        <!-- Signature -->
+        <div class="signature">
+          <p class="signature-label">Authors</p>
+          <div class="signature-names">
+            <div class="signature-person">
+              <p class="signature-name">Kenza M. Rahali</p>
+              <p class="signature-title">Co-Founder, The First Reserve</p>
+            </div>
+            <div class="signature-person">
+              <p class="signature-name">Thomas Cervoni</p>
+              <p class="signature-title">Co-Founder, The First Reserve</p>
+            </div>
+          </div>
+          <p class="signature-date">2026</p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="index.html">The First Reserve<span class="brand-dot" aria-hidden="true"><svg width="26" height="9" viewBox="0 0 84 30" overflow="visible"><defs><clipPath id="fmc"><circle class="m-cac" cx="14" cy="15" r="0"/></clipPath></defs><circle class="m-ca" cx="14" cy="15" r="0" fill="#9c6f48"/><circle class="m-cb" cx="14" cy="15" r="0" fill="#9c6f48"/><circle class="m-cb" cx="14" cy="15" r="0" fill="#5a2e10" clip-path="url(#fmc)"/></svg></span></a>
+    </div>
+    <p class="footer-copy">© 2026 The First Reserve. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  (function(){
+    if (!document.documentElement.classList.contains('js-reveal')) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+      });
+    }, {threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.wp-section-num,.wp-h2,.wp-lead,.wp-p,.pull-quote,.claim-list li,.stat,.wp-cols,.signature').forEach(function(el){ io.observe(el); });
+  })();
+</script>
+
+</body>
+</html>

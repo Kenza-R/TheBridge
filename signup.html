@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Join the Waitlist — The First Reserve</title>
+<meta name="description" content="Reserve your family's place. We'll be in touch before your delivery window." />
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Inter:wght@400;500&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#ffffff;
+    --ink:#0f1620;
+    --ink-soft:rgba(15,22,32,0.55);
+    --ink-faint:rgba(15,22,32,0.32);
+    --line:rgba(15,22,32,0.12);
+    --line-soft:rgba(15,22,32,0.06);
+    --accent:#9bd8ec;
+    --accent-strong:#c3ff9b;
+    --camel:#c69a6f;
+    --gutter:clamp(20px,4vw,48px);
+    --font-display:"Inter Tight","Inter",system-ui,sans-serif;
+    --font-text:"Inter",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  html,body{background:var(--bg);color:var(--ink);font-family:var(--font-text);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+
+  /* ── HEADER ── */
+  .site-header{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;gap:24px;padding:18px var(--gutter);color:#fff;pointer-events:none}
+  .site-header::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,22,32,0.55) 0%,rgba(15,22,32,0) 100%);z-index:-1}
+  .site-header>*{pointer-events:auto}
+  .brand{font-family:"EB Garamond",serif;font-weight:500;font-size:1.25rem;letter-spacing:0.005em;color:#fff;display:inline-flex;align-items:baseline;white-space:nowrap;line-height:1}
+  .brand-dot{display:inline-block;overflow:visible;margin-left:0.1em;position:relative;top:0.04em}
+  @keyframes m-a{0%{r:0}22%{r:14}100%{r:14}}
+  @keyframes m-ac{0%{r:0}22%{r:14}100%{r:14}}
+  @keyframes m-b{0%{r:0;cx:14;opacity:0}22%{r:0;cx:14;opacity:0}32%{r:4;cx:14;opacity:1}55%{r:9;cx:22;opacity:1}75%{r:11;cx:32;opacity:1}100%{r:11;cx:32;opacity:1}}
+  .m-ca{animation:m-a 3.2s cubic-bezier(.7,0,.3,1) infinite}
+  .m-cac{animation:m-ac 3.2s cubic-bezier(.7,0,.3,1) infinite}
+  .m-cb{animation:m-b 3.2s cubic-bezier(.7,0,.3,1) infinite}
+  .back-link{margin-left:auto;font-family:var(--font-display);font-size:0.9rem;font-weight:500;color:#fff;opacity:0.8;transition:opacity 180ms ease}
+  .back-link:hover{opacity:1}
+
+  /* ── HERO BAND ── */
+  .page-hero{background:var(--ink);color:#fff;padding:clamp(110px,14vw,160px) var(--gutter) clamp(48px,6vw,72px);position:relative;overflow:hidden}
+  .page-hero::before{content:"";position:absolute;inset:0;background:url('assets/wp-banner.jpg') center 40%/cover no-repeat;opacity:0.18;z-index:0}
+  .page-hero-inner{position:relative;z-index:1;max-width:640px}
+  .page-kicker{display:block;font-family:var(--font-text);font-size:0.78rem;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--camel);margin-bottom:20px}
+  .page-title{font-family:"EB Garamond",serif;font-weight:400;font-size:clamp(2.6rem,5vw,4rem);line-height:1.06;letter-spacing:-0.01em;margin-bottom:20px}
+  .page-sub{font-family:var(--font-display);font-size:clamp(1rem,1.3vw,1.1rem);line-height:1.6;color:rgba(255,255,255,0.68);max-width:48ch}
+
+  /* ── FORM LAYOUT ── */
+  .form-wrap{max-width:720px;margin:0 auto;padding:clamp(56px,8vw,96px) var(--gutter) clamp(80px,10vw,120px)}
+
+  .form-section{margin-bottom:48px}
+  .form-section-label{font-family:var(--font-text);font-size:0.75rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--camel);margin-bottom:24px;display:block}
+
+  .field-grid{display:grid;gap:20px}
+  .field-grid.cols-2{grid-template-columns:1fr 1fr}
+  .field-grid.cols-3{grid-template-columns:1fr 1fr 1fr}
+  @media(max-width:600px){
+    .field-grid.cols-2,.field-grid.cols-3{grid-template-columns:1fr}
+  }
+
+  .field{display:flex;flex-direction:column;gap:7px}
+  .field label{font-family:var(--font-display);font-size:0.82rem;font-weight:500;color:var(--ink-soft);letter-spacing:0.02em}
+  .field input,.field select,.field textarea{
+    font-family:var(--font-display);font-size:1rem;font-weight:400;color:var(--ink);
+    background:#fff;border:1px solid var(--line);border-radius:8px;
+    padding:13px 16px;outline:none;width:100%;
+    transition:border-color 180ms ease,box-shadow 180ms ease;
+    appearance:none;-webkit-appearance:none;
+  }
+  .field input::placeholder,.field textarea::placeholder{color:var(--ink-faint)}
+  .field input:focus,.field select:focus,.field textarea:focus{
+    border-color:var(--ink);
+    box-shadow:0 0 0 3px rgba(15,22,32,0.07);
+  }
+  .field select{
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%230f1620' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 14px center;
+    padding-right:40px;
+    cursor:pointer;
+  }
+  .field select option{color:var(--ink)}
+
+  /* full-width field */
+  .field.full{grid-column:1/-1}
+
+  /* ── DIVIDER ── */
+  .form-divider{border:none;border-top:1px solid var(--line-soft);margin:0 0 48px}
+
+  /* ── SUBMIT ── */
+  .form-footer{display:flex;flex-direction:column;gap:16px;align-items:flex-start}
+  .btn-submit{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:15px 32px;border-radius:999px;
+    font-family:var(--font-display);font-weight:500;font-size:1rem;
+    background:var(--ink);color:var(--accent-strong);
+    border:none;cursor:pointer;
+    box-shadow:0 1px 2px rgba(15,22,32,0.1),0 8px 20px rgba(15,22,32,0.16);
+    transition:transform 180ms ease,box-shadow 180ms ease,opacity 180ms ease;
+  }
+  .btn-submit:hover{transform:translateY(-1px);box-shadow:0 2px 4px rgba(15,22,32,0.12),0 12px 28px rgba(15,22,32,0.2)}
+  .btn-submit:active{transform:none}
+  .btn-submit svg{width:16px;height:16px;flex-shrink:0}
+  .form-note{font-family:var(--font-text);font-size:0.83rem;color:var(--ink-faint);line-height:1.5;max-width:44ch}
+
+  /* ── SUCCESS STATE ── */
+  .success-screen{display:none;text-align:center;padding:clamp(80px,12vw,140px) var(--gutter)}
+  .success-screen.visible{display:block}
+  .success-icon{width:56px;height:56px;border-radius:999px;background:var(--ink);display:inline-flex;align-items:center;justify-content:center;margin-bottom:28px}
+  .success-icon svg{width:24px;height:24px;color:#fff}
+  .success-title{font-family:"EB Garamond",serif;font-weight:400;font-size:clamp(2rem,4vw,3rem);letter-spacing:-0.01em;margin-bottom:16px}
+  .success-body{font-family:var(--font-display);font-size:1.05rem;color:var(--ink-soft);line-height:1.6;max-width:42ch;margin:0 auto 32px}
+  .success-back{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-display);font-size:0.95rem;font-weight:500;color:var(--ink);border-bottom:1px solid var(--line);padding-bottom:3px;transition:opacity 180ms ease}
+  .success-back:hover{opacity:0.6}
+
+  /* ── FOOTER ── */
+  .site-footer{border-top:1px solid var(--line);padding:48px var(--gutter)}
+  .footer-inner{max-width:720px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  .footer-brand .brand{color:var(--ink)}
+  .footer-copy{font-family:var(--font-display);font-size:0.88rem;color:var(--ink-soft)}
+  @keyframes m-af{0%{r:0}22%{r:14}100%{r:14}}
+  @keyframes m-acf{0%{r:0}22%{r:14}100%{r:14}}
+  @keyframes m-bf{0%{r:0;cx:14;opacity:0}22%{r:0;cx:14;opacity:0}32%{r:4;cx:14;opacity:1}55%{r:9;cx:22;opacity:1}75%{r:11;cx:32;opacity:1}100%{r:11;cx:32;opacity:1}}
+  .m-caf{animation:m-af 3.2s cubic-bezier(.7,0,.3,1) infinite}
+  .m-cacf{animation:m-acf 3.2s cubic-bezier(.7,0,.3,1) infinite}
+  .m-cbf{animation:m-bf 3.2s cubic-bezier(.7,0,.3,1) infinite}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="brand" href="index.html">The First Reserve<span class="brand-dot" aria-hidden="true"><svg width="26" height="9" viewBox="0 0 84 30" overflow="visible"><defs><clipPath id="hmc"><circle class="m-cac" cx="14" cy="15" r="0"/></clipPath></defs><circle class="m-ca" cx="14" cy="15" r="0" fill="#c69a6f"/><circle class="m-cb" cx="14" cy="15" r="0" fill="#c69a6f"/><circle class="m-cb" cx="14" cy="15" r="0" fill="#6e3f1a" clip-path="url(#hmc)"/></svg></span></a>
+  <a class="back-link" href="index.html">← Back</a>
+</header>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <span class="page-kicker">Waitlist</span>
+    <h1 class="page-title">Reserve your family's place.</h1>
+    <p class="page-sub">We collect at delivery. Tell us when yours is — we'll be in touch well before your window opens.</p>
+  </div>
+</div>
+
+<main>
+  <div class="form-wrap" id="form-wrap">
+
+    <form id="signup-form" novalidate>
+
+      <!-- Personal -->
+      <div class="form-section">
+        <span class="form-section-label">About you</span>
+        <div class="field-grid cols-2">
+          <div class="field">
+            <label for="first-name">First name</label>
+            <input type="text" id="first-name" name="first_name" placeholder="Kenza" autocomplete="given-name" required />
+          </div>
+          <div class="field">
+            <label for="last-name">Last name</label>
+            <input type="text" id="last-name" name="last_name" placeholder="Rahali" autocomplete="family-name" required />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" placeholder="+1 (555) 000-0000" autocomplete="tel" />
+          </div>
+        </div>
+      </div>
+
+      <hr class="form-divider" />
+
+      <!-- Delivery -->
+      <div class="form-section">
+        <span class="form-section-label">Your delivery</span>
+        <div class="field-grid cols-2">
+          <div class="field">
+            <label for="delivery-window">Time until delivery</label>
+            <select id="delivery-window" name="delivery_window" required>
+              <option value="" disabled selected>Select a window</option>
+              <option value="under-4-weeks">Less than 4 weeks</option>
+              <option value="1-2-months">1 – 2 months</option>
+              <option value="2-3-months">2 – 3 months</option>
+              <option value="3-4-months">3 – 4 months</option>
+              <option value="4-5-months">4 – 5 months</option>
+              <option value="5-6-months">5 – 6 months</option>
+              <option value="6-plus-months">More than 6 months</option>
+              <option value="planning">Planning / not yet pregnant</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="physician">Delivering physician or midwife</label>
+            <input type="text" id="physician" name="physician" placeholder="Dr. Smith" autocomplete="off" />
+          </div>
+        </div>
+      </div>
+
+      <hr class="form-divider" />
+
+      <!-- Location -->
+      <div class="form-section">
+        <span class="form-section-label">Location</span>
+        <div class="field-grid cols-3">
+          <div class="field full">
+            <label for="address">Street address</label>
+            <input type="text" id="address" name="address" placeholder="123 Main St" autocomplete="street-address" />
+          </div>
+          <div class="field">
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" placeholder="New York" autocomplete="address-level2" required />
+          </div>
+          <div class="field">
+            <label for="state">State</label>
+            <select id="state" name="state" required>
+              <option value="" disabled selected>State</option>
+              <option>AL</option><option>AK</option><option>AZ</option><option>AR</option>
+              <option>CA</option><option>CO</option><option>CT</option><option>DE</option>
+              <option>FL</option><option>GA</option><option>HI</option><option>ID</option>
+              <option>IL</option><option>IN</option><option>IA</option><option>KS</option>
+              <option>KY</option><option>LA</option><option>ME</option><option>MD</option>
+              <option>MA</option><option>MI</option><option>MN</option><option>MS</option>
+              <option>MO</option><option>MT</option><option>NE</option><option>NV</option>
+              <option>NH</option><option>NJ</option><option>NM</option><option>NY</option>
+              <option>NC</option><option>ND</option><option>OH</option><option>OK</option>
+              <option>OR</option><option>PA</option><option>RI</option><option>SC</option>
+              <option>SD</option><option>TN</option><option>TX</option><option>UT</option>
+              <option>VT</option><option>VA</option><option>WA</option><option>WV</option>
+              <option>WI</option><option>WY</option><option>DC</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="zip">ZIP code</label>
+            <input type="text" id="zip" name="zip" placeholder="10001" autocomplete="postal-code" inputmode="numeric" maxlength="10" />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-footer">
+        <button type="submit" class="btn-submit">
+          Join the waitlist
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+        <p class="form-note">We'll only contact you to coordinate your collection. No marketing, no third-party sharing.</p>
+      </div>
+
+    </form>
+
+    <!-- Success -->
+    <div class="success-screen" id="success-screen">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2 class="success-title">You're on the list.</h2>
+      <p class="success-body">We'll reach out well before your delivery window. In the meantime, read the science behind what we bank.</p>
+      <a class="success-back" href="index.html">← Back to The First Reserve</a>
+    </div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="index.html">The First Reserve<span class="brand-dot" aria-hidden="true"><svg width="26" height="9" viewBox="0 0 84 30" overflow="visible"><defs><clipPath id="fmc"><circle class="m-cacf" cx="14" cy="15" r="0"/></clipPath></defs><circle class="m-caf" cx="14" cy="15" r="0" fill="#9c6f48"/><circle class="m-cbf" cx="14" cy="15" r="0" fill="#9c6f48"/><circle class="m-cbf" cx="14" cy="15" r="0" fill="#5a2e10" clip-path="url(#fmc)"/></svg></span></a>
+    </div>
+    <p class="footer-copy">© 2026 The First Reserve</p>
+  </div>
+</footer>
+
+<script>
+  var form = document.getElementById('signup-form');
+  var success = document.getElementById('success-screen');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    // Basic required-field check with native validation
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    var btn = form.querySelector('.btn-submit');
+    btn.textContent = 'Submitting…';
+    btn.disabled = true;
+
+    // Collect form data
+    var data = {};
+    new FormData(form).forEach(function(v, k){ data[k] = v; });
+
+    // ── Swap to success state ──
+    // Replace with your real endpoint (Formspree, Airtable, etc.) when ready.
+    setTimeout(function(){
+      form.style.display = 'none';
+      success.classList.add('visible');
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }, 600);
+  });
+</script>
+
+</body>
+</html>

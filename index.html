@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>The First Reserve, Banking for both of you</title>
+<meta name="description" content="A Family Cell Vault. We capture and steward the rarest cells from your delivery, perfectly matched to your child, and to you." />
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600&family=EB+Garamond:wght@500&display=swap" rel="stylesheet" />
+<script>
+  // Set js-reveal early so initial paint already has reveal targets hidden, prevents flash.
+  // Skipped entirely when the user prefers reduced motion or lacks IntersectionObserver.
+  (function(){
+    try {
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+        document.documentElement.classList.add('js-reveal');
+      }
+    } catch (e) {}
+  })();
+</script>
+<style>
+  :root{
+    --bg:#ffffff;
+    --ink:#0f1620;
+    --ink-soft:rgba(15,22,32,0.62);
+    --line:rgba(15,22,32,0.12);
+    --line-soft:rgba(15,22,32,0.06);
+    --accent:#9bd8ec;
+    --accent-strong:#c3ff9b;
+
+    --max:1216px;
+    --gutter:clamp(20px,4vw,48px);
+
+    --font-display:"Inter Tight","Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --font-text:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+
+    --fs-display:clamp(2.5rem,6vw,5.25rem);
+    --fs-h2:clamp(2rem,4.4vw,3.75rem);
+    --fs-lead:clamp(1.25rem,2.2vw,1.875rem);
+    --fs-copy:clamp(1.05rem,1.4vw,1.2rem);
+    --fs-label:0.85rem;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--font-text);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  a{color:inherit;text-decoration:none}
+  img,video{max-width:100%;display:block}
+
+  .container{width:100%;max-width:var(--max);margin:0 auto;padding-left:var(--gutter);padding-right:var(--gutter)}
+  .two-col{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:clamp(32px,6vw,96px);align-items:start}
+  @media (max-width:820px){.two-col{grid-template-columns:1fr;gap:24px}}
+  .section{padding:clamp(72px,9vw,128px) 0}
+  .section-divider{border-top:1px solid var(--line)}
+  .section-header{margin-bottom:clamp(40px,6vw,80px);max-width:880px}
+
+  /* HEADER */
+  .site-header{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;gap:24px;padding:18px var(--gutter);color:#fff;pointer-events:none}
+  .site-header::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,22,32,0.55) 0%,rgba(15,22,32,0) 100%);z-index:-1;pointer-events:none}
+  .site-header > *{pointer-events:auto}
+  .brand{font-family:"EB Garamond","Garamond","Times New Roman",serif;font-weight:500;font-size:1.25rem;letter-spacing:0.005em;color:#fff;display:inline-flex;align-items:baseline;white-space:nowrap;line-height:1}
+  .footer-brand .brand{color:var(--ink)}
+  .brand-dot{display:inline-block;overflow:visible;margin-left:0.1em;position:relative;top:0.04em}
+  @keyframes m-a{0%{r:0}22%{r:14}100%{r:14}}
+  @keyframes m-ac{0%{r:0}22%{r:14}100%{r:14}}
+  @keyframes m-b{0%{r:0;cx:14;opacity:0}22%{r:0;cx:14;opacity:0}32%{r:4;cx:14;opacity:1}55%{r:9;cx:22;opacity:1}75%{r:11;cx:32;opacity:1}100%{r:11;cx:32;opacity:1}}
+  .m-ca{animation:m-a 3.2s cubic-bezier(.7,0,.3,1) infinite}
+  .m-cac{animation:m-ac 3.2s cubic-bezier(.7,0,.3,1) infinite}
+  .m-cb{animation:m-b 3.2s cubic-bezier(.7,0,.3,1) infinite}
+  .brand-tagline{flex:1;margin:0;font-size:0.95rem;font-weight:500;color:rgba(255,255,255,0.92);text-align:center;letter-spacing:-0.005em}
+  @media (max-width:820px){.brand-tagline{display:none}}
+  .news-pill{display:inline-flex;align-items:center;gap:6px;font-size:0.92rem;font-weight:500;color:#fff;white-space:nowrap;transition:opacity 200ms ease}
+  .news-pill:hover{opacity:0.7}
+  .news-pill .arrow{font-size:0.85em}
+
+  /* HERO */
+  .hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;color:#fff;overflow:hidden;background:#0f1620}
+  .hero-media{position:absolute;inset:0;z-index:0;overflow:hidden}
+  #hero-video{width:100%;height:100%;object-fit:cover;opacity:0.88}
+  .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,22,32,0.55) 0%,rgba(15,22,32,0.15) 50%,rgba(15,22,32,0.6) 100%);z-index:1}
+  .hero-content{position:relative;z-index:2;padding-top:clamp(120px,16vw,200px);padding-bottom:clamp(48px,6vw,96px)}
+  .hero h1{margin:0 0 32px;font-family:var(--font-display);font-size:var(--fs-display);font-weight:500;line-height:1.02;letter-spacing:-0.025em;max-width:18ch}
+  .hero-subheading{max-width:56ch;margin:32px 0 0;font-size:clamp(1rem,1.2vw,1.1rem);line-height:1.55;color:rgba(255,255,255,0.85)}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:999px;font-weight:500;font-size:0.95rem;border:1px solid transparent;transition:opacity 180ms ease,transform 180ms ease,background-color 180ms ease,border-color 180ms ease;cursor:pointer}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:var(--ink);color:var(--accent-strong);box-shadow:0 1px 2px rgba(15,22,32,0.1),0 8px 18px rgba(15,22,32,0.18)}
+  .btn-secondary{background:transparent;color:#fff;border-color:rgba(255,255,255,0.4)}
+  .btn-secondary:hover{border-color:rgba(255,255,255,0.85);background:rgba(255,255,255,0.04)}
+
+  /* SECTION TYPE */
+  .section-label{margin:0 0 14px;font-family:var(--font-text);font-size:var(--fs-label);font-weight:500;color:var(--ink-soft)}
+  .section-sublabel{margin:36px 0 12px;font-size:var(--fs-label);font-weight:500;color:var(--ink-soft)}
+  .section-heading{margin:0;font-family:var(--font-display);font-size:var(--fs-h2);font-weight:500;line-height:1.04;letter-spacing:-0.022em;max-width:18ch}
+  .section-lead{margin:0 0 28px;font-family:var(--font-display);font-size:var(--fs-lead);font-weight:500;line-height:1.2;letter-spacing:-0.012em;max-width:24ch}
+  .section-copy{margin:0;font-family:var(--font-display);font-size:var(--fs-copy);line-height:1.5;color:var(--ink);max-width:60ch;font-weight:400}
+  .section-copy + .section-copy{margin-top:16px}
+  .section-footnote{margin:clamp(40px,6vw,72px) 0 0;font-family:var(--font-display);font-size:var(--fs-lead);font-weight:500;line-height:1.25;letter-spacing:-0.01em;max-width:42ch;color:var(--ink)}
+
+  /* LISTS */
+  .numbered-list,.roman-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+  .numbered-list li,.roman-list li{display:grid;grid-template-columns:60px minmax(0,1fr);gap:24px;padding:28px 0;border-bottom:1px solid var(--line);align-items:baseline}
+  .numbered-list li .num,.roman-list li .num{font-family:var(--font-display);font-size:0.95rem;font-weight:500;color:var(--ink-soft)}
+  .numbered-list li .text,.roman-list li .text{font-family:var(--font-display);font-size:clamp(1.2rem,1.9vw,1.6rem);line-height:1.3;letter-spacing:-0.012em;font-weight:500;color:var(--ink)}
+  .roman-list.compact li{padding:18px 0}
+  .roman-list.compact li .text{font-size:1.1rem}
+
+  .bullet-list{list-style:none;margin:0 0 28px;padding:0}
+  .bullet-list li{font-family:var(--font-display);font-size:var(--fs-lead);font-weight:500;letter-spacing:-0.01em;line-height:1.25;color:var(--ink);margin-bottom:8px;max-width:36ch}
+
+  /* CARDS */
+  .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  @media (max-width:720px){.cards{grid-template-columns:1fr}}
+  .card{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:300px;padding:32px;border:0;border-radius:14px;background:#1a1a1a;overflow:hidden;transition:transform 220ms ease,box-shadow 220ms ease}
+  .card::before{content:"";position:absolute;inset:0;background:linear-gradient(160deg,rgba(15,22,32,0.18) 0%,rgba(15,22,32,0.62) 100%);z-index:1}
+  .card-bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0;transition:transform 500ms ease}
+  .card:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(15,22,32,0.18)}
+  .card:hover .card-bg{transform:scale(1.04)}
+  .card-badge{position:relative;z-index:2;display:inline-flex;width:44px;height:44px;border-radius:999px;align-items:center;justify-content:center;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);color:#fff;font-family:var(--font-display);font-weight:500;font-size:0.95rem;margin-bottom:80px}
+  .card-title{position:relative;z-index:2;margin:0;font-family:var(--font-display);font-size:clamp(1.25rem,1.9vw,1.65rem);line-height:1.2;letter-spacing:-0.012em;font-weight:500;color:#fff;max-width:22ch}
+  .card-1 .card-bg{background-image:url('assets/card1.jpg')}
+  .card-2 .card-bg{background-image:url('assets/card2.jpg')}
+  .card-3 .card-bg{background-image:url('assets/card3.jpg')}
+  .card-4 .card-bg{background-image:url('assets/card4.jpg')}
+
+  /* LINKS / CTA INLINE */
+  .link-arrow{display:inline-flex;align-items:center;gap:6px;margin-top:28px;font-family:var(--font-display);font-size:1rem;font-weight:500;color:var(--ink);border-bottom:1px solid var(--line);padding-bottom:4px;transition:opacity 180ms ease,border-color 180ms ease}
+  .link-arrow:hover{opacity:0.7;border-bottom-color:var(--ink)}
+
+  /* IMAGE PLACEHOLDER (drop your picture in) */
+  .image-slot{width:100%;aspect-ratio:16/9;background:#f4f5f6;border:1px dashed var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:0.9rem;border-radius:12px;overflow:hidden}
+  .image-slot img{width:100%;height:100%;object-fit:cover}
+  .image-slot.tall{aspect-ratio:4/5}
+
+  /* FOOTER */
+  .site-footer{border-top:1px solid var(--line);padding:64px 0 48px}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 2fr;gap:32px;align-items:start}
+  @media (max-width:820px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+  .footer-brand{display:flex;flex-direction:column;gap:14px}
+  .footer-brand .brand{color:var(--ink)}
+  .footer-tagline{margin:0;font-family:var(--font-display);font-size:0.95rem;color:var(--ink);max-width:32ch}
+  .footer-links{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+  .footer-links a{font-family:var(--font-display);font-size:0.95rem;color:var(--ink);transition:opacity 180ms ease}
+  .footer-links a:hover{opacity:0.6}
+  .footer-copy{margin:0;font-family:var(--font-display);font-size:0.9rem;color:var(--ink-soft);text-align:right}
+  @media (max-width:820px){.footer-copy{grid-column:1/-1;text-align:left}}
+
+  /* SCROLL REVEAL
+     Targets are hidden by default and revealed by JS adding .is-visible.
+     `.js-reveal` is set on <html> only when motion is allowed and IO exists. */
+  .js-reveal :where(
+    .hero h1,
+    .hero-actions,
+    .hero-subheading,
+    .section-label,
+    .section-heading,
+    .section-lead,
+    .section-copy,
+    .section-sublabel,
+    .section-footnote,
+    .numbered-list li,
+    .roman-list li,
+    .bullet-list li,
+    .card,
+    .footer-brand,
+    .footer-links,
+    .footer-copy
+  ){
+    opacity:0;
+    transform:translateY(22px);
+    transition:opacity 900ms cubic-bezier(.2,.6,.2,1), transform 900ms cubic-bezier(.2,.6,.2,1);
+    will-change:opacity,transform;
+  }
+  .js-reveal .is-visible{
+    opacity:1 !important;
+    transform:none !important;
+  }
+
+  /* Hero stagger, heading first, CTAs, subheading */
+  .js-reveal .hero h1{transition-delay:120ms}
+  .js-reveal .hero-actions{transition-delay:280ms}
+  .js-reveal .hero-subheading{transition-delay:420ms}
+
+  /* Two-column section stagger, label, heading, lead, copy cascade */
+  .js-reveal .section-label{transition-delay:0ms}
+  .js-reveal .section-heading{transition-delay:80ms}
+  .js-reveal .section-lead{transition-delay:0ms}
+  .js-reveal .section-copy{transition-delay:120ms}
+  .js-reveal .section-copy + .section-copy{transition-delay:220ms}
+  .js-reveal .section-sublabel{transition-delay:200ms}
+  .js-reveal .section-sublabel + .section-copy{transition-delay:300ms}
+  .js-reveal .section-footnote{transition-delay:120ms}
+
+  /* Numbered / roman / bullet list item stagger */
+  .js-reveal .numbered-list li:nth-child(1),
+  .js-reveal .roman-list li:nth-child(1),
+  .js-reveal .bullet-list li:nth-child(1){transition-delay:0ms}
+  .js-reveal .numbered-list li:nth-child(2),
+  .js-reveal .roman-list li:nth-child(2),
+  .js-reveal .bullet-list li:nth-child(2){transition-delay:90ms}
+  .js-reveal .numbered-list li:nth-child(3),
+  .js-reveal .roman-list li:nth-child(3),
+  .js-reveal .bullet-list li:nth-child(3){transition-delay:180ms}
+  .js-reveal .numbered-list li:nth-child(4),
+  .js-reveal .roman-list li:nth-child(4){transition-delay:270ms}
+
+  /* Card stagger */
+  .js-reveal .card:nth-child(1){transition-delay:0ms}
+  .js-reveal .card:nth-child(2){transition-delay:110ms}
+  .js-reveal .card:nth-child(3){transition-delay:220ms}
+  .js-reveal .card:nth-child(4){transition-delay:330ms}
+
+  /* Footer stagger */
+  .js-reveal .footer-brand{transition-delay:0ms}
+  .js-reveal .footer-links:nth-of-type(2){transition-delay:90ms}
+  .js-reveal .footer-links:nth-of-type(3){transition-delay:180ms}
+  .js-reveal .footer-copy{transition-delay:270ms}
+</style>
+</head>
+<body>
+
+<header class="site-header" id="top">
+  <a class="brand" href="#top">The First Reserve<span class="brand-dot" aria-hidden="true"><svg width="26" height="9" viewBox="0 0 84 30" overflow="visible"><defs><clipPath id="hmc"><circle class="m-cac" cx="14" cy="15" r="0"/></clipPath></defs><circle class="m-ca" cx="14" cy="15" r="0" fill="#c69a6f"/><circle class="m-cb" cx="14" cy="15" r="0" fill="#c69a6f"/><circle class="m-cb" cx="14" cy="15" r="0" fill="#6e3f1a" clip-path="url(#hmc)"/></svg></span></a>
+  <p class="brand-tagline">A Family Cell Vault. Banking for both of you.</p>
+  <a class="news-pill" href="whitepaper.html" rel="noopener">
+    <span>Read our white paper</span>
+    <span class="arrow" aria-hidden="true">↗</span>
+  </a>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-media">
+      <video id="hero-video" autoplay loop muted playsinline preload="auto" poster="assets/hero.jpg">
+        <source src="assets/hero.webm" type="video/webm" />
+        <source src="assets/hero.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content container">
+      <h1>Banking for both of you.</h1>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="signup.html">Sign up for the waitlist</a>
+        <a class="btn btn-secondary" href="#science">Read the science</a>
+        <a class="btn btn-secondary" href="#pricing">Pricing</a>
+      </div>
+      <p class="hero-subheading">A new standard in family medicine. We capture and steward the rarest cells from your delivery, perfectly matched to your child, and to you, so future therapies have a place to begin.</p>
+    </div>
+  </section>
+
+  <!-- WHAT WE BELIEVE -->
+  <section class="section section-divider" id="believe">
+    <div class="container two-col">
+      <div>
+        <p class="section-label">What we believe</p>
+        <h2 class="section-heading">Family begins with biology you can keep.</h2>
+      </div>
+      <div>
+        <h3 class="section-lead">A single delivery captures the rarest cells in medicine.</h3>
+        <p class="section-copy">For nine months, the placenta builds, defends, and adapts, stockpiling mesenchymal, hematopoietic, and amniotic stem cells.</p>
+        <p class="section-copy">If we preserve them, a family holds the deepest reserve modern medicine knows how to bank.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE PROBLEM -->
+  <section class="section section-divider" id="problem">
+    <div class="container two-col">
+      <div>
+        <p class="section-label">The problem</p>
+        <h2 class="section-heading">Most placental cells are discarded.</h2>
+      </div>
+      <div>
+        <h3 class="section-lead">Roughly four million placentas leave the delivery room as medical waste each year in the US alone.</h3>
+        <p class="section-copy">Each one a stockpile of the rarest cells in the body, incinerated within hours.</p>
+        <p class="section-copy">By the time a family realizes what was lost, the only window to recover it has closed.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT WE OFFER -->
+  <section class="section section-divider" id="science">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">What we offer</p>
+        <h2 class="section-heading">A complete family cell vault.</h2>
+      </div>
+      <ol class="numbered-list">
+        <li>
+          <span class="num">01</span>
+          <span class="text">Maternal cell collection from the decidua, your own perfectly-matched cells, captured at delivery.</span>
+        </li>
+        <li>
+          <span class="num">02</span>
+          <span class="text">Infant cell collection from cord blood, cord tissue, amnion, chorion, villi, and Wharton's jelly.</span>
+        </li>
+        <li>
+          <span class="num">03</span>
+          <span class="text">AABB-accredited, FDA-registered processing with full chain of custody.</span>
+        </li>
+        <li>
+          <span class="num">04</span>
+          <span class="text">Geographically distributed cryostorage with continuous monitoring and 25+ year viability.</span>
+        </li>
+      </ol>
+      <p class="section-footnote">Together, these become the deepest reserve a family can hold.</p>
+    </div>
+  </section>
+
+  <!-- THE BREAKTHROUGH -->
+  <section class="section section-divider" id="breakthrough">
+    <div class="container two-col">
+      <div>
+        <p class="section-label">The breakthrough</p>
+        <h2 class="section-heading">For the first time, mother and child banked together.</h2>
+      </div>
+      <div>
+        <ul class="bullet-list">
+          <li>Cord blood captures only the infant.</li>
+          <li>Most banks ignore the placenta entirely.</li>
+        </ul>
+        <p class="section-copy">We bank both, including maternal cells from the decidua, under the same accredited protocol, in a single quiet collection that doesn't change your birth plan.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE SCIENCE -->
+  <section class="section section-divider" id="science-detail">
+    <div class="container two-col">
+      <div>
+        <p class="section-label">The science</p>
+        <h2 class="section-heading">Two donors, one collection.</h2>
+      </div>
+      <div>
+        <p class="section-copy">Mesenchymal and hematopoietic stem cell populations sourced from amnion, chorion, villi, Wharton's jelly, and decidua, characterized and viability-tested under sterile conditions.</p>
+        <p class="section-sublabel">Impact</p>
+        <p class="section-copy">As regenerative therapies mature, your family already has the cells, protected, characterized, waiting. The therapeutic roadmap arrives; your reserve is already there.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS / CLOSED LOOP -->
+  <section class="section section-divider" id="process">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Process</p>
+        <h2 class="section-heading">From delivery room to long-term stewardship.</h2>
+      </div>
+      <ol class="roman-list">
+        <li>
+          <span class="num">I.</span>
+          <span class="text">Collection at delivery, OB-GYN-led, with no change to your birth plan.</span>
+        </li>
+        <li>
+          <span class="num">II.</span>
+          <span class="text">Validated cold-chain courier with continuous temperature and chain-of-custody monitoring.</span>
+        </li>
+        <li>
+          <span class="num">III.</span>
+          <span class="text">AABB-accredited processing, viability testing, and cryopreservation in distributed facilities.</span>
+        </li>
+      </ol>
+      <p class="section-footnote">Your obstetrician leads. We move in the background.</p>
+    </div>
+  </section>
+
+  <!-- IMPLICATIONS -->
+  <section class="section section-divider" id="implications">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Why families choose us</p>
+        <h2 class="section-heading">What it enables.</h2>
+      </div>
+      <div class="cards">
+        <article class="card card-1">
+          <div class="card-bg"></div>
+          <span class="card-badge">01</span>
+          <h3 class="card-title">Treat as therapies emerge.</h3>
+        </article>
+        <article class="card card-2">
+          <div class="card-bg"></div>
+          <span class="card-badge">02</span>
+          <h3 class="card-title">Protect against degenerative conditions.</h3>
+        </article>
+        <article class="card card-3">
+          <div class="card-bg"></div>
+          <span class="card-badge">03</span>
+          <h3 class="card-title">Preserve options for both mother and child.</h3>
+        </article>
+        <article class="card card-4">
+          <div class="card-bg"></div>
+          <span class="card-badge">04</span>
+          <h3 class="card-title">Hold a private vault, on your terms.</h3>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESERVE -->
+  <section class="section section-divider" id="reserve">
+    <div class="container two-col">
+      <div>
+        <p class="section-label">Reserve</p>
+        <h2 class="section-heading">We are accepting consultations.</h2>
+      </div>
+      <div>
+        <p class="section-copy">This is private banking for cells. Pricing and process explained in plain language, on your timeline, no pressure.</p>
+        <p class="section-sublabel">Begin if you want:</p>
+        <ol class="roman-list compact">
+          <li><span class="num">I.</span><span class="text">A complete vault for both mother and child</span></li>
+          <li><span class="num">II.</span><span class="text">Accredited processing and 25+ year viability</span></li>
+          <li><span class="num">III.</span><span class="text">A single, transparent cost</span></li>
+        </ol>
+        <a class="link-arrow" href="signup.html">Sign up for the waitlist <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a class="brand" href="#top">The First Reserve<span class="brand-dot" aria-hidden="true"><svg width="26" height="9" viewBox="0 0 84 30" overflow="visible"><defs><clipPath id="fmc"><circle class="m-cac" cx="14" cy="15" r="0"/></clipPath></defs><circle class="m-ca" cx="14" cy="15" r="0" fill="#9c6f48"/><circle class="m-cb" cx="14" cy="15" r="0" fill="#9c6f48"/><circle class="m-cb" cx="14" cy="15" r="0" fill="#5a2e10" clip-path="url(#fmc)"/></svg></span></a>
+      <p class="footer-tagline">A Family Cell Vault for both of you, captured at delivery, stewarded for a lifetime.</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="#science">Science</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#reserve">Reserve</a></li>
+      <li><a href="#">White Paper</a></li>
+    </ul>
+    <ul class="footer-links">
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Terms</a></li>
+      <li><a href="mailto:hello@thefirstreserve.com">Contact</a></li>
+      <li><a href="#">Careers</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 The First Reserve. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  // Ensure hero video plays on low-power mode / iOS (already muted + playsinline, belt-and-suspenders).
+  (function(){
+    var v = document.getElementById('hero-video');
+    if (v) v.play().catch(function(){});
+  })();
+
+  // Scroll reveal, fade + slide up as elements enter the viewport.
+  // Stagger between sibling items is handled by transition-delay rules in CSS.
+  (function(){
+    if (!document.documentElement.classList.contains('js-reveal')) return;
+
+    var SELECTOR = [
+      '.hero h1',
+      '.hero-actions',
+      '.hero-subheading',
+      '.section-label',
+      '.section-heading',
+      '.section-lead',
+      '.section-copy',
+      '.section-sublabel',
+      '.section-footnote',
+      '.numbered-list li',
+      '.roman-list li',
+      '.bullet-list li',
+      '.card',
+      '.footer-brand',
+      '.footer-links',
+      '.footer-copy'
+    ].join(', ');
+
+    var targets = document.querySelectorAll(SELECTOR);
+
+    if (!('IntersectionObserver' in window)) {
+      targets.forEach(function(el){ el.classList.add('is-visible'); });
+      return;
+    }
+
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+
+    targets.forEach(function(el){ io.observe(el); });
+  })();
+</script>
+
+</body>
+</html>

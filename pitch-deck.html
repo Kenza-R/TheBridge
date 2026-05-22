@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The First Reserve — Pre-Seed</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+
+    /* =============================================
+       RESET + SCROLL ENGINE
+       ============================================= */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html {
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+      background: #0c1018;
+      height: 100%;
+    }
+    body { height: 100%; background: transparent; -webkit-font-smoothing: antialiased; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.1ms !important; }
+    }
+
+    /* =============================================
+       16:9 SLIDE SYSTEM
+       ============================================= */
+    /* Outer scroll container — full viewport */
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      scroll-snap-align: start;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Inner 16:9 content frame */
+    .frame {
+      width: min(100vw, calc(100dvh * 16 / 9));
+      height: min(100dvh, calc(100vw * 9 / 16));
+      background: #fff;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 60px rgba(0,0,0,0.5);
+    }
+
+    /* =============================================
+       BRAND SYSTEM
+       ============================================= */
+    :root {
+      --ink:        #0f1620;
+      --ink-soft:   rgba(15,22,32,0.52);
+      --ink-faint:  rgba(15,22,32,0.22);
+      --line:       rgba(15,22,32,0.08);
+      --line-med:   rgba(15,22,32,0.14);
+      --bg-tint:    rgba(15,22,32,0.03);
+      --accent:     #9bd8ec;
+      --accent-alt: #c3ff9b;
+      --accent-ink: #1a6b7e;
+      /* Layout spacing — relative to frame width */
+      --pad: clamp(0.8rem, 2.8vw, 2.8rem);
+      /* Type scale */
+      --t1:  clamp(2rem, 5.5vw, 6rem);
+      --t2:  clamp(1.15rem, 2.4vw, 2.6rem);
+      --b:   clamp(0.6rem, 1.05vw, 0.92rem);
+      --sm:  clamp(0.5rem, 0.72vw, 0.65rem);
+    }
+    * { font-family: 'Inter', sans-serif; }
+
+    /* =============================================
+       LOGO ANIMATION (matches website)
+       ============================================= */
+    @keyframes m-a { 0%{r:0} 22%{r:14} 100%{r:14} }
+    @keyframes m-b { 0%{r:0;cx:14;opacity:0} 22%{r:0;cx:14;opacity:0} 32%{r:4;cx:14;opacity:1} 55%{r:9;cx:26;opacity:1} 75%{r:11;cx:46;opacity:1} 100%{r:11;cx:46;opacity:1} }
+    .m-ca { animation: m-a 3.2s cubic-bezier(.7,0,.3,1) infinite; }
+    .m-cb { animation: m-b 3.2s cubic-bezier(.7,0,.3,1) infinite; }
+
+    /* =============================================
+       BRAND BAR (top of every slide)
+       ============================================= */
+    .brand-bar {
+      flex-shrink: 0;
+      height: clamp(2.1rem, 7%, 3.1rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--pad);
+      border-bottom: 1px solid var(--line-med);
+      background: rgba(255,255,255,0.97);
+      position: relative;
+      z-index: 20;
+    }
+    .brand-bar.dark {
+      background: rgba(15,22,32,0.55);
+      border-color: rgba(255,255,255,0.12);
+      backdrop-filter: blur(8px);
+    }
+    .bw {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5em;
+      font-family: 'EB Garamond', serif;
+      font-size: var(--sm);
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      color: var(--ink);
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .bw.light { color: rgba(255,255,255,0.85); }
+    .bw svg { overflow: visible; flex-shrink: 0; }
+    .sn {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: var(--sm);
+      color: var(--ink-faint);
+      letter-spacing: 0.12em;
+    }
+    .sn.light { color: rgba(255,255,255,0.3); }
+
+    /* =============================================
+       SLIDE BODY LAYOUTS
+       ============================================= */
+    /* Full-width text slide */
+    .body-full {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--pad);
+      overflow: hidden;
+    }
+
+    /* Content + right image panel */
+    .body-split {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1fr 38%;
+      grid-template-rows: 1fr;
+      overflow: hidden;
+    }
+    .body-split.w42 { grid-template-columns: 1fr 42%; }
+
+    .content-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--pad);
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    /* Image column — full height right panel */
+    .img-col {
+      position: relative;
+      height: 100%;
+      overflow: hidden;
+    }
+    .img-col img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    .img-col::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(255,255,255,0.1) 0%, transparent 20%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .img-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0.55rem 0.7rem;
+      background: linear-gradient(to top, rgba(15,22,32,0.72), transparent);
+      z-index: 2;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: clamp(0.4rem, 0.6vw, 0.54rem);
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.05em;
+    }
+
+    /* =============================================
+       TYPOGRAPHY
+       ============================================= */
+    .label {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: var(--sm);
+      font-weight: 600;
+      color: var(--accent-ink);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: clamp(0.28rem, 0.75vh, 0.65rem);
+    }
+    .label.lt { color: var(--accent); }
+    h1 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: var(--t1);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+    }
+    h1.wh { color: #fff; }
+    h2 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: var(--t2);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.022em;
+      color: var(--ink);
+    }
+    h2.wh { color: #fff; }
+    hr.rule {
+      border: none;
+      border-top: 1px solid var(--line-med);
+      margin: clamp(0.35rem, 1.1vh, 0.9rem) 0;
+    }
+    hr.rule.wh { border-color: rgba(255,255,255,0.18); }
+
+    /* Pull quote */
+    .pq {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(0.9rem, 1.95vw, 1.9rem);
+      font-style: italic;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.38;
+      border-left: 2px solid var(--ink);
+      padding-left: clamp(0.55rem, 1.4vw, 1.2rem);
+    }
+    .pq.sm { font-size: clamp(0.78rem, 1.5vw, 1.4rem); }
+    .pq.wh { color: rgba(255,255,255,0.88); border-color: rgba(255,255,255,0.35); }
+
+    /* =============================================
+       BULLETS
+       ============================================= */
+    .items {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(0.28rem, 0.85vh, 0.7rem);
+      margin-top: clamp(0.28rem, 0.85vh, 0.7rem);
+    }
+    .item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6em;
+    }
+    .dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--ink);
+      flex-shrink: 0;
+      margin-top: 0.56em;
+    }
+    .dot.wh { background: rgba(255,255,255,0.5); }
+    .it {
+      font-size: var(--b);
+      color: var(--ink-soft);
+      line-height: 1.52;
+    }
+    .it strong { color: var(--ink); font-weight: 500; }
+    .it.wh { color: rgba(255,255,255,0.65); }
+    .it.wh strong { color: #fff; }
+
+    /* =============================================
+       STAT CELLS
+       ============================================= */
+    .sg { display: grid; gap: clamp(0.35rem, 0.9vw, 0.75rem); margin-top: clamp(0.28rem, 0.85vh, 0.7rem); }
+    .sg4 { grid-template-columns: repeat(4,1fr); }
+    .sg3 { grid-template-columns: repeat(3,1fr); }
+    .sg2 { grid-template-columns: repeat(2,1fr); }
+    .sc {
+      padding: clamp(0.45rem, 1.2vw, 1rem);
+      border: 1px solid var(--line-med);
+      border-top: 2px solid var(--ink);
+      background: var(--bg-tint);
+    }
+    .sc.accent { border-top-color: var(--accent-ink); }
+    .sv {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(1.2rem, 2.8vw, 3rem);
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+    .sl {
+      font-size: clamp(0.44rem, 0.75vw, 0.65rem);
+      color: var(--ink-soft);
+      margin-top: 0.3em;
+      line-height: 1.45;
+    }
+
+    /* =============================================
+       CARDS (3-column)
+       ============================================= */
+    .cards3 {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: clamp(0.35rem, 0.9vw, 0.75rem);
+      margin-top: clamp(0.28rem, 0.85vh, 0.65rem);
+    }
+    .card {
+      padding: clamp(0.45rem, 1.2vw, 1rem);
+      border: 1px solid var(--line-med);
+      background: var(--bg-tint);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .card:hover { border-color: var(--accent-ink); background: rgba(155,216,236,0.07); }
+    .ch {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: var(--sm);
+      font-weight: 700;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 0.4em;
+    }
+    .cb { font-size: clamp(0.46rem, 0.84vw, 0.72rem); color: var(--ink-soft); line-height: 1.5; }
+
+    /* =============================================
+       PILLS
+       ============================================= */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.28em 0.75em;
+      font-family: 'Inter Tight', sans-serif;
+      font-size: var(--sm);
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+    .pill-lime { background: var(--accent-alt); color: var(--ink); }
+    .pill-dark { background: var(--ink); color: var(--accent-alt); }
+
+    /* =============================================
+       ANIMATIONS
+       ============================================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.55s cubic-bezier(0.16,1,0.3,1), transform 0.55s cubic-bezier(0.16,1,0.3,1);
+    }
+    .slide.visible .reveal { opacity: 1; transform: none; }
+    .d1{transition-delay:0.04s} .d2{transition-delay:0.12s} .d3{transition-delay:0.2s}
+    .d4{transition-delay:0.28s} .d5{transition-delay:0.36s} .d6{transition-delay:0.44s}
+
+    /* =============================================
+       NAV DOTS
+       ============================================= */
+    .nav-dots {
+      position: fixed;
+      right: 0.6rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 0.38rem;
+      z-index: 999;
+    }
+    .nav-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      border: none; cursor: pointer;
+      transition: all 0.22s;
+    }
+    .nav-dot.active { background: #fff; transform: scale(1.6); }
+
+    /* =============================================
+       THERAPY TAGS
+       ============================================= */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: clamp(0.2rem, 0.5vw, 0.4rem);
+      margin-top: clamp(0.25rem, 0.7vh, 0.55rem);
+    }
+    .tag {
+      padding: 0.2em 0.55em;
+      border: 1px solid var(--line-med);
+      font-size: clamp(0.42rem, 0.7vw, 0.6rem);
+      font-family: 'Inter Tight', sans-serif;
+      font-weight: 500;
+      color: var(--ink-soft);
+    }
+    .tag.live { border-color: rgba(26,107,126,0.4); background: rgba(155,216,236,0.1); color: var(--accent-ink); }
+
+    /* =============================================
+       CELEB CARDS (Why Now)
+       ============================================= */
+    .celeb-row {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: clamp(0.35rem, 0.85vw, 0.7rem);
+      margin-top: clamp(0.3rem, 0.85vh, 0.65rem);
+    }
+    .celeb {
+      padding: clamp(0.4rem, 1.1vw, 0.85rem);
+      border-left: 2px solid var(--accent-ink);
+      background: rgba(155,216,236,0.06);
+    }
+    .cn {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: var(--sm);
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.3em;
+    }
+    .ct { font-size: clamp(0.44rem, 0.78vw, 0.67rem); color: var(--ink-soft); line-height: 1.45; }
+
+    /* =============================================
+       MARKET MAP
+       ============================================= */
+    .map-outer {
+      display: grid;
+      grid-template-columns: 1.2em 1fr;
+      grid-template-rows: 1fr 1.2em;
+      gap: 0;
+      flex: 1;
+      min-height: 0;
+      margin-top: clamp(0.28rem, 0.8vh, 0.65rem);
+    }
+    .map-y-label {
+      grid-row: 1;
+      grid-column: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(0.42rem, 0.72vw, 0.62rem);
+      font-weight: 600;
+      color: var(--ink-soft);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .map-area {
+      grid-row: 1;
+      grid-column: 2;
+      position: relative;
+      border: 1px solid var(--line-med);
+      border-left: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+      overflow: hidden;
+    }
+    /* Quadrant dividers */
+    .map-area::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 0; right: 0;
+      height: 1px;
+      background: var(--line);
+    }
+    .map-area::after {
+      content: '';
+      position: absolute;
+      left: 50%; top: 0; bottom: 0;
+      width: 1px;
+      background: var(--line);
+    }
+    .map-x-row {
+      grid-row: 2;
+      grid-column: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-top: 0.35em;
+      padding-right: 0.3em;
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(0.42rem, 0.72vw, 0.62rem);
+      font-weight: 600;
+      color: var(--ink-soft);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    /* Players positioned in 2D space */
+    .mp {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.22em;
+      transform: translate(-50%, 50%); /* center on dot */
+      z-index: 5;
+    }
+    .mp-dot {
+      width: clamp(6px, 1vw, 9px);
+      height: clamp(6px, 1vw, 9px);
+      border-radius: 50%;
+      background: var(--ink-faint);
+      border: 1px solid var(--ink-faint);
+    }
+    .mp-dot.us { background: var(--ink); border-color: var(--ink); }
+    .mp-name {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(0.38rem, 0.65vw, 0.56rem);
+      font-weight: 500;
+      color: var(--ink-soft);
+      white-space: nowrap;
+      background: rgba(255,255,255,0.9);
+      padding: 0.1em 0.3em;
+    }
+    .mp-name.us {
+      font-weight: 700;
+      color: var(--ink);
+      font-size: clamp(0.42rem, 0.72vw, 0.62rem);
+    }
+    /* TFR logo badge on map */
+    .mp-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.3em;
+      background: var(--ink);
+      color: #fff;
+      padding: 0.2em 0.5em 0.2em 0.3em;
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(0.38rem, 0.65vw, 0.56rem);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    /* =============================================
+       COVER SLIDE
+       ============================================= */
+    #slide-1 .frame { background: var(--ink); }
+    .cover-bg {
+      position: absolute;
+      inset: 0;
+    }
+    .cover-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.22;
+      display: block;
+    }
+    .cover-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: clamp(1.5rem, 5vw, 5rem);
+      padding-left: clamp(2rem, 6vw, 6rem);
+      padding-bottom: clamp(2rem, 6vh, 5.5rem);
+    }
+    .cover-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      margin-bottom: clamp(0.9rem, 2.5vh, 2rem);
+      opacity: 0.75;
+    }
+    .cover-logo-name {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(0.8rem, 1.4vw, 1.2rem);
+      font-weight: 500;
+      color: rgba(255,255,255,0.85);
+    }
+    .cover-title {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(2.8rem, 7.5vw, 8.5rem);
+      font-weight: 600;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin-bottom: clamp(0.5rem, 1.4vh, 1.1rem);
+    }
+    .cover-tag {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(1rem, 2.3vw, 2.3rem);
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.55);
+    }
+
+    /* =============================================
+       TEAM CARDS
+       ============================================= */
+    .team-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(0.4rem, 1.1vw, 0.9rem);
+      margin-top: clamp(0.3rem, 0.85vh, 0.65rem);
+    }
+    .tc {
+      padding: clamp(0.6rem, 1.6vw, 1.3rem);
+      border: 1px solid var(--line-med);
+      border-top: 2px solid var(--ink);
+      background: var(--bg-tint);
+    }
+    .tn { font-family: 'EB Garamond', serif; font-size: clamp(1rem, 2vw, 1.8rem); font-weight: 500; color: var(--ink); margin-bottom: 0.18em; }
+    .tr { font-family: 'Inter Tight', sans-serif; font-size: var(--sm); font-weight: 600; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.09em; margin-bottom: 0.55em; }
+
+    /* =============================================
+       ASK SLIDE
+       ============================================= */
+    .ask-grid {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 54% 46%;
+      overflow: hidden;
+    }
+    .ask-left {
+      background: var(--ink);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--pad);
+      gap: clamp(0.28rem, 0.8vh, 0.65rem);
+    }
+    .ask-right {
+      position: relative;
+      overflow: hidden;
+    }
+    .ask-right img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.25;
+      display: block;
+    }
+    .ask-right-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15,22,32,0.6);
+    }
+    .ask-quote {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      padding: var(--pad);
+    }
+    .ask-num {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(2.2rem, 5.5vw, 6rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: #fff;
+      line-height: 1;
+    }
+
+  </style>
+</head>
+<body>
+
+  <nav class="nav-dots"></nav>
+
+  <!-- =============================================
+       01 COVER
+       ============================================= -->
+  <section class="slide" id="slide-1">
+    <div class="frame">
+      <!-- Full-bleed microscopy background -->
+      <div class="cover-bg">
+        <img src="assets/wp-banner.jpg" alt="">
+      </div>
+
+      <!-- Floating brand bar -->
+      <div class="brand-bar dark" style="position:absolute;top:0;left:0;right:0;">
+        <div class="bw light">
+          <svg width="34" height="20" viewBox="0 0 65 28" overflow="visible" aria-hidden="true">
+            <circle class="m-ca" cx="16" cy="14" fill="rgba(255,255,255,0.85)"/>
+            <circle class="m-cb" cx="14" cy="14" fill="rgba(255,255,255,0.85)"/>
+          </svg>
+          The First Reserve
+        </div>
+        <span class="sn light">01 / 12</span>
+      </div>
+
+      <!-- Content anchored bottom-left -->
+      <div class="cover-content">
+        <div class="cover-logo-wrap reveal d1">
+          <svg width="28" height="16" viewBox="0 0 65 28" overflow="visible" aria-hidden="true">
+            <circle class="m-ca" cx="16" cy="14" fill="rgba(255,255,255,0.7)"/>
+            <circle class="m-cb" cx="14" cy="14" fill="rgba(255,255,255,0.7)"/>
+          </svg>
+          <span class="cover-logo-name">The First Reserve</span>
+        </div>
+
+        <span class="pill pill-lime reveal d2" style="width:fit-content;margin-bottom:clamp(0.7rem,2vh,1.5rem);">Pre-Seed</span>
+        <h1 class="cover-title reveal d3">A Family<br>Cell Vault.</h1>
+        <p class="cover-tag reveal d4">Banking for both of you.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       02 THE QUOTE
+       ============================================= -->
+  <section class="slide" id="slide-2">
+    <div class="frame">
+      <div class="brand-bar">
+        <div class="bw">
+          <svg width="30" height="18" viewBox="0 0 65 28" overflow="visible" aria-hidden="true">
+            <circle cx="16" cy="14" r="14" fill="var(--ink)"/>
+            <circle class="logo-b" cx="50" cy="14" r="11" fill="var(--ink)"/>
+          </svg>
+          The First Reserve
+        </div>
+        <span class="sn">02 / 12</span>
+      </div>
+
+      <div class="body-full" style="align-items:center;text-align:center;">
+        <div style="max-width:min(68ch,90%);">
+          <div class="label reveal d1" style="color:var(--ink-faint);letter-spacing:0.2em;margin-bottom:clamp(0.6rem,1.8vh,1.4rem);">The Opportunity</div>
+          <blockquote class="reveal d2" style="font-family:'EB Garamond',serif;font-size:clamp(1.3rem,3vw,3.2rem);font-style:italic;font-weight:500;color:var(--ink);line-height:1.3;letter-spacing:-0.01em;">
+            "The placenta is a miracle, a marvellous feat of nature that we throw in the trash."
+          </blockquote>
+          <div class="reveal d3" style="margin-top:clamp(0.55rem,1.6vh,1.2rem);">
+            <hr style="border:none;border-top:1px solid var(--line-med);width:48px;margin:0 auto clamp(0.5rem,1.4vh,1rem);">
+            <p style="color:var(--ink-faint);font-size:var(--sm);font-family:'Inter Tight',sans-serif;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;">
+              Professor of Obstetrics &amp; Gynecology
+            </p>
+            <p class="reveal d4" style="color:var(--ink-soft);font-size:var(--b);margin-top:clamp(0.5rem,1.3vh,1rem);">
+              And 4 million times a year in the United States alone, we do exactly that.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       03 PROBLEM — card4.jpg right panel
+       ============================================= -->
+  <section class="slide" id="slide-3">
+    <div class="frame">
+      <div class="brand-bar">
+        <div class="bw">
+          <svg width="30" height="18" viewBox="0 0 65 28" overflow="visible" aria-hidden="true">
+            <circle cx="16" cy="14" r="14" fill="var(--ink)"/>
+            <circle class="logo-b" cx="47" cy="14" r="11" fill="var(--ink)"/>
+          </svg>
+          The First Reserve
+        </div>
+        <span class="sn">03 / 12</span>
+      </div>
+
+      <div class="body-split">
+        <div class="content-col">
+          <div class="label reveal d1">The Problem</div>
+          <h2 class="reveal d2">4 million births.<br>60-minute window each.<br>Zero comprehensive collections.</h2>
+          <hr class="rule reveal d3">
+          <div class="items">
+            <div class="item reveal d3">
+              <span class="dot"></span>
+              <span class="it">Cord blood banks collect <strong>one compartment out of six</strong>. Five, including all maternal cells, are discarded as medical waste.</span>
+            </div>
+            <div class="item reveal d4">
+              <span class="dot"></span>
+              <span class="it">The mother's decidual cells are <strong>autologous, perfectly matched, and available exactly once</strong> in her life. No bank has ever collected them.</span>
+            </div>
+            <div class="item reveal d5">
+              <span class="dot"></span>
+              <span class="it"><strong>Mixed-heritage children</strong> face under 20% compatible donor probability in public registries. Their own cells are always a perfect match.</span>
+            </div>
+          </div>
+        </div>
+        <div class="img-col">
+          <img src="assets/card4.jpg" alt="Hematopoietic stem cells">
+          <div class="img-caption">Hematopoietic stem cells — lost at every delivery</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       04 THE ASSET — card1.jpg right panel
+       ============================================= -->
+  <section class="slide" id="slide-4">
+    <div class="frame">
+      <div class="brand-bar">
+        <div class="bw">
+          <svg width="30" height="18" viewBox="0 0 65 28" overflow="visible" aria-hidden="true">
+            <circle cx="16" cy="14" r="14" fill="var(--ink)"/>
+            <circle class="logo-b" cx="44" cy="14" r="11" fill="var(--ink)"/>
+          </svg>
+          The First Reserve
+        </div>
+        <span class="sn">04 / 12</span>
+      </div>
+
+      <div class="body-split">
+        <div class="content-col">
+          <div class="label reveal d1">The Asset</div>
+          <h2 class="reveal d2">The youngest cells that exist.<br>Available once.</h2>
+          <hr class="rule reveal d3">
+          <div class="pq accent reveal d3" style="margin-bottom:clamp(0.35rem,0.9vh,0.7rem);">
+            Stem cells are liquid gold. The placenta is the richest deposit on earth.
+          </div>
+          <div class="items">
+            <div class="item reveal d4">
+              <span class="dot"></span>
+              <span class="it">Neonatal placental MSCs have the <strong>highest potency of any stem cells the body can yield</strong>. Potency, colony-forming efficiency, and immunosuppressive capacity decline sharply with age.</span>
+            </div>
+            <div class="item reveal d5">
+              <span class="dot"></span>
+              <span class="it">Cells preserved at birth <strong>retain their zero-day epigenetic age indefinitely</strong>. A 60-year-old using these cells accesses the biology of a newborn.</span>
+            </div>
+            <div class="item reveal d6">
+              <span class="dot"></span>
+              <span class="it">The placenta is <strong>immunologically privileged by design</strong>, yielding cells that resist rejection across populations.</span>
+            </div>
+          </div>
+        </div>
+        <div class="img-col">
+          <img src="assets/card1.jpg" alt="Amniotic epithelial cells">
+          <div class="img-caption">Amniotic epithelial cells — one of six compartments banked</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       05 SOLUTION
+       ============================================= -->
+  <section class="slide" id="slide-5">
+    <div class="frame">
+      <div class="brand-bar">
+        <div class="bw">
+          <svg width="30" height="18" viewBox="0 0 65 28" overflow="visible" aria-hidden="true">
+            <circle cx="16" cy="14" r="14" fill="var(--ink)"/>
+            <circle class="logo-b" cx="41" cy="14" r="11" fill="var(--ink)"/>
+          </svg>
+          The First Reserve
+        </div>
+        <span class="sn">05 / 12</span>
+      </div>
+
+      <div class="body-full">
+        <div class="label reveal d1">Solution</div>
+        <h2 class="reveal d2">One collection. Two vaults.<br>Six compartments. For a lifetime.</h2>
+        <hr class="rule reveal d3">
+
+        <div class="cards3">
+          <div class="card reveal d3">
+            <div class="ch">Six Compartments</div>
+            <div class="cb">Cord blood, Wharton's jelly, amnion, chorion, chorionic villi, and decidua — every bankable biological source in a single delivery protocol.</div>
+          </div>
+          <div class="card reveal d4">
+            <div class="ch">Both Donors</div>
+            <div class="cb">Maternal cells (decidua) and infant cells processed together. For the first time, the mother gets her own vault.</div>
+          </div>
+          <div class="card reveal d5">
+            <div class="ch">Geo-Distributed</div>
+            <div class="cb">Multiple characterized samples per family, stored across geographically separate cryogenic facilities. Redundancy by design.</div>
+          </div>
+        </div>
+
+        <div class="items" style="margin-top:clamp(0.3rem,0.85vh,0.65rem);">
+          <div class="item reveal d6">
+            <span class="dot"></span>
+            <span class="it"><strong>The First Reserve Hospital Kit:</strong> a proprietary collection and preservation system deployed in partner birth centers, protecting stem cell viability from delivery room to lab.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       06 MARKET MAP
+       ============================================= -->
+  <section class="slide" id="slide-6">
+    <div class="frame">
+      <div class="brand-bar">
+        <div class="bw">
+          <svg width="30" height="18" viewBox="0 0 65 28" overflow="visible" aria-hidden="true">
+            <circle cx="16" cy="14" r="14" fill="var(--ink)"/>
+            <circle class="logo-b" cx="38" cy="14" r="11" fill="var(--ink)"/>
+          </svg>
+          The First Reserve
+        </div>
+        <span class="sn">06 / 12</span>
+      </div>
+
+      <div class="body-full" style="padding-bottom:calc(var(--pad)*0.6);">
+        <div class="label reveal d1">Competitive Landscape</div>
+        <h2 class="reveal d2">One compartment banked. Five discarded. $35B+ untouched.</h2>
+        <div class="reveal d3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(0.3rem,0.8vw,0.6rem);margin:clamp(0.25rem,0.7vh,0.5rem) 0;">
+          <div style="padding:clamp(0.3rem,0.8vw,0.65rem);border-top:2px solid var(--ink-faint);background:var(--bg-tint);">
+            <div style="font-family:'Inter Tight',sans-serif;font-size:clamp(0.9rem,2vw,1.9rem);font-weight:700;letter-spacing:-0.03em;color:var(--ink-soft);">$220M</div>
+            <div style="font-size:clamp(0.42rem,0.72vw,0.62rem);color:var(--ink-faint);margin-top:0.2em;line-height:1.4;">Captured today by legacy cord blood banks — one compartment, infant only</div>
+          </div>
+          <div style="padding:clamp(0.3rem,0.8vw,0.65rem);border-top:2px solid var(--accent-ink);background:rgba(155,216,236,0.05);">
+            <div style="font-family:'Inter Tight',sans-serif;font-size:clamp(0.9rem,2vw,1.9rem);font-weight:700;letter-spacing:-0.03em;color:var(--ink);">$1.8B</div>
+            <div style="font-size:clamp(0.42rem,0.72vw,0.62rem);color:var(--ink-soft);margin-top:0.2em;line-height:1.4;">At 5% US birth penetration, $10k per dual-donor collection</div>
+          </div>
+          <div style="padding:clamp(0.3rem,0.8vw,0.65rem);border-top:2px solid var(--accent-alt);background:rgba(195,255,155,0.06);">
+            <div style="font-family:'Inter Tight',sans-serif;font-size:clamp(0.9rem,2vw,1.9rem);font-weight:700;letter-spacing:-0.03em;color:var(--ink);">$36B</div>
+            <div style="font-size:clamp(0.42rem,0.72vw,0.62rem);color:var(--ink-soft);margin-top:0.2em;line-height:1.4;">Full TAM — 3.6M US births at $10k per collection</div>
+          </div>
+        </div>
+
+        <div class="map-outer reveal d4">
+          <div class="map-y-label">Cell Completeness</div>
+          <div class="map-area" style="position:relative;">
+
+            <!-- ─ Competitor dots ─ -->
+
+            <!-- CBR: low completeness, infant only → bottom-left area -->
+            <div class="mp" style="left:18%;bottom:16%;">
+              <div class="mp-dot"></div>
+              <span class="mp-name">CBR</span>
+            </div>
+            <!-- ViaCord -->
+            <div class="mp" style="left:14%;bottom:22%;">
+              <div class="mp-dot"></div>
+              <span class="mp-name">ViaCord</span>
+            </div>
+            <!-- CryoCell -->
+            <div class="mp" style="left:24%;bottom:12%;">
+              <div class="mp-dot"></div>
+              <span class="mp-name">CryoCell</span>
+            </div>
+            <!-- Americord — claims partial MSC, still infant only -->
+            <div class="mp" style="left:20%;bottom:32%;">
+              <div class="mp-dot"></div>
+              <span class="mp-name">Americord</span>
+            </div>
+            <!-- FamiCord — European, cord tissue + cord blood -->
+            <div class="mp" style="left:28%;bottom:26%;">
+              <div class="mp-dot"></div>
+              <span class="mp-name">FamiCord</span>
+            </div>
+            <!-- Storago — partial tissue, infant only -->
+            <div class="mp" style="left:12%;bottom:38%;">
+              <div class="mp-dot"></div>
+              <span class="mp-name">Storago</span>
+            </div>
+            <!-- Anja Health — cord blood + cord tissue, infant only, more complete -->
+            <div class="mp" style="left:35%;bottom:45%;">
+              <div class="mp-dot"></div>
+              <span class="mp-name">Anja Health</span>
+            </div>
+            <!-- Cell4Life — cord blood + cord tissue + some placental, infant only, UK -->
+            <div class="mp" style="left:42%;bottom:52%;">
+              <div class="mp-dot"></div>
+              <span class="mp-name">Cell4Life</span>
+            </div>
+
+            <!-- THE FIRST RESERVE — top-right, alone -->
+            <div class="mp" style="left:80%;bottom:80%;">
+              <div class="mp-logo">
+                <svg width="18" height="10" viewBox="0 0 65 28" overflow="visible" aria-hidden="true">
+                  <circle cx="16" cy="14" r="14" fill="#fff"/>
+                  <circle cx="46" cy="14" r="11" fill="#fff"/>
+                </svg>
+                The First Reserve
+              </div>
+            </div>
+
+            <!-- Quadrant labels -->
+            <div style="position:absolute;top:6%;left:52%;font-family:'Inter Tight',sans-serif;font-size:clamp(0.38rem,0.62vw,0.54rem);font-weight:600;color:rgba(195,255,155,0.9);letter-spacing:0.08em;text-transform:uppercase;background:rgba(195,255,155,0.12);padding:0.2em 0.45em;border:1px solid rgba(195,255,155,0.3);">
+              White Space
+            </div>
+          </div>
+          <div class="map-x-row">
+            <span>Infant Only</span>
+            <span>Mother + Child</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       07 WHY NOW — card3.jpg right panel
+       ============================================= -->
+  <section class="slide" id="slide-7">
+    <div class="frame">
+      <div class="brand-bar">
+        <div class="bw">
+          <svg width="30" height="18" viewBox="0 0 65 28" overflow="visible" aria-hidden="true">
+            <circle cx="16" cy="14" r="14" fill="var(--ink)"/>
+            <circle class="logo-b" cx="35" cy="14" r="11" fill="var(--ink)"/>
+          </svg>
+          The First Reserve
+        </div>
+        <span class="sn">07 / 12</span>
+      </div>
+
+      <div class="body-split w42">
+        <div class="content-col">
+          <div class="label reveal d1">Why Now</div>
+          <h2 class="reveal d2">From insurance to<br>treasure chest.</h2>
+          <hr class="rule reveal d3">
+          <p class="reveal d3" style="font-size:var(--b);color:var(--ink-soft);margin-bottom:clamp(0.3rem,0.85vh,0.65rem);">
+            Cord blood banking was sold as narrow, one-shot insurance. Highly affluent families have been doing it for generations already. Today the applications are multiplying — a vault that opens many times across a lifetime.
+          </p>
+          <div class="celeb-row reveal d4">
+            <div class="celeb">
+              <div class="cn">Kim + Kylie Kardashian</div>
+              <div class="ct">Publicly banked cord blood for their children, reaching 300M+ followers. Cord blood is one compartment. We bank six.</div>
+            </div>
+            <div class="celeb">
+              <div class="cn">Bryan Johnson</div>
+              <div class="ct">Spends $2M/year reversing his biological age through young cell reintroduction — the precise use case for banked neonatal cells.</div>
+            </div>
+            <div class="celeb">
+              <div class="cn">Ryoncil, 2023</div>
+              <div class="ct">First placenta-derived MSC therapy approved. List price: $1.55M per course. The market just priced what we preserve.</div>
+            </div>
+          </div>
+          <div class="label reveal d5" style="margin-top:clamp(0.3rem,0.85vh,0.65rem);margin-bottom:0.3em;">Expanding therapeutic pipeline</div>
+          <div class="tags reveal d6">
+            <span class="tag live">GvHD</span>
+            <span class="tag live">ALS</span>
+            <span class="tag live">Crohn's</span>
+            <span class="tag live">Heart Failure</span>
+            <span class="tag live">Osteoarthritis</span>
+            <span class="tag">MS</span>
+            <span class="tag">Parkinson's</span>
+            <span class="tag">Type 1 Diabetes</span>
+            <span class="tag">Spinal Cord</span>
+            <span class="tag">Stroke</span>
+            <span class="tag">Longevity</span>
+            <span class="tag">Cerebral Palsy</span>
+            <span class="tag">Autism</span>
+          </div>
+        </div>
+        <div class="img-col">
+          <img src="assets/card3.jpg" alt="Dense placental cell tissue">
+          <div class="img-caption">Placental MSC tissue — 1,200+ active clinical trials</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       08 MARKET SIZE
+       ============================================= -->
+  <section class="slide" id="slide-8">
+    <div class="frame">
+      <div class="brand-bar">
+        <div class="bw">
+          <svg width="30" height="18" viewBox="0 0 65 28" overflow="visible" aria-hidden="true">
+            <circle cx="16" cy="14" r="14" fill="var(--ink)"/>
+            <circle class="logo-b" cx="32" cy="14" r="11" fill="var(--ink)"/>
+          </svg>
+          The First Reserve
+        </div>
+        <span class="sn">08 / 12</span>
+      </div>
+
+      <div class="body-full">
+        <div class="label reveal d1">Market</div>
+        <h2 class="reveal d2">$47.7 billion and accelerating.</h2>
+        <hr class="rule reveal d3">
+
+        <div class="sg sg4">
+          <div class="sc accent reveal d3">
+            <div class="sv">$47.7B</div>
+            <div class="sl">Cell therapy market by 2030. $7.4B today. 23% CAGR.</div>
+          </div>
+          <div class="sc accent reveal d4">
+            <div class="sv">$220M</div>
+            <div class="sl">US cord blood banking today — one compartment, infant only.</div>
+          </div>
+          <div class="sc accent reveal d5">
+            <div class="sv">3.6M</div>
+            <div class="sl">Live births per year in the US. Each a 60-minute window.</div>
+          </div>
+          <div class="sc accent reveal d6">
+            <div class="sv">$1.55M</div>
+            <div class="sl">Per course: Ryoncil. First placenta MSC therapy. Approved 2023.</div>
+          </div>
+        </div>
+
+        <div class="items" style="margin-top:clamp(0.35rem,0.95vh,0.8rem);">
+          <div class="item reveal d4">
+            <span class="dot"></span>
+            <span class="it"><strong>Primary target:</strong> fertility-engaged, biologically aware families already spending on premium maternal health. Mixed-heritage parents represent an especially motivated, underserved segment.</span>
+          </div>
+          <div class="item reveal d5">
+            <span class="dot"></span>
+            <span class="it"><strong>International expansion:</strong> UK, UAE, Singapore — high-net-worth demographics with established premium obstetric ecosystems.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       09 BUSINESS MODEL
+       ============================================= -->
+  <section class="slide" id="slide-9">
+    <div class="frame">
+      <div class="brand-bar">
+        <div class="bw">
+          <svg width="30" height="18" viewBox="0 0 65 28" overflow="visible" aria-hidden="true">
+            <circle cx="16" cy="14" r="14" fill="var(--ink)"/>
+            <circle class="logo-b" cx="29" cy="14" r="11" fill="var(--ink)"/>
+          </svg>
+          The First Reserve
+        </div>
+        <span class="sn">09 / 12</span>
+      </div>
+
+      <div class="body-full">
+        <div class="label reveal d1">Business Model</div>
+        <h2 class="reveal d2">Two revenue streams.<br>One compounding asset.</h2>
+        <hr class="rule reveal d3">
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(0.4rem,1.1vw,0.9rem);margin-top:clamp(0.28rem,0.85vh,0.65rem);">
+          <div class="card reveal d3" style="border-top:2px solid var(--ink);">
+            <div class="ch">01 — Family Banking</div>
+            <div class="cb">
+              Premium enrollment + annual cryostorage. Multi-decade recurring contracts from families engaged with fertility treatment, longevity protocols, and premium obstetric care.
+              <br><br>
+              Benchmark: CBR charges $3,500 enroll + $200/yr for cord blood alone (one compartment, infant only). Cell4Life and Anja Health reach $4,500–$6,000 for cord blood + tissue bundles. TFR targets $9,500–$12,000 enrollment + $500–$700/yr for six compartments, both donors, geo-distributed.
+            </div>
+          </div>
+          <div class="card reveal d4" style="border-top:2px solid var(--ink);">
+            <div class="ch">02 — Institutional Supply</div>
+            <div class="cb">
+              Characterized, viability-tested MSC populations sold to clinical researchers, hospital cell therapy programs, and allogeneic therapy developers.
+              <br><br>
+              Supply agreements with CDMOs and anonymous donation programs offset collection costs at scale.
+            </div>
+          </div>
+        </div>
+
+        <hr class="rule reveal d5" style="margin-top:clamp(0.4rem,1.1vh,0.9rem);">
+        <p class="reveal d5" style="font-size:var(--sm);color:var(--ink-faint);">
+          The repository is the moat. A growing collection of characterized, long-term stored material takes years to build and cannot be replicated.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       10 DEFENSIBILITY — card2.jpg right panel
+       ============================================= -->
+  <section class="slide" id="slide-10">
+    <div class="frame">
+      <div class="brand-bar">
+        <div class="bw">
+          <svg width="30" height="18" viewBox="0 0 65 28" overflow="visible" aria-hidden="true">
+            <circle cx="16" cy="14" r="14" fill="var(--ink)"/>
+            <circle class="logo-b" cx="26" cy="14" r="11" fill="var(--ink)"/>
+          </svg>
+          The First Reserve
+        </div>
+        <span class="sn">10 / 12</span>
+      </div>
+
+      <div class="body-split">
+        <div class="content-col">
+          <div class="label reveal d1">Defensibility</div>
+          <h2 class="reveal d2">Four structural advantages.<br>Zero direct competitors.</h2>
+          <hr class="rule reveal d3">
+          <div class="items">
+            <div class="item reveal d3">
+              <span class="dot"></span>
+              <span class="it"><strong>Dual-donor protocol.</strong> The mother's cells exist at this purity exactly once. First-mover advantage here is permanent.</span>
+            </div>
+            <div class="item reveal d4">
+              <span class="dot"></span>
+              <span class="it"><strong>Redundant storage.</strong> Multiple characterized samples per family across geographically distributed cryogenic sites.</span>
+            </div>
+            <div class="item reveal d5">
+              <span class="dot"></span>
+              <span class="it"><strong>Mixed-heritage exclusivity.</strong> The only autologous solution for families whose children face near-zero donor probability in public registries.</span>
+            </div>
+            <div class="item reveal d6">
+              <span class="dot"></span>
+              <span class="it"><strong>Hospital kit distribution edge.</strong> Proprietary collection protocol deployed through partner OBs creates a compounding physician network.</span>
+            </div>
+          </div>
+        </div>
+        <div class="img-col">
+          <img src="assets/card2.jpg" alt="Cord tissue cross-section">
+          <div class="img-caption">Cord tissue cross-section — Wharton's jelly MSC source</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       11 TEAM
+       ============================================= -->
+  <section class="slide" id="slide-11">
+    <div class="frame">
+      <div class="brand-bar">
+        <div class="bw">
+          <svg width="30" height="18" viewBox="0 0 65 28" overflow="visible" aria-hidden="true">
+            <circle cx="16" cy="14" r="14" fill="var(--ink)"/>
+            <circle class="logo-b" cx="23" cy="14" r="11" fill="var(--ink)"/>
+          </svg>
+          The First Reserve
+        </div>
+        <span class="sn">11 / 12</span>
+      </div>
+
+      <div class="body-full">
+        <div class="label reveal d1">Founders</div>
+        <h2 class="reveal d2">Built by founders who understand<br>the biology and the market.</h2>
+        <hr class="rule reveal d3">
+
+        <div class="team-grid" style="margin-top:clamp(1.4rem,3.5vh,2.8rem);">
+
+          <!-- Kenza -->
+          <div style="position:relative;">
+            <div style="position:absolute;top:calc(-1 * clamp(1.4rem,3.5vh,2.8rem));left:clamp(0.6rem,1.6vw,1.3rem);width:clamp(4.2rem,10vw,8rem);height:clamp(4.2rem,10vw,8rem);border-radius:50%;overflow:hidden;border:2px solid var(--line-med);background:#fff;z-index:2;">
+              <img src="assets/kenza.png" alt="Kenza M. Rahali" style="width:100%;height:100%;object-fit:cover;object-position:center top;filter:grayscale(100%) contrast(1.08);">
+            </div>
+            <div class="tc reveal d4" style="padding-top:clamp(0.5rem,1.2vh,0.9rem);">
+              <div style="display:flex;align-items:center;gap:0.65em;padding-left:calc(clamp(4.2rem,10vw,8rem) + 0.8em);margin-bottom:clamp(0.4rem,1vh,0.7rem);min-height:clamp(3.2rem,9vw,7rem);">
+                <div>
+                  <div class="tn">Kenza M. Rahali, MD</div>
+                  <div class="tr">Co-Founder</div>
+                </div>
+              </div>
+              <p style="font-size:var(--b);line-height:1.6;color:var(--ink-soft);">MD with 5 years of business school education at Yale SOM, HEC Paris, and Bocconi University. Medical and surgical experience across 20+ hospital departments. Built GTM from zero at a medtech startup. 4+ years running business operations across healthcare and real estate. Understands the target consumer deeply and how to build the infrastructure to reach them.</p>
+            </div>
+          </div>
+
+          <!-- Thomas -->
+          <div style="position:relative;">
+            <div style="position:absolute;top:calc(-1 * clamp(1.4rem,3.5vh,2.8rem));left:clamp(0.6rem,1.6vw,1.3rem);width:clamp(4.2rem,10vw,8rem);height:clamp(4.2rem,10vw,8rem);border-radius:50%;overflow:hidden;border:2px solid var(--line-med);background:#fff;z-index:2;">
+              <img src="assets/thomas.png" alt="Thomas Cervoni" style="width:100%;height:100%;object-fit:cover;object-position:center top;filter:grayscale(100%) contrast(1.08);">
+            </div>
+            <div class="tc reveal d5" style="padding-top:clamp(0.5rem,1.2vh,0.9rem);">
+              <div style="display:flex;align-items:center;gap:0.65em;padding-left:calc(clamp(4.2rem,10vw,8rem) + 0.8em);margin-bottom:clamp(0.4rem,1vh,0.7rem);min-height:clamp(3.2rem,9vw,7rem);">
+                <div>
+                  <div class="tn">Thomas Cervoni</div>
+                  <div class="tr">Co-Founder</div>
+                </div>
+              </div>
+              <p style="font-size:var(--b);line-height:1.6;color:var(--ink-soft);">Mathematical physicist trained at École Polytechnique (summa cum laude), MIT, and UC Berkeley. Co-founded Zeta Technologies — filed a patent, ran a clinical trial, and won the €1M Lopez-Loreta prize. 4+ years at Quantinuum bridging research teams with product and commercial execution. Coaches deep tech founders on strategy at the X-HEC-Berkeley Entrepreneurs programme.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="items" style="margin-top:clamp(0.35rem,0.95vh,0.75rem);">
+          <div class="item reveal d6">
+            <span class="dot"></span>
+            <span class="it">Advisory board in cell therapy, maternal-fetal medicine, and cryobiology currently being assembled.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       12 THE ASK
+       ============================================= -->
+  <section class="slide" id="slide-12">
+    <div class="frame">
+      <div class="brand-bar">
+        <div class="bw">
+          <svg width="30" height="18" viewBox="0 0 65 28" overflow="visible" aria-hidden="true">
+            <circle cx="16" cy="14" r="14" fill="var(--ink)"/>
+            <circle class="logo-b" cx="20" cy="14" r="11" fill="var(--ink)"/>
+          </svg>
+          The First Reserve
+        </div>
+        <span class="sn">12 / 12</span>
+      </div>
+
+      <div class="ask-grid">
+        <!-- Dark left panel -->
+        <div class="ask-left">
+          <div class="label lt reveal d1">Pre-Seed Round</div>
+          <div class="ask-num reveal d2">Raising<br>Now</div>
+          <p class="reveal d3" style="font-family:'IBM Plex Mono',monospace;font-size:var(--sm);color:rgba(255,255,255,0.4);letter-spacing:0.12em;">Contact to discuss terms</p>
+          <span class="pill pill-lime reveal d3" style="width:fit-content;margin-top:0.1em;">the-first-reserve.vercel.app</span>
+          <hr class="rule wh reveal d4">
+          <div class="items reveal d4">
+            <div class="item">
+              <span class="dot wh"></span>
+              <span class="it wh"><strong>Collection infrastructure</strong> and hospital kit deployment.</span>
+            </div>
+            <div class="item">
+              <span class="dot wh"></span>
+              <span class="it wh"><strong>First family collections</strong> — close waitlist, generate banking revenue.</span>
+            </div>
+            <div class="item">
+              <span class="dot wh"></span>
+              <span class="it wh"><strong>Physician network</strong> — OB and MFM partnerships for referral pipeline.</span>
+            </div>
+            <div class="item">
+              <span class="dot wh"></span>
+              <span class="it wh"><strong>Institutional supply</strong> — first research agreements and CDMO partnerships.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: image + closing quote -->
+        <div class="ask-right">
+          <img src="assets/wp-banner.jpg" alt="">
+          <div class="ask-right-overlay"></div>
+          <div class="ask-quote reveal d5">
+            <div class="pq wh sm">
+              "Four million times a year, the window opens. Then closes. We intend to change that."
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const TOTAL = slides.length;
+
+    /* ── Logo circle animation through scroll ──
+       Slide 1 (cover): animated (CSS handles it)
+       Slides 2-12: second circle cx goes from 50 → 20
+       as you scroll down, the two cells converge.       */
+    const CX_START = 50;
+    const CX_END   = 20;
+
+    function setLogoCx(slideIndex) {
+      const progress = slideIndex / (TOTAL - 1); // 0 → 1
+      const cx = Math.round(CX_START - (CX_START - CX_END) * progress);
+      document.querySelectorAll('.logo-b').forEach(c => c.setAttribute('cx', cx));
+    }
+
+    /* ── Intersection Observer ── */
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          const idx = [...slides].indexOf(e.target);
+          setLogoCx(idx);
+          updateDots(idx);
+        }
+      });
+    }, { threshold: 0.45 });
+
+    slides.forEach(s => io.observe(s));
+
+    /* ── Nav dots ── */
+    const dotsEl = document.querySelector('.nav-dots');
+    slides.forEach((s, i) => {
+      const b = document.createElement('button');
+      b.className = 'nav-dot' + (i === 0 ? ' active' : '');
+      b.setAttribute('aria-label', `Slide ${i+1}`);
+      b.addEventListener('click', () => s.scrollIntoView({ behavior: 'smooth' }));
+      dotsEl.appendChild(b);
+    });
+
+    function updateDots(idx) {
+      document.querySelectorAll('.nav-dot').forEach((d, i) =>
+        d.classList.toggle('active', i === idx));
+    }
+
+    /* ── Keyboard navigation ── */
+    document.addEventListener('keydown', e => {
+      const cur = [...slides].findIndex(s => s.classList.contains('visible'));
+      if ([' ','ArrowDown','ArrowRight'].includes(e.key)) {
+        e.preventDefault();
+        slides[Math.min(cur+1, TOTAL-1)]?.scrollIntoView({ behavior:'smooth' });
+      }
+      if (['ArrowUp','ArrowLeft'].includes(e.key)) {
+        e.preventDefault();
+        slides[Math.max(cur-1, 0)]?.scrollIntoView({ behavior:'smooth' });
+      }
+    });
+
+    /* First slide visible on load */
+    slides[0].classList.add('visible');
+    setLogoCx(0);
+  </script>
+</body>
+</html>

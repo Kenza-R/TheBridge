@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PCOS Intelligence — AI Naturopath Supplement Company</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #ffffff;
+      --bg-2:      #f7f7f8;
+      --bg-3:      #eeeeef;
+      --border:    #e4e4e7;
+      --border-md: #d1d1d6;
+      --ink:       #09090b;
+      --body:      #3f3f46;
+      --muted:     #71717a;
+      --faint:     #a1a1aa;
+      --accent:    #0891b2;
+      --accent-lt: #e0f2fe;
+      --accent-dk: #075985;
+      --green:     #059669;
+      --green-lt:  #d1fae5;
+      --amber:     #d97706;
+      --amber-lt:  #fef3c7;
+      --red:       #dc2626;
+      --red-lt:    #fee2e2;
+      --indigo:    #4f46e5;
+      --indigo-lt: #eef2ff;
+      --purple:    #7c3aed;
+      --purple-lt: #f5f3ff;
+      --radius:    8px;
+      --radius-lg: 12px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--body);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Top bar ── */
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 56px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 40px;
+      gap: 32px;
+      z-index: 200;
+    }
+    .topbar-brand {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      color: var(--ink);
+      white-space: nowrap;
+      margin-right: 8px;
+    }
+    .topbar-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--border);
+    }
+    .tab-nav {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      flex: 1;
+    }
+    .tab-btn {
+      padding: 6px 14px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--muted);
+      background: none;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all .12s;
+      white-space: nowrap;
+    }
+    .tab-btn:hover { color: var(--ink); background: var(--bg-2); }
+    .tab-btn.active {
+      color: var(--ink);
+      background: var(--bg-2);
+      font-weight: 600;
+    }
+    .tab-moon {
+      color: var(--purple) !important;
+    }
+    .tab-moon.active { background: var(--purple-lt) !important; }
+    .tab-moon:hover  { background: var(--purple-lt) !important; color: var(--purple) !important; }
+
+    /* ── Content ── */
+    .page-wrap {
+      margin-top: 56px;
+      min-height: calc(100vh - 56px);
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 64px 40px 100px;
+    }
+    .container-wide {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 64px 40px 100px;
+    }
+
+    /* ── Typography ── */
+    .eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+      display: block;
+    }
+    .eyebrow-purple { color: var(--purple); }
+
+    h1 {
+      font-size: 44px;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      line-height: 1.08;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -.02em;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    h3 {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .lead {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 540px;
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+    p {
+      font-size: 13.5px;
+      color: var(--body);
+      margin-bottom: 10px;
+      line-height: 1.7;
+    }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── Section divider ── */
+    .section {
+      margin-bottom: 72px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .section-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+    .section-label-purple { color: var(--purple); }
+    .section-rule { flex: 1; height: 1px; background: var(--border); }
+
+    /* ── Hero area ── */
+    .hero {
+      padding-bottom: 56px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 64px;
+    }
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-top: 44px;
+    }
+    .stat-block {
+      background: var(--bg);
+      padding: 22px 22px 18px;
+    }
+    .stat-val {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      color: var(--ink);
+      line-height: 1;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .stat-lbl { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 22px;
+      box-shadow: var(--shadow-sm);
+    }
+    .card-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .card-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .card-grid-auto {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 10px;
+    }
+
+    /* ── Stack rows ── */
+    .rows { display: flex; flex-direction: column; gap: 2px; }
+    .row-item {
+      display: grid;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--bg);
+      transition: box-shadow .12s, border-color .12s;
+    }
+    .row-item:hover { border-color: var(--border-md); box-shadow: var(--shadow-sm); }
+
+    .row-item-2col { grid-template-columns: 52px 1fr; }
+    .row-item-3col { grid-template-columns: 60px 1fr; }
+    .row-item-phase { grid-template-columns: 80px 1fr; }
+
+    .row-side {
+      background: var(--bg-2);
+      border-right: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: .04em;
+      padding: 0 8px;
+      text-align: center;
+    }
+    .row-side-accent { color: var(--accent); font-size: 13px; font-weight: 700; }
+    .row-side-purple { color: var(--purple); font-size: 16px; font-weight: 800; }
+
+    .row-body { padding: 16px 20px; }
+    .row-body h3 { margin-bottom: 5px; }
+    .row-body p  { font-size: 13px; margin-bottom: 6px; }
+
+    .phase-side {
+      background: var(--bg-2);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 8px;
+      gap: 3px;
+    }
+    .phase-num { font-size: 20px; font-weight: 800; color: var(--accent); line-height: 1; }
+    .phase-tag { font-size: 9px; font-weight: 600; color: var(--muted); letter-spacing: .06em; text-align: center; }
+
+    /* ── Quote ── */
+    .quote {
+      border-left: 2px solid var(--border-md);
+      padding: 10px 16px;
+      margin: 10px 0;
+      font-size: 13px;
+      font-style: italic;
+      color: var(--muted);
+      background: var(--bg-2);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+    .tag {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 500;
+      border: 1px solid;
+    }
+    .tag-accent  { color: var(--accent);  border-color: #bae6fd;  background: var(--accent-lt); }
+    .tag-green   { color: var(--green);   border-color: #a7f3d0;  background: var(--green-lt); }
+    .tag-amber   { color: var(--amber);   border-color: #fde68a;  background: var(--amber-lt); }
+    .tag-red     { color: var(--red);     border-color: #fecaca;  background: var(--red-lt); }
+    .tag-indigo  { color: var(--indigo);  border-color: #c7d2fe;  background: var(--indigo-lt); }
+    .tag-purple  { color: var(--purple);  border-color: #ddd6fe;  background: var(--purple-lt); }
+    .tag-muted   { color: var(--muted);   border-color: var(--border); background: var(--bg-2); }
+
+    /* ── Tables ── */
+    .table-wrap {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      background: var(--bg);
+    }
+    thead tr { background: var(--bg-2); border-bottom: 1px solid var(--border); }
+    thead th {
+      padding: 10px 16px;
+      text-align: left;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background .1s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--bg-2); }
+    td { padding: 11px 16px; color: var(--body); vertical-align: middle; }
+    td:first-child { color: var(--ink); font-weight: 500; }
+    .check { color: var(--green); font-weight: 600; }
+    .cross  { color: var(--faint); }
+    .ws-row { background: #f0fdf4; }
+    .ws-row td { color: var(--green); }
+    .ws-row td:first-child { font-weight: 700; }
+    .ws-row:hover { background: #dcfce7 !important; }
+
+    /* ── Callout ── */
+    .callout {
+      border: 1px solid var(--border);
+      background: var(--bg-2);
+      border-radius: var(--radius-lg);
+      padding: 22px 26px;
+      margin: 20px 0;
+    }
+    .callout-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 7px;
+    }
+    .callout-label-purple { color: var(--purple); }
+    .callout p { font-size: 14px; color: var(--ink); line-height: 1.7; margin: 0; }
+
+    /* ── Market sizing big numbers ── */
+    .market-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .market-block {
+      background: var(--bg);
+      padding: 28px 24px 22px;
+    }
+    .market-block .market-val {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -.04em;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .market-block .market-sub {
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .market-block .market-desc { font-size: 12px; color: var(--muted); line-height: 1.45; }
+
+    /* ── Sentiment blocks (market research) ── */
+    .sentiment-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .sentiment-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      background: var(--bg);
+    }
+    .sentiment-card .sc-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .sentiment-card h3 { margin-bottom: 0; }
+    .intensity {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 100px;
+      border: 1px solid;
+    }
+    .intensity-high { color: var(--red); border-color: #fecaca; background: var(--red-lt); }
+    .intensity-med  { color: var(--amber); border-color: #fde68a; background: var(--amber-lt); }
+
+    /* ── Moon section ── */
+    .moon-hero {
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
+      border-radius: var(--radius-lg);
+      padding: 48px 44px;
+      margin-bottom: 40px;
+      color: #fff;
+    }
+    .moon-hero .eyebrow { color: #a5b4fc; }
+    .moon-hero h1 { color: #fff; font-size: 36px; }
+    .moon-hero p  { color: rgba(255,255,255,.75); max-width: 560px; }
+
+    .moon-phase {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+    .moon-phase-header {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      background: var(--bg-2);
+      border-bottom: 1px solid var(--border);
+    }
+    .moon-phase-tag {
+      padding: 14px 16px;
+      border-right: 1px solid var(--border);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--purple);
+      display: flex;
+      align-items: center;
+    }
+    .moon-phase-title {
+      padding: 14px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+    }
+    .moon-phase-body {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+    .moon-phase-item {
+      background: var(--bg);
+      padding: 16px 20px;
+    }
+    .moon-phase-item h3 { font-size: 12.5px; margin-bottom: 5px; }
+    .moon-phase-item p  { font-size: 12px; color: var(--muted); margin: 0; }
+
+    /* ── Sources ── */
+    .source-group { margin-bottom: 22px; }
+    .source-group h3 {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .source-group ul { list-style: none; }
+    .source-group li {
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 12.5px;
+    }
+    .source-group li:last-child { border-bottom: none; }
+    .source-group a { color: var(--body); text-decoration: none; transition: color .1s; }
+    .source-group a:hover { color: var(--accent); }
+
+    .footer {
+      font-size: 11px;
+      color: var(--faint);
+      letter-spacing: .03em;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      margin-top: 64px;
+    }
+
+    @media (max-width: 768px) {
+      .topbar { padding: 0 16px; gap: 12px; }
+      .topbar-brand { display: none; }
+      .topbar-divider { display: none; }
+      .container, .container-wide { padding: 32px 20px 72px; }
+      h1 { font-size: 28px; }
+      .stat-row, .market-grid { grid-template-columns: repeat(2, 1fr); }
+      .card-grid-3, .card-grid-2, .moon-phase-body { grid-template-columns: 1fr; }
+      .sentiment-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="topbar-brand">PCOS Intelligence</div>
+  <div class="topbar-divider"></div>
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('overview', this)">Overview</button>
+    <button class="tab-btn" onclick="switchTab('market-sizing', this)">Market Sizing</button>
+    <button class="tab-btn" onclick="switchTab('market-research', this)">Market Research</button>
+    <button class="tab-btn" onclick="switchTab('competitive', this)">Competitive Analysis</button>
+    <button class="tab-btn tab-moon" onclick="switchTab('moon', this)">To the Moon</button>
+  </nav>
+</header>
+
+<div class="page-wrap">
+
+<!-- ═══════════════════════════════════════════════════
+     TAB 1: OVERVIEW
+═══════════════════════════════════════════════════ -->
+<div id="tab-overview" class="tab-content active">
+<div class="container">
+
+  <div class="hero">
+    <span class="eyebrow">Business Intelligence — May 2026</span>
+    <h1>The AI Naturopath for PCOS</h1>
+    <p class="lead">A company that personalizes supplements for women with PCOS based on microbiome testing and hormonal biomarkers — cutting through the noise of generic protocols with the precision of a practitioner.</p>
+    <div class="stat-row">
+      <div class="stat-block">
+        <span class="stat-val">200M+</span>
+        <span class="stat-lbl">Women with PCOS globally — 1 in 10 with ovaries</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-val">3%</span>
+        <span class="stat-lbl">Feel supported and informed after diagnosis</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-val">$15B</span>
+        <span class="stat-lbl">Annual US healthcare costs attributable to PCOS</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-val">0</span>
+        <span class="stat-lbl">Companies doing this exact combination today</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- The Concept -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">The Concept</span>
+      <div class="section-rule"></div>
+    </div>
+    <h2>What This Company Does</h2>
+    <p class="lead" style="margin-bottom:24px;">Women with PCOS have been let down by a medical system that offers two things: birth control and "just lose weight." They've turned Reddit into their clinical community and are self-experimenting with supplements they don't understand. This company meets them with precision.</p>
+
+    <div class="rows">
+      <div class="row-item row-item-2col">
+        <div class="row-side"><span class="row-side-accent">01</span></div>
+        <div class="row-body">
+          <h3>At-Home Diagnostic Kit</h3>
+          <p>Stool microbiome sample + finger-prick hormone panel. Tests: testosterone (free + total), DHEA-S, LH/FSH ratio, insulin/HOMA-IR, estradiol, cortisol, SHBG, vitamin D, thyroid. Symptom intake classifies PCOS subtype: insulin-resistant, lean/adrenal, inflammatory, or post-pill.</p>
+        </div>
+      </div>
+      <div class="row-item row-item-2col">
+        <div class="row-side"><span class="row-side-accent">02</span></div>
+        <div class="row-body">
+          <h3>AI Protocol Engine</h3>
+          <p>Cross-references microbiome signature with hormonal profile. Identifies dysbiosis patterns specific to the user's PCOS expression. Maps against clinical evidence to determine which probiotic strains, prebiotics, and supplements (myo-inositol, berberine, NAC, magnesium, spearmint, omega-3) are indicated for this exact profile. Phased rollout — not everything at once.</p>
+        </div>
+      </div>
+      <div class="row-item row-item-2col">
+        <div class="row-side"><span class="row-side-accent">03</span></div>
+        <div class="row-body">
+          <h3>Personalized Monthly Formulation</h3>
+          <p>Custom supplement packs formulated per user — not generic SKUs. The specific probiotic strain combination for her microbiome. Delivered monthly, adjusted quarterly after re-testing or symptom check-in. 70%+ gross margin consumable business at the core.</p>
+        </div>
+      </div>
+      <div class="row-item row-item-2col">
+        <div class="row-side"><span class="row-side-accent">04</span></div>
+        <div class="row-body">
+          <h3>AI Naturopath Interface</h3>
+          <p>Ongoing chat: "My acne got worse this week — what's happening?" Interprets lab results in plain English. Flags when to see a doctor. Tracks symptom trends over time and adjusts protocol. Every recommendation backed by cited research. This is the layer that builds irreplaceable trust.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Business Model -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">Business Model</span>
+      <div class="section-rule"></div>
+    </div>
+    <h2>Revenue Architecture</h2>
+    <div class="table-wrap" style="margin-bottom:20px;">
+      <table>
+        <thead>
+          <tr><th>Stream</th><th>Price Point</th><th>Margin Profile</th><th>Role</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Initial test kit</td><td>$149–$199</td><td>Low / break-even</td><td>Customer acquisition vehicle</td></tr>
+          <tr><td>Monthly supplement subscription</td><td>$79–$120/mo</td><td>~70%+ gross margin</td><td>The business</td></tr>
+          <tr><td>Quarterly re-test + protocol update</td><td>$79–$99</td><td>Moderate</td><td>Retention mechanism</td></tr>
+          <tr><td>AI naturopath premium tier</td><td>$29/mo add-on</td><td>High (software)</td><td>Unlimited chat, faster updates</td></tr>
+          <tr><td>Telehealth referral (MD partners)</td><td>Revenue share</td><td>High</td><td>Rx access: metformin, spiro, GLP-1</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-grid-3">
+      <div class="card">
+        <h3>LTV at 18 Months</h3>
+        <p>~$100/mo average x 18 months = <strong>$1,800 LTV</strong> before add-ons. PCOS is a lifelong condition — churn should be low for a product that demonstrably works.</p>
+      </div>
+      <div class="card">
+        <h3>CAC Dynamics</h3>
+        <p>Strong organic loop: community of 350K+ on Reddit already looking for exactly this. Word-of-mouth in a community that talks constantly is the primary acquisition lever.</p>
+      </div>
+      <div class="card">
+        <h3>Gross Margin Target</h3>
+        <p>Supplement subscriptions at 70%+ gross margin fund the platform. Test kits are subsidized to drive acquisition. Software tiers add pure margin.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- The Moat -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">Defensibility</span>
+      <div class="section-rule"></div>
+    </div>
+    <h2>Why This Wins Over Time</h2>
+    <div class="card-grid-2">
+      <div class="card">
+        <h3>Proprietary Data Flywheel</h3>
+        <p>Every test, symptom report, and outcome builds a proprietary dataset. At 10,000 users: "Insulin-resistant PCOS women with low Akkermansia + high Desulfovibrio who take this probiotic combination see X% testosterone reduction in 90 days." No competitor can buy that data.</p>
+      </div>
+      <div class="card">
+        <h3>Subtype Personalization</h3>
+        <p>PCOS is 4–5 different conditions sharing a name. Lean PCOS is metabolically different from insulin-resistant PCOS is different from adrenal PCOS. Microbiome + hormone testing is the only way to correctly classify each subtype — which no one else does.</p>
+      </div>
+      <div class="card">
+        <h3>Trust as Infrastructure</h3>
+        <p>These women have been dismissed by every doctor they've ever seen. The company that explains their results, proves what's happening, and adjusts based on outcomes earns loyalty that no supplement brand can replicate. This is a trust business, not a product business.</p>
+      </div>
+      <div class="card">
+        <h3>18-Month Window</h3>
+        <p>Pinkmatter reaches PCOS in 2027 (from PMS). Allara doesn't do microbiome. Viome doesn't do PCOS. Nobody has closed the loop. The window to build this and own the category is open now.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- The Science -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">Scientific Foundation</span>
+      <div class="section-rule"></div>
+    </div>
+    <h2>The Gut-PCOS Link Is Real</h2>
+    <p style="margin-bottom:20px; color:var(--muted);">Multiple peer-reviewed studies (2024–2025) confirm PCOS patients have a measurably different microbiome than healthy women. This is in Physiological Genomics, Frontiers in Endocrinology, and multiple PMC journals — not fringe.</p>
+    <div class="rows" style="margin-bottom:20px;">
+      <div class="row-item row-item-2col">
+        <div class="row-side"><span class="row-side-accent">01</span></div>
+        <div class="row-body">
+          <h3>The Metabolic Pathway</h3>
+          <p>Low SCFA production from dysbiotic gut bacteria weakens insulin signaling, driving hyperinsulinemia. Elevated insulin triggers androgen overproduction in the ovaries — the classic PCOS spiral. 50–70% of PCOS patients have insulin resistance; this gut pathway is a primary driver.</p>
+        </div>
+      </div>
+      <div class="row-item row-item-2col">
+        <div class="row-side"><span class="row-side-accent">02</span></div>
+        <div class="row-body">
+          <h3>The Estrobolome Pathway</h3>
+          <p>The estrobolome — gut bacteria that produce beta-glucuronidase enzymes — controls estrogen recirculation. Dysbiosis creates estrogen imbalance layered on top of androgen excess, compounding the hormonal chaos of PCOS.</p>
+        </div>
+      </div>
+      <div class="row-item row-item-2col">
+        <div class="row-side"><span class="row-side-accent">03</span></div>
+        <div class="row-body">
+          <h3>The Inflammatory Pathway</h3>
+          <p>Gut barrier compromise allows bacterial LPS into systemic circulation, triggering chronic low-grade inflammation that worsens every PCOS symptom: acne, weight gain, mood dysregulation, insulin resistance, pain.</p>
+        </div>
+      </div>
+    </div>
+    <div class="callout">
+      <div class="callout-label">2025 RCT Evidence</div>
+      <p>A 2025 randomized controlled trial of a 9-strain probiotic (Lactobacillus + Bifidobacterium) over 12 weeks in 50 PCOS women showed: decreased LH, decreased androstenedione, increased SHBG, and statistically significant BMI reduction vs. placebo. The intervention works — it just needs personalization and delivery.</p>
+    </div>
+  </div>
+
+  <div class="footer">Research compiled May 2026 &middot; r/PCOS, PubMed, Frontiers, NutraIngredients, TechCrunch, IMARC Group</div>
+</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     TAB 2: MARKET SIZING
+═══════════════════════════════════════════════════ -->
+<div id="tab-market-sizing" class="tab-content">
+<div class="container">
+
+  <div class="hero" style="padding-bottom:48px; margin-bottom:56px;">
+    <span class="eyebrow">Market Sizing</span>
+    <h1>How Big Is This?</h1>
+    <p class="lead">The $9.1B figure you've seen elsewhere is the pharmaceutical treatment market — the smallest, most conservative slice. The real consumer opportunity across women's hormonal health supplements is an order of magnitude larger, and it's mostly unorganized spend today.</p>
+  </div>
+
+  <!-- The framing correction -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">The Right Frame</span>
+      <div class="section-rule"></div>
+    </div>
+    <h2>Stop Looking at the Treatment Market. Look at the Consumer Market.</h2>
+    <p style="color:var(--muted); font-size:13.5px; max-width:620px; margin-bottom:24px;">The $9.1B PCOS "treatment" market measures pharma sales, clinical visits, and insurance reimbursements. It doesn't capture what PCOS women are already spending out-of-pocket — which is where this company lives. One study found women with PCOS spending up to <strong style="color:var(--ink);">$400/month</strong> on self-assembled supplement stacks. That money exists. It's just unguided.</p>
+
+    <div class="market-grid" style="grid-template-columns: repeat(3,1fr);">
+      <div class="market-block">
+        <div class="market-val">$1.3B</div>
+        <div class="market-sub">PCOS Supplements Market — 2025</div>
+        <div class="market-desc">Growing to $5B by 2035 at a 14.4% CAGR — the fastest-growing segment within women's health supplements. Myo-inositol alone holds 41.8% share. This is the direct beachhead market.</div>
+      </div>
+      <div class="market-block">
+        <div class="market-val">$57B</div>
+        <div class="market-sub">Women's Health Supplements — US Only, 2025</div>
+        <div class="market-desc">Growing to $113B by 2035 at 7.1% CAGR. Women are the single largest consumer segment in dietary supplements globally. The hormonal health sub-segment is the fastest-growing category within this.</div>
+      </div>
+      <div class="market-block">
+        <div class="market-val">$188B</div>
+        <div class="market-sub">Global Dietary Supplements Market — 2024</div>
+        <div class="market-desc">Growing to $316B by 2030 at 7.6% CAGR. Women are the dominant end-user. This is the macro context — precision, condition-specific products are taking share from generic multivitamins at every price tier.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Layer breakdown -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">Market Layers</span>
+      <div class="section-rule"></div>
+    </div>
+    <h2>Every Market This Company Touches</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Market Segment</th><th>2025 Size</th><th>2033–2035 Forecast</th><th>CAGR</th><th>This Company's Role</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>PCOS supplements (global)</td><td>$1.3B</td><td>$5.0B</td><td>14.4%</td><td>Core beachhead — direct competition</td></tr>
+          <tr><td>Women's hormone balance supplements</td><td>$4.1B</td><td>$8B+</td><td>8.7%</td><td>Immediate expansion — same biology, adjacent protocols</td></tr>
+          <tr><td>PMS &amp; menstrual health supplements</td><td>$24.9B</td><td>$47.5B</td><td>7.5%</td><td>Adjacent — same customer, overlapping conditions</td></tr>
+          <tr><td>Menopause supplements</td><td>$983M</td><td>$1.7B</td><td>5.7%</td><td>Phase 3 expansion via estrobolome platform</td></tr>
+          <tr><td>Women's health supplements (US)</td><td>$57.1B</td><td>$113.6B</td><td>7.1%</td><td>Macro category — platform endgame</td></tr>
+          <tr><td>Personalized supplements &amp; testing</td><td>$5.4B</td><td>$7.7B</td><td>~4.5%</td><td>Business model validation — Viome/Ritual proof</td></tr>
+          <tr><td>AI personalized nutrition</td><td>$1.1B</td><td>$4.3B</td><td>~18%</td><td>Technology layer — fastest growing segment</td></tr>
+          <tr><td>Consumer microbiome testing</td><td>~$1.2B</td><td>~$3.4B</td><td>~12%</td><td>Diagnostic infrastructure — validated by Viome/Zoe</td></tr>
+          <tr><td>Global dietary supplements (women #1 user)</td><td>$188B</td><td>$316B</td><td>7.6%</td><td>Ultimate platform ceiling</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SAM / SOM -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">Serviceable Markets</span>
+      <div class="section-rule"></div>
+    </div>
+    <h2>Realistic Capture — Bottom Up</h2>
+
+    <div class="card-grid-3" style="margin-bottom:24px;">
+      <div class="card">
+        <h3>TAM — The Full Vision</h3>
+        <p style="font-size:24px; font-weight:800; color:var(--ink); letter-spacing:-.02em; margin-bottom:4px;">$57B+</p>
+        <p>Women's health supplements in the US alone. Add adjacent conditions (endo, perimenopause, fertility) and global reach and the ceiling becomes the full $188B dietary supplement market — with women as the dominant consumer.</p>
+      </div>
+      <div class="card">
+        <h3>SAM — PCOS Women, Supplement-Active</h3>
+        <p style="font-size:24px; font-weight:800; color:var(--ink); letter-spacing:-.02em; margin-bottom:4px;">$7.2B</p>
+        <p>6M PCOS women in the US. Conservatively, 10% are already spending $100+/mo on supplements = 600K women x $1,200/yr. The money is already being spent — unguided, on fragmented stacks. This company consolidates it.</p>
+      </div>
+      <div class="card">
+        <h3>SOM — Realistic Year 3</h3>
+        <p style="font-size:24px; font-weight:800; color:var(--ink); letter-spacing:-.02em; margin-bottom:4px;">$36M ARR</p>
+        <p>25,000 subscribers at $120/mo. Less than 0.5% of the SAM. No telehealth revenue, no B2B, no premium tier counted. The floor, not the ceiling.</p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Scenario</th><th>Subscribers</th><th>ARPU</th><th>ARR</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Year 1 (launch)</td><td>1,000</td><td>$100/mo</td><td>$1.2M</td><td>US only, hormone test kit, supplement subscription</td></tr>
+          <tr><td>Year 2 (growth)</td><td>8,000</td><td>$110/mo</td><td>$10.6M</td><td>Microbiome layer added, AI chat live</td></tr>
+          <tr><td>Year 3 (scale)</td><td>25,000</td><td>$120/mo</td><td>$36M</td><td>Full stack, telehealth referrals added</td></tr>
+          <tr><td>Year 5 (platform)</td><td>100,000</td><td>$130/mo</td><td>$156M</td><td>Endometriosis + perimenopause expansion</td></tr>
+          <tr><td>Year 7 (category leader)</td><td>300,000</td><td>$150/mo</td><td>$540M</td><td>B2B channel + data licensing + adjacent conditions</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout" style="margin-top:16px;">
+      <div class="callout-label">The Key Insight</div>
+      <p>The PCOS supplement market at $1.3B today is already larger than the "PCOS treatment market" suggests — and it's growing at 14.4% CAGR, nearly twice the rate of the clinical treatment market. That's because women are already self-funding their care. This company doesn't need to create demand. It needs to capture and organize spend that already exists.</p>
+    </div>
+  </div>
+
+  <!-- Why Now -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">Why Now</span>
+      <div class="section-rule"></div>
+    </div>
+    <h2>Five Tailwinds Converging</h2>
+    <div class="card-grid-2">
+      <div class="card">
+        <h3>GLP-1 Has Made Metabolic Health Mainstream</h3>
+        <p>Ozempic and semaglutide have put insulin resistance into the cultural conversation. PCOS women are the exact population for whom metabolic intervention is most relevant — and most undertreated.</p>
+        <div class="tags"><span class="tag tag-accent">Massive awareness lift</span></div>
+      </div>
+      <div class="card">
+        <h3>Microbiome Science Has Reached Consumer Readiness</h3>
+        <p>Viome has proven that women will pay for at-home microbiome testing and act on the results. The science connecting gut to hormones is 2024–2025 vintage — early enough to be defensible, mature enough to ship.</p>
+        <div class="tags"><span class="tag tag-accent">Science timing</span></div>
+      </div>
+      <div class="card">
+        <h3>Women's Health Has Massive Investment Gap</h3>
+        <p>Women's health has historically captured only ~6% of private healthcare investment despite representing half the population. That gap is closing fast — creating a rare window where a focused company can build before incumbents notice.</p>
+        <div class="tags"><span class="tag tag-green">Capital tailwind</span></div>
+      </div>
+      <div class="card">
+        <h3>AI Makes Personalization Economically Viable</h3>
+        <p>Running a personalized protocol at scale was previously impossible without human practitioners for each patient. AI removes that bottleneck — and does it at a price point that a $100/mo subscriber can afford.</p>
+        <div class="tags"><span class="tag tag-green">Technology unlock</span></div>
+      </div>
+      <div class="card">
+        <h3>The Community Is Ready and Waiting</h3>
+        <p>r/PCOS with 350K+ members has already built demand for this product. These women are self-experimenting with supplements and running their own clinical trials. They just need the infrastructure.</p>
+        <div class="tags"><span class="tag tag-accent">Demand exists</span></div>
+      </div>
+      <div class="card">
+        <h3>No Approved PCOS Drug Exists</h3>
+        <p>There is no FDA-approved drug specifically for PCOS. Current management relies on repurposed medications (OCP, metformin, spironolactone). This gap makes non-pharmaceutical personalized interventions the dominant category by default.</p>
+        <div class="tags"><span class="tag tag-amber">Regulatory vacuum</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comparison -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">Investment Context</span>
+      <div class="section-rule"></div>
+    </div>
+    <h2>Comparable Companies at Scale</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Company</th><th>Category</th><th>Model</th><th>Scale / Outcome</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Ritual</td><td>Personalized supplements (women)</td><td>DTC subscription</td><td>$100M+ revenue, transparent-formula premium brand</td></tr>
+          <tr><td>Viome</td><td>Microbiome testing + supplements</td><td>Test + subscription</td><td>$100M+ raised, mass market microbiome</td></tr>
+          <tr><td>Allara Health</td><td>PCOS telehealth</td><td>Telehealth + insurance</td><td>$26M Series B (2025), 4x revenue growth YoY</td></tr>
+          <tr><td>Nourish</td><td>AI nutritionist</td><td>Telehealth + insurance</td><td>$115M raised, Series B 2025</td></tr>
+          <tr><td>Hims &amp; Hers</td><td>Personalized health subscriptions</td><td>DTC + Rx</td><td>$500M+ revenue, public company</td></tr>
+          <tr><td>23andMe</td><td>Genetic testing + health insights</td><td>Test + subscription</td><td>Pioneered consumer diagnostics category</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout" style="margin-top:16px;">
+      <div class="callout-label">The Intersection</div>
+      <p>This company sits at the intersection of Ritual (supplement subscription), Viome (microbiome diagnostics), and Allara (PCOS-specific). None of those three has built what this company would be. That gap is the opportunity.</p>
+    </div>
+  </div>
+
+  <div class="footer">Market data: IMARC Group, Precedence Research, Coherent Market Insights, TechCrunch, McKinsey/WEF</div>
+</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     TAB 3: MARKET RESEARCH
+═══════════════════════════════════════════════════ -->
+<div id="tab-market-research" class="tab-content">
+<div class="container">
+
+  <div class="hero" style="padding-bottom:48px; margin-bottom:56px;">
+    <span class="eyebrow">Market Research</span>
+    <h1>What Women With PCOS Actually Say</h1>
+    <p class="lead">Scraped from r/PCOS (350K+ members), clinical qualitative studies, and online community analysis. This is the unfiltered demand signal.</p>
+  </div>
+
+  <!-- Top complaints -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">Community Sentiment — Ranked</span>
+      <div class="section-rule"></div>
+    </div>
+    <h2>Biggest Pain Points by Intensity</h2>
+    <p style="color:var(--muted); margin-bottom:20px; font-size:13px;">Ranked by frequency of mentions and emotional intensity across forum posts, clinical qualitative studies, and online discussions.</p>
+
+    <div class="rows">
+      <div class="row-item row-item-2col">
+        <div class="row-side"><span class="row-side-accent">01</span></div>
+        <div class="row-body">
+          <h3>The Medical System Gaslights Them</h3>
+          <p>The single highest-volume source of rage across all PCOS communities. Women wait 2–13 years for a diagnosis. Doctors dismiss irregular periods as "normal," attribute everything to weight, and only engage seriously when pregnancy is the goal. Thinner women are told "you don't look like you have PCOS."</p>
+          <div class="quote">"I felt like she didn't take me seriously" — recurring quote across multiple independent clinical studies</div>
+          <div class="tags">
+            <span class="tag tag-red">2–13 yr diagnosis delay</span>
+            <span class="tag tag-red">27.8% feel dismissed post-diagnosis</span>
+            <span class="tag tag-red">Only 3% feel supported</span>
+          </div>
+        </div>
+      </div>
+      <div class="row-item row-item-2col">
+        <div class="row-side"><span class="row-side-accent">02</span></div>
+        <div class="row-body">
+          <h3>Weight — The Cruel Paradox</h3>
+          <p>PCOS causes insulin resistance, making weight gain easy and weight loss nearly impossible. Doctors' only advice: "just lose weight" — while the condition actively sabotages that. Women report doing everything right and losing nothing. Blamed for something the condition causes.</p>
+          <div class="tags"><span class="tag tag-amber">50–70% of PCOS patients have insulin resistance</span></div>
+        </div>
+      </div>
+      <div class="row-item row-item-2col">
+        <div class="row-side"><span class="row-side-accent">03</span></div>
+        <div class="row-body">
+          <h3>Hair — On Face, Gone from Head</h3>
+          <p>Hirsutism (facial/body hair growth) described as "freakish," "unnatural" — causes avoidance of social situations, intimacy, the gym. Androgenic alopecia (scalp hair loss) is devastating for identity. No non-hormonal solution works consistently. Among the highest-engagement post types.</p>
+        </div>
+      </div>
+      <div class="row-item row-item-2col">
+        <div class="row-side"><span class="row-side-accent">04</span></div>
+        <div class="row-body">
+          <h3>The Supplement Maze — No Guidance</h3>
+          <p>Women self-experiment with inositol, berberine, spearmint, magnesium, NAC, omega-3, vitamin D in endless combinations with no framework. Birth control is the blanket fix offered, but causes weight gain, mood changes, decreased libido. "What's actually working for you?" threads are perpetually viral.</p>
+          <div class="tags">
+            <span class="tag tag-muted">Myo-inositol</span>
+            <span class="tag tag-muted">Berberine</span>
+            <span class="tag tag-muted">Spearmint</span>
+            <span class="tag tag-muted">NAC</span>
+            <span class="tag tag-muted">Magnesium</span>
+            <span class="tag tag-muted">Omega-3</span>
+          </div>
+        </div>
+      </div>
+      <div class="row-item row-item-2col">
+        <div class="row-side"><span class="row-side-accent">05</span></div>
+        <div class="row-body">
+          <h3>Mental Health — Invisible in PCOS Care</h3>
+          <p>Depression and anxiety rates 2–3x higher than the general population. Zero routine mental health screening in PCOS care. Women don't just want their hormones fixed — they want to be heard and validated. The emotional burden is repeatedly described as worse than the physical symptoms.</p>
+        </div>
+      </div>
+      <div class="row-item row-item-2col">
+        <div class="row-side"><span class="row-side-accent">06</span></div>
+        <div class="row-body">
+          <h3>Fertility Terror — Without Trying Yet</h3>
+          <p>Women in their 20s consumed by fear of future infertility. The uncertainty is as psychologically damaging as an actual infertility diagnosis. Doctors only engage with fertility when actively trying — leaving years of anxiety unaddressed.</p>
+        </div>
+      </div>
+      <div class="row-item row-item-2col">
+        <div class="row-side"><span class="row-side-accent">07</span></div>
+        <div class="row-body">
+          <h3>Adult Acne the Skincare Industry Ignores</h3>
+          <p>Hormonal acne (jaw, chin, cheeks) that doesn't respond to skincare. Women cycle on and off birth control to manage it with unclear long-term consequences. The skincare industry targets teen acne. PCOS acne at 28–35 is invisible to brands.</p>
+        </div>
+      </div>
+      <div class="row-item row-item-2col">
+        <div class="row-side"><span class="row-side-accent">08</span></div>
+        <div class="row-body">
+          <h3>No Food Protocol That Actually Works</h3>
+          <p>Diet is the #1 recommended intervention but there is no consensus. Women try low-carb, keto, Mediterranean, vegan with wildly different results. Insulin resistance tracking is a black box without expensive tests. Glucose spike discussions generate enormous community engagement.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Thread types -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">Thread Engagement Patterns</span>
+      <div class="section-rule"></div>
+    </div>
+    <h2>Highest-Engagement Content on r/PCOS</h2>
+    <p style="color:var(--muted); margin-bottom:20px; font-size:13px;">These thread types consistently generate the highest comment counts, saves, and cross-posts. Each is a product brief.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Thread Type</th><th>Signal</th><th>Product Implication</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>"What actually worked for you?"</td><td>Perpetually viral, every week</td><td>People need a protocol engine, not more anecdotes</td></tr>
+          <tr><td>Before/after weight loss posts</td><td>Highest saves of any content type</td><td>Proof of outcomes is the product — show, don't tell</td></tr>
+          <tr><td>"My doctor dismissed me — is this normal?"</td><td>Massive comment volume, outrage</td><td>Trust and validation are the core UX</td></tr>
+          <tr><td>Specific supplement stacks</td><td>High saves, extensive comments</td><td>Women want to know "the exact stack" — that is your product</td></tr>
+          <tr><td>"Just diagnosed, what do I do?"</td><td>High frequency, high anxiety</td><td>First 24 hours post-diagnosis is the acquisition moment</td></tr>
+          <tr><td>Ozempic / GLP-1 experiences</td><td>Exploding in 2025–2026</td><td>Metabolic angle validates the insulin-resistance approach</td></tr>
+          <tr><td>PCOS + pregnancy success stories</td><td>Highest emotional engagement</td><td>Hope + outcomes = retention content</td></tr>
+          <tr><td>"Labs normal but I feel awful"</td><td>Chronic, underserved complaint</td><td>Functional testing beyond standard labs = your edge</td></tr>
+          <tr><td>Comparing birth control options</td><td>Frustration + seeking alternatives</td><td>Your product is what they switch to when BC fails them</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- What they buy -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">Current Spending Behavior</span>
+      <div class="section-rule"></div>
+    </div>
+    <h2>What They Already Pay For</h2>
+    <p style="color:var(--muted); font-size:13px; margin-bottom:20px;">These women are not price-resistant. They are spending significant money on fragmented, unguided solutions. The opportunity is consolidation and precision.</p>
+    <div class="sentiment-grid">
+      <div class="sentiment-card">
+        <div class="sc-header"><h3>Supplements (Self-Directed)</h3><span class="intensity intensity-high">Very High</span></div>
+        <p style="font-size:13px;">Most PCOS women are already spending $50–150/month on a self-assembled supplement stack with no professional guidance. Inositol, berberine, spearmint capsules, magnesium, NAC, omega-3, vitamin D. They are the customer — they just need direction.</p>
+      </div>
+      <div class="sentiment-card">
+        <div class="sc-header"><h3>Private Lab Tests</h3><span class="intensity intensity-high">High</span></div>
+        <p style="font-size:13px;">Many women are paying out-of-pocket for hormone panels their GPs won't order. Companies like Lets Get Checked and Everlywell are already capturing this spend — but without PCOS-specific interpretation or follow-through.</p>
+      </div>
+      <div class="sentiment-card">
+        <div class="sc-header"><h3>Telehealth Consults</h3><span class="intensity intensity-med">Medium-High</span></div>
+        <p style="font-size:13px;">Allara Health grew 4x in 2024 on insurance coverage. Before insurance, women paid out-of-pocket for specialist access. The willingness to pay for PCOS-specific care is demonstrated and documented.</p>
+      </div>
+      <div class="sentiment-card">
+        <div class="sc-header"><h3>Diets and Nutrition Apps</h3><span class="intensity intensity-med">Medium</span></div>
+        <p style="font-size:13px;">High engagement with apps like Glucose Goddess content, CGM experiments (Levels, Nutrisense), and PCOS-focused nutrition accounts on Instagram and TikTok. Diet information is the most searched PCOS topic after diagnosis.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quotes / Sentiment -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">Direct Sentiment</span>
+      <div class="section-rule"></div>
+    </div>
+    <h2>What They Actually Say</h2>
+    <div class="rows">
+      <div class="row-item row-item-2col">
+        <div class="row-side" style="font-size:16px; color:var(--border-md);">"</div>
+        <div class="row-body">
+          <p style="font-size:13.5px; color:var(--ink); font-style:italic;">"I've spent three years trying every supplement on this sub. Nothing works consistently. I just want someone to tell me what MY body specifically needs."</p>
+          <p style="font-size:11px; margin-top:6px;">Common r/PCOS sentiment — the unmet need for personalization is explicit</p>
+        </div>
+      </div>
+      <div class="row-item row-item-2col">
+        <div class="row-side" style="font-size:16px; color:var(--border-md);">"</div>
+        <div class="row-body">
+          <p style="font-size:13.5px; color:var(--ink); font-style:italic;">"My doctor told me to lose weight. When I asked how to lose weight with insulin resistance, she had no answer. So I came here."</p>
+          <p style="font-size:11px; margin-top:6px;">Reddit as clinical fallback — the system failure that creates the acquisition moment</p>
+        </div>
+      </div>
+      <div class="row-item row-item-2col">
+        <div class="row-side" style="font-size:16px; color:var(--border-md);">"</div>
+        <div class="row-body">
+          <p style="font-size:13.5px; color:var(--ink); font-style:italic;">"Berberine changed my life. But it took me 18 months of trial and error to find it, and I still don't know why it works for me and not my friend who has the same diagnosis."</p>
+          <p style="font-size:11px; margin-top:6px;">The PCOS subtype problem — same label, different biology, different solutions</p>
+        </div>
+      </div>
+      <div class="row-item row-item-2col">
+        <div class="row-side" style="font-size:16px; color:var(--border-md);">"</div>
+        <div class="row-body">
+          <p style="font-size:13.5px; color:var(--ink); font-style:italic;">"If someone could just look at my labs and tell me 'take this, not that, here's why' — I would pay a lot of money for that."</p>
+          <p style="font-size:11px; margin-top:6px;">The pitch, written by the customer</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sources -->
+  <div class="section" id="sources">
+    <div class="section-header">
+      <span class="section-label">Research Sources</span>
+      <div class="section-rule"></div>
+    </div>
+    <h2>References</h2>
+    <div class="source-group">
+      <h3>Community and Clinical Qualitative Research</h3>
+      <ul>
+        <li><a href="https://www.treatmentinprogress.com/post/reddit-pcos" target="_blank">7 of the Best Reddit PCOS Threads — Treatment in Progress</a></li>
+        <li><a href="https://news.cuanschutz.edu/news-stories/polycystic-ovary-syndrome-patients-say-they-feel-dismissed-and-misunderstood-according-to-new-study" target="_blank">PCOS Patients Feel Dismissed and Misunderstood — CU Anschutz Study</a></li>
+        <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12894167/" target="_blank">Psychological Challenges of PCOS — PMC Systematic Review and Meta-Synthesis</a></li>
+        <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12732985/" target="_blank">Disease Experience in Women with PCOS — PMC Qualitative Study</a></li>
+        <li><a href="https://www.contemporaryobgyn.net/view/pcos-patients-report-feeling-dismissed-by-health-care-providers" target="_blank">PCOS Patients Dismissed by Healthcare Providers — Contemporary OB/GYN</a></li>
+        <li><a href="https://www.verity-pcos.org.uk/uploads/6/7/0/2/6702442/verity_appg_pcos_report_sept25.pdf" target="_blank">Systemic Failures in PCOS Diagnosis — Verity/APPG Report (Sept 2025)</a></li>
+        <li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11018694/" target="_blank">Unmet Mental Health Needs in PCOS — PMC Cross-Sectional Study</a></li>
+        <li><a href="https://www.washingtonpost.com/health/2025/10/17/pcos-misdiagnosis-treatment-symptoms/" target="_blank">PCOS Misdiagnosis and Treatment — Washington Post (2025)</a></li>
+      </ul>
+    </div>
+    <div class="source-group">
+      <h3>Microbiome and PCOS Science</h3>
+      <ul>
+        <li><a href="https://journals.physiology.org/doi/full/10.1152/physiolgenomics.00072.2025" target="_blank">Dysbiosis in PCOS: Systematic Review — Physiological Genomics (2025)</a></li>
+        <li><a href="https://www.frontiersin.org/journals/endocrinology/articles/10.3389/fendo.2025.1529703/full" target="_blank">Gut Microbiota's Role in PCOS — Frontiers in Endocrinology (2025)</a></li>
+        <li><a href="https://www.frontiersin.org/journals/cellular-and-infection-microbiology/articles/10.3389/fcimb.2025.1508893/full" target="_blank">Gut Microbiota: Emerging Target for PCOS and Insulin Resistance — Frontiers (2025)</a></li>
+        <li><a href="https://www.nutraingredients.com/Article/2025/01/30/multi-strain-probiotic-shows-promise-for-women-with-pcos/" target="_blank">Multi-Strain Probiotic RCT for PCOS — NutraIngredients (2025)</a></li>
+        <li><a href="https://www.nutraingredients.com/Article/2025/10/15/gut-microbiomes-hidden-role-in-womens-hormonal-health/" target="_blank">Gut Microbiome's Hidden Role in Women's Hormonal Health — NutraIngredients (2025)</a></li>
+        <li><a href="https://www.tinyhealth.com/blog/estrobolome-101-how-your-gut-shapes-estrogen-balance" target="_blank">Estrobolome 101: How Your Gut Shapes Estrogen Balance — Tiny Health</a></li>
+        <li><a href="https://www.frontiersin.org/journals/endocrinology/articles/10.3389/fendo.2026.1713408/full" target="_blank">Dietary Interventions for Microbiome in PCOS — Frontiers Endocrinology (2026)</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">Community data from r/PCOS subreddit analysis, clinical qualitative studies, and online sentiment research</div>
+</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     TAB 4: COMPETITIVE ANALYSIS
+═══════════════════════════════════════════════════ -->
+<div id="tab-competitive" class="tab-content">
+<div class="container-wide">
+
+  <div class="hero" style="padding-bottom:48px; margin-bottom:56px;">
+    <span class="eyebrow">Competitive Analysis</span>
+    <h1>The Landscape and the Gap</h1>
+    <p class="lead">No company has assembled the full stack: PCOS-specific + microbiome + hormone testing + AI protocol + personalized supplements. Every existing player is missing at least two of these.</p>
+  </div>
+
+  <!-- Full competitor map -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">Direct Competitors</span>
+      <div class="section-rule"></div>
+    </div>
+    <h2>Full Competitive Map</h2>
+    <div class="table-wrap" style="margin-bottom:24px;">
+      <table>
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Category</th>
+            <th>PCOS Specific</th>
+            <th>Microbiome</th>
+            <th>Hormone Testing</th>
+            <th>AI Protocol</th>
+            <th>Personalized Supplements</th>
+            <th>Status / Funding</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Allara Health</td>
+            <td>PCOS telehealth</td>
+            <td class="check">Yes</td>
+            <td class="cross">No</td>
+            <td class="check">Yes (MD-ordered)</td>
+            <td class="cross">No (human RD)</td>
+            <td class="cross">No</td>
+            <td>$26M Series B, 2025</td>
+          </tr>
+          <tr>
+            <td>Viome</td>
+            <td>Microbiome testing</td>
+            <td class="cross">No</td>
+            <td class="check">Yes</td>
+            <td class="cross">No</td>
+            <td class="check">Partial (AI)</td>
+            <td class="check">Yes (generic)</td>
+            <td>$100M+ raised</td>
+          </tr>
+          <tr>
+            <td>Pinkmatter</td>
+            <td>PMS microbiome supplements</td>
+            <td class="cross">PMS (PCOS 2027)</td>
+            <td class="check">Building</td>
+            <td class="cross">No</td>
+            <td class="cross">No</td>
+            <td class="check">Partial</td>
+            <td>Bootstrapped, launch Jan 2026</td>
+          </tr>
+          <tr>
+            <td>FemmeBiome</td>
+            <td>Estrobolome probiotic</td>
+            <td class="cross">Menopause</td>
+            <td>Partial</td>
+            <td class="cross">No</td>
+            <td class="cross">No</td>
+            <td class="cross">One SKU</td>
+            <td>Early stage</td>
+          </tr>
+          <tr>
+            <td>Sova Health</td>
+            <td>Microbiome + supplements</td>
+            <td class="cross">General wellness</td>
+            <td class="check">Yes</td>
+            <td class="cross">No</td>
+            <td class="cross">No</td>
+            <td class="check">Yes</td>
+            <td>India market, VC-backed</td>
+          </tr>
+          <tr>
+            <td>Enbiosis</td>
+            <td>AI microbiome platform</td>
+            <td class="cross">General</td>
+            <td class="check">Yes (200K dataset)</td>
+            <td>Partial</td>
+            <td class="check">Yes (AI v2)</td>
+            <td class="cross">No</td>
+            <td>Platform play, B2B focus</td>
+          </tr>
+          <tr>
+            <td>Ritual</td>
+            <td>Women's supplements</td>
+            <td class="cross">No</td>
+            <td class="cross">No</td>
+            <td class="cross">No</td>
+            <td class="cross">No</td>
+            <td class="cross">Fixed formulation</td>
+            <td>$100M+ revenue, DTC brand</td>
+          </tr>
+          <tr>
+            <td>Zoe</td>
+            <td>Personalized nutrition via microbiome</td>
+            <td class="cross">No</td>
+            <td class="check">Yes</td>
+            <td class="cross">No</td>
+            <td class="check">Yes</td>
+            <td class="cross">Food guidance only</td>
+            <td>$53M raised, UK-based</td>
+          </tr>
+          <tr>
+            <td>Laiqa</td>
+            <td>AI cycle + nutrition</td>
+            <td>Partial</td>
+            <td class="cross">No</td>
+            <td class="cross">No</td>
+            <td class="cross">Minimal</td>
+            <td class="cross">No</td>
+            <td>Early stage, India</td>
+          </tr>
+          <tr class="ws-row">
+            <td>The White Space</td>
+            <td>AI naturopath for PCOS</td>
+            <td class="check">Yes</td>
+            <td class="check">Yes</td>
+            <td class="check">Yes</td>
+            <td class="check">Yes</td>
+            <td class="check">Yes (personalized)</td>
+            <td>Does not exist today</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Deeper profiles -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">Competitor Profiles</span>
+      <div class="section-rule"></div>
+    </div>
+    <h2>Key Players In Depth</h2>
+    <div class="rows">
+      <div class="row-item row-item-2col">
+        <div class="row-side" style="font-size:10px; font-weight:700; letter-spacing:.04em; color:var(--muted); padding:8px;">ALLARA</div>
+        <div class="row-body">
+          <h3>Allara Health — Closest PCOS Competitor</h3>
+          <p><strong>What they do:</strong> Virtual care for PCOS and chronic hormonal conditions. Board-certified OB/GYNs, endocrinologists, and registered dietitians. Insurance-covered in 10+ states. 4x revenue growth in 2024.</p>
+          <p><strong>What they miss:</strong> No microbiome testing. No AI protocol — it's human practitioners. No personalized supplement formulation. High-touch model limits scalability and margin. The RD is doing manually what an AI could do at 10x the scale.</p>
+          <div class="tags"><span class="tag tag-amber">Watch closely</span><span class="tag tag-muted">Potential acquirer</span></div>
+        </div>
+      </div>
+      <div class="row-item row-item-2col">
+        <div class="row-side" style="font-size:10px; font-weight:700; letter-spacing:.04em; color:var(--muted); padding:8px;">VIOME</div>
+        <div class="row-body">
+          <h3>Viome — Closest Microbiome Competitor</h3>
+          <p><strong>What they do:</strong> At-home microbiome testing (gut, oral, blood), AI-powered recommendations, personalized supplement subscriptions. HSA/FSA eligible. 100,000+ customers.</p>
+          <p><strong>What they miss:</strong> No PCOS focus whatsoever. No hormonal testing. The personalization is generic — not mapped to PCOS subtypes or androgenic patterns. Women with PCOS are using Viome, getting generic results, and still don't know what to do about their symptoms.</p>
+          <div class="tags"><span class="tag tag-amber">Potential partner</span><span class="tag tag-muted">Validated the model</span></div>
+        </div>
+      </div>
+      <div class="row-item row-item-2col">
+        <div class="row-side" style="font-size:10px; font-weight:700; letter-spacing:.04em; color:var(--muted); padding:8px;">ZOE</div>
+        <div class="row-body">
+          <h3>Zoe — Proof the Diagnostic-to-Protocol Model Works</h3>
+          <p><strong>What they do:</strong> Microbiome + blood sugar testing → personalized food recommendations. $53M raised, primarily UK. Strong clinical credibility (published research). £299 test kit + £24/mo subscription.</p>
+          <p><strong>What they miss:</strong> No PCOS focus. No hormonal testing. No supplements — food guidance only. But Zoe's success proves that women will pay for test-to-protocol models in the £200-300 range. That's the price validation.</p>
+          <div class="tags"><span class="tag tag-green">Price point validated</span><span class="tag tag-muted">Model proven</span></div>
+        </div>
+      </div>
+      <div class="row-item row-item-2col">
+        <div class="row-side" style="font-size:10px; font-weight:700; letter-spacing:.04em; color:var(--muted); padding:8px;">RITUAL</div>
+        <div class="row-body">
+          <h3>Ritual — Proof of the Premium Women's Supplement Model</h3>
+          <p><strong>What they do:</strong> DTC subscription supplements for women. Transparent ingredients, science-forward branding, clean aesthetics. $100M+ revenue. Single formulation per life stage.</p>
+          <p><strong>What they miss:</strong> No personalization. No diagnostics. No PCOS focus. A PCOS-specific brand with microbiome personalization is what Ritual would be if it had actually solved the underlying biology — rather than selling a well-packaged multivitamin.</p>
+          <div class="tags"><span class="tag tag-green">Brand model to follow</span><span class="tag tag-muted">Personalization gap is the opening</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Positioning -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">Positioning</span>
+      <div class="section-rule"></div>
+    </div>
+    <h2>Where to Sit in the Market</h2>
+    <div class="card-grid-2">
+      <div class="card">
+        <h3>Not a Telehealth Company</h3>
+        <p>Allara is a telehealth company that happens to do PCOS. This is a supplement company powered by diagnostics and AI. No practitioners on payroll, no insurance dependency, infinite scalability. The AI is the practitioner.</p>
+      </div>
+      <div class="card">
+        <h3>Not a Generic Microbiome Test</h3>
+        <p>Viome and Zoe sell general microbiome insight. This company translates microbiome data specifically into PCOS hormonal context — which requires a completely different interpretation layer and evidence base.</p>
+      </div>
+      <div class="card">
+        <h3>Not a Supplement Brand</h3>
+        <p>Ritual sells the same product to every woman. This company sells a different product to every woman, based on her specific biology. The supplement is the outcome of the diagnostic, not the product itself.</p>
+      </div>
+      <div class="card">
+        <h3>The Intersection of All Three</h3>
+        <p>Diagnostic precision of Viome/Zoe + PCOS specificity of Allara + supplement subscription model of Ritual + AI interpretation layer that none of them have. That intersection is the company.</p>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:20px;">
+      <div class="callout-label">Competitive Moat</div>
+      <p>Every competitor is one or two pivots away from this space. Allara could add microbiome testing. Viome could add PCOS focus. Ritual could add diagnostics. The company that builds the full stack first owns the category — because the data flywheel becomes insurmountable after 10,000 users.</p>
+    </div>
+  </div>
+
+  <!-- Risk: what if a competitor moves -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">Competitive Risks</span>
+      <div class="section-rule"></div>
+    </div>
+    <h2>What Could Close the Window</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Threat</th><th>Likelihood</th><th>Timeline</th><th>Defense</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Allara adds microbiome testing</td><td><span class="tag tag-amber">Medium</span></td><td>18–24 months</td><td>PCOS-specific data flywheel + supplement subscription already built</td></tr>
+          <tr><td>Viome launches women's health vertical</td><td><span class="tag tag-amber">Medium</span></td><td>12–24 months</td><td>PCOS subtype interpretation requires years of specialized data to replicate</td></tr>
+          <tr><td>Pinkmatter expands to PCOS</td><td><span class="tag tag-green">Low-Med</span></td><td>2027+</td><td>Head start, first-mover data advantage, community trust</td></tr>
+          <tr><td>Pharma develops approved PCOS drug</td><td><span class="tag tag-green">Low</span></td><td>5–10 years</td><td>Supplement company becomes complement, not competition — integrates with Rx</td></tr>
+          <tr><td>Large wellness brand (Hims/Hers) enters</td><td><span class="tag tag-red">Medium-High</span></td><td>24–36 months</td><td>PCOS specificity and clinical trust are hard to fake — community loyalty is the moat</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">Competitive data: company websites, Crunchbase, TechCrunch, VitaFoods Insights, NutraIngredients</div>
+</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     TAB 5: TO THE MOON
+═══════════════════════════════════════════════════ -->
+<div id="tab-moon" class="tab-content">
+<div class="container">
+
+  <div class="moon-hero">
+    <span class="eyebrow">To the Moon</span>
+    <h1 style="margin-bottom:14px;">If This Works — What Does It Become?</h1>
+    <p>PCOS is the beach head. The microbiome-hormone connection is the platform. The data is the moat. Here is what the company could look like if it executes.</p>
+  </div>
+
+  <!-- Phase roadmap -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label section-label-purple">Expansion Phases</span>
+      <div class="section-rule"></div>
+    </div>
+    <h2>From Supplement Company to Health Platform</h2>
+
+    <div class="moon-phase" style="margin-bottom:10px;">
+      <div class="moon-phase-header">
+        <div class="moon-phase-tag">Year 1–2</div>
+        <div class="moon-phase-title">PCOS Supplement + Diagnostics — Prove the Model</div>
+      </div>
+      <div class="moon-phase-body">
+        <div class="moon-phase-item">
+          <h3>Core Product Live</h3>
+          <p>Hormone test kit + AI protocol + personalized supplement subscription. First 1,000 users, outcome tracking running.</p>
+        </div>
+        <div class="moon-phase-item">
+          <h3>Microbiome Layer Added</h3>
+          <p>Stool testing integrated via lab partner. First version of the proprietary dataset building. AI naturopath chat launched.</p>
+        </div>
+        <div class="moon-phase-item">
+          <h3>Community Owned</h3>
+          <p>r/PCOS community knows this brand. Word-of-mouth is the primary growth channel. Before/after outcomes are the marketing.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="moon-phase" style="margin-bottom:10px;">
+      <div class="moon-phase-header">
+        <div class="moon-phase-tag">Year 2–3</div>
+        <div class="moon-phase-title">GLP-1 Integration + Telehealth Bridge</div>
+      </div>
+      <div class="moon-phase-body">
+        <div class="moon-phase-item">
+          <h3>GLP-1 Navigator Layer</h3>
+          <p>Partner with telehealth Rx providers for semaglutide access. Position as "the PCOS + GLP-1 specialist" — most prescribers don't understand PCOS-specific dosing and monitoring.</p>
+        </div>
+        <div class="moon-phase-item">
+          <h3>Supplement + Rx Bundling</h3>
+          <p>GLP-1 + targeted probiotic + myo-inositol as an evidence-based combination protocol. The supplement company becomes the companion layer to Rx treatment.</p>
+        </div>
+        <div class="moon-phase-item">
+          <h3>Insurance Coverage Push</h3>
+          <p>Work toward HSA/FSA eligibility for test kits and supplements. Start conversations with insurers — Allara's model shows this is achievable within 3 years of launch.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="moon-phase" style="margin-bottom:10px;">
+      <div class="moon-phase-header">
+        <div class="moon-phase-tag">Year 3–4</div>
+        <div class="moon-phase-title">Adjacent Conditions — Same Biological Framework</div>
+      </div>
+      <div class="moon-phase-body">
+        <div class="moon-phase-item">
+          <h3>Endometriosis</h3>
+          <p>Shares the estrobolome dysbiosis mechanism. Affects 10% of women. Same test infrastructure, different protocol layer. High community overlap with PCOS.</p>
+          <div class="tags"><span class="tag tag-purple">~190M women globally</span></div>
+        </div>
+        <div class="moon-phase-item">
+          <h3>Perimenopause</h3>
+          <p>Estrobolome is the dominant mechanism. FemmeBiome is trying this from a supplement-only angle — the diagnostic + AI layer would be a step-change. Large, affluent demographic.</p>
+          <div class="tags"><span class="tag tag-purple">~1B women by 2030</span></div>
+        </div>
+        <div class="moon-phase-item">
+          <h3>Fertility Optimization</h3>
+          <p>Natural extension: PCOS women who want to conceive. Egg quality, cycle regularity, implantation — all have gut microbiome connections being researched. High willingness to pay.</p>
+          <div class="tags"><span class="tag tag-purple">$40B+ fertility market</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="moon-phase">
+      <div class="moon-phase-header">
+        <div class="moon-phase-tag">Year 4–6</div>
+        <div class="moon-phase-title">The Data Platform — Becoming the Infrastructure Layer</div>
+      </div>
+      <div class="moon-phase-body">
+        <div class="moon-phase-item">
+          <h3>Clinical Research Partner</h3>
+          <p>Proprietary dataset of 100K+ women: microbiome signatures, hormonal profiles, supplement response, outcomes. License to pharma, academic institutions, and clinical researchers.</p>
+        </div>
+        <div class="moon-phase-item">
+          <h3>B2B — Clinics and Practitioners</h3>
+          <p>White-label the AI protocol engine to OB/GYN practices, RD clinics, and functional medicine practitioners. The data becomes a product for the healthcare system itself.</p>
+        </div>
+        <div class="moon-phase-item">
+          <h3>Diagnostic Biomarker Discovery</h3>
+          <p>With enough data, the company can identify novel PCOS biomarkers, publish research, and potentially hold IP around specific microbiome signatures and their clinical implications.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- The vision -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label section-label-purple">Long-Term Vision</span>
+      <div class="section-rule"></div>
+    </div>
+    <h2>What the Category Could Look Like</h2>
+    <div class="card-grid-2">
+      <div class="card" style="border-color:#ddd6fe;">
+        <h3>The 23andMe of Women's Hormonal Health</h3>
+        <p>23andMe proved that women will pay to understand their biology, take action based on it, and stay subscribed for years. The equivalent for hormonal and gut health — with far more actionable output and recurring supplement revenue — is a larger, stickier business.</p>
+        <div class="tags"><span class="tag tag-purple">Platform endgame</span></div>
+      </div>
+      <div class="card" style="border-color:#ddd6fe;">
+        <h3>The Practitioner OS for Women's Health</h3>
+        <p>If the AI protocol engine becomes sophisticated enough, it becomes the tool that every naturopath, integrative MD, and functional dietitian uses to manage hormonal patients. B2B SaaS layer on top of the consumer business.</p>
+        <div class="tags"><span class="tag tag-purple">B2B expansion</span></div>
+      </div>
+      <div class="card" style="border-color:#ddd6fe;">
+        <h3>The Pharmaceutical Data Partner</h3>
+        <p>No FDA-approved PCOS drug exists. A company with 100K+ deep hormonal and microbiome profiles — and documented supplement response data — becomes a uniquely valuable partner to any pharma company developing PCOS treatments.</p>
+        <div class="tags"><span class="tag tag-purple">Strategic asset</span></div>
+      </div>
+      <div class="card" style="border-color:#ddd6fe;">
+        <h3>The Acquisition Target</h3>
+        <p>Ritual, Hims &amp; Hers, Nestlé Health Science, Bayer Women's Health, or a large telehealth platform would pay significant multiples for a company with: 100K PCOS subscribers, proprietary diagnostic data, and a defensible AI protocol engine.</p>
+        <div class="tags"><span class="tag tag-purple">Exit path</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Market upside -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label section-label-purple">Market Upside</span>
+      <div class="section-rule"></div>
+    </div>
+    <h2>Revenue Potential at Scale</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Scenario</th><th>Subscribers</th><th>ARPU</th><th>ARR</th><th>Driver</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Base (PCOS only)</td><td>50,000</td><td>$120/mo</td><td>$72M</td><td>Supplement subscription + re-testing</td></tr>
+          <tr><td>Growth (+ endo + perimenopause)</td><td>150,000</td><td>$130/mo</td><td>$234M</td><td>Condition expansion, same infrastructure</td></tr>
+          <tr><td>Platform (+ B2B + data licensing)</td><td>250,000</td><td>$140/mo</td><td>$420M+</td><td>B2B practitioner SaaS + pharma data deals</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout" style="margin-top:16px; border-color:#ddd6fe;">
+      <div class="callout-label callout-label-purple">The Bet</div>
+      <p>PCOS is the wedge. The microbiome-hormone platform is the company. If the science continues to develop — and it will — this becomes the infrastructure layer for women's hormonal health, sitting between the diagnostic lab and the patient, with a proprietary dataset that no one else can build.</p>
+    </div>
+  </div>
+
+  <div class="footer">Projections are illustrative. Market sizing from IMARC Group, Precedence Research, company public disclosures.</div>
+</div>
+</div>
+
+</div><!-- end page-wrap -->
+
+<script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+</script>
+
+</body>
+</html>
