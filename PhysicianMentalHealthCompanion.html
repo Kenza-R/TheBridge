@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Physician Mental Health Companion | Context-Aware Clinical Support Layer</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --ink: #151821;
+      --muted: #5f6675;
+      --card: #ffffff;
+      --line: #e1e5ee;
+      --navy: #0d1428;
+      --blue: #3157ff;
+      --blue-soft: #edf1ff;
+      --green: #087b57;
+      --red: #a33434;
+      --gold: #9a6b12;
+      --purple: #5e3cc7;
+      --purple-soft: #f2edff;
+      --shadow: 0 14px 38px rgba(20, 30, 60, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      line-height: 1.55;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 42px 22px 72px;
+    }
+
+    header {
+      position: relative;
+      overflow: hidden;
+      border-radius: 30px;
+      padding: 46px;
+      background:
+        radial-gradient(circle at top right, rgba(89, 111, 255, 0.55), transparent 34%),
+        linear-gradient(135deg, #0b1024 0%, #182a7a 64%, #4c3bd0 100%);
+      color: white;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.16);
+      right: -120px;
+      bottom: -160px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 7px 12px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      max-width: 920px;
+      font-size: clamp(34px, 5.8vw, 66px);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      margin: 0 0 18px;
+    }
+
+    .subtitle {
+      max-width: 880px;
+      font-size: 19px;
+      opacity: 0.92;
+      margin: 0;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 34px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .metric {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.17);
+      border-radius: 19px;
+      padding: 16px;
+      min-height: 112px;
+    }
+
+    .metric .value {
+      font-weight: 900;
+      font-size: 25px;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .metric .label {
+      font-size: 13px;
+      opacity: 0.87;
+    }
+
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      padding: 28px;
+      margin: 18px 0;
+      box-shadow: 0 8px 28px rgba(18, 26, 45, 0.045);
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 25px;
+      line-height: 1.18;
+      letter-spacing: -0.03em;
+    }
+
+    h3 {
+      font-size: 17px;
+      margin: 22px 0 8px;
+      letter-spacing: -0.01em;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    .lead {
+      font-size: 17px;
+      color: #2b3140;
+    }
+
+    .direct {
+      background: var(--blue-soft);
+      border-left: 5px solid var(--blue);
+      border-radius: 18px;
+      padding: 18px 20px;
+      margin: 16px 0 0;
+      font-weight: 700;
+    }
+
+    .quote {
+      background: var(--navy);
+      color: white;
+      border-radius: 22px;
+      padding: 22px;
+      font-size: 21px;
+      line-height: 1.35;
+      font-weight: 850;
+      letter-spacing: -0.025em;
+      margin-top: 16px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 18px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+    }
+
+    .pill {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 5px 10px;
+      margin: 3px 4px 3px 0;
+      font-size: 12px;
+      font-weight: 800;
+      background: var(--blue-soft);
+      color: #233aa8;
+    }
+
+    .pill.purple {
+      background: var(--purple-soft);
+      color: var(--purple);
+    }
+
+    .pill.green {
+      background: #e9f7f1;
+      color: var(--green);
+    }
+
+    .pill.red {
+      background: #fff0f0;
+      color: var(--red);
+    }
+
+    .small {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    code {
+      font-size: 12px;
+      background: #eef1f7;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 8px;
+      border-radius: 18px;
+      overflow: hidden;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 11px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f1f4fa;
+      color: #303746;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 12px;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    ul {
+      padding-left: 21px;
+      margin: 8px 0 0;
+    }
+
+    li {
+      margin-bottom: 7px;
+    }
+
+    .good {
+      color: var(--green);
+      font-weight: 850;
+    }
+
+    .risk {
+      color: var(--red);
+      font-weight: 850;
+    }
+
+    .watch {
+      color: var(--gold);
+      font-weight: 850;
+    }
+
+    .flow {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .flow-step {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: #fff;
+    }
+
+    .bubble {
+      height: 38px;
+      width: 38px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+    }
+
+    .roadmap {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .phase {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+      min-height: 160px;
+    }
+
+    .phase strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .two-column-list {
+      columns: 2;
+      column-gap: 34px;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 24px;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid, .grid-2, .grid-3, .roadmap {
+        grid-template-columns: 1fr;
+      }
+
+      .two-column-list {
+        columns: 1;
+      }
+
+      header {
+        padding: 32px;
+      }
+
+      section {
+        padding: 23px;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .page {
+        padding: 0;
+      }
+
+      section, header {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div class="eyebrow">Startup Concept Memo</div>
+      <h1>Physician Mental Health Companion</h1>
+      <p class="subtitle">
+        A context-aware, privacy-first physician support layer—peer network, physician-chosen Circle of Trust, EHR-aware workload signals, and deliberate collegial social time—routing doctors to the right human support after high-stress clinical moments.
+      </p>
+
+      <div class="hero-grid">
+        <div class="metric">
+          <div class="value">$300M-$900M</div>
+          <div class="label">Potential U.S. physician and resident ARR opportunity depending on pricing</div>
+        </div>
+        <div class="metric">
+          <div class="value">$1.5B-$5.5B</div>
+          <div class="label">Expanded U.S. clinician and hospital workforce ARR opportunity</div>
+        </div>
+        <div class="metric">
+          <div class="value">3-click support</div>
+          <div class="label">Reset now, talk to someone, or handle admin</div>
+        </div>
+        <div class="metric">
+          <div class="value">Peer + circle</div>
+          <div class="label">Trained peers and physician-chosen Circle of Trust—not employer surveillance</div>
+        </div>
+      </div>
+    </header>
+
+    <section>
+      <h2>1. Executive Summary</h2>
+      <p class="lead">
+        The idea is to build an agentic support layer for physicians: a workflow-aware companion that connects calendars, schedules, EHR-derived workload signals, and a <strong>trained peer-support network</strong>—but only within tight, clinician-approved boundaries. The differentiator is not another meditation app; it is infrastructure that routes doctors to humans who have done this work, plus optional social reconnection after hard shifts.
+      </p>
+      <div class="direct">
+        The product should not be “AI therapist for doctors.” It should be “confidential routing infrastructure after the hardest moments in care”—with peer support, a physician-chosen Circle of Trust, and deliberate encouragement of collegial social time.
+      </div>
+      <p class="small">
+        Research anchors: Kaiser Permanente’s POST program (306 peer interactions over 3 years; ~49% of physicians engaged); Johns Hopkins RISE; Health Affairs linkage of system-generated in-basket volume to ~40% higher burnout odds; Mayo commensality pilots showing improved emotional exhaustion vs. controls.
+      </p>
+    </section>
+
+    <section>
+      <h2>2. Product Positioning</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Strong positioning</h3>
+          <p>
+            A confidential support router that uses schedule, shift, and event context to detect when a physician may need help, then routes them to self-guided reset, peer support, licensed help, admin relief, or crisis escalation.
+          </p>
+          <span class="pill green">Context-aware</span>
+          <span class="pill green">Peer network first</span>
+          <span class="pill green">Circle of Trust</span>
+          <span class="pill green">EHR-aware (metadata)</span>
+          <span class="pill green">Social collegiality</span>
+        </div>
+        <div class="card">
+          <h3>Weak positioning</h3>
+          <p>
+            A generic wellness chatbot that asks doctors how they feel, offers meditation content, or claims to provide therapy through AI. This would be easy to ignore and risky to deploy.
+          </p>
+          <span class="pill red">Not AI therapy</span>
+          <span class="pill red">Not surveillance</span>
+          <span class="pill red">Not generic EAP</span>
+          <span class="pill red">Not EHR automation</span>
+        </div>
+      </div>
+      <div class="quote">
+        Best one-line pitch: “The confidential support layer that routes physicians to peers, trusted colleagues, and recovery—triggered by clinical context, not generic wellness check-ins.”
+      </div>
+    </section>
+
+    <section>
+      <h2>3. How It Works</h2>
+      <div class="flow">
+        <div class="flow-step">
+          <div class="bubble">1</div>
+          <div>
+            <strong>Read low-risk context first</strong>
+            <p>
+              Connect to calendar, call schedule, shift schedule, appointment volume, missed breaks, after-hours work, and self-reported hard events. Avoid full patient-chart ingestion in the MVP.
+            </p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="bubble">2</div>
+          <div>
+            <strong>Detect high-stress moments</strong>
+            <p>
+              Identify patterns such as a patient death, surgical complication, night call, litigation threat, hostile encounter, excessive charting, or repeated intense shifts.
+            </p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="bubble">3</div>
+          <div>
+            <strong>Offer a tiny, useful choice</strong>
+            <p>
+              The interface should offer three clear actions: reset now, talk to someone, or handle admin. No long forms, no content library, no generic check-in.
+            </p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="bubble">4</div>
+          <div>
+            <strong>Route to peer support first</strong>
+            <p>
+              Match to a trained peer physician (hospital roster or specialty pool), offer a Circle-of-Trust outreach option, schedule licensed care, or trigger crisis protocol. Third-party referrals—colleague, charge nurse, APP—should be supported like POST programs do.
+            </p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="bubble">5</div>
+          <div>
+            <strong>Circle of Trust (opt-in, physician-controlled)</strong>
+            <p>
+              Each doctor curates 3–7 trusted colleagues (spouse, mentor, co-resident, friend-physician). If multiple stress signals accumulate within a window the physician configured, the app asks: “Reach out to your circle?” Nothing is sent without explicit approval in that moment—except pre-authorized crisis pathways.
+            </p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="bubble">6</div>
+          <div>
+            <strong>Encourage social recovery</strong>
+            <p>
+              Suggest protected collegial time: walk with a peer, shared meal, brief debrief coffee, specialty huddle—not “another webinar.” Evidence supports commensality and small-group collegiality for burnout domains.
+            </p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="bubble">7</div>
+          <div>
+            <strong>Report only aggregate trends</strong>
+            <p>
+              Hospitals receive department-level risk patterns, never individual emotional logs or Circle-of-Trust activity. Trust is the product.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. What the Product Should Do</h2>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Detect</h3>
+          <ul>
+            <li>Long shifts</li>
+            <li>Night call stretches</li>
+            <li>High patient volume</li>
+            <li>Patient death or code event</li>
+            <li>Complication or adverse outcome</li>
+            <li>Repeated late charting</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Debrief</h3>
+          <ul>
+            <li>90-second reset</li>
+            <li>3-minute guided debrief</li>
+            <li>Private reflection summary</li>
+            <li>Cognitive reframing</li>
+            <li>Moral injury support</li>
+            <li>Post-event decompression</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Route</h3>
+          <ul>
+            <li>Trained peer physician (POST/RISE-style)</li>
+            <li>Circle of Trust member (physician-approved)</li>
+            <li>Therapist or coach</li>
+            <li>Crisis resource</li>
+            <li>Collegial social invite (meal, walk, huddle)</li>
+            <li>Admin relief</li>
+            <li>Calendar recovery block</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>High-value agentic actions</h3>
+      <ul class="two-column-list">
+        <li>Match to on-call trained peer by specialty and shift</li>
+        <li>Facilitate third-party referral to peer support (colleague-initiated)</li>
+        <li>Offer Circle-of-Trust outreach with one-tap physician approval</li>
+        <li>Book a confidential peer or therapist call</li>
+        <li>Reserve “commensality block” on shared calendars</li>
+        <li>Send a secure link (no PHI in message body)</li>
+        <li>Draft non-clinical check-in text to a trusted colleague</li>
+        <li>Summarize the day privately (physician-owned)</li>
+        <li>Block recovery time after a hard shift</li>
+        <li>Surface EHR workload signals (in-basket load, after-hours use)</li>
+        <li>Launch SMART-on-FHIR panel from Hyperspace after adverse event</li>
+        <li>Escalate crisis language to a human pathway</li>
+        <li>Generate aggregate department-level risk trends</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>5. What It Should Not Do</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Do not allow</th>
+            <th>Reason</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Autonomous patient-specific medical advice</td>
+            <td>This moves the product into clinical decision support and creates regulatory and liability risk.</td>
+          </tr>
+          <tr>
+            <td>Changing orders or documenting in the EHR without review</td>
+            <td>Physician approval must remain mandatory for any clinical action.</td>
+          </tr>
+          <tr>
+            <td>Notifying leadership that “Dr. X is burned out”</td>
+            <td>This destroys trust and creates employment, licensing, and credentialing fears.</td>
+          </tr>
+          <tr>
+            <td>Storing identifiable patient stories unnecessarily</td>
+            <td>PHI exposure should be avoided in the MVP and minimized later.</td>
+          </tr>
+          <tr>
+            <td>Diagnosing the physician</td>
+            <td>The system should detect support needs, not label doctors with psychiatric conditions.</td>
+          </tr>
+          <tr>
+            <td>Alerting a Circle of Trust without live physician consent</td>
+            <td>Even well-meaning “concern” messages can harm careers and trust. Multi-signal detection should surface a prompt to the physician first; outreach sends only after approval (crisis carve-outs excepted).</td>
+          </tr>
+          <tr>
+            <td>Employer visibility into who is in whose circle</td>
+            <td>Circle membership and alert history are clinician-owned data, not HR analytics.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>6. Product Architecture</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Inputs</h3>
+          <span class="pill">Calendar</span>
+          <span class="pill">Shift schedule</span>
+          <span class="pill">Call schedule</span>
+          <span class="pill">Appointment load</span>
+          <span class="pill">After-hours work</span>
+          <span class="pill">Self-reported events</span>
+          <span class="pill">Peer-support roster & availability</span>
+          <span class="pill">Circle of Trust graph</span>
+          <span class="pill">EHR metadata (phased)</span>
+          <span class="pill">In-basket / pajama-time metrics</span>
+        </div>
+        <div class="card">
+          <h3>Outputs</h3>
+          <span class="pill purple">Micro-reset</span>
+          <span class="pill purple">Guided debrief</span>
+          <span class="pill purple">Peer match</span>
+          <span class="pill purple">Circle outreach draft</span>
+          <span class="pill purple">Social time scheduling</span>
+          <span class="pill purple">Therapist scheduling</span>
+          <span class="pill purple">Crisis escalation</span>
+          <span class="pill purple">Admin triage</span>
+          <span class="pill purple">Aggregate risk dashboard</span>
+        </div>
+      </div>
+
+      <h3>Support urgency score</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Signal type</th>
+            <th>Example</th>
+            <th>Likely response</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Acute event</td>
+            <td>Patient death, complication, code, bad outcome</td>
+            <td>Immediate debrief and peer-support offer</td>
+          </tr>
+          <tr>
+            <td>Load</td>
+            <td>18 patients, no break, late notes</td>
+            <td>Micro-recovery and admin triage</td>
+          </tr>
+          <tr>
+            <td>Temporal risk</td>
+            <td>Third night shift in a row</td>
+            <td>Fatigue check and recovery planning</td>
+          </tr>
+          <tr>
+            <td>Emotional event</td>
+            <td>Hostile encounter, bad news disclosure</td>
+            <td>Guided reflection or peer call</td>
+          </tr>
+          <tr>
+            <td>Crisis language</td>
+            <td>Hopelessness, self-harm signal, panic</td>
+            <td>Immediate human escalation protocol</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>7. Peer Support Network (Core Pillar)</h2>
+      <p class="lead">
+        Peer support is the product’s human backbone—not an afterthought to AI debrief. Hospital programs like Kaiser Permanente’s POST and Johns Hopkins RISE show that physicians accept help from trained peers more readily than from generic EAP or leadership-driven wellness.
+      </p>
+      <div class="grid-2">
+        <div class="card">
+          <h3>What works in published programs</h3>
+          <ul>
+            <li><strong>Physician-only peers</strong> with 4+ hours of training on confidentiality, red flags, and when to escalate</li>
+            <li><strong>Department-embedded supporters</strong> who understand local culture (surgery vs. OB vs. ED)</li>
+            <li><strong>Third-party referrals</strong>—colleagues can flag concern without exposing the distressed physician to HR</li>
+            <li><strong>48-hour outreach SLA</strong> from referral to peer contact (POST norm)</li>
+            <li><strong>Median ~60-minute conversations</strong>—substantive, not a checkbox</li>
+            <li><strong>Leadership-funded time protection</strong> for peer leads and training refreshers</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>How the platform operationalizes peers</h3>
+          <ul>
+            <li>Roster of trained supporters with specialty, language, gender preference, and on-call windows</li>
+            <li>Intelligent match after adverse events (complication, death, litigation scare)</li>
+            <li>Secure booking + optional video, with no session notes flowing to employer dashboards</li>
+            <li>Peer workload caps and burnout monitoring for supporters themselves</li>
+            <li>Integration with existing POST/RISE/well-being lead programs rather than replacing them</li>
+            <li>Outcome metrics at program level: reach, time-to-contact, repeat use—never transcript mining</li>
+          </ul>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Support tier</th>
+            <th>Who</th>
+            <th>When</th>
+            <th>Training</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Immediate peer</td>
+            <td>On-call trained physician in same specialty</td>
+            <td>Acute event, same shift</td>
+            <td>POST/RISE-equivalent + platform workflow</td>
+          </tr>
+          <tr>
+            <td>Scheduled peer</td>
+            <td>Matched peer within 48h</td>
+            <td>After hard week, moral injury, repeated signals</td>
+            <td>De-identified case framing only</td>
+          </tr>
+          <tr>
+            <td>Well-being lead</td>
+            <td>Department POST lead</td>
+            <td>Third-party referral, recurring distress</td>
+            <td>Institutional + platform routing</td>
+          </tr>
+          <tr>
+            <td>Licensed escalation</td>
+            <td>Therapist / psychiatrist</td>
+            <td>Peer or AI detects red flags</td>
+            <td>Licensed; separate consent</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="quote">
+        Positioning: “We scale what POST and RISE already proved—trained physicians supporting physicians—with software that makes matching, scheduling, and confidentiality practical at 2am after a bad case.”
+      </div>
+    </section>
+
+    <section>
+      <h2>8. Circle of Trust</h2>
+      <p class="lead">
+        Physicians should choose their own safety net: a small, private list of people who may be invited to check in when the system sees a pattern of strain—not a single alert, and never without the doctor’s live approval in that moment.
+      </p>
+      <div class="flow">
+        <div class="flow-step">
+          <div class="bubble">1</div>
+          <div>
+            <strong>Onboarding: build the circle</strong>
+            <p>Physician selects 3–7 contacts (colleagues, friends, partner, mentor). Each accepts invite via secure link. Roles: “can receive gentle check-in” vs. “crisis-only.”</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="bubble">2</div>
+          <div>
+            <strong>Configure thresholds (physician-owned)</strong>
+            <p>Example: “If 3+ support prompts are declined in 7 days AND after-hours charting exceeds my baseline AND I tap ‘hard day’ twice → ask me about alerting my circle.” Physician sets sensitivity; defaults are conservative.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="bubble">3</div>
+          <div>
+            <strong>Multi-signal detection (no auto-send)</strong>
+            <p>Signals can include: repeated hard-event tags, elevated in-basket/pajama-time (from EHR metadata), missed recovery blocks, crisis-adjacent language in private debrief (never auto-forwarded verbatim).</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="bubble">4</div>
+          <div>
+            <strong>Physician approval gate</strong>
+            <p>UI: “Several stress signals this week. Send a pre-written check-in to Alex and Jordan?” Options: Send / Edit message / Not now / Talk to peer instead. <span class="good">No silent notifications to the circle.</span></p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="bubble">5</div>
+          <div>
+            <strong>What the circle receives</strong>
+            <p>Non-clinical, non-diagnostic message: “A colleague asked us to check in—they’ve had a rough stretch. A text or coffee might help.” No patient details, no “burnout score,” no employer CC.</p>
+          </div>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Principle</th>
+            <th>Implementation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Opt-in only</td>
+            <td>Circle feature disabled until physician completes setup</td>
+          </tr>
+          <tr>
+            <td>Approval per outreach</td>
+            <td>Multi-signal logic triggers a prompt, not an automatic SMS</td>
+          </tr>
+          <tr>
+            <td>Crisis exception</td>
+            <td>Pre-authorized crisis contacts can be called immediately if explicit crisis language detected; separate consent flow at signup</td>
+          </tr>
+          <tr>
+            <td>Employer firewall</td>
+            <td>Circle membership and messages excluded from hospital analytics APIs</td>
+          </tr>
+          <tr>
+            <td>Revocable</td>
+            <td>One-tap pause or remove any circle member; audit log visible only to physician</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="direct">
+        This is the anti-surveillance feature: the hospital sees heatmaps; your college roommate sees a text only if you said yes today.
+      </div>
+    </section>
+
+    <section>
+      <h2>9. EHR Integration Architecture</h2>
+      <p class="lead">
+        EHR integration is a phased trust ladder: start with physician-owned context and metadata, not chart mining. Epic (~35%+ U.S. hospital share) and Oracle Health/Cerner expose FHIR R4 via SMART on FHIR; clinician-facing apps launch from Hyperspace/Hyperdrive with OAuth scopes negotiated per hospital.
+      </p>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Phase 0 — No EHR (MVP)</h3>
+          <ul>
+            <li>Calendar, QGenda/Kronos shift feeds, hard-event button</li>
+            <li>Self-reported events and peer routing</li>
+            <li>Zero PHI in platform storage</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Phase 1 — Metadata only</h3>
+          <ul>
+            <li>SMART launch from Epic Hyperspace (user context, not patient chart)</li>
+            <li>Scopes: <code>openid</code>, <code>fhirUser</code>, Appointment.read, PractitionerRole</li>
+            <li>Signals: appointment volume, session length, after-hours login patterns via EHR analytics exports (e.g., Signal-style aggregates)</li>
+            <li>In-basket message counts—especially system-generated volume (burnout correlate in Health Affairs)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Phase 2 — Event-aware (still minimal PHI)</h3>
+          <ul>
+            <li>Encounter type flags (death, complication code categories) without storing narrative notes</li>
+            <li>Integration with incident reporting (RLDatix) for post-adverse-event workflows</li>
+            <li>“Debrief now” deep link after closing a traumatic encounter</li>
+          </ul>
+        </div>
+      </div>
+      <h3>Technical integration map</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Layer</th>
+            <th>Standard / path</th>
+            <th>Use for physician support</th>
+            <th>PHI risk</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Launch</td>
+            <td>SMART on FHIR EHR launch from Hyperspace/Hyperdrive</td>
+            <td>One-click access after hard encounter; SSO; no separate login</td>
+            <td class="good">Low</td>
+          </tr>
+          <tr>
+            <td>Scheduling</td>
+            <td>FHIR Appointment, Schedule</td>
+            <td>Load detection, recovery block proposals</td>
+            <td class="good">Low</td>
+          </tr>
+          <tr>
+            <td>Workload</td>
+            <td>Epic Signal / Clarity aggregates, in-basket metrics</td>
+            <td>Pajama time, system-generated message burden</td>
+            <td class="watch">Medium (de-identified aggregates)</td>
+          </tr>
+          <tr>
+            <td>Team dynamics</td>
+            <td>In-basket network graphs (research precedent)</td>
+            <td>Suggest delegating inbox load; identify isolation</td>
+            <td class="watch">Medium</td>
+          </tr>
+          <tr>
+            <td>Clinical narrative</td>
+            <td>DocumentReference, ClinicalNote</td>
+            <td><strong>Avoid in MVP</strong>—high PHI and surveillance perception</td>
+            <td class="risk">High</td>
+          </tr>
+          <tr>
+            <td>Distribution</td>
+            <td>Epic Showroom (formerly App Orchard) certification</td>
+            <td>Multi-hospital deploy; hospital-specific App Record + BAA</td>
+            <td class="good">Governance</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        <strong>Oracle Health / Meditech / athena:</strong> parallel FHIR paths; prioritize Epic + Cerner for enterprise health systems. <strong>Competitive moat:</strong> Marvin and most EAP vendors do not appear to offer deep in-EHR launch—workflow-native support after closing a chart is open territory if trust is preserved.
+      </p>
+      <div class="direct">
+        Design rule: the EHR should feel like a door into support, not a surveillance camera on the physician.
+      </div>
+    </section>
+
+    <section>
+      <h2>10. Physician Social Connection & Collegiality</h2>
+      <p class="lead">
+        Burnout is not only individual exhaustion—it is erosion of collegiality. Structured social time (commensality, profession-specific small groups) shows measurable gains in emotional exhaustion and workplace community. The product should actively protect and schedule social recovery, not just solo resets.
+      </p>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Evidence-informed tactics</h3>
+          <ul>
+            <li><strong>Commensality:</strong> facilitated shared meals improved emotional exhaustion vs. matched controls (Mayo pilot)</li>
+            <li><strong>Small peer groups:</strong> COMPASS-style self-facilitated groups sustained meaning at work for 12+ months</li>
+            <li><strong>Social network interventions:</strong> increasing faculty–resident connectivity improved accomplishment and environment scores</li>
+            <li><strong>EHR social graphs:</strong> communication patterns with care team predict exhaustion—suggest team huddles or shared breaks when isolation detected</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Product features (“social time engine”)</h3>
+          <ul>
+            <li><strong>Collegiality blocks:</strong> 20–45 min holds with suggested peer (same service line)</li>
+            <li><strong>Walk-and-debrief:</strong> pair two physicians finishing overlapping OR/ED shifts</li>
+            <li><strong>Commensality mode:</strong> group lunch RSVP for department after shared adverse week</li>
+            <li><strong>No-meeting zones:</strong> coordinate with chiefs to protect post-call breakfast</li>
+            <li><strong>Residency social graph:</strong> nudge PGY peers who haven’t connected in 30 days (opt-in)</li>
+            <li><strong>Celebration prompts:</strong> wins matter—successful discharge streak, trainee milestone</li>
+          </ul>
+        </div>
+      </div>
+      <div class="quote">
+        “You don’t need another resilience module. You need someone to eat lunch with who gets yesterday’s case.”
+      </div>
+      <p class="small">
+        Social features must remain voluntary and off employer performance dashboards. Metrics: participation rate, self-reported connection—not minutes logged for HR.
+      </p>
+    </section>
+
+    <section>
+      <h2>11. MVP and Roadmap</h2>
+      <div class="roadmap">
+        <div class="phase">
+          <strong>MVP</strong>
+          Calendar/schedule integration, hard-event button, AI-guided debrief, peer-support routing, Circle of Trust (setup + approval-gated outreach), private journal.
+        </div>
+        <div class="phase">
+          <strong>V1</strong>
+          POST/RISE roster integration, third-party referrals, collegiality scheduling, residency dashboards, aggregate analytics.
+        </div>
+        <div class="phase">
+          <strong>V2</strong>
+          SMART-on-FHIR Epic launch, in-basket/pajama-time metadata, EAP/therapy network, specialty playbooks.
+        </div>
+        <div class="phase">
+          <strong>V3</strong>
+          Encounter-flag triggers, RLDatix post-event flows, Cerner/Meditech, malpractice partnerships, predictive models.
+        </div>
+        <div class="phase">
+          <strong>Expansion</strong>
+          Nurses, APPs, pharmacists, respiratory therapists, social workers, and hospital-wide workforce support.
+        </div>
+        <div class="phase">
+          <strong>Platform</strong>
+          Broader high-stress professions: first responders, military, crisis teams, lawyers, pilots, air traffic controllers.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>12. Market Opportunity</h2>
+      <p>
+        The physician-only market can support a meaningful company, but the venture-scale outcome comes from expanding into the broader healthcare workforce and then into other high-stress professions.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Market layer</th>
+            <th>Approx. U.S. users</th>
+            <th>Realistic PMPM</th>
+            <th>ARR opportunity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Residents and fellows</td>
+            <td>~167K</td>
+            <td>$20-$50</td>
+            <td>~$40M-$100M</td>
+          </tr>
+          <tr>
+            <td>Physicians + residents</td>
+            <td>~1.2M</td>
+            <td>$25-$50</td>
+            <td>~$300M-$700M+</td>
+          </tr>
+          <tr>
+            <td>Nurses + APPs</td>
+            <td>~3.9M</td>
+            <td>$10-$25</td>
+            <td>~$470M-$1.2B</td>
+          </tr>
+          <tr>
+            <td>Broad healthcare workforce</td>
+            <td>~15M+</td>
+            <td>$5-$20</td>
+            <td>~$900M-$3.7B</td>
+          </tr>
+          <tr>
+            <td>High-stress adjacent professions</td>
+            <td>~3.6M+</td>
+            <td>$10-$30</td>
+            <td>~$440M-$1.3B</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="small">
+        Market figures should be revalidated before investor use. The sizing logic is bottom-up: relevant users multiplied by realistic per-member-per-month pricing.
+      </p>
+    </section>
+
+    <section>
+      <h2>13. Business Model</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Tier</th>
+            <th>Offer</th>
+            <th>Pricing</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Residents/fellows</td>
+            <td>AI debrief, peer routing, GME dashboard</td>
+            <td>$15-$30 PMPM</td>
+          </tr>
+          <tr>
+            <td>Physicians</td>
+            <td>Context-aware support, post-event routing, high-touch escalation</td>
+            <td>$25-$60 PMPM</td>
+          </tr>
+          <tr>
+            <td>Nurses/APPs</td>
+            <td>Shift-aware support, team debrief, peer and therapist routing</td>
+            <td>$8-$25 PMPM</td>
+          </tr>
+          <tr>
+            <td>Hospital-wide workforce</td>
+            <td>Broad support layer and aggregate risk signals</td>
+            <td>$5-$15 PMPM</td>
+          </tr>
+          <tr>
+            <td>Analytics module</td>
+            <td>Department-level risk, shift burden, retention signals</td>
+            <td>Enterprise add-on</td>
+          </tr>
+          <tr>
+            <td>Post-event module</td>
+            <td>Adverse event, patient death, malpractice threat workflows</td>
+            <td>Department or system-level add-on</td>
+          </tr>
+          <tr>
+            <td>Peer network module</td>
+            <td>Trained supporter roster, matching, SLA tracking, POST/RISE integration</td>
+            <td>Per-department or system license</td>
+          </tr>
+          <tr>
+            <td>EHR integration</td>
+            <td>SMART launch, in-basket/pajama-time signals, encounter-flag debrief triggers</td>
+            <td>Enterprise add-on after Epic Showroom certification</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Buyer coalition</h3>
+      <div>
+        <span class="pill">Chief Medical Officer</span>
+        <span class="pill">Chief Wellness Officer</span>
+        <span class="pill">GME leadership</span>
+        <span class="pill">Department chairs</span>
+        <span class="pill">Risk management</span>
+        <span class="pill">Patient safety</span>
+        <span class="pill">CHRO</span>
+        <span class="pill">Malpractice insurer</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>14. Competitive Landscape</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Examples</th>
+            <th>Threat</th>
+            <th>Gap to exploit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Direct clinician mental health</td>
+            <td>Marvin, VITAL WorkLife, physician coaches, nonprofit peer support</td>
+            <td class="risk">High</td>
+            <td>Win on real-time clinical context, in-EHR launch, Circle of Trust, and specialty event playbooks—not generic teletherapy alone.</td>
+          </tr>
+          <tr>
+            <td>Hospital peer programs (in-house)</td>
+            <td>Kaiser POST, Johns Hopkins RISE, Peers for Peers</td>
+            <td class="watch">Medium</td>
+            <td>Partner and digitize—not replace. Software for matching, SLAs, third-party referrals, and analytics.</td>
+          </tr>
+          <tr>
+            <td>Employer mental health platforms</td>
+            <td>Lyra, Spring Health, Headspace, Modern Health, ComPsych</td>
+            <td class="watch">Medium-high</td>
+            <td>They own budgets, but are less physician-specific and less tied to clinical events.</td>
+          </tr>
+          <tr>
+            <td>Burnout measurement tools</td>
+            <td>Mayo Clinic Well-Being Index, Press Ganey, internal surveys</td>
+            <td class="watch">Medium</td>
+            <td>They measure distress. This product intervenes and routes support.</td>
+          </tr>
+          <tr>
+            <td>Healthcare workforce platforms</td>
+            <td>QGenda, AMN, Aya, UKG, Workday</td>
+            <td class="watch">Medium-high</td>
+            <td>They own schedule data. Partner first and use their data as context.</td>
+          </tr>
+          <tr>
+            <td>EHR / workflow incumbents</td>
+            <td>Epic, Oracle Health, Meditech, ambient AI scribes</td>
+            <td class="risk">High</td>
+            <td>They own workflow metadata, but physicians may not trust them for emotional support.</td>
+          </tr>
+          <tr>
+            <td>Risk and patient safety platforms</td>
+            <td>RLDatix, incident-reporting tools, malpractice insurers</td>
+            <td class="watch">Medium-high</td>
+            <td>They overlap with post-adverse-event support but may be less physician-facing.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Closest competitor</h3>
+      <p>
+        Marvin is the clearest direct competitor because it is clinician-specific and includes behavioral health, AI coaching, workshops, and organizational analytics.
+      </p>
+
+      <h3>Most important strategic threats</h3>
+      <ul>
+        <li><strong>QGenda:</strong> owns scheduling and workforce context.</li>
+        <li><strong>Epic:</strong> owns EHR activity and clinical workflow metadata.</li>
+        <li><strong>Lyra, Spring, Headspace:</strong> own enterprise mental health budgets and provider networks.</li>
+        <li><strong>RLDatix:</strong> sits close to adverse events, risk, and peer support.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>15. Trust and Compliance Architecture</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3 class="good">Trust requirements</h3>
+          <ul>
+            <li>Employer never sees individual emotional logs or Circle-of-Trust membership</li>
+            <li>No raw transcripts shared with hospital leadership</li>
+            <li>Circle outreach requires live physician approval (multi-signal → prompt, not auto-alert)</li>
+            <li>Aggregate insights only for hospitals; peer session notes stay peer-owned</li>
+            <li>Clinician controls what gets shared and who is in the circle</li>
+            <li>Clear crisis escalation rules with separate pre-authorized contacts</li>
+            <li>Human-in-the-loop for sensitive actions and EHR writebacks</li>
+            <li>Read-only EHR permissions by default; SMART scopes minimized per App Orchard norms</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 class="risk">Compliance watchouts</h3>
+          <ul>
+            <li>HIPAA and business associate obligations if PHI is processed</li>
+            <li>FDA clinical decision support risk if making patient-care recommendations</li>
+            <li>Employment and credentialing sensitivity</li>
+            <li>Discoverability and legal privilege concerns</li>
+            <li>Security risks from tool permissions and agent actions</li>
+            <li>Clear separation from psychiatric diagnosis claims</li>
+          </ul>
+        </div>
+      </div>
+      <div class="direct">
+        The product must be genuinely useful in a physician’s real workflow, but healthcare-grade constrained.
+      </div>
+    </section>
+
+    <section>
+      <h2>16. Best Initial Wedge</h2>
+      <p>
+        The strongest wedge is post-event support for high-acuity clinicians. This creates urgency and avoids sounding like generic wellness.
+      </p>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Surgery</h3>
+          <p>Support after complications, unexpected outcomes, disclosure conversations, and long operative days.</p>
+        </div>
+        <div class="card">
+          <h3>OB-GYN</h3>
+          <p>Support after fetal loss, maternal complications, emergency deliveries, and litigation-prone events.</p>
+        </div>
+        <div class="card">
+          <h3>Emergency and ICU</h3>
+          <p>Support after trauma, codes, withdrawal-of-care cases, violence, and repeated death exposure.</p>
+        </div>
+      </div>
+      <div class="quote">
+        “Burnout prevention” sounds soft. “Support after the hardest moments in care” sounds necessary.
+      </div>
+    </section>
+
+    <section>
+      <h2>17. Go-to-Market</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Wedge</th>
+            <th>Why it works</th>
+            <th>Likely buyer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Residency programs</td>
+            <td>High need, concentrated channel, clear well-being pressure</td>
+            <td>GME leadership, program directors, academic medical centers</td>
+          </tr>
+          <tr>
+            <td>High-acuity departments</td>
+            <td>Clear event triggers and high replacement cost</td>
+            <td>Department chairs, CMOs, service line leaders</td>
+          </tr>
+          <tr>
+            <td>Post-adverse-event support</td>
+            <td>Links emotional support to patient safety, risk, retention, and malpractice exposure</td>
+            <td>Risk management, quality/safety, malpractice partners</td>
+          </tr>
+          <tr>
+            <td>Physician groups</td>
+            <td>Direct retention and productivity ROI</td>
+            <td>CMO, COO, practice leadership</td>
+          </tr>
+          <tr>
+            <td>Existing POST/RISE programs</td>
+            <td>Software layer increases reach (Kaiser: ~49% physician engagement over 3 years) without new headcount</td>
+            <td>Well-being leads, peer support coordinators, CWO</td>
+          </tr>
+          <tr>
+            <td>Epic-centric health systems</td>
+            <td>In-workflow launch after adverse encounters; metadata on in-basket burden</td>
+            <td>CIO, CMIO, Epic application coordinators</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>18. Exit Opportunities</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Likely acquirers</h3>
+          <ul>
+            <li>Employer mental health: Lyra, Spring Health, Headspace, Modern Health</li>
+            <li>EAP and benefits: ComPsych, Optum, Evernorth, CVS/Aetna</li>
+            <li>Healthcare workforce: QGenda, AMN, Aya, UKG, Workday</li>
+            <li>Risk and safety: RLDatix, malpractice insurers, professional liability carriers</li>
+            <li>Virtual care: Teladoc, Included Health, Amwell</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Exit logic</h3>
+          <ul>
+            <li><strong>Physician-only:</strong> likely strategic acquisition.</li>
+            <li><strong>Clinician workforce platform:</strong> strong acquisition or growth equity outcome.</li>
+            <li><strong>Healthcare workforce + analytics:</strong> credible IPO path if ARR, retention, and ROI are strong.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>19. VC Verdict</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Question</th>
+            <th>Answer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Is it venture-scale?</td>
+            <td>Yes, if it expands from physicians into clinician workforce infrastructure and risk analytics.</td>
+          </tr>
+          <tr>
+            <td>Is the market crowded?</td>
+            <td>Yes around mental health broadly, but less crowded around event-triggered physician support.</td>
+          </tr>
+          <tr>
+            <td>What is the wedge?</td>
+            <td>Post-event support for high-acuity clinicians after the hardest moments in care.</td>
+          </tr>
+          <tr>
+            <td>What is the moat?</td>
+            <td>Trust architecture (especially Circle of Trust), trained peer network density, EHR-native triggers, collegiality habits, and specialty playbooks.</td>
+          </tr>
+          <tr>
+            <td>What kills it?</td>
+            <td>Auto-alerting circles without consent, employer surveillance, generic wellness positioning, or peers treated as unpaid volunteers without protected time.</td>
+          </tr>
+          <tr>
+            <td>What makes it a category leader?</td>
+            <td>Becoming the confidential routing layer: EHR context → peer/circle/social recovery → licensed care → aggregate workforce intelligence.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="quote">
+        Final thesis: Build a controlled, trusted clinical-workforce companion. It reads workflow context (including EHR metadata when permitted), routes to peers and physician-approved circles, protects collegial social time, and gives hospitals only aggregate risk intelligence—never individual emotional surveillance.
+      </div>
+    </section>
+
+    <section>
+      <h2>20. Source List to Revalidate Before Investor Use</h2>
+      <p class="small">
+        Before using this memo externally, revalidate figures and claims from: AMA burnout reports; AAMC workforce data; ACGME resident statistics; BLS healthcare occupations; Health Affairs (Sinsky et al., system-generated in-basket messages and burnout); JMIR (after-hours EHR / pajama time); PLOS One (Kaiser POST peer support); PMC (Johns Hopkins RISE); Mayo commensality / COMPASS / Camaraderie studies; PMC (EHR social network modeling and physician well-being); Epic on FHIR / open.epic Hyperdrive / Epic Showroom (App Orchard); SMART on FHIR launch spec; Marvin Health public materials; RLDatix Peer Support; QGenda; HHS HIPAA guidance; FDA CDS guidance.
+      </p>
+    </section>
+
+    <div class="footer">
+      Prepared as an HTML concept memo for the Physician Mental Health Companion / context-aware physician support startup idea.
+    </div>
+  </main>
+</body>
+</html>
