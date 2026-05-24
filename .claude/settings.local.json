@@ -66,7 +66,21 @@
       "Bash(cp /Users/kmr/pitchdeck/assets/* /tmp/tfr-repo/pitchdeck/assets/)",
       "WebSearch",
       "WebFetch(domain:pmc.ncbi.nlm.nih.gov)",
-      "WebFetch(domain:www.ncbi.nlm.nih.gov)"
+      "WebFetch(domain:www.ncbi.nlm.nih.gov)",
+      "Bash(git add *)",
+      "Bash(git commit -m 'Add comprehensive healthcare worker mental health research report *)",
+      "Bash(git push *)",
+      "Bash(open -a \"Google Chrome\" /Users/kmr/TheBridge/healthcare-mental-health-research-report.html)",
+      "Bash(gh api *)",
+      "WebFetch(domain:news.harvard.edu)",
+      "WebFetch(domain:www.ama-assn.org)",
+      "WebFetch(domain:psnet.ahrq.gov)",
+      "WebFetch(domain:med.stanford.edu)",
+      "WebFetch(domain:www.ajpmonline.org)",
+      "WebFetch(domain:news.virginia.edu)",
+      "Bash(git commit -m 'Replace 58% hero stat with $4.6B/year burnout cost metric *)",
+      "Bash(git commit -m 'Add $7,600/physician/year hero stat; expand header grid to 5 columns *)",
+      "Bash(git commit -m 'Add '\\\\''To the Moon'\\\\'' section: full vision, product modules, valuation scenarios, exit paths *)"
     ]
   }
 }
