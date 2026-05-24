@@ -63,17 +63,20 @@
         </ul>
       </div>
     </div>
-    <p class="note"><strong>Decision:</strong> Build only under specific conditions: privacy-by-design, peer-support-first workflows, measurable retention/quality outcomes, and phased integration strategy.</p>
+    <p class="note"><strong>Decision:</strong> Build only under specific conditions: privacy-by-design, peer-support-first workflows, measurable retention/quality outcomes, and phased integration strategy. This is best framed as a <strong>clinical workforce infrastructure</strong> product, not a stand-alone wellness app.</p>
   </section>
 
   <section>
     <h2>2) Problem Analysis</h2>
     <ul>
       <li>US physician burnout remains high: <strong>43.2%</strong> in 2024 AMA data.</li>
+      <li>2023-2024 sources still place physician burnout near ~45% depending on method and sample.</li>
+      <li>Broader healthcare burnout burden remains high; multiple studies and workforce surveys show persistent stress and exhaustion across clinical roles.</li>
       <li>Resident burnout remains material (AMA resident comparison report shows meaningful burden by training year).</li>
       <li>Nursing workforce still fragile: high leave intent and burnout-linked exit pressure in 2024 workforce data.</li>
       <li>Second-victim burden is large (ICU review reports lifetime prevalence around <strong>58%</strong>).</li>
       <li>Burnout correlates with patient safety events and medical errors in multiple meta-analyses.</li>
+      <li>Replacement cost per physician is frequently cited in a wide band (~$500K to $2M depending on specialty/model), making retention ROI highly material.</li>
     </ul>
     <h3>Clinical constructs to separate in product design</h3>
     <ul>
@@ -92,14 +95,26 @@
 
   <section>
     <h2>3) Market Size</h2>
+    <p><strong>Recalibration note:</strong> the $100M-$300M figure is a <em>conservative physician-only seat model</em> (1.1M physicians x $100-$300/year). It is useful as a narrow wedge, but it is not full TAM for an enterprise clinical workforce platform.</p>
     <table>
       <thead><tr><th>Layer</th><th>Range</th><th>Logic</th></tr></thead>
       <tbody>
-        <tr><td>TAM (US)</td><td>$12B-$22B+</td><td>Employer mental health / wellness / EAP budget pool where healthcare workforce use case can win.</td></tr>
-        <tr><td>SAM (US healthcare workforce)</td><td>$3.6B-$10B+</td><td>Bottom-up: addressable clinicians x realistic PMPM bands.</td></tr>
-        <tr><td>SOM (5-7 year)</td><td>$50M-$300M ARR</td><td>Attainable only with strong retention and safety ROI evidence.</td></tr>
+        <tr><td>TAM (US, enterprise spend pool)</td><td>$12B-$22B+</td><td>Top-down budget pool across employer mental health, EAP, and workforce well-being categories where health systems and medical groups buy today.</td></tr>
+        <tr><td>SAM (US, serviceable healthcare workforce)</td><td>$3.6B-$10B+</td><td>Bottom-up: ~15M-18M healthcare workers x realistic PMPM ($20-$50 for high-value workflows, blended by segment).</td></tr>
+        <tr><td>Conservative physician-only wedge</td><td>$110M-$330M</td><td>1.1M physicians x $100-$300/year (your draft scenario). Good entry wedge, not total category potential.</td></tr>
+        <tr><td>SOM (5-7 year)</td><td>$50M-$300M ARR</td><td>Attainable only with strong retention/safety ROI proof and successful enterprise expansion from physician wedge into broader clinical teams.</td></tr>
       </tbody>
     </table>
+    <h3>Illustrative US segmentation (bottom-up)</h3>
+    <table>
+      <thead><tr><th>Segment</th><th>Users</th><th>Pricing assumption</th><th>Indicative ARR band</th></tr></thead>
+      <tbody>
+        <tr><td>Physicians + residents</td><td>~1.0M-1.2M</td><td>$100-$600 per year</td><td>$100M-$720M</td></tr>
+        <tr><td>Nurses + APPs</td><td>~4M+</td><td>$60-$300 per year</td><td>$240M-$1.2B</td></tr>
+        <tr><td>Broad clinical workforce</td><td>~15M-18M</td><td>$60-$600 per year (mixed tiering)</td><td>$900M-$10.8B</td></tr>
+      </tbody>
+    </table>
+    <p class="small">Interpretation: your proposed $100-$300/physician model is a realistic starting contract structure. The larger venture case comes from expansion across clinical workforce tiers and integration-linked premium pricing.</p>
     <h3>International potential (priority order)</h3>
     <ul>
       <li><strong>Tier 1:</strong> UK, Canada, Australia, Germany, France (large workforce + pressure).</li>
@@ -113,8 +128,8 @@
     <table>
       <thead><tr><th>Competitor group</th><th>Examples</th><th>Threat</th><th>Implication</th></tr></thead>
       <tbody>
-        <tr><td>Clinician mental health point solutions</td><td>Marvin, VITAL WorkLife</td><td class="warn">High</td><td>Validate need; force differentiation via workflow and trust architecture.</td></tr>
-        <tr><td>Enterprise mental health giants</td><td>Lyra, Spring, Modern, Headspace</td><td class="warn">High</td><td>Own HR budgets; partner or out-specialize on acute clinical moments.</td></tr>
+        <tr><td>Clinician mental health point solutions</td><td>Marvin, VITAL WorkLife, Cress Health</td><td class="warn">High</td><td>Validate need; force differentiation via workflow and trust architecture.</td></tr>
+        <tr><td>Enterprise mental health giants</td><td>Lyra, Spring, Modern, Headspace, BetterUp</td><td class="warn">High</td><td>Own HR budgets; partner or out-specialize on acute clinical moments.</td></tr>
         <tr><td>EAP incumbents</td><td>ComPsych, broad EAP vendors</td><td class="warn">High</td><td>Large distribution; likely channel partner or bundling risk.</td></tr>
         <tr><td>Workforce ops platforms</td><td>QGenda</td><td class="warn">Medium-high</td><td>Control schedule data and buyer relationships.</td></tr>
         <tr><td>Risk/safety platforms</td><td>RLDatix ecosystem</td><td class="warn">Medium-high</td><td>Strong overlap with adverse-event workflows.</td></tr>
@@ -174,8 +189,8 @@
     <h2>8) Product Strategy (Best MVP + What not to build)</h2>
     <h3>MVP blueprint</h3>
     <ul>
-      <li>Trigger engine: shift load, repeated nights, hard-event self-tags, optional incident events.</li>
-      <li>Intervention menu: 3-minute reset, peer connect, recovery/social time block, trusted coworker ping.</li>
+      <li>Trigger engine: shift load, repeated nights, hard-event self-tags, optional incident events, and optional wearable sleep/HRV signals.</li>
+      <li>Intervention menu: 3-minute reset, peer connect, recovery/social time block, trusted coworker ping, optional escalation to EAP/professional support.</li>
       <li>Circle of Trust: only alert after multiple signals + explicit physician approval rules.</li>
       <li>Leadership analytics: only de-identified patterns (unit-level stress load, utilization, response latency).</li>
     </ul>
