@@ -1,0 +1,66 @@
+{
+  "company_name": "Bridge Survivorship",
+  "tagline": "Survivorship OS for community oncology — breast-first",
+  "problem": [
+    "18.6M US cancer survivors; treatment ends but symptoms, fear, and care gaps persist",
+    "~59% moderate fear of recurrence; breast survivorship: menopause, sexual health, fatigue often unaddressed",
+    "SCPs are required but rarely drive behavior change; oncology is optimized for active treatment"
+  ],
+  "solution": [
+    "Productized survivorship service line embedded in the oncology practice",
+    "Digital pathways + NP/clinical team + escalation — not a content super-app",
+    "Wedge: HR+/HER2- breast — endocrine side effects, FCR, care coordination",
+    "Expand tumor types only after measurable outcomes at anchor sites"
+  ],
+  "market": [
+    "TAM: 18.6M all US cancer survivors x $400-$900/yr CPT-backed services = $7.4B-$16.7B",
+    "CPT stack (Medicare 2024): G0023 PIN $79/mo + 99490 CCM $60 + 99457 RPM $48 + 99484 BHI $48",
+    "Gross billable up to ~$2,800/yr/survivor if full stack; TAM uses blended capture",
+    "SAM: 6-8M reachable x $400-$700/yr = $2.4B-$5.6B",
+    "SOM: 250k-600k lives x $180-$260 platform PMPM = $45M-$156M ARR (5 yr)",
+    "Beachhead: 4.3M US breast survivors — not TAM denominator"
+  ],
+  "product": [
+    "Enroll post-treatment cohorts at practice discharge",
+    "PRO-based tracking: fatigue, sleep, sexual health, distress, FCR",
+    "Protocolized interventions + NP escalation; EHR-aware reporting",
+    "Outcomes + utilization dashboard for value-based contracts"
+  ],
+  "traction": [
+    "Pre-seed: diligence-backed wedge + clinical advisory in formation",
+    "Target: 2 design-partner LOIs (community oncology) in 90 days",
+    "6-month HR+ breast pilot: symptom burden + engagement endpoints",
+    "Series A bar: 3 sites, cohort outcomes, embedded distribution CAC"
+  ],
+  "business_model": [
+    "Primary: PMPM from practices / risk entities ($15-$25 target)",
+    "Secondary: shared savings / quality where contracts allow",
+    "Not primary: consumer DTC subscription at scale",
+    "Target 70%+ gross margin; CAC via practice-embedded distribution"
+  ],
+  "competition": {
+    "our_advantages": [
+      "Only quadrant: practice-embedded + post-treatment survivorship OS",
+      "Breast HR+ protocols + CPT stack (PIN/CCM/RPM) — not content or chemo nav",
+      "Outcomes + utilization data moat vs OncoveryCare point solution"
+    ],
+    "competitors": [
+      "X-axis: DTC/employer vs oncology practice & VBC",
+      "Y-axis: treatment navigation vs post-treatment survivorship",
+      "OncoveryCare (closest), Thyme/Navigating Cancer (treatment/VBC)",
+      "Included/Transcarent/Midi (DTC or point tools)"
+    ]
+  },
+  "team": [
+    "CEO: [Name] — oncology / digital health operator",
+    "Clinical: [Advisor] — breast oncologist or survivorship NP",
+    "Product: [Name] — regulated health SaaS + EHR",
+    "Commercial: [Name] — community oncology / VBC partnerships"
+  ],
+  "financials": [
+    "Raising: $4.0M seed round",
+    "Use: 45% product/clinical · 35% GTM/pilots · 15% ops/reg · 5% buffer",
+    "18 mo: 3 live sites, HR+ pilot outcomes, ARR path to Series A",
+    "Contact: [founder@company.com]"
+  ]
+}

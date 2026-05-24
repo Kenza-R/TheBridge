@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bridge Survivorship — Seed Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+      background: #080c14;
+      height: 100%;
+    }
+    body { height: 100%; -webkit-font-smoothing: antialiased; }
+
+    :root {
+      --ink: #0c1220;
+      --ink-soft: rgba(12, 18, 32, 0.62);
+      --ink-faint: rgba(12, 18, 32, 0.38);
+      --line: rgba(12, 18, 32, 0.1);
+      --line-med: rgba(12, 18, 32, 0.16);
+      --rose: #c43d5a;
+      --rose-soft: #fce8ec;
+      --teal: #0d7a8c;
+      --teal-soft: #e6f6f8;
+      --pad: clamp(1.4rem, 3.2vw, 2.8rem);
+      --t-hero: clamp(2.4rem, 6.5vw, 5.2rem);
+      --t-head: clamp(1.5rem, 3.2vw, 2.75rem);
+      --t-sub: clamp(1rem, 1.8vw, 1.35rem);
+      --t-body: clamp(0.92rem, 1.35vw, 1.12rem);
+      --t-sm: clamp(0.72rem, 1vw, 0.88rem);
+      --t-stat: clamp(2rem, 4.5vw, 3.5rem);
+    }
+
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      scroll-snap-align: start;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+
+    .frame {
+      width: min(100vw, calc(100dvh * 16 / 9));
+      height: min(100dvh, calc(100vw * 9 / 16));
+      background: #fff;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 80px rgba(0,0,0,0.55);
+    }
+
+    .brand-bar {
+      flex-shrink: 0;
+      height: clamp(2.4rem, 7.5%, 3.2rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--pad);
+      border-bottom: 1px solid var(--line-med);
+      background: rgba(255,255,255,0.97);
+      z-index: 10;
+    }
+    .brand-bar.on-dark {
+      background: rgba(12, 18, 32, 0.55);
+      border-color: rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+    }
+    .logo {
+      font-family: 'Inter Tight', sans-serif;
+      font-weight: 700;
+      font-size: var(--t-sm);
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .logo span { color: var(--rose); }
+    .brand-bar.on-dark .logo { color: #fff; }
+    .brand-bar.on-dark .logo span { color: #f9a8b4; }
+    .sn {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: var(--t-sm);
+      color: var(--ink-faint);
+      letter-spacing: 0.14em;
+    }
+    .brand-bar.on-dark .sn { color: rgba(255,255,255,0.35); }
+
+    .body-full {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--pad);
+      overflow: hidden;
+    }
+
+    .body-split {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1fr 42%;
+      overflow: hidden;
+    }
+
+    .content-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--pad);
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .visual-col {
+      position: relative;
+      height: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--pad);
+    }
+
+    .label {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: var(--t-sm);
+      font-weight: 600;
+      color: var(--rose);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .label.lt { color: #f9a8b4; }
+
+    h1 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: var(--t-hero);
+      font-weight: 400;
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    h1.wh { color: #fff; }
+    h1 em { font-style: italic; color: var(--rose); }
+    h1.wh em { color: #fda4af; }
+
+    h2 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: var(--t-head);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      max-width: 16ch;
+    }
+    h2.wh { color: #fff; max-width: none; }
+
+    .lead {
+      font-size: var(--t-sub);
+      color: var(--ink-soft);
+      line-height: 1.45;
+      margin-top: 0.75rem;
+      max-width: 38ch;
+    }
+    .lead.wh { color: rgba(255,255,255,0.82); }
+
+    .items {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(0.5rem, 1.2vh, 0.85rem);
+      margin-top: clamp(0.75rem, 2vh, 1.25rem);
+    }
+    .item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75em;
+      font-size: var(--t-body);
+      color: var(--ink-soft);
+      line-height: 1.45;
+    }
+    .item strong { color: var(--ink); font-weight: 600; }
+    .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--rose);
+      flex-shrink: 0;
+      margin-top: 0.45em;
+    }
+
+    .cards-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(0.6rem, 1.2vw, 1rem);
+      margin-top: 1rem;
+      flex: 1;
+      min-height: 0;
+      align-content: start;
+    }
+    .card {
+      background: #f8f9fc;
+      border: 1px solid var(--line-med);
+      border-radius: 12px;
+      padding: clamp(0.85rem, 1.5vw, 1.2rem);
+    }
+    .card.accent {
+      background: var(--rose-soft);
+      border-color: rgba(196, 61, 90, 0.2);
+    }
+    .card .cv {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: var(--t-stat);
+      font-weight: 700;
+      color: var(--rose);
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+    .card .cv.teal { color: var(--teal); }
+    .card .cl {
+      font-size: var(--t-body);
+      font-weight: 600;
+      color: var(--ink);
+      margin-top: 0.35rem;
+    }
+    .card .cx {
+      font-size: var(--t-sm);
+      color: var(--ink-soft);
+      margin-top: 0.35rem;
+      line-height: 1.4;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: clamp(0.6rem, 1.2vw, 1rem);
+      margin-top: 1rem;
+      width: 100%;
+    }
+    .stat-box {
+      background: linear-gradient(135deg, #0c1220 0%, #1a2d4a 100%);
+      color: #fff;
+      border-radius: 14px;
+      padding: clamp(1rem, 2vw, 1.4rem);
+    }
+    .stat-box .v {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .stat-box .v span { font-size: 0.55em; opacity: 0.7; font-weight: 500; }
+    .stat-box .l {
+      font-size: var(--t-sm);
+      opacity: 0.75;
+      margin-top: 0.4rem;
+      line-height: 1.35;
+    }
+
+    .flow {
+      display: flex;
+      gap: 0.5rem;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+    .flow-step {
+      flex: 1;
+      background: #fff;
+      border: 2px solid var(--line-med);
+      border-radius: 10px;
+      padding: 0.75rem 0.5rem;
+      text-align: center;
+      position: relative;
+    }
+    .flow-step:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      right: -0.65rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--rose);
+      font-weight: 700;
+      font-size: 1rem;
+      z-index: 2;
+    }
+    .flow-step .fn {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: var(--t-sm);
+      font-weight: 700;
+      color: var(--rose);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .flow-step .fd {
+      font-size: clamp(0.65rem, 0.95vw, 0.78rem);
+      color: var(--ink-soft);
+      margin-top: 0.35rem;
+      line-height: 1.3;
+    }
+
+    .panel-gradient {
+      background: linear-gradient(160deg, #0c1220 0%, #1e3a5f 45%, #c43d5a 120%);
+      color: #fff;
+    }
+    .panel-gradient.soft {
+      background: linear-gradient(145deg, var(--teal-soft) 0%, var(--rose-soft) 100%);
+    }
+    .panel-gradient .big-quote {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+      line-height: 1.15;
+      font-style: italic;
+      max-width: 14ch;
+    }
+    .panel-gradient .big-num {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(4rem, 12vw, 8rem);
+      font-weight: 700;
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      opacity: 0.95;
+    }
+    .panel-gradient .big-cap {
+      font-size: var(--t-sub);
+      opacity: 0.8;
+      margin-top: 0.5rem;
+      max-width: 22ch;
+      line-height: 1.4;
+    }
+
+    .tam-rings {
+      width: min(100%, 280px);
+      aspect-ratio: 1;
+    }
+
+    .map-wrap {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1.4em 1fr;
+      grid-template-rows: 1fr 1.6em;
+      margin-top: 0.75rem;
+    }
+    .map-y {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+    .map-area {
+      position: relative;
+      border: 1px solid var(--line-med);
+      border-left: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+      background: #fafbfc;
+      min-height: 140px;
+    }
+    .map-area::before, .map-area::after {
+      content: "";
+      position: absolute;
+      background: var(--line);
+    }
+    .map-area::before { top: 50%; left: 0; right: 0; height: 1px; }
+    .map-area::after { left: 50%; top: 0; bottom: 0; width: 1px; }
+    .map-area .q-win {
+      position: absolute;
+      top: 0; right: 0;
+      width: 50%; height: 50%;
+      background: rgba(196, 61, 90, 0.06);
+      pointer-events: none;
+    }
+    .map-area .qtag {
+      position: absolute;
+      font-size: 0.58rem;
+      font-weight: 600;
+      color: var(--ink-faint);
+      line-height: 1.25;
+      max-width: 38%;
+      pointer-events: none;
+    }
+    .map-area .qtag.tl { top: 6px; left: 6px; }
+    .map-area .qtag.tr { top: 6px; right: 6px; text-align: right; color: var(--rose); }
+    .map-area .qtag.bl { bottom: 6px; left: 6px; }
+    .map-area .qtag.br { bottom: 6px; right: 6px; text-align: right; }
+    .map-x {
+      grid-column: 2;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-soft);
+      padding-top: 0.35rem;
+    }
+    .mp {
+      position: absolute;
+      transform: translate(-50%, 50%);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--ink-soft);
+      white-space: nowrap;
+      padding: 0.2em 0.45em;
+      background: rgba(255,255,255,0.92);
+      border-radius: 4px;
+      border: 1px solid var(--line);
+    }
+    .mp.us {
+      background: var(--ink);
+      color: #fff;
+      border-color: var(--ink);
+      font-size: 0.78rem;
+      padding: 0.35em 0.6em;
+      box-shadow: 0 4px 16px rgba(12,18,32,0.25);
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.85rem;
+      margin-top: 1rem;
+      width: 100%;
+    }
+    .person {
+      display: flex;
+      gap: 0.85rem;
+      align-items: center;
+      padding: 0.85rem;
+      background: #f8f9fc;
+      border-radius: 12px;
+      border: 1px solid var(--line-med);
+    }
+    .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--rose));
+      flex-shrink: 0;
+    }
+    .person .pn { font-weight: 700; font-size: var(--t-body); color: var(--ink); }
+    .person .pr { font-size: var(--t-sm); color: var(--ink-soft); margin-top: 0.15rem; line-height: 1.35; }
+
+    .ask-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.25rem;
+      width: 100%;
+      max-width: 720px;
+    }
+    .ask-block {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 14px;
+      padding: 1.1rem 1.25rem;
+    }
+    .ask-block h3 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: var(--t-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #fda4af;
+      margin-bottom: 0.5rem;
+    }
+    .ask-block p {
+      font-size: var(--t-body);
+      color: rgba(255,255,255,0.9);
+      line-height: 1.45;
+    }
+
+    .cover-slide .frame { background: var(--ink); }
+    .cover-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 20%, rgba(196, 61, 90, 0.35) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 50% at 10% 90%, rgba(13, 122, 140, 0.25) 0%, transparent 50%),
+        var(--ink);
+    }
+    .cover-body {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: var(--pad);
+      padding-bottom: clamp(2rem, 5vh, 3.5rem);
+    }
+    .cover-meta {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .cover-pill {
+      font-size: var(--t-sm);
+      font-weight: 600;
+      color: rgba(255,255,255,0.7);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 0.4em 0.9em;
+      border-radius: 100px;
+    }
+
+    .progress {
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      gap: 6px;
+      padding: 8px 14px;
+      background: rgba(12,18,32,0.85);
+      border-radius: 100px;
+      backdrop-filter: blur(8px);
+    }
+    .progress a {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      text-indent: -999px;
+      overflow: hidden;
+    }
+    .progress a:hover { background: rgba(255,255,255,0.5); }
+
+    .foot {
+      font-size: var(--t-sm);
+      color: var(--ink-faint);
+      margin-top: auto;
+      padding-top: 0.75rem;
+    }
+
+    @media (max-width: 900px) {
+      .body-split { grid-template-columns: 1fr; }
+      .visual-col { min-height: 180px; }
+      .cards-2, .team-grid, .ask-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="progress" aria-label="Slides">
+    <a href="#s1">1</a><a href="#s2">2</a><a href="#s3">3</a><a href="#s4">4</a>
+    <a href="#s5">5</a><a href="#s6">6</a><a href="#s7">7</a><a href="#s8">8</a>
+    <a href="#s9">9</a><a href="#s10">10</a><a href="#s11">11</a>
+  </nav>
+
+  <!-- 01 COVER -->
+  <section class="slide cover-slide" id="s1">
+    <div class="frame">
+      <div class="cover-bg"></div>
+      <header class="brand-bar on-dark">
+        <div class="logo">Bridge <span>Survivorship</span></div>
+        <span class="sn">01 / 11</span>
+      </header>
+      <div class="cover-body">
+        <p class="label lt">Seed round · Confidential</p>
+        <h1 class="wh">Survivorship OS for <em>community oncology</em></h1>
+        <p class="lead wh">Post-treatment care infrastructure — starting with HR+ breast cancer, embedded in the practices that already own the patient relationship.</p>
+        <div class="cover-meta">
+          <span class="cover-pill">$4M seed</span>
+          <span class="cover-pill">B2B2C · Value-based oncology</span>
+          <span class="cover-pill">founder@company.com</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 PROBLEM (+ why now) -->
+  <section class="slide" id="s2">
+    <div class="frame">
+      <header class="brand-bar">
+        <div class="logo">Bridge <span>Survivorship</span></div>
+        <span class="sn">02 / 11</span>
+      </header>
+      <div class="body-split">
+        <div class="content-col">
+          <p class="label">Problem</p>
+          <h2>Treatment ends.<br>Survivorship doesn’t scale.</h2>
+          <div class="cards-2" style="margin-bottom:0.75rem;">
+            <div class="card accent">
+              <div class="cv">18.6M</div>
+              <div class="cl">US survivors → 22M+ by 2035</div>
+            </div>
+            <div class="card">
+              <div class="cv teal">59%</div>
+              <div class="cl">Moderate fear of recurrence</div>
+            </div>
+          </div>
+          <div class="items" style="margin-top:0.5rem;">
+            <div class="item"><span class="dot"></span><span>Breast: menopause, sexual health, fatigue, sleep — under-treated after active care</span></div>
+            <div class="item"><span class="dot"></span><span>Value-based oncology needs post-treatment ROI; SCPs rarely change behavior or utilization</span></div>
+          </div>
+        </div>
+        <div class="visual-col panel-gradient soft">
+          <p class="big-quote" style="color:var(--ink);font-style:italic;">“I finished chemo. Nobody owns what happens next.”</p>
+          <p style="margin-top:1.25rem;font-size:var(--t-sub);font-weight:600;color:var(--teal);">53.5M global 5-yr prevalence — demand exceeds capacity (IARC)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 SOLUTION -->
+  <section class="slide" id="s3">
+    <div class="frame">
+      <header class="brand-bar">
+        <div class="logo">Bridge <span>Survivorship</span></div>
+        <span class="sn">03 / 11</span>
+      </header>
+      <div class="body-full">
+        <p class="label">Solution</p>
+        <h2 style="max-width:none;">A reimbursable survivorship <span style="color:var(--rose)">service line</span> — not another patient app</h2>
+        <div class="stat-grid" style="max-width:900px;">
+          <div class="stat-box">
+            <div class="v">Embed</div>
+            <div class="l">Inside community oncology workflow — enroll at treatment completion</div>
+          </div>
+          <div class="stat-box">
+            <div class="v">Protocol</div>
+            <div class="l">NP-led pathways: endocrine side effects, FCR, coordination (NCCN-aligned)</div>
+          </div>
+          <div class="stat-box">
+            <div class="v">Prove</div>
+            <div class="l">Symptom burden + engagement + utilization impact for VBC contracts</div>
+          </div>
+          <div class="stat-box" style="background:linear-gradient(135deg,#c43d5a,#8b2d42);">
+            <div class="v">Wedge</div>
+            <div class="l">HR+ / HER2− breast first — expand only after cohort outcomes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 PRODUCT -->
+  <section class="slide" id="s4">
+    <div class="frame">
+      <header class="brand-bar">
+        <div class="logo">Bridge <span>Survivorship</span></div>
+        <span class="sn">04 / 11</span>
+      </header>
+      <div class="body-full">
+        <p class="label">Product</p>
+        <h2 style="max-width:none;">Five modules. One operating system.</h2>
+        <div class="flow">
+          <div class="flow-step"><div class="fn">Enroll</div><div class="fd">Cohort at discharge</div></div>
+          <div class="flow-step"><div class="fn">Track</div><div class="fd">PROs &amp; alerts</div></div>
+          <div class="flow-step"><div class="fn">Act</div><div class="fd">Pathways + NP</div></div>
+          <div class="flow-step"><div class="fn">Report</div><div class="fd">Panel for MD</div></div>
+          <div class="flow-step"><div class="fn">Prove</div><div class="fd">Outcomes ROI</div></div>
+        </div>
+        <div class="cards-2" style="margin-top:1.25rem;max-width:900px;">
+          <div class="card">
+            <div class="cl">What the oncologist sees</div>
+            <div class="cx">Risk-stratified list: who needs visit vs. self-manage — not another inbox</div>
+          </div>
+          <div class="card accent">
+            <div class="cl">What the survivor gets</div>
+            <div class="cx">Structured support for symptoms the treatment team no longer has bandwidth to own</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 TRACTION -->
+  <section class="slide" id="s5">
+    <div class="frame">
+      <header class="brand-bar">
+        <div class="logo">Bridge <span>Survivorship</span></div>
+        <span class="sn">05 / 11</span>
+      </header>
+      <div class="body-full">
+        <p class="label">Traction</p>
+        <h2 style="max-width:none;">Pre-seed — clear proof plan</h2>
+        <div class="stat-grid" style="max-width:100%;">
+          <div class="card">
+            <div class="cl">Today</div>
+            <div class="cx" style="font-size:var(--t-body);margin-top:0.5rem;">Diligence-backed wedge · clinical advisors forming · category mapped</div>
+          </div>
+          <div class="card accent">
+            <div class="cl">90 days</div>
+            <div class="cx" style="font-size:var(--t-body);margin-top:0.5rem;"><strong>2 design-partner LOIs</strong> — community oncology networks</div>
+          </div>
+          <div class="card">
+            <div class="cl">6 months</div>
+            <div class="cx" style="font-size:var(--t-body);margin-top:0.5rem;">HR+ breast pilot · symptom burden + engagement endpoints</div>
+          </div>
+          <div class="card" style="background:var(--ink);border-color:var(--ink);">
+            <div class="cl" style="color:#fff;">Series A bar</div>
+            <div class="cx" style="color:rgba(255,255,255,0.75);font-size:var(--t-body);margin-top:0.5rem;">3 live sites · cohort outcomes · embedded-channel CAC</div>
+          </div>
+        </div>
+        <p class="foot">Replace with real LOIs / pilots before YC or investor meetings</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 MARKET -->
+  <section class="slide" id="s6">
+    <div class="frame">
+      <header class="brand-bar">
+        <div class="logo">Bridge <span>Survivorship</span></div>
+        <span class="sn">06 / 11</span>
+      </header>
+      <div class="body-split">
+        <div class="content-col">
+          <p class="label">Market · bottom-up (US)</p>
+          <h2 style="max-width:none;">All cancer survivors — breast is where we start</h2>
+          <div class="card accent" style="margin-top:0.5rem;">
+            <div class="cl" style="font-size:var(--t-sm);text-transform:uppercase;letter-spacing:0.08em;color:var(--rose);">TAM · all US cancer survivors</div>
+            <div class="cv" style="font-size:clamp(1.2rem,2.4vw,1.75rem);margin:0.35rem 0;">18.6M × $400–$900/yr</div>
+            <div class="cl" style="font-size:var(--t-head);margin-top:0.25rem;">= $7.4B – $16.7B</div>
+            <div class="cx">$/yr = blended addressable billable services (PIN, CCM, RPM, BHI) — not platform PMPM alone. See CPT build-up.</div>
+          </div>
+          <div class="items" style="margin-top:0.65rem;">
+            <div class="item"><span class="dot"></span><span><strong>CPT basis:</strong> G0023 ~$79/mo + 99490 ~$60 + 99457/99484 ~$48 each (Medicare 2024) → up to ~$2.8k/yr gross; blended for eligibility &amp; capture</span></div>
+            <div class="item"><span class="dot"></span><span><strong>SAM</strong> $2.4–5.6B — ~6–8M reachable lives × $400–$700/yr</span></div>
+            <div class="item"><span class="dot"></span><span><strong>SOM (5 yr)</strong> $45–156M ARR — 250k–600k lives × $180–$260 <em>platform</em> PMPM</span></div>
+            <div class="item"><span class="dot"></span><span><strong>Beachhead</strong> ~4.3M breast survivors — first protocol, not TAM count</span></div>
+          </div>
+          <p class="foot">No standalone SCP-only CPT · ACS 2025 · ACCC/CMS PIN table 2024 · MARKET_PRICING_CPT.md</p>
+        </div>
+        <div class="visual-col" style="background:#f8f9fc;flex-direction:column;gap:0.75rem;">
+          <svg class="tam-rings" viewBox="0 0 200 200" aria-label="TAM SAM SOM">
+            <circle cx="100" cy="100" r="88" fill="none" stroke="#e2e8f0" stroke-width="2"/>
+            <circle cx="100" cy="100" r="88" fill="rgba(196,61,90,0.08)"/>
+            <text x="100" y="24" text-anchor="middle" font-family="Inter Tight,sans-serif" font-size="9" font-weight="700" fill="#c43d5a">TAM</text>
+            <text x="100" y="36" text-anchor="middle" font-family="Inter Tight,sans-serif" font-size="8" font-weight="600" fill="#64748b">18.6M all survivors</text>
+            <text x="100" y="48" text-anchor="middle" font-family="Inter Tight,sans-serif" font-size="8" font-weight="600" fill="#64748b">$7.4–16.7B</text>
+            <circle cx="100" cy="100" r="62" fill="rgba(13,122,140,0.12)" stroke="#0d7a8c" stroke-width="2"/>
+            <text x="100" y="58" text-anchor="middle" font-family="Inter Tight,sans-serif" font-size="8" font-weight="600" fill="#0d7a8c">SAM $2.4–5.6B</text>
+            <circle cx="100" cy="100" r="36" fill="#c43d5a"/>
+            <text x="100" y="94" text-anchor="middle" font-family="Inter Tight,sans-serif" font-size="8" font-weight="700" fill="#fff">SOM</text>
+            <text x="100" y="106" text-anchor="middle" font-family="Inter Tight,sans-serif" font-size="7" font-weight="600" fill="#fff">250–600k</text>
+            <circle cx="118" cy="118" r="10" fill="#0d7a8c" stroke="#fff" stroke-width="2"/>
+            <text x="100" y="168" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#0d7a8c">● Wedge 4.3M breast (start)</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 BUSINESS MODEL -->
+  <section class="slide" id="s7">
+    <div class="frame">
+      <header class="brand-bar">
+        <div class="logo">Bridge <span>Survivorship</span></div>
+        <span class="sn">07 / 11</span>
+      </header>
+      <div class="body-split">
+        <div class="content-col">
+          <p class="label">Business model</p>
+          <h2>PMPM + performance — not DTC</h2>
+          <div class="card accent" style="margin-top:1rem;">
+            <div class="cv">$15–25</div>
+            <div class="cl">Target PMPM per managed survivor</div>
+            <div class="cx">Sold to practices &amp; risk-bearing entities — survivor does not pay at scale</div>
+          </div>
+          <div class="items">
+            <div class="item"><span class="dot"></span><span>Secondary: shared savings &amp; quality bonuses where contracts allow</span></div>
+            <div class="item"><span class="dot"></span><span>70%+ gross margin target · CAC via embedded distribution</span></div>
+          </div>
+        </div>
+        <div class="visual-col panel-gradient">
+          <p class="big-quote" style="font-style:normal;font-size:clamp(1.2rem,2.5vw,1.8rem);">Revenue follows <em style="font-style:italic;color:#fda4af;">lives under management</em> — not ad impressions or consumer subscriptions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 GTM -->
+  <section class="slide" id="s8">
+    <div class="frame">
+      <header class="brand-bar">
+        <div class="logo">Bridge <span>Survivorship</span></div>
+        <span class="sn">08 / 11</span>
+      </header>
+      <div class="body-split">
+        <div class="content-col">
+          <p class="label">Go-to-market</p>
+          <h2>Land inside community oncology</h2>
+          <div class="items">
+            <div class="item"><span class="dot"></span><span><strong>ICP:</strong> Value-based community oncology (EOM / MA / commercial risk)</span></div>
+            <div class="item"><span class="dot"></span><span><strong>Champion:</strong> Breast oncologist + survivorship NP</span></div>
+            <div class="item"><span class="dot"></span><span><strong>Motion:</strong> One service line per practice — enroll at treatment completion</span></div>
+            <div class="item"><span class="dot"></span><span><strong>Not:</strong> Broad DTC, viral consumer growth, or “all cancers day one”</span></div>
+          </div>
+        </div>
+        <div class="visual-col panel-gradient soft">
+          <div class="stat-box" style="width:100%;background:var(--ink);">
+            <div class="v">3</div>
+            <div class="l">Anchor sites in 18 months — proof before expansion</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 COMPETITION -->
+  <section class="slide" id="s9">
+    <div class="frame">
+      <header class="brand-bar">
+        <div class="logo">Bridge <span>Survivorship</span></div>
+        <span class="sn">09 / 11</span>
+      </header>
+      <div class="body-full">
+        <p class="label">Competition</p>
+        <h2 style="max-width:none;">Only one quadrant is <span style="color:var(--rose)">practice-embedded post-treatment</span></h2>
+        <p class="lead" style="max-width:72ch;margin-bottom:0.5rem;font-size:var(--t-sm);">
+          <strong>X — Distribution:</strong> who sells &amp; delivers (patient/employer DTC ← → oncology practice &amp; VBC payer).
+          <strong style="margin-left:0.75em;">Y — Job:</strong> built for active treatment navigation ← → built for survivorship after treatment ends.
+        </p>
+        <div class="map-wrap" style="max-width:920px;margin-top:0.35rem;">
+          <div class="map-y">Post-treatment survivorship ↑</div>
+          <div class="map-area" style="min-height:200px;">
+            <div class="q-win"></div>
+            <span class="qtag tl">DTC symptom &amp; wellness tools</span>
+            <span class="qtag tr">Survivorship OS in oncology workflow</span>
+            <span class="qtag bl">Communities &amp; content</span>
+            <span class="qtag br">Treatment-era nav &amp; VBC</span>
+            <!-- Bottom-left: DTC, not survivorship-in-practice -->
+            <span class="mp" style="left:16%;bottom:18%;">Communities</span>
+            <span class="mp" style="left:30%;bottom:28%;">Included · Transcarent</span>
+            <!-- Top-left: survivorship-adjacent but not practice channel -->
+            <span class="mp" style="left:24%;bottom:62%;">Midi · point apps</span>
+            <!-- Bottom-right: embedded but treatment-phase -->
+            <span class="mp" style="left:68%;bottom:22%;">Navigating Cancer</span>
+            <span class="mp" style="left:78%;bottom:38%;">Thyme Care</span>
+            <span class="mp" style="left:58%;bottom:32%;">Canopy</span>
+            <!-- Top-right: survivorship + practice -->
+            <span class="mp" style="left:80%;bottom:70%;">OncoveryCare</span>
+            <span class="mp us" style="left:90%;bottom:82%;">Bridge</span>
+          </div>
+          <div></div>
+          <div class="map-x">
+            <span>← Patient &amp; employer (DTC)</span>
+            <span>Oncology practice &amp; VBC payer →</span>
+          </div>
+        </div>
+        <div class="cards-2" style="margin-top:0.65rem;max-width:920px;">
+          <div class="card">
+            <div class="cl">Closest rival</div>
+            <div class="cx" style="font-size:var(--t-body);margin-top:0.35rem;"><strong>OncoveryCare</strong> — virtual survivorship clinic in community oncology (validated wedge, narrower OS)</div>
+          </div>
+          <div class="card accent">
+            <div class="cl">Why Bridge wins</div>
+            <div class="cx" style="font-size:var(--t-body);margin-top:0.35rem;">Breast HR+ protocols + billable CPT stack (PIN/CCM/RPM) + outcomes data — not content or treatment navigation</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 TEAM -->
+  <section class="slide" id="s10">
+    <div class="frame">
+      <header class="brand-bar">
+        <div class="logo">Bridge <span>Survivorship</span></div>
+        <span class="sn">10 / 11</span>
+      </header>
+      <div class="body-full">
+        <p class="label">Team</p>
+        <h2 style="max-width:none;">Built for regulated oncology distribution</h2>
+        <div class="team-grid" style="max-width:880px;">
+          <div class="person"><div class="avatar"></div><div><div class="pn">[CEO Name]</div><div class="pr">Oncology / digital health operator</div></div></div>
+          <div class="person"><div class="avatar"></div><div><div class="pn">[Clinical Advisor]</div><div class="pr">Breast oncologist or survivorship NP</div></div></div>
+          <div class="person"><div class="avatar"></div><div><div class="pn">[Product Lead]</div><div class="pr">Health SaaS · EHR integrations</div></div></div>
+          <div class="person"><div class="avatar"></div><div><div class="pn">[Commercial Lead]</div><div class="pr">Community oncology · VBC partnerships</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 ASK -->
+  <section class="slide" id="s11">
+    <div class="frame" style="background:var(--ink);">
+      <header class="brand-bar on-dark">
+        <div class="logo">Bridge <span>Survivorship</span></div>
+        <span class="sn">11 / 11</span>
+      </header>
+      <div class="body-full">
+        <p class="label lt">The ask</p>
+        <h1 class="wh" style="font-size:clamp(3rem,8vw,6rem);">$4M <em>seed</em></h1>
+        <div class="ask-grid">
+          <div class="ask-block">
+            <h3>Use of funds</h3>
+            <p>45% product &amp; clinical · 35% GTM &amp; pilots · 15% ops &amp; regulatory · 5% buffer</p>
+          </div>
+          <div class="ask-block">
+            <h3>18-month outcomes</h3>
+            <p>3 live community oncology sites · HR+ cohort results · ARR path to Series A</p>
+          </div>
+        </div>
+        <p class="lead wh" style="margin-top:1.5rem;">founder@company.com</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('keydown', (e) => {
+      const slides = [...document.querySelectorAll('.slide')];
+      const i = slides.findIndex(s => {
+        const r = s.getBoundingClientRect();
+        return r.top >= -80 && r.top < window.innerHeight / 2;
+      });
+      if (e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        if (i < slides.length - 1) slides[i + 1].scrollIntoView({ behavior: 'smooth' });
+      }
+      if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        e.preventDefault();
+        if (i > 0) slides[i - 1].scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  </script>
+</body>
+</html>

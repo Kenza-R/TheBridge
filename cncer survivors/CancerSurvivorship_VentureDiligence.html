@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cancer Survivorship Platform - Venture Diligence Memo</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --ink: #111827;
+      --muted: #4b5563;
+      --line: #dbe2ea;
+      --blue: #1d4ed8;
+      --green: #047857;
+      --amber: #92400e;
+      --red: #b91c1c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      line-height: 1.5;
+    }
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 20px 56px;
+    }
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 55%, #1d4ed8 100%);
+      color: #fff;
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 18px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(30px, 5vw, 50px);
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+    }
+    .sub {
+      margin: 0;
+      opacity: 0.93;
+      font-size: 16px;
+      max-width: 920px;
+    }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .metric {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 14px;
+      padding: 12px;
+    }
+    .metric .v { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+    .metric .l { font-size: 12px; opacity: 0.9; }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 14px 0;
+    }
+    h2 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+    h3 {
+      margin: 14px 0 8px;
+      font-size: 16px;
+    }
+    p { margin: 0 0 10px; }
+    ul { margin: 8px 0 0; padding-left: 20px; }
+    li { margin-bottom: 6px; }
+    .callout {
+      border-left: 4px solid var(--blue);
+      background: #eff6ff;
+      border-radius: 10px;
+      padding: 12px;
+      margin: 10px 0;
+    }
+    .good { color: var(--green); font-weight: 700; }
+    .warn { color: var(--amber); font-weight: 700; }
+    .bad { color: var(--red); font-weight: 700; }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 13px;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      padding: 8px;
+      vertical-align: top;
+    }
+    th {
+      background: #f3f4f6;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 11px;
+      color: #374151;
+    }
+    .small { font-size: 12px; color: var(--muted); }
+    .score {
+      font-size: 30px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+    @media (max-width: 980px) {
+      .metrics, .grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <p class="small" style="color:#dbeafe;margin:0 0 6px;">Investment Committee Memo - Venture Diligence</p>
+      <h1>Cancer Survivorship Companion Platform</h1>
+      <p class="sub">
+        Focus: post-treatment survivorship operating system (starting with breast cancer survivors), not active treatment, diagnostics, or chemo navigation.
+      </p>
+      <div class="metrics">
+        <div class="metric"><div class="v">$7.4–16.7B</div><div class="l">US TAM (18.6M survivors × $400–900/yr CPT-backed)</div></div>
+        <div class="metric"><div class="v">$2.4–5.6B</div><div class="l">SAM (6–8M reachable members)</div></div>
+        <div class="metric"><div class="v">$15–25</div><div class="l">Platform PMPM / managed member (Bridge fee)</div></div>
+        <div class="metric"><div class="v">4.3M</div><div class="l">US breast survivors — beachhead wedge (ACS 2025)</div></div>
+      </div>
+    </header>
+
+    <section>
+      <h2>1) Executive Verdict</h2>
+      <ul>
+        <li><strong>Venture-scale opportunity:</strong> <span class="warn">Conditional yes</span>. Survivorship is large and growing, but broad "all-in-one survivorship app" is unlikely to be venture-grade.</li>
+        <li><strong>Biggest strength:</strong> high unmet needs after treatment where oncology systems are fragmented and PCP handoff is weak.</li>
+        <li><strong>Biggest weakness:</strong willingness-to-pay fragmentation and low moat if product starts as content/coaching without workflow integration.</li>
+        <li><strong>Strongest wedge:</strong> HR+/HER2- breast survivorship with endocrine side effects (menopause/sexual health/sleep/fatigue) + fear of recurrence + care coordination.</li>
+        <li><strong>Weakest assumption:</strong that survivors will pay DTC at scale for long periods when many free communities and point solutions already exist.</li>
+        <li><strong>Recommended first model:</strong> oncology-practice and payer-aligned B2B2C (not pure DTC).</li>
+        <li><strong>Recommended first buyer:</strong large community oncology networks participating in value-based models (EOM/MA/commercial risk).</li>
+        <li><strong>Breast-first vs multi-cancer:</strong breast-first is correct; multi-cancer too early dilutes clinical credibility.</li>
+      </ul>
+      <div class="callout">
+        <strong>Recommendation:</strong> <span class="warn">Build differently.</span> Do not launch as a generic survivorship super-app. Launch as a narrowly scoped survivorship service line tied to measurable clinical and utilization outcomes.
+      </div>
+    </section>
+
+    <section>
+      <h2>2) Problem Analysis</h2>
+      <h3>Scale of Survivorship</h3>
+      <ul>
+        <li>US survivors: 18.6M in 2025, projected &gt;22M by 2035 (ACS).</li>
+        <li>US breast survivors: ~4.3M in 2025, projected ~5.3M by 2035 (ACS).</li>
+        <li>Global 5-year prevalence: ~53.5M (IARC GLOBOCAN 2022).</li>
+      </ul>
+      <h3>Clinical unmet needs (selected evidence)</h3>
+      <ul>
+        <li><strong>Fear of recurrence:</strong> ~59% moderate FCR; ~19% high/clinical FCR across cancer survivors/patients.</li>
+        <li><strong>Sexual dysfunction:</strong commonly 30-80% in breast survivorship literature; high burden around desire, lubrication, dyspareunia.</li>
+        <li><strong>Fatigue:</strong ~43% overall prevalence; severe fatigue ~22% in pooled analyses.</li>
+        <li><strong>Sleep:</strong pooled prevalence in breast survivors ~40% (wide range), and high during active treatment periods.</li>
+      </ul>
+      <h3>Mental health and psychosocial burden</h3>
+      <ul>
+        <li>Depression and anxiety remain elevated in survivors versus non-cancer controls.</li>
+        <li>PTSD/stress-related symptoms are present and can persist years post-treatment.</li>
+      </ul>
+      <h3>Financial survivorship burden</h3>
+      <ul>
+        <li>Financial hardship among survivors is common; studies report substantial material and psychological burden.</li>
+        <li>Work disruption is meaningful: ~41% of employed survivors report at least one cancer-related employment change.</li>
+      </ul>
+      <h3>Why survivorship remains fragmented</h3>
+      <ul>
+        <li>SCPs are mandated/encouraged but evidence of outcome improvement is weak in multiple systematic reviews.</li>
+        <li>SCP implementation is resource-heavy and not consistently reimbursed as a dedicated standalone service.</li>
+        <li>Oncology teams are throughput-optimized for treatment, not longitudinal survivorship behavior change.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>3) Market Size (US first)</h2>
+      <p>Two sizing lenses are shown intentionally: broad theoretical demand and realistic near-term serviceability.</p>
+      <table>
+        <thead>
+          <tr><th>Layer</th><th>Method</th><th>Assumption</th><th>Range</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>TAM (all US cancer survivors)</td>
+            <td>Bottom-up (CPT-backed)</td>
+            <td>18.6M survivors x $400-$900/yr addressable billable services (PIN G0023, CCM 99490, RPM 99457/99454, BHI 99484; blended capture — see pitch-deck/MARKET_PRICING_CPT.md)</td>
+            <td>$7.4B-$16.7B</td>
+          </tr>
+          <tr>
+            <td>SAM (digitally reachable + insured + post-treatment focus)</td>
+            <td>Bottom-up</td>
+            <td>~6M-8M members x $400-$700 annual</td>
+            <td>$2.4B-$5.6B</td>
+          </tr>
+          <tr>
+            <td>SOM (5-year realistic)</td>
+            <td>Execution-based</td>
+            <td>250k-600k managed members x $180-$260 annual realized revenue</td>
+            <td>$45M-$156M ARR</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="small">Interpretation: venture outcomes are plausible only if model captures institutional distribution and proves cost/quality impact, not via content subscriptions alone. <strong>There is no standalone CPT for “survivorship care plan only”</strong> — SCP work is usually bundled into E/M or care-management codes; TAM uses the billable stack practices can run post-treatment (PIN, CCM, RPM, BHI).</p>
+
+      <h3>Per-member economics (CPT-backed, Medicare 2024 national avg.)</h3>
+      <table>
+        <thead>
+          <tr><th>Layer</th><th>What it measures</th><th>$/member/month</th><th>$/member/year</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Gross billable (PIN only)</td>
+            <td>HCPCS <span class="mono">G0023</span> — 60 min principal illness navigation; cancer qualifies</td>
+            <td>~$79</td>
+            <td>~$950</td>
+          </tr>
+          <tr>
+            <td>Gross billable (PIN + CCM)</td>
+            <td><span class="mono">G0023</span> + CPT <span class="mono">99490</span> (20+ min; 2+ chronic conditions)</td>
+            <td>~$139</td>
+            <td>~$1,670</td>
+          </tr>
+          <tr>
+            <td>Gross billable (full stack)</td>
+            <td>PIN + CCM + RPM (<span class="mono">99454/99457</span>) + BHI (<span class="mono">99484</span>); distinct documented time</td>
+            <td>~$235</td>
+            <td>~$2,820</td>
+          </tr>
+          <tr>
+            <td>Blended TAM input</td>
+            <td>All payers; partial eligibility &amp; capture — used for market size</td>
+            <td>~$33–75</td>
+            <td><strong>$400–900</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Bridge platform fee</strong></td>
+            <td>PMPM charged to practice / risk entity (not survivor DTC)</td>
+            <td><strong>$15–25</strong></td>
+            <td><strong>$180–260</strong></td>
+          </tr>
+          <tr>
+            <td>SOM revenue (5 yr)</td>
+            <td>250k–600k managed members on platform fee</td>
+            <td>—</td>
+            <td><strong>$45M–156M ARR</strong></td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="small">Key codes: G0023 $78.92, G0024 $49.45/30 min, 99490 ~$60, 99457 ~$48, 99484 ~$48 (CMS CY2024 / ACCC PIN table). Same minutes cannot be double-counted. Full detail: <span class="mono">pitch-deck/MARKET_PRICING_CPT.md</span>.</p>
+
+      <h3>Breast-first serviceable wedge</h3>
+      <table>
+        <thead><tr><th>Segment</th><th>Population base</th><th>Monetization logic</th></tr></thead>
+        <tbody>
+          <tr><td>Breast survivors (US)</td><td>~4.3M</td><td>Most coherent initial protocolized survivorship pathway</td></tr>
+          <tr><td>HR+/endocrine-heavy subset</td><td>Sub-segment</td><td>High symptom persistence + longitudinal follow-up need</td></tr>
+          <tr><td>Employer-covered survivors</td><td>Large but distributed</td><td>Possible channel, but procurement and ROI proof are non-trivial</td></tr>
+        </tbody>
+      </table>
+      <h3>International expansion signal</h3>
+      <ul>
+        <li><strong>UK:</strong> ~3.5M people living with cancer (Macmillan).</li>
+        <li><strong>Canada:</strong> &gt;1.5M living with or beyond cancer (CCS/PHAC).</li>
+        <li><strong>Germany:</strong> ~1.6M (5-year), ~4.5M over longer horizon estimates.</li>
+        <li><strong>Saudi Arabia:</strong> ~94,951 5-year prevalent cases (GLOBOCAN).</li>
+        <li><strong>Morocco:</strong> ~63,609 5-year prevalent cases (GLOBOCAN).</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>4) Competition Landscape</h2>
+      <table>
+        <thead>
+          <tr><th>Company/group</th><th>Product focus</th><th>Buyer</th><th>Funding/scale signal</th><th>Threat</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>OncoveryCare</td><td>Virtual survivorship clinic, transitions of care</td><td>Oncology practices</td><td>$4.5M seed; expansion with Tennessee Oncology</td><td>Direct high</td></tr>
+          <tr><td>Thyme Care</td><td>Value-based oncology infrastructure incl. survivorship</td><td>Payers/employers/providers</td><td>$275M total, strategic investors</td><td>High</td></tr>
+          <tr><td>Canopy</td><td>Oncology RTM and between-visit care</td><td>Oncology practices</td><td>Raised capital, large provider footprint claims</td><td>Medium-high</td></tr>
+          <tr><td>Reimagine Care</td><td>AI + 24/7 virtual oncology symptom management</td><td>Health systems/practices/plans</td><td>$25M Series A (publicly announced)</td><td>Medium-high</td></tr>
+          <tr><td>Included Health / Transcarent</td><td>Employer navigation + cancer programs</td><td>Employers/plans</td><td>Large capital and distribution</td><td>High channel threat</td></tr>
+          <tr><td>Midi / Maven / menopause health</td><td>Midlife and women health platforms</td><td>Employers/plans/DTC</td><td>Unicorn-scale valuations and broad distribution</td><td>Adjacent high</td></tr>
+          <tr><td>Breastcancer.org / communities</td><td>Free support and education</td><td>Users/nonprofit</td><td>Entrenched audience trust</td><td>High substitution risk</td></tr>
+          <tr><td>Navigating Cancer + OneOncology</td><td>Portal/PRO/care management in community oncology</td><td>Practices/MSOs</td><td>Acquired by OneOncology (2024)</td><td>Workflow lock-in threat</td></tr>
+          <tr><td>Epic/Flatiron incumbency effects</td><td>Data/workflow and oncology software ecosystem</td><td>Providers/life sciences</td><td>Flatiron acquired by Roche ($1.9B)</td><td>Platform power</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Special deep dives (requested)</h3>
+      <p><strong>OncoveryCare:</strong> clear signal of market validation: survivorship-specific clinical model, oncology anchor partner, and active expansion in community oncology footprint.</p>
+      <p><strong>Pathway.care:</strong> evidence quality is weak/ambiguous. Publicly discoverable data points to <span class="mono">patientpathway.care</span> (a nonprofit CANCER101 navigation resource), while "Pathway" search results often refer to unrelated clinical-reference or precision-medicine startups. <span class="warn">Investment implication: do not anchor strategy on unclear competitor intelligence; verify legal entity and cap table directly.</span></p>
+      <p><strong>Pivot pattern across category:</strong> survivorship-only products often drift toward broader navigation, employer channels, or risk-based oncology operations because pure survivorship support monetization is difficult at scale.</p>
+    </section>
+
+    <section>
+      <h2>5) Why Now (Bull and Bear)</h2>
+      <div class="grid-2">
+        <div>
+          <h3>Bull case</h3>
+          <ul>
+            <li>Survivor population is large and rising.</li>
+            <li>Value-based oncology models fund between-visit services.</li>
+            <li>Women's health investment momentum enables menopause and sexual-health wedges.</li>
+            <li>AI allows low-friction personalization and triage at scale.</li>
+            <li>Provider burnout and workforce shortages increase appetite for outsourced survivorship operations.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Bear case</h3>
+          <ul>
+            <li>Not every survivor qualifies for every code (CCM needs 2+ conditions; PIN/CCM consent; no minute double-counting).</li>
+            <li>Oncology practices prioritize active-treatment economics before survivorship optimization.</li>
+            <li>Generic navigation incumbents can add survivorship modules quickly.</li>
+            <li>DTC retention can be weak once acute post-treatment fear window passes.</li>
+            <li>Clinical heterogeneity across tumor types can break product simplicity.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>6) Business Model Analysis</h2>
+      <table>
+        <thead><tr><th>Model</th><th>CAC and sales motion</th><th>Retention</th><th>Defensibility</th><th>Venture viability</th></tr></thead>
+        <tbody>
+          <tr><td>A) DTC subscription</td><td>High CAC in crowded channels</td><td>Volatile</td><td>Low-medium</td><td class="bad">Weak alone</td></tr>
+          <tr><td>B) Oncology clinics</td><td>Moderate enterprise sales</td><td>Higher if embedded in workflow</td><td>Medium-high</td><td class="good">Strong candidate</td></tr>
+          <tr><td>C) Hospitals</td><td>Long procurement cycles</td><td>Stable contracts</td><td>Medium</td><td class="warn">Possible but slow</td></tr>
+          <tr><td>D) Employers</td><td>Benefits broker distribution needed</td><td>Annual rebid risk</td><td>Medium</td><td class="warn">Useful channel, not first</td></tr>
+          <tr><td>E) Payers</td><td>Complex contracting</td><td>High if risk-sharing works</td><td>High potential</td><td class="good">Strong, but later</td></tr>
+          <tr><td>F) Hybrid marketplace</td><td>Two-sided complexity</td><td>Liquidity risk</td><td>Unclear</td><td class="bad">Too early</td></tr>
+          <tr><td>G) Navigation infrastructure</td><td>B2B platform motion</td><td>High if integrated</td><td>Higher via workflow data moat</td><td class="good">Best long-term architecture</td></tr>
+        </tbody>
+      </table>
+      <div class="callout"><strong>Recommended:</strong> Start as survivorship-focused workflow extension for oncology practices; evolve toward payer-aligned oncology infrastructure. Price Bridge at <strong>$15–25 PMPM per managed survivor</strong> (~15–25% of gross billable pool unlocked via CPT stack); avoid DTC membership pricing as primary model.</div>
+
+      <h3>Managed-member pricing summary</h3>
+      <table>
+        <thead><tr><th>Buyer</th><th>Bridge charges</th><th>Practice can bill (illustrative)</th><th>Net logic</th></tr></thead>
+        <tbody>
+          <tr><td>Community oncology / MSO</td><td>$15–25 PMPM ($180–300/yr)</td><td>$950–2,820/yr gross Medicare stack if fully utilized</td><td>Platform fee + staff time savings + VBC upside</td></tr>
+          <tr><td>Payer / risk entity (later)</td><td>PMPM or shared savings</td><td>Utilization + quality bonuses</td><td>Requires 6–12 mo outcomes data</td></tr>
+          <tr><td>Survivor (DTC)</td><td class="bad">Not primary</td><td>N/A</td><td>Weak WTP vs free communities; high CAC</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>7) Product Strategy</h2>
+      <h3>Best MVP wedge</h3>
+      <ul>
+        <li>Breast survivorship track focused on endocrine side effects, menopausal symptoms, sexual/vaginal health, sleep/fatigue, fear of recurrence.</li>
+        <li>Structured weekly ePRO capture + risk stratification + escalation playbooks.</li>
+        <li>Nurse/coach escalation layer with oncology clinical governance.</li>
+        <li>Survivorship care-plan execution tracking (not just document generation).</li>
+      </ul>
+      <h3>Do NOT build first</h3>
+      <ul>
+        <li>Broad cross-cancer marketplace.</li>
+        <li>Beauty and commerce heavy features.</li>
+        <li>Standalone social community as core moat.</li>
+        <li>Deep EMR integrations before proving engagement/outcomes in lightweight integration environments.</li>
+      </ul>
+      <h3>AI defensibility opportunities</h3>
+      <ul>
+        <li>Personalized survivorship trajectories from longitudinal symptom-response data.</li>
+        <li>Protocol-aware recommendation engine tied to NCCN-informed survivorship domains.</li>
+        <li>Risk flags for dropout, unmanaged toxicity, and escalating distress.</li>
+      </ul>
+      <p class="small">AI is not moat by itself; proprietary longitudinal survivorship outcome data + embedded workflows are the moat candidates.</p>
+    </section>
+
+    <section>
+      <h2>8) Clinical and Regulatory</h2>
+      <ul>
+        <li><strong>FDA boundary:</strong> keep scope in coaching/navigation/supportive care. Avoid diagnostic or treatment recommendation claims that trigger SaMD risk.</li>
+        <li><strong>HIPAA:</strong> assume HIPAA-grade architecture if integrated with provider workflows or claims data.</li>
+        <li><strong>Liability:</strong> clear escalation protocols for severe mental distress, suicidality, and high-risk symptom reports.</li>
+        <li><strong>NCCN alignment:</strong> directly map product domains to survivorship guideline areas (sexual health, menopausal symptoms, psychosocial distress, fatigue, sleep, care coordination).</li>
+        <li><strong>Interoperability:</strong> phase integrations: (1) no-EMR intake + portal upload, (2) scheduling/labs/med list interfaces, (3) deeper FHIR events where ROI justifies.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>9) Go-To-Market</h2>
+      <h3>Best beachhead</h3>
+      <p>Breast cancer survivors age 35-60 in community oncology networks with existing value-based contracts and high endocrine therapy volumes.</p>
+      <h3>Buying committee</h3>
+      <ul>
+        <li><strong>Economic buyer:</strong> practice CEO/CFO or payer medical leader (for risk contracts).</li>
+        <li><strong>Clinical champion:</strong> breast oncologist + survivorship NP lead.</li>
+        <li><strong>Operational owner:</strong> navigation director/care management lead.</li>
+      </ul>
+      <h3>Pilot design</h3>
+      <ul>
+        <li>6-month pilot, 300-800 survivors across 2-4 sites.</li>
+        <li>Primary metrics: engagement, symptom burden trajectory, ED/inpatient utilization deltas, completion of key survivorship interventions.</li>
+        <li>Secondary metrics: fear-of-recurrence, sleep/fatigue score changes, return-to-work support utilization.</li>
+      </ul>
+      <p><strong>CAC reality:</strong> low consumer CAC is unlikely; distribution must piggyback on existing patient flow via oncology partners or payer navigation channels.</p>
+    </section>
+
+    <section>
+      <h2>10) Strategic Risks</h2>
+      <table>
+        <thead><tr><th>Risk</th><th>Severity</th><th>Why it matters</th><th>Mitigation</th></tr></thead>
+        <tbody>
+          <tr><td>Too-broad product scope</td><td>High</td><td>Kills focus, clinical quality, and unit economics</td><td>Narrow wedge and phased expansion</td></tr>
+          <tr><td>Weak payer/provider ROI proof</td><td>High</td><td>No contract renewal leverage</td><td>Hard outcomes + economic model from day 1</td></tr>
+          <tr><td>Incumbent feature replication</td><td>High</td><td>Navigation platforms can copy UI quickly</td><td>Data + workflow embedding + outcomes publishing</td></tr>
+          <tr><td>Engagement decay over time</td><td>Medium-high</td><td>Survivorship is long horizon behavior challenge</td><td>Risk-based cadence and intervention personalization</td></tr>
+          <tr><td>Clinical credibility gaps</td><td>Medium-high</td><td>Oncology referrals stall without trust</td><td>Publish protocols and outcomes with oncology partners</td></tr>
+          <tr><td>Marketplace liquidity failure</td><td>Medium</td><td>Supply-demand mismatch for services</td><td>Avoid early two-sided marketplace model</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>11) International Comparison</h2>
+      <table>
+        <thead><tr><th>Market</th><th>Survivorship maturity</th><th>Reimbursement posture</th><th>Adoption outlook</th></tr></thead>
+        <tbody>
+          <tr><td>US</td><td>High demand, fragmented delivery</td><td>Mixed (commercial + VBC paths)</td><td class="good">Best initial scale market</td></tr>
+          <tr><td>UK</td><td>Large survivor base, NHS constraints</td><td>Centralized but budget-tight</td><td class="warn">Good partnerships, slower cycles</td></tr>
+          <tr><td>Canada</td><td>Strong prevalence, public systems</td><td>Provincial complexity</td><td class="warn">Selective opportunities</td></tr>
+          <tr><td>France/Germany</td><td>Mature oncology systems</td><td>Regulated reimbursement pathways</td><td class="warn">Needs localization and evidence</td></tr>
+          <tr><td>Gulf</td><td>Growing oncology capacity</td><td>Mix public/private, variable</td><td class="good">Possible premium pilots</td></tr>
+          <tr><td>Morocco/MENA frontier</td><td>Need is real, infrastructure variable</td><td>Budget constraints</td><td class="bad">Partnership/grant led only near term</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>12) Case Studies and Lessons</h2>
+      <ul>
+        <li><strong>OncoveryCare:</strong> validates survivorship care gap and provider willingness to adopt when model is clinical and integrated with oncology operations.</li>
+        <li><strong>Navigating Cancer acquisition:</strong> indicates strategic value of oncology workflow and patient engagement infrastructure more than standalone wellness products.</li>
+        <li><strong>Thyme Care trajectory:</strong> capital flowed to organizations tied to payer-provider incentives and total cost accountability, not narrow content apps.</li>
+        <li><strong>Midi/Maven analog:</strong> women-focused health can scale when payer/employer distribution, insurance coverage, and clinical pathways are strong.</li>
+        <li><strong>Pathway.care ambiguity:</strong> unclear competitor identity itself is a diligence warning; avoid narrative risk by verifying entity-level evidence before competitive claims.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>13) Final Recommendation</h2>
+      <p><strong>Verdict:</strong> <span class="warn">Build differently.</span> This can be venture-scale if built as survivorship workflow infrastructure with measurable outcomes, not as a broad consumer survivorship app.</p>
+      <p><strong>Recommended wedge:</strong> endocrine/menopause/sexual-health/FCR program for breast survivors in oncology practice channels.</p>
+      <p><strong>Recommended model:</strong> B2B2C through oncology groups and risk-bearing payers; DTC as supporting intake/engagement layer only.</p>
+      <p><strong>30-day validation plan:</strong></p>
+      <ul>
+        <li>Interview 20 survivors, 20 oncology leaders, 20 payer/employer stakeholders.</li>
+        <li>Prototype one protocolized care pathway and test usability + willingness-to-refer.</li>
+        <li>Model economic impact with partner baseline data (ED, admissions, symptom burden).</li>
+        <li>Secure one design-partner LOI with defined pilot success metrics.</li>
+      </ul>
+      <h3>Interview Guides</h3>
+      <p><strong>20 survivor questions:</strong> What symptoms are most disruptive? Which problems were ignored after treatment? What triggers contact with clinicians? What support did you seek but fail to find? Would you use structured symptom check-ins? How often? What privacy boundaries matter? Would you invite partner/caregiver? What sexual health questions remain unanswered? How did menopause management fail? What fear-of-recurrence moments are worst? What financial issues appeared after treatment? What return-to-work barriers persisted? What care coordination tasks are hardest? What would make you abandon an app? What support format do you trust most (NP, coach, peer)? Which recommendations feel credible? What is your willingness to pay? What should your oncologist see vs not see? What is one measurable outcome that would prove value to you?</p>
+      <p><strong>20 oncologist/practice questions:</strong> Which survivorship complaints consume the most staff time? What is your current post-treatment follow-up model? Where do SCPs fail in practice? What outcomes would justify budget? Which CPT/HCPCS pathways do you already bill? What utilization pain points matter most (ED, admissions)? What does your EHR workflow tolerate? What alerts are acceptable vs noise? Which patients should be enrolled first? What legal concerns block adoption? What staffing constraints exist? How would referrals work operationally? What data must be chart-integrated? What implementation timeline is acceptable? What denominator and benchmark do you trust? What would make you churn in year 1? How do you define clinical accountability boundaries? What payer contracts could this support? What role should APPs play? What publication/evidence threshold is required for scale-up?</p>
+      <p><strong>20 employer/payer questions:</strong> Which cancer cost buckets are highest today? How much spend occurs post-treatment? What outcomes matter most (trend PMPM, productivity, disability, retention)? What benefit overlap concerns exist? Would you contract PMPM, case-rate, or outcomes-based? What utilization benchmarks trigger expansion? What data-sharing constraints exist? What populations would you start with? What minimum member volume is needed? What integration requirements with navigation vendors exist? Which vendors are incumbents? Why would you switch? What savings horizon is acceptable? How do you value quality-of-life outcomes? What member engagement thresholds are acceptable? Which compliance requirements are mandatory? What contract term is preferred? What are top reasons pilots fail? What executive sponsor function owns this budget? What is required to move from pilot to enterprise rollout?</p>
+      <p><strong>10 investor diligence questions:</strong> Is there a repeatable wedge with high urgency? Can this exceed $100M ARR without becoming a services-heavy margin trap? Is distribution proprietary or rented? What is measured clinical/economic impact at 6 and 12 months? How strong is retention by cohort? What cannot incumbents replicate in 12 months? Is there data network effect potential? Are regulatory boundaries clean? Is there a credible path from breast-first to multi-cancer without product sprawl? Who are likely acquirers if IPO path fails (oncology MSOs, navigation platforms, payer-tech, digital health consolidators)?</p>
+      <div class="callout">
+        <strong>Conviction score: <span class="score">6.5 / 10</span></strong><br />
+        Increases to 8+ only if the company proves: (1) superior survivorship outcomes vs usual care, (2) utilization and cost impact, and (3) workflow lock-in with low churn in oncology enterprise channels.
+      </div>
+    </section>
+
+    <section>
+      <h2>Source Appendix (Selected)</h2>
+      <ul class="small">
+        <li>ACS survivorship prevalence and projections: https://www.cancer.org/research/cancer-facts-statistics/survivor-facts-figures.html</li>
+        <li>ACS fast facts 2025 PDF: https://www.cancer.org/content/dam/cancer-org/research/cancer-facts-and-statistics/cancer-treatment-and-survivorship-facts-and-figures/2025/treatment-and-survival-2025-fast-facts-stats.pdf</li>
+        <li>SEER breast prevalence: https://seer.cancer.gov/statfacts/html/breast.html</li>
+        <li>IARC GLOBOCAN world fact sheet: https://gco.iarc.who.int/media/globocan/factsheets/populations/900-world-fact-sheet.pdf</li>
+        <li>Fear of recurrence meta-analysis: https://pmc.ncbi.nlm.nih.gov/articles/PMC9321869/</li>
+        <li>Sexual dysfunction cohort in breast survivors: https://pmc.ncbi.nlm.nih.gov/articles/PMC10382144/</li>
+        <li>Sleep disturbance in breast survivors review: https://pubmed.ncbi.nlm.nih.gov/31346744/</li>
+        <li>Cancer-related fatigue meta-analysis: https://pmc.ncbi.nlm.nih.gov/articles/PMC10406927/</li>
+        <li>Financial toxicity PDQ: https://www.cancer.gov/about-cancer/managing-care/track-care-costs/financial-toxicity-hp-pdq</li>
+        <li>CDC financial hardship among survivors: https://www.cdc.gov/mmwr/volumes/68/wr/mm6822a2.htm</li>
+        <li>Employment outcomes among US survivors: https://pmc.ncbi.nlm.nih.gov/articles/PMC7745836/</li>
+        <li>NCCN survivorship insights 2024: https://jnccn.org/view/journals/jnccn/22/10/article-p648.xml?print=</li>
+        <li>SCP meta-analysis: https://pmc.ncbi.nlm.nih.gov/articles/PMC7011634/</li>
+        <li>OncoveryCare seed + Tennessee Oncology: https://www.oncoverycare.com/resources/oncoverycare-partners-with-tennessee-oncology-and-raises-4-5m-seed-round-from-406-ventures</li>
+        <li>Thyme Care Series D: https://blog.thymecare.com/press/97m-series-d-backed-by-strategic-investors-across-the-oncology-ecosystem-positions-thyme-care-to-break-through-cancer-cares-biggest-bottlenecks</li>
+        <li>Navigating Cancer acquisition by OneOncology: https://www.prnewswire.com/news-releases/navigating-cancer-accelerates-investments-to-enhance-care-management-platform-for-providers-and-patients-302235542.html</li>
+        <li>ACCC/CMS PIN reimbursement table (G0023, G0024, 2024 rates): https://www.accc-cancer.org/docs/projects/comprehensive-cancer-care-survey/the-centers-for-medicare-medicaid-services-will-pay-for-patient-navigation-now-what.pdf</li>
+        <li>ACS PIN payment FAQ: https://www.cancer.org/content/dam/cancer-org/online-documents/en/pdf/brochures/acs-lion-pin-payment-faq-01-22-24.pdf</li>
+        <li>CMS chronic care management FAQs (99490, 99491): https://www.cms.gov/files/document/chronic-care-management-faqs.pdf</li>
+        <li>Community Oncology Alliance CCM guide: https://communityoncology.org/downloads/can/pdfs/COA_CCM.pdf</li>
+        <li>CMS EOM MEOS details: https://www.cms.gov/priorities/innovation/innovation-models/eom</li>
+        <li>Flatiron acquisition by Roche ($1.9B): https://www.roche.com/media/releases/med-cor-2018-02-15</li>
+        <li>Midi funding and growth: https://www.prnewswire.com/news-releases/midi-health-the-fastest-growing-virtual-clinic-for-perimenopause-and-menopause-raises-an-additional-60m-in-series-b-round--100m-total-funding-to-date--to-transform-womens-healthcare-302125839.html</li>
+        <li>Maven Series F and valuation: https://www.prnewswire.com/news-releases/maven-clinic-announces-125-million-series-f-round-of-funding-to-chart-the-next-decade-of-innovation-in-womens-and-family-health-302269566.html</li>
+        <li>Patient Pathway nonprofit identity: https://www.patientpathway.care/about-us</li>
+        <li>UK prevalence (Macmillan): https://www.macmillan.org.uk/about-us/what-we-do/research/cancer-prevalence</li>
+        <li>Canada prevalence (CCS/PHAC): https://cancer.ca/en/about-us/media-releases/2022/canadian-cancer-statistics-special-report-2022</li>
+        <li>Germany prevalence overview: https://www.krebsdaten.de/Krebs/EN/Content/Cancer_sites/All_cancers/all_cancers_node.html</li>
+        <li>Saudi Arabia GLOBOCAN fact sheet: https://gco.iarc.who.int/media/globocan/factsheets/populations/682-saudi-arabia-fact-sheet.pdf</li>
+        <li>Morocco GLOBOCAN fact sheet: https://gco.iarc.who.int/media/globocan/factsheets/populations/504-morocco-fact-sheet.pdf</li>
+      </ul>
+      <p class="small">
+        Note: Several figures in literature vary due to differing definitions (e.g., survivorship window, patient mix, instrument cutoffs). Ranges are shown where heterogeneity is high.
+      </p>
+    </section>
+  </main>
+</body>
+</html>
