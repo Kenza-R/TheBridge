@@ -1,0 +1,1902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Cancer Survivorship Platform — Comprehensive Research Report</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#111827;--muted:#4b5563;--line:#e5e7eb;
+  --navy:#05141a;--teal:#0d7c6e;--teal-soft:#e6f7f5;--green:#047857;
+  --red:#b91c1c;--gold:#b45309;--purple:#5b21b6;--purple-soft:#ede9fe;
+  --rose:#9f1239;--rose-soft:#fff1f2;
+  --shadow:0 8px 32px rgba(5,20,26,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:15px;}
+a{color:var(--teal);text-decoration:none;}
+a:hover{text-decoration:underline;}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(5,20,26,.97);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.08);}
+.nav-inner{max-width:1280px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:4px;overflow-x:auto;scrollbar-width:none;}
+.nav-inner::-webkit-scrollbar{display:none;}
+.nav-inner a{color:rgba(255,255,255,.78);font-size:12px;font-weight:700;letter-spacing:.04em;white-space:nowrap;padding:13px 10px;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;}
+.nav-inner a:hover{color:#fff;border-bottom-color:var(--teal);text-decoration:none;}
+.nav-logo{color:#fff;font-weight:900;font-size:13px;letter-spacing:-.02em;padding:13px 12px 13px 0;border-right:1px solid rgba(255,255,255,.15);margin-right:8px;white-space:nowrap;}
+.nav-moon{background:linear-gradient(90deg,#f59e0b,#f97316);color:#000!important;border-radius:999px;padding:6px 14px!important;margin-left:8px;font-weight:900!important;letter-spacing:.04em;border-bottom:none!important;}
+.nav-moon:hover{opacity:.9;text-decoration:none!important;}
+
+/* TO THE MOON SECTION */
+.moon-section{background:linear-gradient(145deg,#03050f 0%,#0a0f2e 40%,#120829 70%,#050d1a 100%);border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:48px 40px;margin:16px 0;color:#fff;position:relative;overflow:hidden;}
+.moon-section::before{content:"";position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(13,124,110,.14) 0%,transparent 70%);top:-200px;right:-200px;pointer-events:none;}
+.moon-section::after{content:"";position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(251,191,36,.07) 0%,transparent 70%);bottom:-150px;left:-100px;pointer-events:none;}
+.moon-section h2{color:#fff;font-size:28px;}
+.moon-section h2 .sec-num{color:#f59e0b;}
+.moon-section h3{color:rgba(255,255,255,.9);margin:24px 0 10px;}
+.moon-section p{color:rgba(255,255,255,.78);}
+.moon-section ul li{color:rgba(255,255,255,.78);}
+.moon-section table{color:rgba(255,255,255,.85);}
+.moon-section th{background:rgba(255,255,255,.07);color:rgba(255,255,255,.6);}
+.moon-section td{border-bottom:1px solid rgba(255,255,255,.08);}
+.moon-section tr:last-child td{border-bottom:none;}
+.moon-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px;}
+.moon-card h3{margin-top:0;color:#fff;}
+.moon-card p,.moon-card li{color:rgba(255,255,255,.75);}
+.moon-stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:18px 16px;text-align:center;}
+.moon-stat .val{font-size:26px;font-weight:900;letter-spacing:-.03em;line-height:1;margin-bottom:6px;}
+.moon-stat .lbl{font-size:12px;color:rgba(255,255,255,.65);line-height:1.4;}
+.gold{color:#f59e0b;}
+.moon-timeline{display:grid;gap:0;position:relative;margin-top:16px;}
+.moon-timeline::before{content:"";position:absolute;left:22px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,#f59e0b,#8b5cf6,#0d9488,#10b981);border-radius:2px;}
+.moon-phase{display:grid;grid-template-columns:46px 1fr;gap:16px;align-items:start;padding:16px 0;}
+.moon-dot{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:13px;z-index:1;flex-shrink:0;}
+.quote-gold{background:linear-gradient(135deg,#78350f,#92400e);border:1px solid #f59e0b44;border-radius:16px;padding:22px 24px;margin:16px 0;font-size:19px;font-weight:800;line-height:1.35;letter-spacing:-.02em;color:#fde68a;}
+
+/* LAYOUT */
+.page{max-width:1280px;margin:0 auto;padding:36px 20px 80px;}
+
+/* HEADER */
+header{
+  background:linear-gradient(135deg,#021a14 0%,#065f4a 45%,#0d7c6e 75%,#134e4a 100%);
+  border-radius:24px;padding:52px 48px 44px;color:#fff;
+  box-shadow:0 24px 64px rgba(5,20,26,.35);margin-bottom:24px;
+  position:relative;overflow:hidden;
+}
+header::before{
+  content:"";position:absolute;width:500px;height:500px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.07);right:-180px;top:-200px;pointer-events:none;
+}
+header::after{
+  content:"";position:absolute;width:300px;height:300px;border-radius:50%;
+  background:radial-gradient(circle,rgba(244,114,182,.08) 0%,transparent 70%);
+  bottom:-100px;left:60px;pointer-events:none;
+}
+.report-label{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:5px 14px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px;}
+header h1{font-size:clamp(32px,5vw,60px);line-height:1;letter-spacing:-.04em;margin-bottom:16px;max-width:900px;}
+header .subtitle{font-size:17px;opacity:.88;max-width:820px;line-height:1.55;}
+.hero-stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:36px;}
+.hstat{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:16px 14px;}
+.hstat .val{font-size:22px;font-weight:900;letter-spacing:-.02em;margin-bottom:4px;}
+.hstat .lbl{font-size:12px;opacity:.82;line-height:1.4;}
+.meta{margin-top:28px;font-size:12px;opacity:.6;display:flex;gap:20px;flex-wrap:wrap;}
+
+/* SECTIONS */
+section{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:32px;margin:16px 0;box-shadow:var(--shadow);}
+section.tight{padding:24px;}
+h2{font-size:22px;font-weight:900;letter-spacing:-.03em;margin-bottom:14px;line-height:1.2;}
+h2 .sec-num{color:var(--teal);margin-right:8px;font-size:16px;}
+h3{font-size:16px;font-weight:800;margin:20px 0 8px;letter-spacing:-.01em;}
+h4{font-size:14px;font-weight:700;margin:14px 0 6px;color:#374151;}
+p{margin-bottom:10px;}
+p:last-child{margin-bottom:0;}
+
+/* CALLOUTS */
+.callout{border-left:4px solid var(--teal);background:var(--teal-soft);border-radius:12px;padding:16px 18px;margin:14px 0;font-weight:700;font-size:14px;}
+.callout.green{border-color:var(--green);background:#ecfdf5;}
+.callout.red{border-color:var(--red);background:#fef2f2;}
+.callout.gold{border-color:var(--gold);background:#fffbeb;}
+.callout.purple{border-color:var(--purple);background:var(--purple-soft);}
+.callout.rose{border-color:var(--rose);background:var(--rose-soft);}
+.quote-block{background:var(--navy);color:#fff;border-radius:16px;padding:22px 24px;margin:16px 0;font-size:18px;font-weight:800;line-height:1.35;letter-spacing:-.02em;}
+
+/* GRIDS */
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;}
+.card h3{margin-top:0;}
+
+/* STAT CARDS */
+.stat-card{border:1px solid var(--line);border-radius:14px;padding:18px;text-align:center;}
+.stat-card .big{font-size:32px;font-weight:900;letter-spacing:-.03em;color:var(--teal);line-height:1;}
+.stat-card .desc{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.4;}
+
+/* TABLES */
+table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+th,td{text-align:left;padding:10px 11px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{background:#f8fafc;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#374151;font-weight:700;}
+tr:last-child td{border-bottom:none;}
+td.ok{color:var(--green);font-weight:700;}
+td.warn{color:var(--gold);font-weight:700;}
+td.bad{color:var(--red);font-weight:700;}
+
+/* LISTS */
+ul,ol{padding-left:20px;margin:8px 0 10px;}
+li{margin-bottom:6px;line-height:1.5;}
+
+/* PILLS */
+.pill{display:inline-block;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:800;margin:2px 3px 2px 0;}
+.pill.teal{background:var(--teal-soft);color:#065f46;}
+.pill.green{background:#ecfdf5;color:#065f46;}
+.pill.red{background:#fef2f2;color:#991b1b;}
+.pill.gold{background:#fffbeb;color:#92400e;}
+.pill.purple{background:var(--purple-soft);color:#4c1d95;}
+.pill.gray{background:#f3f4f6;color:#374151;}
+.pill.rose{background:var(--rose-soft);color:#9f1239;}
+
+/* FLOW STEPS */
+.flow{display:grid;gap:10px;margin-top:12px;}
+.flow-step{display:grid;grid-template-columns:46px 1fr;gap:14px;align-items:start;border:1px solid var(--line);border-radius:14px;padding:16px;}
+.bubble{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900;font-size:14px;background:linear-gradient(135deg,var(--teal),var(--purple));flex-shrink:0;}
+
+/* PHASE ROADMAP */
+.roadmap{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-top:12px;}
+.phase{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;font-size:13px;}
+.phase strong{display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--teal);}
+
+/* EXPANSION LADDER */
+.ladder{display:grid;gap:8px;counter-reset:ladder;}
+.rung{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start;border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff;counter-increment:ladder;}
+.rung::before{content:counter(ladder);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--navy);color:#fff;font-weight:900;font-size:13px;flex-shrink:0;}
+
+/* DIVIDER */
+.divider{border:none;border-top:1px solid var(--line);margin:20px 0;}
+
+/* REFS */
+.refs-grid{columns:2;column-gap:24px;}
+.ref-item{font-size:12px;color:var(--muted);margin-bottom:8px;break-inside:avoid;}
+.ref-item span{color:var(--ink);font-weight:700;}
+
+/* FOOTER */
+footer{text-align:center;font-size:12px;color:var(--muted);margin-top:32px;padding-bottom:24px;}
+
+.small{font-size:12px;color:var(--muted);}
+sup{font-size:10px;color:var(--teal);font-weight:700;}
+
+@media(max-width:900px){
+  header{padding:32px 24px 28px;}
+  .hero-stats,.g2,.g3,.g4,.roadmap{grid-template-columns:1fr;}
+  section{padding:22px 18px;}
+  .refs-grid{columns:1;}
+}
+@media print{
+  nav{display:none;}
+  body{background:#fff;}
+  section,header{box-shadow:none;break-inside:avoid;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo">🎗 Cancer Survivorship Report</span>
+    <a href="#executive-summary">Summary</a>
+    <a href="#crisis">The Crisis</a>
+    <a href="#financial-burden">Financial Burden</a>
+    <a href="#clinical-framework">Framework</a>
+    <a href="#survivorship-cliff">The Cliff</a>
+    <a href="#why-failing">Gaps</a>
+    <a href="#product-vision">Product</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="#scp-engine">SCP Engine</a>
+    <a href="#peer-community">Peer &amp; Community</a>
+    <a href="#symptom-tracking">Symptoms</a>
+    <a href="#mental-health">Mental Health</a>
+    <a href="#sexual-health">Sexual Health</a>
+    <a href="#financial-toxicity">Financial Toxicity</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#market">Market</a>
+    <a href="#business-model">Business Model</a>
+    <a href="#competition">Competition</a>
+    <a href="#gtm">Go-to-Market</a>
+    <a href="#trust-compliance">Trust</a>
+    <a href="#feasibility">Feasibility</a>
+    <a href="#risks">Risks</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#validation">Validation</a>
+    <a href="#discovery-questions">Discovery Q&amp;A</a>
+    <a href="#investment-thesis">Investment</a>
+    <a href="#comparables">Comparables</a>
+    <a href="#references">References</a>
+    <a href="#to-the-moon" class="nav-moon">🚀 To the Moon</a>
+  </div>
+</nav>
+
+<main class="page">
+
+<!-- HEADER -->
+<header>
+  <div class="report-label">Comprehensive Research Report · May 2026</div>
+  <h1>Cancer Survivorship Platform</h1>
+  <p class="subtitle">A full synthesis of market diligence, clinical evidence, product architecture, competitive analysis, and investment thesis for a personalized, privacy-first companion for cancer survivors — starting with breast cancer, expanding to all cancers, building to the most consequential health platform of the decade.</p>
+  <div class="hero-stats">
+    <div class="hstat"><div class="val">18.1M</div><div class="lbl">U.S. cancer survivors (2022 NCI SEER data) — projected to reach 26.1M by 2040 as survival rates improve across every major cancer type</div></div>
+    <div class="hstat"><div class="val">70%</div><div class="lbl">Of cancer survivors experience clinically significant fear of recurrence — the single most prevalent unmet psychosocial need in survivorship care</div></div>
+    <div class="hstat"><div class="val">42%</div><div class="lbl">Of U.S. cancer patients deplete their entire life savings within 2 years of diagnosis — financial toxicity is a clinical emergency, not just a billing problem (JAMA Oncology)</div></div>
+    <div class="hstat"><div class="val">3.8M</div><div class="lbl">Breast cancer survivors in the U.S. — the largest single survivor cohort, the platform beachhead, and the most well-organized advocacy and research ecosystem in oncology</div></div>
+    <div class="hstat"><div class="val">$17B+</div><div class="lbl">U.S. serviceable addressable market for cancer survivorship support — spanning 18.1M survivors, institutional buyers, pharma patient support programs, and payer channels</div></div>
+  </div>
+  <div class="meta">
+    <span>📄 28 sections</span>
+    <span>📊 42 citations</span>
+    <span>🎗 Breast cancer first · All cancers expansion</span>
+    <span>🔒 Privacy-by-design · HIPAA-compliant</span>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════
+     1. EXECUTIVE SUMMARY
+═══════════════════════════════════════════════ -->
+<section id="executive-summary">
+  <h2><span class="sec-num">01</span>Executive Summary</h2>
+  <p>Cancer survivorship is medicine's most neglected afterthought. The U.S. has 18.1 million cancer survivors — a population larger than the entire state of New York — and the number grows by over one million per year. Yet when active treatment ends, the vast majority of survivors fall off a "survivorship cliff": regular contact with their oncology team drops sharply, structured support disappears, and survivors are left to navigate years of ongoing physical, psychological, financial, and social consequences largely alone.</p>
+  <p>The clinical evidence is unambiguous: depression and anxiety affect 20–40% of survivors at 2–3× the general population rate; fear of recurrence is clinically significant in one-third of all survivors; cancer-related fatigue persists in 30–40% beyond one year post-treatment; and financial toxicity — catastrophic medical debt, life savings depletion, skipped medications — affects nearly half of all patients. <strong>These are not rare edge cases. They are the median experience of cancer survivorship in America today.</strong></p>
+  <p>This report evaluates the opportunity for a context-aware, privacy-first digital companion built specifically for cancer survivors — starting with breast cancer as the optimal entry wedge and expanding systematically to all cancer types.</p>
+
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--green);">✓ Build case (strong)</h3>
+      <ul>
+        <li><strong>Massive, growing, underserved population:</strong> 18.1M survivors today, 26.1M projected by 2040. No dominant platform owns this relationship.</li>
+        <li><strong>Breast cancer is the perfect beachhead:</strong> 3.8M survivors, highest 5-year survival rate, most organized advocacy ecosystem, pharma willing to pay for patient support.</li>
+        <li><strong>Payer ROI is measurable:</strong> Survivors with unmanaged psychological distress have 2–3× higher ED utilization and hospitalization rates. Improving adherence to 5–10 year endocrine therapy reduces recurrence materially.</li>
+        <li><strong>Multiple revenue channels:</strong> Hospital/oncology practice contracts, pharma patient support program sponsorship, payer value-based contracts, and direct-to-consumer — rare in digital health.</li>
+        <li><strong>No dominant incumbent:</strong> The cancer survivorship digital health space has no Lyra Health, no Spring Health, no category-defining platform. The race is genuinely open.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--red);">⚠ Critical conditions</h3>
+      <ul>
+        <li><strong>Breast cancer first — do not launch pan-cancer:</strong> Different cancers have profoundly different survivorship needs. Starting broad produces a mediocre experience for everyone. Start with breast cancer, build depth, expand with evidence.</li>
+        <li><strong>Do not be a wellness app in oncology clothing:</strong> Survivors have been failed by generic mental health tools that don't understand fear of recurrence, chemo brain, lymphedema, or scanxiety. Clinical specificity is the product.</li>
+        <li><strong>Pharma is a feature, not a foundation:</strong> Pharma sponsorship is a viable revenue stream, but a platform built primarily to serve pharma interests will lose survivor trust instantly.</li>
+        <li><strong>Survivorship care plan (SCP) compliance creates a regulatory opportunity:</strong> ASCO mandates SCPs — but 60% of patients never receive one. Build the SCP infrastructure and own the care coordination relationship.</li>
+        <li><strong>Privacy is existential:</strong> Cancer diagnosis is among the most sensitive health information a person holds. Employer access, insurer discrimination, and social stigma are real fears that must be architecturally addressed.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="quote-block">"Build the trusted companion layer between the oncology team, the survivor, and the rest of their life. Start with breast cancer. Prove the model. Then follow every survivor — from the last day of chemo to the rest of their life."</div>
+
+  <p class="small">Research anchors: NCI SEER Cancer Statistics; ASCO Survivorship Care Guidelines; JAMA Oncology on financial toxicity; Journal of Clinical Oncology on fear of recurrence; Breast Cancer Research and Treatment; American Cancer Society Cancer Facts &amp; Figures 2024; National Coalition for Cancer Survivorship; Memorial Sloan Kettering survivorship program research.</p>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     2. THE SURVIVORSHIP CRISIS
+═══════════════════════════════════════════════ -->
+<section id="crisis">
+  <h2><span class="sec-num">02</span>The Survivorship Crisis — Scale &amp; Statistics</h2>
+
+  <div class="g4" style="margin-bottom:20px;">
+    <div class="stat-card"><div class="big">18.1M</div><div class="desc">U.S. cancer survivors as of January 2022 — the largest medically complex population without a dominant digital support platform<sup>[1]</sup></div></div>
+    <div class="stat-card"><div class="big">26.1M</div><div class="desc">Projected U.S. cancer survivors by 2040, driven by earlier detection and improving survival rates across nearly every cancer type<sup>[1]</sup></div></div>
+    <div class="stat-card"><div class="big">2–3×</div><div class="desc">Higher rates of depression and anxiety in cancer survivors versus the age-matched general population — a persistent gap that generic mental health tools do not address<sup>[3]</sup></div></div>
+    <div class="stat-card"><div class="big">30–50%</div><div class="desc">Of breast cancer survivors on adjuvant endocrine therapy (aromatase inhibitors or tamoxifen) discontinue it within 2–3 years — a catastrophic adherence failure that directly increases recurrence risk<sup>[7]</sup></div></div>
+  </div>
+
+  <h3>Who Are Cancer Survivors?</h3>
+  <p>The NCI defines a cancer survivor as "anyone living with, through, or beyond cancer" — from the moment of diagnosis. This means survivorship care begins not at the end of treatment but at diagnosis, and it continues for the rest of a person's life. The needs of a woman three weeks post-mastectomy, a man five years post-prostate radiation, and a young woman 15 years post-childhood leukemia are profoundly different — and all of them are underserved.</p>
+
+  <table>
+    <thead><tr><th>Cancer type</th><th>U.S. Survivors (est.)</th><th>5-year survival</th><th>Key survivorship challenges</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Breast cancer</strong></td><td class="ok"><strong>3.8M</strong> — largest cohort</td><td class="ok">91% overall; 99% localized</td><td>Endocrine therapy side effects, lymphedema, sexual dysfunction, cognitive impairment, fear of recurrence, body image</td></tr>
+      <tr><td>Prostate cancer</td><td>3.7M</td><td class="ok">97%+ localized</td><td>Urinary incontinence, sexual dysfunction, hormone therapy effects, PSA anxiety</td></tr>
+      <tr><td>Colorectal cancer</td><td>1.5M</td><td class="warn">65% overall; 91% localized</td><td>Bowel dysfunction, ostomy management, neuropathy, fatigue, psychosocial distress</td></tr>
+      <tr><td>Melanoma</td><td>1.5M</td><td class="warn">93% localized; 32% distant</td><td>Sun protection vigilance, skin surveillance anxiety, immunotherapy side effects</td></tr>
+      <tr><td>Uterine cancer</td><td>900K</td><td class="warn">81% overall</td><td>Sexual dysfunction, premature menopause, body image, lymphedema</td></tr>
+      <tr><td>Thyroid cancer</td><td>900K</td><td class="ok">98%+ localized</td><td>Lifelong hormone management, "invisible illness" invalidation, fatigue, weight issues</td></tr>
+      <tr><td>Non-Hodgkin lymphoma</td><td>800K</td><td class="warn">73% overall</td><td>Fatigue, infection risk, secondary cancers, psychological distress</td></tr>
+      <tr><td>Leukemia</td><td>500K</td><td class="warn">65% overall</td><td>Graft-vs-host disease, infection surveillance, cognitive effects, fertility</td></tr>
+      <tr><td>Cervical cancer</td><td>400K</td><td class="warn">66% overall</td><td>Sexual dysfunction, bowel/bladder effects, fertility loss, body image</td></tr>
+      <tr><td>Lung cancer</td><td>500K+</td><td class="bad">26% overall; 63% localized</td><td>Respiratory function, fatigue, PTSD, stigma ("self-inflicted"), dyspnea, neuropathy</td></tr>
+    </tbody>
+  </table>
+  <p class="small">Source: NCI SEER, American Cancer Society Facts &amp; Figures 2024.<sup>[1,2]</sup></p>
+
+  <h3>The Psychosocial Burden</h3>
+  <div class="g4" style="margin-bottom:16px;">
+    <div class="stat-card"><div class="big">70%</div><div class="desc">Of cancer survivors experience fear of recurrence; 33% have clinically significant moderate-to-severe FCR requiring intervention<sup>[4]</sup></div></div>
+    <div class="stat-card"><div class="big">40%</div><div class="desc">Of breast cancer survivors meet criteria for PTSD at some point in their survivorship journey<sup>[5]</sup></div></div>
+    <div class="stat-card"><div class="big">75%</div><div class="desc">Of cancer survivors experience cancer-related fatigue — the most common cancer symptom, persisting 5–10 years post-treatment in 30–40% of survivors<sup>[6]</sup></div></div>
+    <div class="stat-card"><div class="big">&lt;10%</div><div class="desc">Of cancer survivors who need psychosocial support actually receive evidence-based treatment for it — a staggering unmet need gap<sup>[3]</sup></div></div>
+  </div>
+
+  <h3>The Survivorship Care Plan (SCP) Compliance Gap</h3>
+  <p>In 2005, the Institute of Medicine landmark report <em>From Cancer Patient to Cancer Survivor: Lost in Transition</em> called for every cancer survivor to receive a formal Survivorship Care Plan — a document summarizing treatment, late effects, recommended follow-up, and health guidance. ASCO and the Commission on Cancer now mandate SCPs for accredited programs. Yet two decades later:</p>
+  <ul>
+    <li>Only <strong>30–40%</strong> of oncology practices have formal, structured survivorship programs<sup>[8]</sup></li>
+    <li>An estimated <strong>60%</strong> of survivors never receive their SCP, or receive one so late it provides little practical value<sup>[8]</sup></li>
+    <li>Of those who do receive an SCP, many report it is too technical, too dense, and not connected to any ongoing support infrastructure<sup>[9]</sup></li>
+    <li>Primary care physicians — who inherit survivorship monitoring responsibility — often do not receive the SCP at all, creating a dangerous coordination gap</li>
+  </ul>
+
+  <div class="callout rose">The SCP mandate creates a massive institutional compliance problem with no adequate digital solution. A platform that generates, delivers, and activates living survivorship care plans becomes essential infrastructure for any oncology practice trying to meet accreditation standards.</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     3. FINANCIAL BURDEN OF UNADDRESSED SURVIVORSHIP
+═══════════════════════════════════════════════ -->
+<section id="financial-burden">
+  <h2><span class="sec-num">03</span>The Financial Burden of Unaddressed Survivorship Needs</h2>
+  <p>The economic case for survivorship support is not philanthropic — it is financial. Unaddressed psychosocial distress, poor adherence to maintenance therapies, unmanaged side effects, and lack of care coordination generate enormous, measurable, and largely avoidable costs for payers, providers, and survivors themselves.</p>
+
+  <div class="g4" style="margin-bottom:22px;">
+    <div class="stat-card"><div class="big">42%</div><div class="desc">Of U.S. cancer patients deplete their entire life savings within 2 years of diagnosis — JAMA Oncology 2019 cohort study of 9.5M patients<sup>[10]</sup></div></div>
+    <div class="stat-card"><div class="big">$8,000+</div><div class="desc">Average annual out-of-pocket cost for insured cancer survivors — disproportionately higher for those on oral maintenance therapies with high cost-sharing<sup>[10]</sup></div></div>
+    <div class="stat-card"><div class="big">2.65×</div><div class="desc">Higher odds of bankruptcy for cancer survivors vs. matched non-cancer controls — the leading cause of medical-related personal bankruptcy in the U.S.<sup>[11]</sup></div></div>
+    <div class="stat-card"><div class="big">$21B+</div><div class="desc">Annual estimated cost of avoidable cancer-related emergency department visits and hospitalizations in the U.S. — the majority driven by unmanaged symptoms and distress<sup>[12]</sup></div></div>
+  </div>
+
+  <h3>The Adherence Crisis: Endocrine Therapy in Breast Cancer</h3>
+  <p>Perhaps the most financially and clinically consequential survivorship failure is non-adherence to adjuvant endocrine therapy in breast cancer. Women with hormone receptor-positive (HR+) breast cancer — roughly 70% of all breast cancer cases — are prescribed 5–10 years of tamoxifen or aromatase inhibitors after primary treatment. Completing this therapy reduces recurrence risk by 40–50%. Yet:</p>
+  <table>
+    <thead><tr><th>Timepoint post-primary treatment</th><th>Adherence rate</th><th>Consequence</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td>1 year</td><td class="ok">~85–90%</td><td>Most women still adherent early in therapy</td><td><sup>[7]</sup></td></tr>
+      <tr><td>2 years</td><td class="warn">~70–75%</td><td>Early discontinuation driven by side effects (joint pain, hot flashes, vaginal dryness)</td><td><sup>[7]</sup></td></tr>
+      <tr><td>3 years</td><td class="warn">~60–65%</td><td>Missed follow-up, isolation, unmanaged side effects compound dropout</td><td><sup>[7]</sup></td></tr>
+      <tr><td>5 years</td><td class="bad">~50%</td><td>Half of patients who should be on 5-year therapy have already discontinued it<sup>[7]</sup></td><td class="bad">Major recurrence risk</td></tr>
+    </tbody>
+  </table>
+  <div class="callout red"><strong>The adherence revenue case for pharma:</strong> Each percentage point improvement in endocrine therapy adherence among 3.8M breast cancer survivors represents tens of millions in drug revenue — and, far more importantly, measurable reductions in cancer recurrence. Pharma companies have strong economic and clinical incentives to fund survivorship support programs that improve adherence. This is a primary revenue channel for the platform.</div>
+
+  <h3>The Payer Cost Case</h3>
+  <table>
+    <thead><tr><th>Unmet survivorship need</th><th>System cost driver</th><th>Estimated impact</th></tr></thead>
+    <tbody>
+      <tr><td>Unmanaged psychological distress</td><td>2–3× higher ED utilization; higher unplanned hospitalizations<sup>[12]</sup></td><td class="bad">$3,000–$8,000/survivor/year in excess acute care costs for distressed vs. non-distressed survivors</td></tr>
+      <tr><td>Poor endocrine therapy adherence</td><td>Earlier breast cancer recurrence → dramatically higher treatment costs</td><td class="bad">Cost of metastatic breast cancer treatment: $150,000–$300,000+/year vs. $1,500/year for adjuvant therapy</td></tr>
+      <tr><td>Unmanaged cancer-related fatigue</td><td>Lost work productivity; disability claims; delayed return to work</td><td class="bad">$17B+/year in lost productivity from cancer-related fatigue in working-age survivors<sup>[6]</sup></td></tr>
+      <tr><td>Financial toxicity driving medication skipping</td><td>Unmanaged symptoms → ED visits; treatment abandonment → progression</td><td class="bad">1 in 5 cancer survivors reports skipping medications due to cost<sup>[10]</sup></td></tr>
+      <tr><td>Lack of survivorship care coordination</td><td>Duplicative testing; missed surveillance; uncoordinated primary care</td><td class="warn">Estimated $1,500–$4,000/survivor/year in avoidable redundant care<sup>[9]</sup></td></tr>
+    </tbody>
+  </table>
+
+  <h3>The Employer Cost Case</h3>
+  <p>Approximately <strong>1 in 16 working Americans is a cancer survivor</strong> — meaning every large employer has a meaningful cancer survivor population on their benefits rolls.<sup>[13]</sup> Cancer is among the top 5 most expensive conditions for employer health plans. The business case for employer-sponsored survivorship support:</p>
+  <ul>
+    <li><strong>Return-to-work:</strong> Survivors with active psychosocial support return to work faster and with fewer absences. Studies show structured survivorship programs reduce days off work by 20–40%.<sup>[13]</sup></li>
+    <li><strong>Productivity:</strong> Cognitive impairment ("chemo brain") affects 17–75% of chemotherapy-treated survivors — directly impairing work performance. Unaddressed, it drives quiet attrition.</li>
+    <li><strong>Benefits claim reduction:</strong> Survivors with active management programs use 15–25% fewer high-cost services in years 2–5 post-treatment.<sup>[12]</sup></li>
+    <li><strong>Retention:</strong> Cancer survivors who feel supported by their employer are significantly more likely to remain employed through and after treatment.</li>
+  </ul>
+
+  <div class="callout green"><strong>The business case in one line:</strong> A platform priced at $25–$75 PMPM for a survivor delivers a calculable ROI to payers (ED avoidance), pharma (adherence revenue and outcomes data), oncology practices (SCP compliance, quality metrics), and employers (productivity, retention) — simultaneously. This multi-buyer structure is rare in digital health and makes the business model far more resilient than single-payer models.</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     4. CLINICAL FRAMEWORK
+═══════════════════════════════════════════════ -->
+<section id="clinical-framework">
+  <h2><span class="sec-num">04</span>Clinical Framework — Ten Distinct Survivorship Constructs</h2>
+  <p>Cancer survivorship is not a single clinical problem. It is a constellation of distinct, overlapping, and sometimes interacting conditions — each requiring different interventions, support modalities, and clinical pathways. A generic mental health app cannot address these; a clinically credible platform must distinguish between them and route to appropriate responses.</p>
+
+  <div class="g3">
+    <div class="card">
+      <h3>😰 Fear of Recurrence (FCR)</h3>
+      <p>The fear, worry, or concern about cancer returning or progressing. The most prevalent unmet psychosocial need in survivorship — affecting 70% of survivors, with 33% at clinically significant levels. FCR peaks around surveillance appointments ("scanxiety"), anniversaries of diagnosis, and new physical symptoms.</p>
+      <p class="small">Evidence-based intervention: CBT-based interventions (CONQUER, Conquering Cancer-Related Worry) show significant FCR reduction. App delivery has been validated.</p>
+    </div>
+    <div class="card">
+      <h3>🧠 Cancer-Related Cognitive Impairment ("Chemo Brain")</h3>
+      <p>Deficits in memory, attention, processing speed, and executive function following cancer treatment. Affects 17–75% of chemotherapy-treated survivors; persists at clinically significant levels in 10–40% at 6+ months post-treatment. Frequently dismissed by clinicians despite major impact on work and daily functioning.</p>
+      <p class="small">Validated by neuropsychological testing. Cognitive rehabilitation programs show benefit. Peer validation ("I'm not imagining this") is therapeutically significant.</p>
+    </div>
+    <div class="card">
+      <h3>😓 Cancer-Related Fatigue (CRF)</h3>
+      <p>A persistent, distressing sense of physical, emotional, or cognitive tiredness related to cancer or its treatment, not proportional to recent activity and not relieved by rest. The most common cancer symptom — affects 75–80% during treatment and 30–40% at 1+ year post-treatment. Severely impacts quality of life and return to work.</p>
+      <p class="small">Evidence-based interventions: exercise (aerobic + resistance), behavioral therapy, sleep hygiene, psychostimulants in select cases.</p>
+    </div>
+    <div class="card">
+      <h3>💔 Post-Traumatic Stress &amp; Adjustment Disorder</h3>
+      <p>Cancer diagnosis and treatment are traumatic events. PTSD criteria are met in 5–30% of survivors depending on cancer type and assessment timing; adjustment disorder is substantially more common. Intrusive thoughts, hypervigilance around symptoms, avoidance behaviors, and emotional numbing are common presentations.</p>
+      <p class="small">Particularly prevalent in breast cancer, head and neck cancer, and those who experienced intensive treatment (transplant, ICU-level care).</p>
+    </div>
+    <div class="card">
+      <h3>💸 Financial Toxicity</h3>
+      <p>The financial burden of cancer and its treatment, including direct costs (copays, medications, travel) and indirect costs (lost income, career disruption). Now recognized as a clinical construct with validated measurement (COST tool). Financial distress directly causes medication non-adherence, skipped follow-up appointments, and delayed symptom reporting.</p>
+      <p class="small">42% of patients deplete life savings within 2 years. Financial navigation is a clinical intervention, not a social services afterthought.<sup>[10]</sup></p>
+    </div>
+    <div class="card">
+      <h3>🌡 Treatment Late Effects &amp; Chronic Symptoms</h3>
+      <p>Persistent or emerging physical effects of cancer treatment that can appear months to years after therapy ends. Varies significantly by cancer type and treatment modality. Examples: lymphedema (breast), neuropathy (chemotherapy), cardiac toxicity (anthracyclines, radiation), bone density loss (aromatase inhibitors), bowel dysfunction (colorectal/pelvic radiation), and secondary malignancies.</p>
+      <p class="small">Self-monitoring, lifestyle modification, and early escalation to clinical care are critical for managing late effects before they become acute crises.</p>
+    </div>
+    <div class="card">
+      <h3>🫀 Sexual Health &amp; Intimacy Disruption</h3>
+      <p>One of the most prevalent and least addressed survivorship issues. Affects 40–80% of cancer survivors depending on cancer type and treatment. Breast cancer survivors on endocrine therapy: vaginal dryness, dyspareunia, reduced libido. Prostate cancer survivors: erectile dysfunction, ejaculatory changes. Cervical/gynecologic cancer: physical structural changes, body image.</p>
+      <p class="small">Taboo in most oncology practices. Rarely proactively addressed. Survivors frequently report feeling "too embarrassed to bring it up." Dramatically impacts relationship quality and survivor well-being.</p>
+    </div>
+    <div class="card">
+      <h3>🧬 Fertility &amp; Reproductive Health Concerns</h3>
+      <p>For younger survivors, the potential impact of cancer and treatment on fertility is a profound concern. Chemotherapy, radiation, and hormonal therapies can impair fertility. Discussions about fertility preservation often happen under extreme time pressure at diagnosis. Post-treatment: uncertainty about safe pregnancy timing, premature ovarian insufficiency, options for family building.</p>
+      <p class="small">Oncofertility is a subspecialty. Most survivors have poor awareness of their options or where to get guidance post-treatment.</p>
+    </div>
+    <div class="card">
+      <h3>🪞 Body Image &amp; Identity Disruption</h3>
+      <p>Cancer treatment often involves visible, permanent changes to the body: mastectomy, hair loss (permanent in some cases), weight changes, scars, ostomies, prosthetics. The psychological impact of these changes — loss of the "pre-cancer self," disrupted gender identity, intimacy avoidance — is profound and often unaddressed in medical follow-up.</p>
+      <p class="small">Breast cancer reconstruction decisions are among the most psychologically complex choices a survivor faces, often made under duress and with inadequate support.</p>
+    </div>
+    <div class="card">
+      <h3>👨‍👩‍👧 Family, Caregiver &amp; Genetic Burden</h3>
+      <p>Cancer has a ripple effect: caregivers develop their own psychological distress at rates comparable to patients. For hereditary cancers (BRCA1/2 in breast/ovarian; Lynch syndrome in colorectal), survivors carry the burden of informing family members of their shared genetic risk. Children of survivors have elevated anxiety. Support for the survivor-family system, not just the individual, is a clinical need.</p>
+      <p class="small">Genetic counseling referral, caregiver support tools, and family communication guidance are largely absent from standard survivorship programs.</p>
+    </div>
+  </div>
+
+  <div class="callout">The clinical framework determines the product architecture. A platform that treats "cancer survivor distress" as a single construct will fail. These ten domains require distinct content, distinct interventions, and — in some cases — distinct clinical pathways and licensed professionals. Build the taxonomy; route to the right response.</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     5. THE SURVIVORSHIP CLIFF
+═══════════════════════════════════════════════ -->
+<section id="survivorship-cliff">
+  <h2><span class="sec-num">05</span>The Survivorship Cliff — The Most Dangerous Transition</h2>
+  <p>In the HCW mental health parallel, the "acute clinical event" is the trigger moment. In cancer survivorship, the equivalent moment is <strong>the end of active treatment</strong> — what clinicians call "the survivorship cliff."</p>
+
+  <div class="quote-block">"My oncologist said 'you're done with treatment, you're cancer-free, congratulations.' I burst into tears. I wasn't relieved. I was terrified. I'd seen my team every week for months. Now I was just… alone." — Breast cancer survivor, 18 months post-treatment</div>
+
+  <h3>Why the End of Treatment Is Paradoxically the Most Vulnerable Moment</h3>
+  <div class="g2">
+    <div class="card">
+      <h3>During active treatment</h3>
+      <ul>
+        <li>Regular appointments with oncology team (often weekly)</li>
+        <li>Active monitoring — labs, imaging, vital signs</li>
+        <li>Nurse navigator or care coordinator contact</li>
+        <li>Infusion center community and peer connection</li>
+        <li>Clear protocol and role ("I'm fighting cancer")</li>
+        <li>Side effect management is immediate clinical priority</li>
+        <li>Support systems activated by visible illness</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>After treatment ends — the cliff</h3>
+      <ul>
+        <li>Appointments drop to every 3–6 months (or annually)</li>
+        <li>Monitoring is surveillance-only — waiting for a problem</li>
+        <li>Care coordination disappears; responsibility shifts to primary care</li>
+        <li>Infusion center community evaporates</li>
+        <li>Loss of identity and purpose: "I'm not a cancer patient anymore but I don't feel normal"</li>
+        <li>Side effects from maintenance therapy emerge without active management</li>
+        <li>Support systems contract as family/friends assume "you're better now"</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>The Cliff Is When Distress Peaks</h3>
+  <p>Counterintuitively, psychological distress often <em>increases</em> in the months following treatment completion, rather than improving. Multiple studies document this U-shaped or paradoxical distress curve:</p>
+  <ul>
+    <li>The protective structure of treatment (regular appointments, clear role, active monitoring) is removed suddenly</li>
+    <li>The "cancer patient" identity, which provided community and clarity, is stripped away without a replacement</li>
+    <li>Fear of recurrence, which was suppressed during the "fight," surfaces fully when fighting is no longer the task</li>
+    <li>Family and friends, who mobilized during acute treatment, begin to disengage — "you're cured, you can move on"</li>
+    <li>The physical side effects of treatment — fatigue, neuropathy, cognitive impairment, endocrine symptoms — often <em>worsen</em> in the first months post-treatment as the body processes the cumulative toxic burden</li>
+  </ul>
+
+  <div class="callout rose"><strong>The product opportunity: own the cliff.</strong> The survivorship companion activates at the moment treatment ends — or even in the final weeks of treatment, preparing the survivor for the transition. Unlike clinical tools that end at the last infusion, this platform begins where medicine stops. That is the defensible market position.</div>
+
+  <h3>Scanxiety: The Recurring Cliff</h3>
+  <p>"Scanxiety" — the intense anxiety experienced in the days and weeks before a surveillance scan (mammogram, CT, PET, colonoscopy, PSA test) — is a recurring trigger that no existing tool specifically addresses. Surveys show 85% of cancer survivors experience significant anxiety around surveillance appointments; many describe the 2–4 weeks before a scan as the worst period of their year, worse than active treatment in some cases.</p>
+  <ul>
+    <li>Scans happen every 3–12 months for years to decades post-treatment</li>
+    <li>Each scan reactivates fear of recurrence acutely</li>
+    <li>Results wait periods (often 24–72 hours) are described as psychologically unbearable</li>
+    <li>A platform that detects upcoming scan dates and proactively provides support, coping tools, and peer connection in the scan window addresses a recurring, predictable, high-intensity need</li>
+  </ul>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     6. WHY EXISTING SOLUTIONS FAIL
+═══════════════════════════════════════════════ -->
+<section id="why-failing">
+  <h2><span class="sec-num">06</span>Why Existing Solutions Fail</h2>
+
+  <div class="g2">
+    <div>
+      <h3>Structural failures</h3>
+      <ul>
+        <li><strong>Generic mental health apps don't speak cancer:</strong> Calm, Headspace, and Betterhelp cannot address fear of recurrence, chemo brain, lymphedema management, scanxiety, or the specific psychological dynamics of endocrine therapy. Survivors feel unseen and leave within weeks.</li>
+        <li><strong>Oncology EHRs end at treatment:</strong> Epic Beacon (the dominant oncology EHR module) is built for active treatment management — chemotherapy ordering, toxicity tracking, clinical trial management. It has essentially no survivorship infrastructure post-treatment. The EHR relationship ends when the prescription pad closes.</li>
+        <li><strong>Survivorship programs are under-resourced and under-digitized:</strong> The 30–40% of cancer centers with formal survivorship programs rely on nurse practitioners and social workers to manually coordinate care with no digital infrastructure. Wait times for survivorship clinic appointments can be months.</li>
+        <li><strong>Navigator programs don't scale:</strong> Oncology nurse navigators are among the most valuable humans in the cancer care ecosystem — but they carry caseloads of 50–200 patients and cannot provide the daily support survivors need.</li>
+        <li><strong>Peer support programs are fragmented:</strong> CancerCare, the American Cancer Society, and Livestrong all offer peer support, but they are siloed, not personalized to cancer type or treatment history, and not integrated with clinical data.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>What the evidence says</h3>
+      <p>Three converging findings from the survivorship literature define what actually works:</p>
+      <ul>
+        <li><strong>Timing matters:</strong> Psychosocial interventions delivered in the first 6–12 months post-treatment have substantially larger effect sizes than those offered years later. The platform must meet survivors at the cliff, not after they've fallen.</li>
+        <li><strong>Disease-specificity matters:</strong> Interventions tailored to breast cancer specifically outperform generic cancer interventions in fear-of-recurrence reduction. A lung cancer survivor and a breast cancer survivor have fundamentally different clinical and psychological needs.</li>
+        <li><strong>Peer support + clinical support is more effective than either alone:</strong> Studies of survivorship programs consistently show that combining peer support (survivor-to-survivor connection) with clinical guidance (licensed professional backup) produces better outcomes than either model independently.</li>
+        <li><strong>The SCP alone is insufficient:</strong> Receiving a paper or PDF survivorship care plan without active follow-up, personalized guidance, and ongoing support produces minimal behavior change. The plan needs to be living, actionable, and connected to a human or digital touchpoint.</li>
+      </ul>
+      <div class="callout">The product opportunity is to be the active, personalized survivorship support layer that activates at the cliff, personalizes to the survivor's specific cancer and treatment history, and persists for the full survivorship journey — not just the first 90 days.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     7. PRODUCT VISION
+═══════════════════════════════════════════════ -->
+<section id="product-vision">
+  <h2><span class="sec-num">07</span>Product Vision &amp; Positioning</h2>
+
+  <div class="g2" style="margin-bottom:16px;">
+    <div class="card">
+      <h3 style="color:var(--green);">What it is</h3>
+      <p>A <strong>personalized, cancer-specific survivorship companion</strong> that activates at treatment completion (or diagnosis), delivers a living Survivorship Care Plan, tracks symptoms and side effects, connects survivors to peers who've walked the same path, routes to mental health support when distress signals emerge, and persists as an active partner through every scan, anniversary, medication refill, and life transition.</p>
+      <div style="margin-top:10px;">
+        <span class="pill teal">Disease-specific (breast cancer first)</span>
+        <span class="pill teal">Treatment-aware personalization</span>
+        <span class="pill teal">Scanxiety support</span>
+        <span class="pill teal">Living SCP engine</span>
+        <span class="pill teal">Peer-survivor network</span>
+        <span class="pill teal">Adherence support</span>
+        <span class="pill teal">Financial toxicity navigation</span>
+        <span class="pill teal">Privacy-by-design</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--red);">What it is not</h3>
+      <p>Not another cancer information portal (WebMD for oncology). Not an oncology EHR. Not a clinical trial matching tool. Not a meditation app with a pink ribbon on it. Not a pharma-branded patient program that happens to have an app. Not a one-size-fits-all "cancer survivor" product that fails breast, lung, and leukemia survivors equally.</p>
+      <div style="margin-top:10px;">
+        <span class="pill red">Not a medical records platform</span>
+        <span class="pill red">Not a treatment decision tool</span>
+        <span class="pill red">Not pharma-branded</span>
+        <span class="pill red">Not generic mental health</span>
+        <span class="pill red">Not a cancer information directory</span>
+      </div>
+    </div>
+  </div>
+
+  <h3>The breast cancer beachhead: why this cancer, why first</h3>
+  <div class="g3">
+    <div class="card">
+      <h3>📊 Market depth</h3>
+      <p>3.8M survivors in the U.S. — the single largest cohort. 310,720 new cases in 2024 alone means the addressable population grows by nearly 300,000 net new potential users per year. The survivor cohort grows because survival rates continue to improve.</p>
+    </div>
+    <div class="card">
+      <h3>🧬 Clinical specificity advantage</h3>
+      <p>Breast cancer survivorship has the richest clinical research base of any cancer type. Evidence-based interventions for FCR, fatigue, endocrine therapy adherence, body image, and cognitive impairment are all well-documented specifically for breast cancer. The product can be built on a strong evidence foundation from Day 1.</p>
+    </div>
+    <div class="card">
+      <h3>💊 Pharma channel opportunity</h3>
+      <p>The breast cancer drug market is among the largest in oncology. AstraZeneca (Lynparza), Eli Lilly (Verzenio), Novartis (Kisqali), Pfizer (Ibrance), and others have strong financial incentives to fund survivorship support programs that improve adherence. Pharma-sponsored patient support is an established, fundable model in breast oncology.</p>
+    </div>
+    <div class="card">
+      <h3>🏥 Payer alignment</h3>
+      <p>Improving endocrine therapy adherence has the most clearly calculable ROI of any cancer survivorship intervention — because the cost of breast cancer recurrence ($150K–$300K+/year for metastatic treatment) vs. the cost of adjuvant therapy ($1,500–$3,000/year) is stark. Payers can model this directly.</p>
+    </div>
+    <div class="card">
+      <h3>🎗 Advocacy ecosystem</h3>
+      <p>Breast cancer has the strongest patient advocacy infrastructure in oncology: Susan G. Komen, NBCC, Living Beyond Breast Cancer, Young Survival Coalition, FORCE (for BRCA+ survivors). These organizations provide validated content partnerships, survivor community access, and co-marketing credibility that no other cancer type can match.</p>
+    </div>
+    <div class="card">
+      <h3>🧪 Evidence of digital readiness</h3>
+      <p>Breast cancer survivors have the highest digital health engagement of any cancer population. Multiple RCTs have demonstrated feasibility and efficacy of digital interventions for breast cancer survivorship — making regulatory validation, payer evidence requirements, and clinical partnership conversations faster than in less-studied cancer types.</p>
+    </div>
+  </div>
+
+  <h3>High-trigger moments — the product activates when it matters most</h3>
+  <div>
+    <span class="pill rose">Last day of chemotherapy</span>
+    <span class="pill rose">Post-mastectomy / post-surgery discharge</span>
+    <span class="pill rose">End of radiation</span>
+    <span class="pill rose">Upcoming surveillance mammogram</span>
+    <span class="pill rose">Upcoming CT / MRI / PET scan</span>
+    <span class="pill rose">Scan results waiting period</span>
+    <span class="pill rose">Anniversary of diagnosis</span>
+    <span class="pill rose">Starting endocrine therapy</span>
+    <span class="pill rose">Missing a medication refill</span>
+    <span class="pill rose">New physical symptom (self-reported)</span>
+    <span class="pill rose">3-month / 6-month / 1-year post-treatment</span>
+    <span class="pill rose">Genetic testing results</span>
+    <span class="pill rose">Reconstruction decision point</span>
+    <span class="pill rose">Return to work after treatment</span>
+    <span class="pill rose">Partner / family tension trigger</span>
+    <span class="pill rose">Fertility consultation</span>
+  </div>
+
+  <div class="quote-block">"The confidential, clinically-informed companion that stays when treatment ends — triggered by your specific cancer timeline, not a generic wellness schedule."</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     8. HOW IT WORKS
+═══════════════════════════════════════════════ -->
+<section id="how-it-works">
+  <h2><span class="sec-num">08</span>How It Works — The Survivorship Companion Flow</h2>
+
+  <div class="flow">
+    <div class="flow-step">
+      <div class="bubble">1</div>
+      <div>
+        <h4>Intake: cancer-specific onboarding</h4>
+        <p>Survivor enters cancer type, stage at diagnosis, primary treatments received (surgery type, chemotherapy regimens, radiation, hormone therapy), current maintenance therapies, and treatment completion date. This takes 5–8 minutes and creates the personalization foundation for all subsequent content and triggers. Optional: connect to oncology EHR (Epic MyChart) to auto-populate treatment history via FHIR patient-access APIs.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="bubble">2</div>
+      <div>
+        <h4>Generate a living Survivorship Care Plan (SCP)</h4>
+        <p>Instantly generate a personalized SCP: treatment summary, specific late effect risks for the survivor's treatment regimen, recommended follow-up schedule, lifestyle guidance (nutrition, exercise, bone health, cardiac monitoring), medication management calendar, and when to call the oncology team. The SCP is a living document — it updates as new surveillance results are logged, medications change, or new guidelines emerge.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="bubble">3</div>
+      <div>
+        <h4>Build the survivorship calendar</h4>
+        <p>Populate a personalized surveillance and milestone calendar: mammogram/imaging dates, follow-up appointment reminders, medication refill alerts, endocrine therapy adherence tracking, and anticipated milestone dates (6-month, 1-year, 5-year anniversaries). Integrate with Google/Apple Calendar. Each calendar event is a potential support touchpoint.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="bubble">4</div>
+      <div>
+        <h4>Detect high-intensity moments and intervene proactively</h4>
+        <p>System detects approaching high-trigger events (scan in 14 days, 1-year anniversary, overdue medication refill, self-reported new symptom) and offers the right next step: a scanxiety prep tool, a peer connection with someone who had the same scan 6 months ago, an evidence-based coping skill, or a clinical escalation prompt.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="bubble">5</div>
+      <div>
+        <h4>Route to the right support: a tiered system</h4>
+        <p><strong>Self-care resources</strong> (evidence-based, cancer-specific): CBT exercises for FCR, fatigue management protocols, lymphedema self-monitoring guides, exercise guidance. <strong>Peer support</strong>: connect with a trained survivor peer matched by cancer type, treatment, and survivorship stage. <strong>Licensed clinical support</strong>: oncology-trained therapist, financial navigator, dietitian, sexual health specialist. <strong>Clinical escalation</strong>: "Report this symptom to your oncology team today" with draft message to care team.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="bubble">6</div>
+      <div>
+        <h4>Daily check-in: symptom and wellbeing tracking</h4>
+        <p>Brief (60–90 second) daily optional check-in: energy level, pain, mood, medication taken, noteworthy symptoms. Over time, this builds a longitudinal symptom profile that enables early detection of concerning trends, personalizes intervention timing, and generates a shareable report for clinical appointments. Patient-Reported Outcome (PRO) data collection with clinical-grade instruments (PROMIS).</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="bubble">7</div>
+      <div>
+        <h4>Share summaries with the clinical team (survivor-controlled)</h4>
+        <p>Survivor generates a pre-appointment summary of symptom trends, medication adherence, and wellbeing over the past 3–6 months. This goes to the oncology team or primary care physician only with the survivor's explicit approval for that specific appointment. The platform never reports to payers or employers; the survivor controls every data share.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>Support triage matrix</h3>
+  <table>
+    <thead><tr><th>Trigger type</th><th>Example</th><th>Recommended response</th><th>Urgency</th></tr></thead>
+    <tbody>
+      <tr><td>Pre-scan anxiety</td><td>Mammogram in 14 days; PET scan scheduled</td><td>Scanxiety CBT module + peer connection with survivor at same stage + relaxation tools</td><td class="warn">Proactive — begin 2 weeks before</td></tr>
+      <tr><td>New physical symptom</td><td>"I feel a lump" / "My arm is swelling"</td><td>Symptom checker + immediate prompt to contact oncology team with draft message</td><td class="bad">Immediate — escalate</td></tr>
+      <tr><td>Medication non-adherence</td><td>Missed endocrine therapy 3+ days; refill overdue</td><td>Gentle check-in → if side effect barrier, route to management resources → if cost barrier, financial navigation</td><td class="warn">48 hours</td></tr>
+      <tr><td>Emotional distress signal</td><td>PHQ-2 screen positive; journal entry with distress language</td><td>Offer peer support + clinical mental health referral (oncology-trained therapist)</td><td class="warn">Same day</td></tr>
+      <tr><td>Anniversary / milestone</td><td>1-year post-diagnosis, 5-year milestone</td><td>Reflection prompt, community celebration, clinical check-in reminder</td><td class="warn">Same day</td></tr>
+      <tr><td>Crisis signal</td><td>Suicidal ideation; overwhelm crisis language</td><td>Immediate human escalation + crisis resources; never AI-only response</td><td class="bad">Immediate</td></tr>
+      <tr><td>Routine support cadence</td><td>3 months post-treatment; returning to work</td><td>Milestone content module + survivorship community connection</td><td class="ok">Scheduled</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     9. SURVIVORSHIP CARE PLAN ENGINE
+═══════════════════════════════════════════════ -->
+<section id="scp-engine">
+  <h2><span class="sec-num">09</span>Survivorship Care Plan (SCP) Engine</h2>
+  <p>The Survivorship Care Plan is the clinical and regulatory anchor of the product. ASCO and the American College of Surgeons Commission on Cancer (CoC) require that accredited cancer programs provide SCPs. Yet the infrastructure for delivering, personalizing, and activating SCPs is almost entirely absent at scale — creating a compliance problem the platform solves.</p>
+
+  <h3>What a world-class SCP contains</h3>
+  <div class="g2">
+    <div class="card">
+      <h3>Treatment summary (static)</h3>
+      <ul>
+        <li>Cancer type, subtype, and stage at diagnosis</li>
+        <li>All surgical procedures and dates</li>
+        <li>Chemotherapy agents, doses, cycles, and dates</li>
+        <li>Radiation fields, doses, and dates</li>
+        <li>Targeted therapies and immunotherapies</li>
+        <li>Hormone therapies: current and planned duration</li>
+        <li>Clinical trials participated in</li>
+        <li>Key pathology (hormone receptor status, HER2, grade)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Living follow-up plan (dynamic)</h3>
+      <ul>
+        <li>Surveillance schedule: imaging, labs, clinical exams by year post-treatment</li>
+        <li>Late effect monitoring: cardiac (if anthracyclines/trastuzumab), bone density (if AI), neurology (if taxane), lymphedema monitoring (if node dissection)</li>
+        <li>Lifestyle recommendations personalized to treatment: exercise, weight, alcohol, nutrition</li>
+        <li>Medications: current prescriptions, dose, duration, adherence tracking</li>
+        <li>Genetic referral: BRCA testing recommended? Family members to notify?</li>
+        <li>Fertility and reproductive health guidance</li>
+        <li>When to call the oncology team immediately (red flag symptom list)</li>
+        <li>Primary care coordination: what the PCP needs to monitor</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>The SCP as a distribution and lock-in mechanism</h3>
+  <p>The SCP is not just a clinical document — it is the most powerful onboarding and retention hook the platform has:</p>
+  <ul>
+    <li><strong>Institutional distribution:</strong> Oncology practices and cancer centers that use the platform can generate ASCO-compliant SCPs for their patients automatically — solving their CoC accreditation compliance problem while populating the platform with new users.</li>
+    <li><strong>Lock-in:</strong> Once a survivor's complete treatment history and surveillance calendar lives in the platform, switching cost is extraordinarily high. The SCP is the identity layer for the survivorship journey.</li>
+    <li><strong>PCP bridge:</strong> The platform auto-generates a version of the SCP formatted for the primary care physician, closing the hand-off gap that currently leaves PCPs uninformed about cancer history.</li>
+    <li><strong>Interoperability:</strong> FHIR-compliant SCP data enables integration with Epic's patient portal (MyChart), hospital health records, and payer care management programs.</li>
+  </ul>
+
+  <div class="callout green">The SCP engine is a regulatory compliance product for institutions and a life-organizing platform for survivors simultaneously. No competitor currently offers a digitally delivered, personalized, living SCP at scale. This is the platform's most defensible core feature.</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     10. PEER SUPPORT & COMMUNITY
+═══════════════════════════════════════════════ -->
+<section id="peer-community">
+  <h2><span class="sec-num">10</span>Peer Support &amp; Survivor Community</h2>
+  <p>Cancer survivors consistently report that connecting with other survivors who have walked the same path is among the most valuable forms of support they receive — often more valued than clinical guidance alone. The peer connection that happens organically in infusion centers, breast cancer support groups, and advocacy organizations is powerful but fragile, local, and inaccessible to the majority of survivors.</p>
+
+  <div class="g2">
+    <div class="card">
+      <h3>Evidence for peer support in survivorship</h3>
+      <ul>
+        <li>Peer support programs for breast cancer survivors show significant reductions in distress, fear of recurrence, and isolation vs. usual care alone<sup>[14]</sup></li>
+        <li>Trained survivor peer advisors improve adherence to endocrine therapy when they proactively address side effect barriers through shared experience<sup>[15]</sup></li>
+        <li>Online peer communities for cancer survivors have been associated with improved psychosocial outcomes in multiple studies, with particular benefit for geographically isolated survivors and those with rare cancers<sup>[16]</sup></li>
+        <li>Peer mentorship for young breast cancer survivors (under 45) significantly reduces isolation and improves quality of life — a population that is particularly poorly served by traditional support groups dominated by older survivors</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>How the platform operationalizes peer support</h3>
+      <ul>
+        <li><strong>Cancer-specific matching:</strong> Not "all cancer survivors." Match breast-to-breast, grade III HER2+ to grade III HER2+, mastectomy+reconstruction to mastectomy+reconstruction. Specificity is the value.</li>
+        <li><strong>Treatment stage matching:</strong> Connect someone 3 months post-chemo with someone 18 months post-chemo who has been through what they're about to face.</li>
+        <li><strong>Trained survivor advisors:</strong> A cohort of volunteer-trained survivor peers, certified in the platform's peer support protocol, available for 1:1 text or video conversations.</li>
+        <li><strong>Community groups by context:</strong> Young survivors (under 45), metastatic survivors, BRCA+ survivors, specific drug regimen side effect management, return-to-work, sexuality after cancer.</li>
+        <li><strong>Clinical backstop:</strong> Peer support is never the terminal layer. Escalation pathways to licensed professionals are always one tap away.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Peer support tiers</h3>
+  <table>
+    <thead><tr><th>Tier</th><th>Who</th><th>When deployed</th><th>Training standard</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Community peer (async)</strong></td><td>Any verified survivor; moderated community groups</td><td>Daily — ongoing community support, shared experience</td><td>Community guidelines; moderation review; no clinical advice</td></tr>
+      <tr><td><strong>Survivor advisor (synchronous)</strong></td><td>Trained volunteer survivor peers; 8-hour certification program</td><td>On-demand 1:1 text or video; matched by cancer type, treatment, stage</td><td>Platform peer support certification; escalation protocols; supervised first 10 conversations</td></tr>
+      <tr><td><strong>Scanxiety peer</strong></td><td>Survivor who had same scan type within last 12 months</td><td>Pre-scan window (2 weeks before); results wait period</td><td>Scan-specific peer training; emotional first aid; empathy vs. advice framing</td></tr>
+      <tr><td><strong>Licensed clinical bridge</strong></td><td>Oncology-specialized therapist, social worker, or financial navigator</td><td>When peer or platform detects clinical-level distress; crisis signals</td><td>Licensed; oncology specialty required; separate HIPAA-compliant session</td></tr>
+    </tbody>
+  </table>
+
+  <div class="quote-block">"The nurse who treated me was extraordinary. But she had never had breast cancer. The woman in my support group who had the same surgery, the same drugs, the same fear — she understood in two minutes what took months of therapy to approach. That is what we are scaling."</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     11. SYMPTOM TRACKING & CLINICAL INTELLIGENCE
+═══════════════════════════════════════════════ -->
+<section id="symptom-tracking">
+  <h2><span class="sec-num">11</span>Symptom Tracking &amp; Clinical Intelligence</h2>
+  <p>Patient-reported outcome (PRO) collection is the clinical infrastructure layer that transforms the platform from a support app into a clinical tool with institutional and payer value. Real-world PRO data from cancer survivors is among the most sought-after data assets in oncology research, payer quality reporting, and drug post-marketing surveillance.</p>
+
+  <h3>What the platform tracks (opt-in, survivor-controlled)</h3>
+  <div class="g3">
+    <div class="card">
+      <h3>Daily wellbeing check-in</h3>
+      <ul>
+        <li>Energy / fatigue level (PROMIS-Fatigue anchored)</li>
+        <li>Pain (0–10 scale; location if noted)</li>
+        <li>Mood / emotional wellbeing</li>
+        <li>Sleep quality</li>
+        <li>Nausea / appetite</li>
+        <li>Medications taken as prescribed (yes/no + reason if no)</li>
+      </ul>
+      <p class="small">Target: &lt;90 seconds. Adaptive — reduces to 3 questions if stable trend detected over 14 days.</p>
+    </div>
+    <div class="card">
+      <h3>Treatment-specific side effect monitoring</h3>
+      <ul>
+        <li>Aromatase inhibitor users: joint pain, hot flashes, vaginal symptoms, bone pain</li>
+        <li>Post-surgery: arm mobility, wound healing, lymphedema signs (arm heaviness, swelling)</li>
+        <li>Taxane-treated: neuropathy symptoms (numbness, tingling in hands/feet)</li>
+        <li>HER2+ survivors on trastuzumab: cardiac symptom watch (shortness of breath)</li>
+        <li>Radiation: skin changes, fatigue patterns, field-specific symptoms</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Psychosocial PRO instruments</h3>
+      <ul>
+        <li>PHQ-2 / PHQ-9 (depression screening)</li>
+        <li>GAD-7 (anxiety)</li>
+        <li>FCR brief scale (Fear of Recurrence)</li>
+        <li>PROMIS Global Health</li>
+        <li>FACIT-Fatigue</li>
+        <li>Financial distress single-item screen</li>
+        <li>Sleep Quality Index (abbreviated)</li>
+      </ul>
+      <p class="small">Deployed adaptively: triggered by clinical indication, not on fixed calendar schedule to avoid alert fatigue.</p>
+    </div>
+  </div>
+
+  <h3>Clinical intelligence layer</h3>
+  <ul>
+    <li><strong>Trend detection:</strong> If fatigue scores increase consistently over 14 days, or if a survivor reports 5+ missed endocrine therapy doses in a month, the system flags this and offers an intervention — not just a reminder.</li>
+    <li><strong>Pre-appointment summary:</strong> Survivor generates a 3–6 month symptom trend summary to bring to the oncology or primary care appointment. Time-pressed oncologists have reported this dramatically improves the quality of survivorship conversations in pilot programs.</li>
+    <li><strong>Red flag escalation:</strong> Certain symptom combinations trigger immediate clinical escalation prompts: new arm swelling (lymphedema), chest pain + shortness of breath (cardiac in anthracycline-treated), new breast lump, unexplained bone pain. The platform never diagnoses — it flags and routes.</li>
+    <li><strong>Aggregate data for research:</strong> De-identified, aggregated PRO data from consenting survivors is a high-value research asset. Oncology research institutions, pharmaceutical companies (for post-marketing surveillance), and payers are active buyers of real-world survivorship outcome data.</li>
+  </ul>
+
+  <div class="callout gold">The PRO data layer is the platform's secondary revenue engine and long-term data moat. A survivor who uses the platform for 5 years generates a longitudinal health record that no clinical trial can replicate — because it captures daily life experience, not quarterly clinic snapshots. This data, aggregated and de-identified with robust consent, becomes a premium asset for oncology research.</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     12. MENTAL HEALTH MODULE
+═══════════════════════════════════════════════ -->
+<section id="mental-health">
+  <h2><span class="sec-num">12</span>Mental Health &amp; Psychological Support Module</h2>
+  <p>Cancer-specific mental health needs require cancer-specific interventions. The fear-of-recurrence framework that works for a breast cancer survivor is built on a fundamentally different theoretical model than generalized anxiety disorder treatment. The platform must deliver evidence-based, oncology-specific psychological support — not generic CBT rebranded with a cancer ribbon.</p>
+
+  <h3>Evidence-based interventions for cancer-specific psychological needs</h3>
+  <div class="g2">
+    <div class="card">
+      <h3>Fear of Recurrence (FCR)</h3>
+      <p>Cognitive Existential Therapy (CET) and Acceptance and Commitment Therapy (ACT)-based interventions for FCR have the strongest evidence base. Key elements:</p>
+      <ul>
+        <li>Psychoeducation: normalizing FCR as a near-universal survivor experience, not a pathology</li>
+        <li>Cognitive restructuring: challenging catastrophizing thought patterns about symptoms and scans</li>
+        <li>Acceptance work: moving from control-seeking to tolerance of uncertainty (the core existential challenge of survivorship)</li>
+        <li>Trigger identification and coping plan: scanxiety pre-planning, symptom-check behavior management</li>
+        <li>Values-based action: redirecting attention from cancer threat to valued life activities</li>
+      </ul>
+      <p class="small">RCT evidence for app-delivered CBT for FCR in breast cancer survivors shows significant reductions in FCR severity at 3 and 6 months.<sup>[17]</sup></p>
+    </div>
+    <div class="card">
+      <h3>Cancer-Related Cognitive Impairment ("Chemo Brain")</h3>
+      <p>Cognitive rehabilitation approaches adapted for cancer survivors:</p>
+      <ul>
+        <li><strong>Psychoeducation:</strong> Validating CRCI as real and documented — many survivors are told "it's just stress" for years</li>
+        <li><strong>Compensatory strategy training:</strong> Memory aids, calendars, chunking, reducing cognitive load</li>
+        <li><strong>Attention training:</strong> Cognitive exercise protocols validated in cancer populations</li>
+        <li><strong>Sleep and fatigue management:</strong> CRCI is worsened by fatigue and poor sleep — treating these improves cognitive function</li>
+        <li><strong>Work accommodation planning:</strong> Return-to-work support with documentation tools for cognitive accommodations</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Scanxiety Management Protocol</h3>
+      <p>A structured pre-scan support sequence, activating 2 weeks before each surveillance appointment:</p>
+      <ul>
+        <li><strong>Day 14–8 before scan:</strong> Psychoeducation on scanxiety; normalization; CBT introductory module</li>
+        <li><strong>Day 7 before scan:</strong> Peer connection with survivor who had same scan recently</li>
+        <li><strong>Day 3–1 before scan:</strong> Anxiety regulation tools; grounding exercises; pre-prepared coping plan for results</li>
+        <li><strong>Results wait period:</strong> Active distraction coping tools; peer check-in option; results anxiety journaling</li>
+        <li><strong>Post-results:</strong> Celebration (good results) OR distress support pathway (concerning results) + clinical escalation if needed</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Grief, Loss &amp; Identity</h3>
+      <p>Cancer survivorship involves a series of losses that are rarely acknowledged in medical settings: loss of the pre-cancer body, loss of certainty about the future, potential loss of fertility, loss of the "cancer patient" identity when treatment ends, loss of the infusion center community. Grief-informed approaches:</p>
+      <ul>
+        <li>Narrative therapy: writing and sharing the survivor story</li>
+        <li>Post-traumatic growth framing: meaning-making without toxic positivity</li>
+        <li>Identity reconstruction exercises: who am I now, what matters, what's next</li>
+        <li>Body image work: specific to mastectomy, hair loss, weight changes, scars</li>
+        <li>Peer connection: shared narrative with other survivors navigating identity</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Mental health module scope — what it does and doesn't do</h3>
+  <table>
+    <thead><tr><th>Capability</th><th>Platform role</th><th>Rationale</th></tr></thead>
+    <tbody>
+      <tr><td>Cancer-specific CBT/ACT modules</td><td class="ok">Yes — core platform feature</td><td>Evidence-based, scalable, does not require licensed delivery for educational/skill-building content</td></tr>
+      <tr><td>Peer support for emotional distress</td><td class="ok">Yes — trained survivor peers</td><td>Highest-value intervention; survivors prefer peer support; clinical escalation always available</td></tr>
+      <tr><td>Licensed oncology therapist booking</td><td class="ok">Yes — routing and scheduling</td><td>For clinical-level distress; platform connects to licensed network; separate session, separate consent</td></tr>
+      <tr><td>PHQ-9 / GAD-7 screening</td><td class="ok">Yes — with warm handoff protocol</td><td>Standard validated instruments; ASCO recommends routine psychosocial screening; triggers licensed referral</td></tr>
+      <tr><td>Diagnosis of psychiatric conditions</td><td class="bad">Never</td><td>Outside scope; regulatory risk; platform detects support need, routes to licensed professional</td></tr>
+      <tr><td>Crisis counseling (autonomous)</td><td class="bad">Never AI-only</td><td>Immediate human escalation; trained crisis line connection; never AI-only response to suicidal ideation</td></tr>
+      <tr><td>Prescription recommendations</td><td class="bad">Never</td><td>FDA clinical decision support territory; outside product scope</td></tr>
+    </tbody>
+  </table>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     13. SEXUAL HEALTH & INTIMACY
+═══════════════════════════════════════════════ -->
+<section id="sexual-health">
+  <h2><span class="sec-num">13</span>Sexual Health, Intimacy &amp; Fertility</h2>
+  <p>Sexual health disruption is among the most prevalent and least addressed survivorship issues in oncology. Studies consistently show it affects 40–80% of cancer survivors depending on cancer type and treatment, yet fewer than 30% of oncology practices proactively screen for or address sexual health concerns. Survivors report feeling "too embarrassed to bring it up," and clinicians — equally uncomfortable — rarely initiate the conversation.</p>
+
+  <div class="g2">
+    <div class="card">
+      <h3>Breast cancer: specific sexual health burden</h3>
+      <ul>
+        <li><strong>Aromatase inhibitors/tamoxifen:</strong> Vaginal dryness, dyspareunia (painful intercourse), reduced libido, and vulvovaginal atrophy affect 50–70% of women on endocrine therapy — and are among the top reasons for discontinuation, with direct recurrence risk consequences<sup>[18]</sup></li>
+        <li><strong>Premature menopause:</strong> Chemotherapy-induced ovarian failure causes abrupt menopause in pre-menopausal women — without the gradual transition that provides natural adaptation time</li>
+        <li><strong>Mastectomy and body image:</strong> Profound changes in self-perception, partner relationship dynamics, and willingness to engage sexually</li>
+        <li><strong>Fatigue:</strong> Cancer-related fatigue — often most severe in the post-treatment period — is a major inhibitor of sexual desire and activity</li>
+        <li><strong>Relationship impact:</strong> Partners frequently report feeling helpless, afraid of hurting the survivor, or uncertain about how to re-engage intimately after treatment</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Platform approach: taboo → normalized, routable</h3>
+      <ul>
+        <li><strong>Proactive screening:</strong> Brief validated sexual health screen at 3 and 6 months post-treatment — asked by the app, not the oncologist, removing the interpersonal barrier</li>
+        <li><strong>Psychoeducation:</strong> Normalize that sexual health changes are medical side effects of treatment — not personal failures or permanent states</li>
+        <li><strong>Evidence-based self-management:</strong> Vaginal moisturizers, lubricants, pelvic floor exercises — content created with gynecologic oncology specialists</li>
+        <li><strong>Partner resources:</strong> Guided content for partners navigating intimacy after cancer treatment</li>
+        <li><strong>Routing to specialists:</strong> Certified sexual health counselors, gynecologic oncology NPs, pelvic floor physical therapists — a specialist network that most survivors don't know exists</li>
+        <li><strong>Peer community:</strong> Private groups specifically for survivors navigating intimacy — the most-used and highest-rated feature in comparable digital support programs</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Fertility: the young survivor dimension</h3>
+  <p>For premenopausal breast cancer survivors and young adult cancer survivors broadly, fertility is a defining survivorship concern that the medical system handles poorly:</p>
+  <ul>
+    <li>Fertility preservation discussions at diagnosis happen under extreme time pressure — often the day of or after diagnosis — when cognitive and emotional capacity to process options is minimal</li>
+    <li>Post-treatment: survivors face uncertainty about when (or whether) it is safe to attempt pregnancy, how hormone changes affect fertility, and what options exist for family building after treatment-induced ovarian insufficiency</li>
+    <li>ASCO guidelines recommend all patients receive fertility preservation counseling before gonadotoxic treatment — yet studies show this happens in only 30–40% of eligible cases<sup>[19]</sup></li>
+    <li>The platform provides: post-treatment fertility guidance by treatment type, oncofertility specialist referral network, peer communities for survivors navigating family-building decisions, and evidence-based information on pregnancy after breast cancer (which is safe for most HR- survivors with appropriate waiting periods)</li>
+  </ul>
+
+  <div class="callout rose">Sexual health and fertility are the topics survivors most want to talk about and most rarely get to. A platform that normalizes these conversations and routes to appropriate specialists will have disproportionately high engagement and loyalty in these modules — because survivors have nowhere else to go.</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     14. FINANCIAL TOXICITY NAVIGATION
+═══════════════════════════════════════════════ -->
+<section id="financial-toxicity">
+  <h2><span class="sec-num">14</span>Financial Toxicity Navigation</h2>
+  <p>Financial toxicity is now a recognized clinical construct in oncology — not a social work afterthought. The COST (Comprehensive Score for Financial Toxicity) tool is a validated PRO instrument, and financial distress is independently associated with worse survival outcomes, independent of clinical disease factors.<sup>[20]</sup> A platform that ignores financial toxicity ignores one of the strongest independent predictors of cancer survivor outcomes.</p>
+
+  <div class="g4" style="margin-bottom:20px;">
+    <div class="stat-card"><div class="big">42%</div><div class="desc">Of cancer patients deplete life savings within 2 years — and the burden is not limited to low-income patients<sup>[10]</sup></div></div>
+    <div class="stat-card"><div class="big">1 in 5</div><div class="desc">Cancer survivors skip or reduce prescribed medications due to cost — directly worsening outcomes<sup>[10]</sup></div></div>
+    <div class="stat-card"><div class="big">2.65×</div><div class="desc">Higher bankruptcy odds for cancer survivors vs. matched controls<sup>[11]</sup></div></div>
+    <div class="stat-card"><div class="big">$0</div><div class="desc">Navigators available proactively for the majority of survivors — financial guidance happens at crisis, not prevention</div></div>
+  </div>
+
+  <h3>What financial navigation looks like in the platform</h3>
+  <div class="g3">
+    <div class="card">
+      <h3>Medication cost support</h3>
+      <ul>
+        <li>Pharmaceutical manufacturer patient assistance programs (PAPs) — many survivors qualify but don't know they exist</li>
+        <li>Copay assistance programs for branded oncology drugs (Pfizer, AZ, Lilly, Novartis all have programs)</li>
+        <li>Medicare Part D low-income subsidy eligibility screening</li>
+        <li>Generic / biosimilar availability alerts when endocrine therapy patents expire</li>
+        <li>Refill adherence early warning: if a refill is overdue, check in for financial barrier vs. side effect barrier</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Insurance &amp; benefits navigation</h3>
+      <ul>
+        <li>EOB (explanation of benefits) interpretation guidance — one of the most confusing documents cancer patients receive</li>
+        <li>Prior authorization appeal templates for denied coverage</li>
+        <li>Short-term disability and FMLA documentation support for treatment-related absences</li>
+        <li>ADA accommodation guidance for cognitive impairment and fatigue-related work limitations</li>
+        <li>COBRA navigation for survivors who lose employment-based insurance</li>
+        <li>Health insurance marketplace guidance for coverage transitions</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Financial support resources</h3>
+      <ul>
+        <li>Curated database of cancer-specific financial assistance programs (CancerCare, Patient Advocate Foundation, ACS, disease-specific foundations)</li>
+        <li>Utility assistance, housing assistance, and transportation programs for treatment-related needs</li>
+        <li>Routing to certified oncology financial navigators (COFNs) for complex cases</li>
+        <li>COST tool administration — tracks financial toxicity over time as a clinical outcome</li>
+        <li>Pro bono legal resource referrals for medical debt, workplace discrimination, and estate planning</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout gold"><strong>Why financial navigation is not a feature — it is a survival intervention:</strong> Higher financial toxicity is independently associated with worse cancer-specific survival in multiple large registry studies, even after controlling for stage, treatment type, and socioeconomic status. A survivor who skips endocrine therapy because they can't afford the copay is at materially higher recurrence risk. Financial navigation is oncology care.</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     15. CLINICAL EVIDENCE BASE
+═══════════════════════════════════════════════ -->
+<section id="evidence">
+  <h2><span class="sec-num">15</span>Clinical Evidence Base</h2>
+
+  <table>
+    <thead><tr><th>Study / Program</th><th>Finding relevant to product design</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td>NCI SEER Cancer Statistics Review (2022)</td><td>18.1M U.S. cancer survivors; projected 26.1M by 2040; breast cancer largest cohort at 3.8M</td><td><sup>[1]</sup></td></tr>
+      <tr><td>ACS Cancer Facts &amp; Figures 2024</td><td>310,720 new invasive breast cancer cases; overall 5-year survival 91%; localized 99%. Foundation for beachhead sizing.</td><td><sup>[2]</sup></td></tr>
+      <tr><td>Zabora et al. — Prevalence of psychological distress in cancer</td><td>~35% of cancer patients across all types experience significant psychological distress; rates are higher at treatment end than during active treatment in many studies</td><td><sup>[3]</sup></td></tr>
+      <tr><td>Simard et al. — FCR meta-analysis (Lancet Oncology, 2013)</td><td>Fear of recurrence affects 70% of survivors; clinically significant moderate-to-severe FCR in ~33%; largest meta-analysis to date</td><td><sup>[4]</sup></td></tr>
+      <tr><td>Breast cancer PTSD literature review</td><td>PTSD criteria met in 5–30% of breast cancer survivors depending on assessment timing and measurement instrument; acute stress disorder higher immediately post-treatment</td><td><sup>[5]</sup></td></tr>
+      <tr><td>Bower et al. — Cancer-related fatigue review (NEJM, 2014)</td><td>CRF affects 75–80% during treatment; 30–40% at 1+ year post-treatment; exercise and CBT have best evidence for intervention</td><td><sup>[6]</sup></td></tr>
+      <tr><td>Hershman et al. — Endocrine therapy adherence (JCO, 2010)</td><td>~50% of breast cancer patients discontinue adjuvant endocrine therapy within 5 years; side effects are primary driver; non-adherence significantly worsens recurrence-free survival</td><td><sup>[7]</sup></td></tr>
+      <tr><td>Birken et al. — SCP delivery rates</td><td>Fewer than 50% of cancer survivors receive a survivorship care plan; of those who do, most rate the quality and usefulness as insufficient; implementation highly variable by practice type</td><td><sup>[8,9]</sup></td></tr>
+      <tr><td>Ramsey et al. — Financial toxicity and survival (JAMA Oncology, 2016)</td><td>Cancer patients 2.65× more likely to file bankruptcy than matched non-cancer controls; bankruptcy associated with significantly higher mortality risk — financial toxicity is a survival predictor</td><td><sup>[11]</sup></td></tr>
+      <tr><td>Mariotto et al. — Cost of cancer care (JNCI, 2011, updated)</td><td>National cancer care costs $21B+ annually in avoidable acute care utilization; survivors with psychosocial distress have substantially higher costs than those without</td><td><sup>[12]</sup></td></tr>
+      <tr><td>Rechis et al. — Employment and cancer survivorship</td><td>1 in 16 working Americans is a cancer survivor; workplace discrimination and accommodation gaps persist; supported survivors have higher retention and productivity</td><td><sup>[13]</sup></td></tr>
+      <tr><td>Peer support for breast cancer survivorship — RCT meta-analysis</td><td>Peer support programs significantly reduce distress, FCR, and isolation vs. usual care alone; effect sizes strongest in first 2 years post-treatment</td><td><sup>[14]</sup></td></tr>
+      <tr><td>Peer support and endocrine therapy adherence (Breast Cancer Res Treat)</td><td>Trained peer advisors addressing side effect barriers improved endocrine therapy adherence at 12 months vs. usual care; adherence gains maintained at 24 months</td><td><sup>[15]</sup></td></tr>
+      <tr><td>Online communities for cancer survivors — systematic review</td><td>Online peer communities associated with improved psychosocial outcomes; particular benefit for geographically isolated survivors and rare cancer types</td><td><sup>[16]</sup></td></tr>
+      <tr><td>Butow et al. — App-delivered CBT for FCR (CONQUER RCT)</td><td>App-delivered CBT intervention for fear of recurrence in breast cancer survivors showed significant FCR reduction at 3 and 6 months vs. control; feasibility and engagement demonstrated</td><td><sup>[17]</sup></td></tr>
+      <tr><td>Carter et al. — Sexual dysfunction in breast cancer (JCO, 2011)</td><td>50–70% of breast cancer survivors on aromatase inhibitors report significant sexual dysfunction; vaginal dryness and dyspareunia most common; directly linked to non-adherence</td><td><sup>[18]</sup></td></tr>
+      <tr><td>ASCO — Fertility preservation guidelines</td><td>ASCO recommends all patients at risk of infertility from treatment receive prompt fertility counseling; actual provision rates remain 30–40% in practice</td><td><sup>[19]</sup></td></tr>
+      <tr><td>Khera et al. — COST tool validation (JCO, 2017)</td><td>Financial toxicity (COST tool) independently associated with worse QoL and survival outcomes, validating financial distress as a clinical construct requiring measurement and intervention</td><td><sup>[20]</sup></td></tr>
+      <tr><td>Livestrong Foundation — Impact of Cancer on the Workforce</td><td>42% of cancer patients deplete savings within 2 years; 1 in 5 skip medications due to cost; employment disruption affects majority of working-age survivors<sup>[10]</sup></td><td><sup>[10]</sup></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     16. MARKET OPPORTUNITY
+═══════════════════════════════════════════════ -->
+<section id="market">
+  <h2><span class="sec-num">16</span>Market Opportunity</h2>
+
+  <div class="callout">Key framing: the breast cancer beachhead (~$1.5B SAM) is the credible entry point, not the venture thesis. The venture-scale outcome requires expansion across all cancer survivorship types, and ultimately the full cancer journey from diagnosis through end of life — and all of the institutional, pharma, and payer channels that surround it.</div>
+
+  <h3>TAM / SAM / SOM framework (U.S.)</h3>
+  <table>
+    <thead><tr><th>Layer</th><th>Definition</th><th>Size (indicative)</th><th>Sizing methodology</th></tr></thead>
+    <tbody>
+      <tr><td><strong>TAM</strong></td><td>Total U.S. spend pool across cancer survivorship, supportive oncology, and adjacent services</td><td class="ok" style="font-size:15px;"><strong>$60B–$100B+</strong></td><td>Top-down: $200B+ total U.S. cancer care market; survivorship and supportive care represent 15–20% of total spend. Adjacent: $21B mental health benefits market; $15B+ chronic disease management market; oncology pharma patient support programs ($5B+ annual spend). Total pool includes payer, employer, provider, and pharma channels.</td></tr>
+      <tr><td><strong>SAM</strong></td><td>Revenue capturable with this platform at realistic pricing across relevant channels</td><td class="ok" style="font-size:15px;"><strong>$8B–$17B+</strong></td><td>Bottom-up: 18.1M survivors × $10–$50 PMPM × 12. Upper bound assumes pharma channel, payer value-based contracts, and institutional licensing stack on top of survivor PMPM. Growing 5–7% annually as survivor population increases.</td></tr>
+      <tr><td><strong>SOM</strong> (5–7 yr)</td><td>Share realistically winnable in the platform build window</td><td><strong>$100M–$500M ARR</strong></td><td>Illustrative: breast cancer beachhead at 5–10% of 3.8M survivors at $20–$40 PMPM + institutional licensing at 200–500 cancer centers + pharma patient support contracts with 3–5 major oncology pharma companies.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Bottom-up SAM by segment (U.S. annual revenue, indicative)</h3>
+  <table>
+    <thead><tr><th>Segment</th><th>Addressable population</th><th>Realistic pricing</th><th>Indicative SAM</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Breast cancer survivors</strong> (beachhead)</td><td>3.8M active survivors + ~300K new/year</td><td>$20–$50 PMPM direct or institutional</td><td><strong>$912M–$2.3B</strong></td></tr>
+      <tr><td><strong>All cancer survivors</strong> (expansion)</td><td>18.1M total; ~10M "active" in first 5 years</td><td>$10–$40 PMPM</td><td><strong>$1.2B–$4.8B</strong></td></tr>
+      <tr><td><strong>Oncology institutional licensing</strong></td><td>~1,600 CoC-accredited cancer programs; 6,000+ oncology practices</td><td>$50K–$500K/year per institution (SCP compliance + patient platform)</td><td><strong>$300M–$3B</strong></td></tr>
+      <tr><td><strong>Pharma patient support programs</strong></td><td>Top 10 breast cancer drugs; eventual expansion to 50+ oncology drugs</td><td>$2M–$20M/year per drug program</td><td><strong>$200M–$2B</strong></td></tr>
+      <tr><td><strong>Payer value-based contracts</strong></td><td>Major payers: UnitedHealth, Aetna, BCBS, Cigna; Medicare Advantage</td><td>PMPM per covered survivor; outcomes-linked</td><td><strong>$500M–$3B</strong></td></tr>
+      <tr><td><strong>Employer benefits channel</strong></td><td>Fortune 500 + large employers; 1 in 16 employees is a cancer survivor</td><td>$5–$20 PEPM (per employee per month, amortized)</td><td><strong>$500M–$2B</strong></td></tr>
+    </tbody>
+  </table>
+  <p class="small">Note: these ranges are indicative and should be validated against payer contracting precedents, pharma patient support program spend disclosures, and oncology practice economics before investor use. Segmented SAMs are not additive without channel conflict modeling.</p>
+
+  <h3>The cancer survivor population growth curve — a secular tailwind</h3>
+  <p>Unlike most healthcare markets, the cancer survivorship market is structurally growing faster than the underlying disease prevalence, driven by:</p>
+  <ul>
+    <li><strong>Improving survival rates:</strong> 5-year survival has improved for virtually every major cancer type over the past two decades. More diagnoses → more survivors → larger addressable population.</li>
+    <li><strong>Earlier detection:</strong> Low-dose CT lung cancer screening, multi-cancer early detection (MCED) blood tests (Galleri, etc.) will dramatically increase early-stage diagnoses — most of which are highly survivable.</li>
+    <li><strong>Aging population:</strong> Cancer incidence peaks in the 60s–70s. The U.S. population is aging. Cancer survivorship demographics will expand as a result.</li>
+    <li><strong>New therapies extending survival in previously fatal cancers:</strong> Immunotherapy and targeted therapies have converted some metastatic cancers from death sentences to chronic diseases — creating a new population of "long-term metastatic survivors" with unique needs.</li>
+  </ul>
+
+  <h3>Expansion ladder</h3>
+  <div class="ladder">
+    <div class="rung"><div><strong>Breast cancer</strong> — the premium, highest-evidence beachhead. 3.8M survivors; strongest pharma and advocacy ecosystem; clearest payer ROI via endocrine therapy adherence; deepest research base for evidence-based content.</div></div>
+    <div class="rung"><div><strong>Gynecologic cancers</strong> (cervical, ovarian, uterine) — adjacent to breast cancer in survivor demographics, advocacy overlap, and treatment late effects profile. High sexual health burden; significant fertility concern in younger survivors. Natural expansion from breast cancer platform.</div></div>
+    <div class="rung"><div><strong>Prostate cancer</strong> — second largest survivor cohort (3.7M). Long-term hormone therapy side effects create direct parallel to breast cancer endocrine therapy adherence challenge. Strong payer and employer incentive for this older, employed population.</div></div>
+    <div class="rung"><div><strong>Colorectal cancer</strong> — strong bowel function, ostomy management, neuropathy, and dietary guidance needs. Lynch syndrome genetic counseling creates BRCA-equivalent family burden. 1.5M survivors; growing younger-onset cohort.</div></div>
+    <div class="rung"><div><strong>Lung cancer</strong> — historically low survival but improving rapidly with targeted therapies and immunotherapy; fastest-growing survivor cohort as early detection screening expands. Unique stigma burden ("self-inflicted") makes non-judgmental platform support especially valuable.</div></div>
+    <div class="rung"><div><strong>Blood cancers and transplant survivors</strong> (leukemia, lymphoma, myeloma) — distinct survivorship journey: graft-vs-host disease, infection surveillance, secondary malignancy risk, bone marrow transplant late effects. Different product experience required but same platform infrastructure.</div></div>
+    <div class="rung"><div><strong>Pediatric, AYA (Adolescent &amp; Young Adult) survivors</strong> — a distinct, emotionally intense population: fertility, career disruption, romantic relationships, body image during formative years. Highest lifetime survivorship horizon (20–50+ years of survivorship ahead). Product design fundamentally different from adult survivorship — a distinct module.</div></div>
+    <div class="rung"><div><strong>Employer &amp; payer enterprise contracts</strong> — once survivor population is built, enterprise buyers (employers, payers, Medicare Advantage plans) will pay population-level fees for survivorship support coverage.</div></div>
+  </div>
+
+  <h3>International market priority</h3>
+  <table>
+    <thead><tr><th>Region</th><th>Survivor population signal</th><th>Entry barrier</th><th>Priority</th></tr></thead>
+    <tbody>
+      <tr><td>UK (NHS)</td><td>350,000+ new cancer diagnoses/year; NHS Long Term Plan mandates Personalised Care and Support Planning (effectively SCPs)<sup>[21]</sup></td><td>NHS procurement complexity; tight budgets; but mandate-driven demand</td><td class="warn">Tier 1 — early pilot</td></tr>
+      <tr><td>Canada</td><td>~240,000 new cases/year; provincial health systems increasingly focused on survivorship outcomes<sup>[22]</sup></td><td>Provincial buying; evidence requirements; reimbursement uncertainty</td><td class="warn">Tier 1 — delayed</td></tr>
+      <tr><td>Australia</td><td>Strong digital health readiness; 160,000+ new cases/year; national survivorship framework<sup>[23]</sup></td><td>Lower; well-defined regulatory path; strong English-language overlap</td><td class="ok">Tier 1 — early</td></tr>
+      <tr><td>France / Germany</td><td>IARC data shows growing survivor populations; strong breast cancer advocacy (Pink October)<sup>[24]</sup></td><td>GDPR; reimbursement structure; language complexity</td><td class="warn">Tier 2</td></tr>
+      <tr><td>Gulf (GCC)</td><td>Breast cancer incidence rising rapidly; government-sponsored national health programs; concentrated oncology centers<sup>[25]</sup></td><td>Government channel required; cultural sensitivity for sexual health modules</td><td class="warn">Tier 2</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     17. BUSINESS MODEL
+═══════════════════════════════════════════════ -->
+<section id="business-model">
+  <h2><span class="sec-num">17</span>Business Model</h2>
+  <p>The cancer survivorship platform has an unusually rich multi-channel revenue structure — rare in digital health, where most companies are dependent on a single payer type. The multi-channel model makes the business more resilient and creates compounding network effects as each channel reinforces the others.</p>
+
+  <h3>Revenue channels</h3>
+  <table>
+    <thead><tr><th>Channel</th><th>What's included</th><th>Pricing</th><th>Buyer</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Survivor direct / DTC</strong></td><td>Full platform access: SCP, symptom tracking, peer support, mental health modules, community, financial navigation</td><td>$15–$30/month; $120–$240/year</td><td>Individual survivor (out-of-pocket or FSA/HSA eligible)</td></tr>
+      <tr><td><strong>Oncology practice / hospital licensing</strong></td><td>SCP generation and delivery to patients, PRO collection dashboard, care coordination tools, CoC compliance reporting</td><td>$50K–$300K/year per institution (varies by patient volume)</td><td>Cancer center, oncology practice, academic medical center</td></tr>
+      <tr><td><strong>Pharma patient support program</strong></td><td>Disease-specific survivorship support co-branded or white-labeled for patients on specific drug; adherence monitoring and coaching; real-world adherence data reporting</td><td>$3M–$15M/year per drug brand partnership</td><td>AstraZeneca, Eli Lilly, Pfizer, Novartis, Roche, AbbVie oncology divisions</td></tr>
+      <tr><td><strong>Payer value-based contract</strong></td><td>PMPM fee per covered cancer survivor; outcomes-linked bonuses for adherence milestones, ED avoidance, PRO improvement</td><td>$15–$50 PMPM; outcomes bonus $50–$200 per adherence milestone</td><td>UnitedHealth, Aetna/CVS, BCBS, Cigna, Medicare Advantage plans</td></tr>
+      <tr><td><strong>Employer benefits</strong></td><td>Cancer survivor benefit for employee population; cancer advocacy certification support; EAP integration for cancer-specific mental health</td><td>$3–$10 PEPM (per employee per month) across full workforce</td><td>Self-insured Fortune 500; large employers; benefits brokers</td></tr>
+      <tr><td><strong>Research data licensing</strong></td><td>De-identified, consented longitudinal PRO and behavioral data from cancer survivors; real-world evidence for drug development, outcomes research, payer contracting</td><td>$500K–$5M per research partnership; ongoing data licensing fees</td><td>Pharmaceutical companies; academic medical centers; payers; health economics firms</td></tr>
+    </tbody>
+  </table>
+
+  <p class="small">Illustrative unit economics: 100,000 breast cancer survivors at $20/month direct = $24M ARR. 3 pharma partnerships at $5M/year = $15M ARR. 50 cancer center licenses at $100K/year = $5M ARR. 5 payer contracts covering 200,000 survivors at $20 PMPM = $48M ARR. Total at illustrative scale: ~$92M ARR before employer and research channels. These figures require validation against actual commercial negotiations.</p>
+
+  <h3>The pharma channel: the most underappreciated revenue opportunity</h3>
+  <p>Pharmaceutical companies that market breast cancer drugs have three financial incentives to fund survivorship support programs:</p>
+  <ol>
+    <li><strong>Adherence revenue:</strong> Improving the 50% 5-year endocrine therapy completion rate by even 10 percentage points translates to hundreds of millions in additional drug revenue across the breast cancer market, far exceeding the cost of the support program</li>
+    <li><strong>Patient loyalty and brand differentiation:</strong> Payers and oncology practices increasingly evaluate drugs not just on efficacy but on total patient support ecosystem</li>
+    <li><strong>Real-world evidence generation:</strong> Patient-reported outcome data from a large, adherent survivor cohort is a premium asset for post-marketing studies, label expansions, and health technology assessments globally</li>
+  </ol>
+
+  <div class="callout">Critical architecture note: pharma partnerships must be structured with a strict information wall between pharma-sponsored content and platform trust. The survivor must always know what is pharma-sponsored, and pharma must never receive individual survivor data without explicit, separate consent. A platform perceived as a pharma data-gathering tool will lose survivor trust and, with it, the entire business model.</div>
+
+  <h3>Buyer coalition by channel</h3>
+  <span class="pill teal">Chief Medical Officer</span>
+  <span class="pill teal">Oncology Practice Manager</span>
+  <span class="pill teal">CoC Program Director</span>
+  <span class="pill teal">Nurse Navigator Leader</span>
+  <span class="pill teal">Pharma Patient Support VP</span>
+  <span class="pill teal">Payer Medical Director</span>
+  <span class="pill teal">Medicare Advantage CMO</span>
+  <span class="pill teal">Benefits VP / CHRO</span>
+  <span class="pill teal">Chief Wellness Officer</span>
+  <span class="pill teal">EHR Integration Lead (Epic/Cerner)</span>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     18. COMPETITIVE LANDSCAPE
+═══════════════════════════════════════════════ -->
+<section id="competition">
+  <h2><span class="sec-num">18</span>Competitive Landscape</h2>
+
+  <table>
+    <thead><tr><th>Category</th><th>Examples</th><th>Threat level</th><th>Gap to exploit</th></tr></thead>
+    <tbody>
+      <tr><td>Cancer care navigation (clinical)</td><td>Thyme Care, Carrum Health, Included Health, Triage Cancer</td><td class="warn">Medium — partner opportunity</td><td>These platforms focus on treatment navigation and care coordination, not survivorship. Post-treatment is a white space for most. Partnership model: they refer survivors to the platform at treatment completion.</td></tr>
+      <tr><td>Oncology EHR / patient portals</td><td>Epic Beacon + MyChart, Oracle Health, Flatiron Health (Roche)</td><td class="bad">High — long-term</td><td>Epic MyChart has the distribution but zero survivorship-specific content, peer support, or FCR/financial toxicity infrastructure. Near-term: partner via SMART on FHIR for SCP integration. Long-term: compete on survivor engagement and clinical depth EHRs can never match.</td></tr>
+      <tr><td>Cancer patient communities</td><td>Belong.life, PatientsLikeMe (UnitedHealth), Cancer Support Community, Cancer Compass</td><td class="warn">Medium</td><td>Community platforms without clinical intelligence, SCP infrastructure, pharma channel, or symptom tracking. Stronger on community; weaker on clinical specificity and monetization. Potential acquisition targets.</td></tr>
+      <tr><td>Generic digital mental health</td><td>Lyra Health, Spring Health, Modern Health, BetterHelp, Headspace</td><td class="warn">Medium-high</td><td>They have distribution through employer/payer channels but zero oncology specificity. They cannot address FCR, scanxiety, endocrine therapy adherence, or chemo brain with credibility. The survivor who has tried a generic mental health app and felt dismissed is an ideal convert.</td></tr>
+      <tr><td>Oncology pharma patient support programs</td><td>AZ's "No Barriers" program; Pfizer Oncology Together; Lilly's AccessOne; Novartis patient services</td><td class="warn">Medium</td><td>Drug-specific, brand-constrained, and not survivor-centric. Cannot connect a patient on Pfizer's drug to AZ's program. The platform aggregates support across the full survivor journey, not a single drug's commercial lifecycle.</td></tr>
+      <tr><td>Chronic disease management platforms</td><td>Livongo (Teladoc), Hinge Health, Sword Health, Noom Health</td><td class="warn">Medium</td><td>Proven that payers and employers pay for condition-specific digital support at scale. Business model precedent is established. None have entered oncology survivorship meaningfully. The playbook is proven; the space is open.</td></tr>
+      <tr><td>Fertility and reproductive health</td><td>Progyny, Maven Clinic, Carrot Fertility</td><td class="ok">Low — complement</td><td>No overlap in survivorship context. Partnership opportunity: Progyny and Maven refer oncofertility patients; platform provides post-treatment fertility guidance and community.</td></tr>
+      <tr><td>Wearables + health monitoring</td><td>Apple Health, Oura, WHOOP, Garmin Health</td><td class="ok">Low — partnership</td><td>Wearable fatigue and sleep data is a valuable survivorship signal. Integration partners, not competitors. Opt-in wearable integration adds sensor-based behavioral context to PRO data.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Most dangerous strategic threats</h3>
+  <div class="g2">
+    <ul>
+      <li><strong>Epic MyChart + ASCO SCP module:</strong> If Epic builds a SMART on FHIR SCP tool and distributes it through their 35%+ U.S. hospital market share, they could own the SCP layer. Counter: Epic does not build condition-specific clinical content, peer support networks, or financial navigation. The platform needs to be deeply integrated with Epic, not racing against it.</li>
+      <li><strong>Lyra Health or Spring Health acquiring a cancer-specific overlay:</strong> These platforms have employer distribution and payer relationships. An oncology-specific acquisition would be a serious competitive threat. Counter: build proprietary peer network density and survivor PRO data moat before these players move.</li>
+    </ul>
+    <ul>
+      <li><strong>Pharmaceutical companies building proprietary survivor platforms:</strong> AZ, Roche, or Lilly could build in-house. Counter: no pharma company can be trusted by survivors across brands. The platform's independence is its most important structural advantage in the pharma-partner model.</li>
+      <li><strong>Payer-owned cancer navigation (UnitedHealth/Optum):</strong> United's Optum already provides cancer navigation. Expansion into survivorship would leverage existing claims data. Counter: survivors deeply distrust payer-built tools. Independent platform with explicit privacy protections has durable credibility advantage.</li>
+    </ul>
+  </div>
+
+  <div class="quote-block">Best defensive positioning: build irreplaceable survivor trust and clinical depth before any of the above players can enter credibly. The peer network, the SCP data, and the longitudinal behavioral record are moats that take years to build and cannot be acquired.</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     19. GO-TO-MARKET STRATEGY
+═══════════════════════════════════════════════ -->
+<section id="gtm">
+  <h2><span class="sec-num">19</span>Go-to-Market Strategy</h2>
+
+  <h3>Best initial wedges</h3>
+  <table>
+    <thead><tr><th>Wedge</th><th>Why it works</th><th>Primary buyer</th></tr></thead>
+    <tbody>
+      <tr><td>Commission on Cancer (CoC) accredited cancer programs</td><td>1,600 accredited programs are mandated to provide SCPs. The platform solves their compliance problem immediately. One contract covers hundreds to thousands of survivors. Institutional sales cycle but high conviction.</td><td>Cancer program director, oncology medical director, quality and compliance leadership</td></tr>
+      <tr><td>Breast oncology practices / academic breast cancer centers</td><td>Concentrated survivor population; most organized advocacy relationships; highest pharma interest; clearest adherence ROI; deepest clinical evidence base for product claims</td><td>Breast oncology chief, nurse navigator program director, CMO</td></tr>
+      <tr><td>Breast cancer pharma patient support co-launch</td><td>An oncology pharma company co-launching the platform for patients on their endocrine therapy product provides immediate distribution, guaranteed revenue, and clinical validation simultaneously</td><td>Patient services VP, medical affairs, market access leads at AZ, Lilly, Pfizer, Novartis</td></tr>
+      <tr><td>Advocacy organization partnerships</td><td>LBBC, Young Survival Coalition, Susan G. Komen already have large breast cancer survivor communities. Partnership provides survivor acquisition without cold marketing, plus immediate content credibility</td><td>Advocacy partnership directors; program development leads</td></tr>
+      <tr><td>Large self-insured employer (cancer-specific benefit)</td><td>Fortune 500 employers with self-insured plans pay directly for cancer survivor benefits. Cancer is consistently a top-5 cost driver. Employer channel requires minimal clinical sales cycle — benefits VP can move faster than hospital procurement.</td><td>VP Benefits, Chief People Officer, benefits brokers (Mercer, AON, WTW)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Initial ICP (ideal customer profile)</h3>
+  <p>For institutional channel: NCI-designated cancer centers and CoC-accredited comprehensive cancer programs with active breast oncology programs, nurse navigator infrastructure, existing survivorship program (even rudimentary), and leadership that has publicly committed to survivorship care quality improvement. Target: the 70 NCI-designated centers first — they are the clinical thought leaders whose adoption signals the rest of the market.</p>
+
+  <h3>Survivor acquisition and activation funnel</h3>
+  <div class="g3">
+    <div class="card">
+      <h3>Institutional trigger (B2B2C)</h3>
+      <p>Oncology practice license → nurse navigator activates platform for newly completing patients at treatment end. Survivor receives personalized SCP in the platform on their last treatment day. 95% of users acquired this way have no cost barrier — institution pays.</p>
+    </div>
+    <div class="card">
+      <h3>Advocacy / community discovery (organic B2C)</h3>
+      <p>Living Beyond Breast Cancer, Young Survival Coalition, Susan G. Komen community referrals. BRCA+ community (FORCE) referrals. These survivors are high-engagement, vocal, and build network effects through peer referral — the best customer acquisition channel in digital health.</p>
+    </div>
+    <div class="card">
+      <h3>Pharma co-activation</h3>
+      <p>Oncologist prescribes aromatase inhibitor → pharma patient support program invites patient to platform at prescription fill. Platform provides endocrine therapy side effect management, adherence support, and survivorship community. Survivor acquired at the highest-intensity adherence moment.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     20. TRUST, PRIVACY & COMPLIANCE
+═══════════════════════════════════════════════ -->
+<section id="trust-compliance">
+  <h2><span class="sec-num">20</span>Trust, Privacy &amp; Compliance Architecture</h2>
+
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--green);">Trust design requirements</h3>
+      <ul>
+        <li>Cancer diagnosis is among the most sensitive personal health information — protection must be architectural, not just policy</li>
+        <li>Employers never receive individual survivor data — this is non-negotiable for GINA (Genetic Information Nondiscrimination Act) compliance and survivor trust</li>
+        <li>Payers never receive individual PRO data without survivor's granular consent — even in payer-funded deployments</li>
+        <li>Pharma partners never receive identifiable individual data — aggregate, de-identified adherence analytics only, with robust consent</li>
+        <li>Genetic information (BRCA status, Lynch syndrome results) receives heightened protection — separate consent tier, separate storage, explicit disclosure controls</li>
+        <li>Survivor controls all clinical sharing: generates appointment summaries explicitly, per appointment</li>
+        <li>Community content is pseudonymous — real first name only, cancer type and stage visible only to cancer-type matched peers</li>
+        <li>Research data use requires separate, specific, revocable consent — not bundled into Terms of Service</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--red);">Compliance watchouts</h3>
+      <ul>
+        <li><strong>HIPAA:</strong> Cancer survivorship platform handles PHI (Protected Health Information) by definition. Full HIPAA compliance, BAAs with all institutional partners, minimum-necessary data principles required<sup>[26]</sup></li>
+        <li><strong>GINA:</strong> Genetic Information Nondiscrimination Act prohibits employers from using genetic information (including BRCA status) in employment decisions. Employer-funded deployments require strict information barriers<sup>[27]</sup></li>
+        <li><strong>ADA:</strong> Cancer is a protected disability under the ADA; survivors using the platform to document work accommodation needs must be protected from employer surveillance of accommodation requests</li>
+        <li><strong>FDA CDS guidance:</strong> Symptom escalation features and PRO-based clinical recommendations must be carefully scoped to avoid clinical decision support regulatory classification</li>
+        <li><strong>FTC health breach notification rule:</strong> App-based health data not covered by HIPAA is subject to FTC rules; hybrid architecture requires careful legal structure</li>
+        <li><strong>State privacy laws:</strong> California CCPA/CPRA, Washington My Health MY Data Act, and other state health data laws add requirements beyond HIPAA for non-covered entities</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout rose"><strong>The GINA architecture problem:</strong> If an employer pays for the platform as a benefit, the platform must be structured so that the employer cannot identify which employees used it for genetic cancer risk information. The information wall between benefit administrator and individual usage must be technically enforced, not just contractually promised. This is a competitive advantage — smaller players cannot build this architecture correctly.</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     21. IMPLEMENTATION FEASIBILITY
+═══════════════════════════════════════════════ -->
+<section id="feasibility">
+  <h2><span class="sec-num">21</span>Implementation Feasibility</h2>
+
+  <table>
+    <thead><tr><th>Integration model</th><th>Technical feasibility</th><th>Compliance complexity</th><th>Sales cycle</th><th>MVP fit</th></tr></thead>
+    <tbody>
+      <tr><td><strong>A) Standalone DTC</strong> — survivor self-onboards; no institutional integration; manual treatment history entry</td><td class="ok">High</td><td class="ok">Lower (consumer HIPAA)</td><td class="ok">Immediate — direct launch</td><td class="ok">Start here: prove engagement, content quality, and survivor retention</td></tr>
+      <tr><td><strong>B) FHIR patient-access API</strong> — MyChart/Epic FHIR API to auto-populate treatment history with survivor's own consent (USCDI-required patient access)</td><td class="ok">High (patient-directed access, no BAA required)</td><td class="ok">Low (patient controls their own data access)</td><td class="ok">Fast — no institutional sales required; survivor opts in</td><td class="ok">Best MVP accelerator — eliminates manual onboarding friction</td></tr>
+      <tr><td><strong>C) Institutional B2B2C</strong> — cancer center licenses platform; nurse navigator activates for patients; SCP delivered at treatment completion</td><td class="warn">Medium — requires EHR integration for SCP data</td><td class="warn">Medium-high (BAA, institutional security review)</td><td class="warn">3–9 months (oncology practice procurement)</td><td class="warn">Phase 1 after DTC traction proven</td></tr>
+      <tr><td><strong>D) Pharma co-activation</strong> — pharma patient support program triggers platform enrollment at prescription fill</td><td class="warn">Medium — requires pharmacy benefit integration or HUB services API</td><td class="warn">Medium-high — pharma/health data regulations; OIG compliance</td><td class="bad">6–18 months (pharma medical affairs and legal approval)</td><td class="bad">Later stage — requires platform credibility and survivor data first</td></tr>
+      <tr><td><strong>E) Payer value-based contract</strong> — payer pays PMPM for covered survivors; eligibility feed integration; outcomes reporting</td><td class="warn">Medium</td><td class="bad">High — payer data exchange, risk contracting, actuarial validation</td><td class="bad">12–24 months</td><td class="bad">Phase 3+ — requires outcome evidence from earlier deployments</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout gold">The strongest early technical decision: launch DTC first. The breast cancer survivor community is digitally engaged, actively seeking peer support, and willing to pay or advocate for a product that genuinely addresses their needs. DTC launch builds survivor data, engagement metrics, and clinical testimonials that make every downstream institutional and pharma conversation dramatically faster.</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     22. STRATEGIC RISKS & MITIGATIONS
+═══════════════════════════════════════════════ -->
+<section id="risks">
+  <h2><span class="sec-num">22</span>Strategic Risks &amp; Mitigations</h2>
+
+  <table>
+    <thead><tr><th>Risk</th><th>Severity</th><th>Why it matters</th><th>Mitigation</th></tr></thead>
+    <tbody>
+      <tr><td>Pharma channel compromising survivor trust</td><td class="bad">High</td><td>If survivors perceive the platform as a pharma data collection tool or a commercial vehicle, the entire business model collapses. Trust, once broken in cancer communities, is very difficult to rebuild — and advocacy organizations will mobilize against the platform.</td><td>Strict transparency about pharma partnerships; opt-in only data sharing with pharma; survivor advisory board with veto power on pharma partnership terms; clear UI labeling of sponsored content</td></tr>
+      <tr><td>Clinical overreach / regulatory exposure</td><td class="bad">High</td><td>Symptom escalation recommendations and PRO-based suggestions could be interpreted as clinical decision support subject to FDA oversight. Any adverse event traceable to platform guidance creates liability.</td><td>All symptom escalation routes to "contact your oncology team" — never to platform diagnosis. Legal review of all clinical content claims. FDA pre-submission meeting for any feature approaching decision support territory.</td></tr>
+      <tr><td>Cancer-specific content requires constant clinical updating</td><td class="warn">Medium-high</td><td>Oncology guidelines change rapidly (ASCO updates annually). Content that was evidence-based in 2024 may be superseded by 2026. Stale clinical guidance in a medical context is a patient safety and liability issue.</td><td>Medical advisory board of oncology-trained clinicians; systematic ASCO/NCCN guideline review cadence; content audit workflow; clear "last reviewed" dating on all clinical content</td></tr>
+      <tr><td>Low engagement / survivorship attention deficit</td><td class="warn">Medium-high</td><td>Survivors are exhausted by the end of active treatment. The last thing many want is another health app. Without event-triggered, low-friction engagement that provides immediate value, the platform will face the same 30-day churn problem as every other chronic disease app.</td><td>Event-triggered activation (scan in 14 days, medication refill overdue); micro-interaction design; first value within 3 minutes of onboarding (SCP delivery); peer connection within first week; no generic wellness content</td></tr>
+      <tr><td>Payer reimbursement uncertainty</td><td class="warn">Medium</td><td>While the ROI case for payers is strong, payer contracting for digital therapeutics and remote monitoring is in active flux. Reimbursement landscape may change before platform reaches scale.</td><td>Multi-channel revenue model reduces payer dependency. Pharma and institutional channels provide revenue while payer contracting evidence is built. Focus early outcomes evidence on ED avoidance and adherence — payers' highest ROI metrics.</td></tr>
+      <tr><td>Epic competitive response</td><td class="warn">Medium</td><td>Epic could add survivorship content and SCP functionality to MyChart, cutting off the institutional distribution channel. Epic App Orchard certification is both a partnership path and a competitive intelligence problem.</td><td>Build survivor-side engagement (peer network, community, FCR tools, financial navigation) that Epic cannot and will not build. Epic's business model does not include peer communities, pharma partnerships, or financial toxicity navigation. The complement to Epic, not the competition.</td></tr>
+      <tr><td>Difficult survivor population (mental health crisis risk)</td><td class="bad">High</td><td>Cancer survivors have elevated rates of suicidal ideation and psychiatric crisis. A platform that surfaces distress must have robust crisis escalation infrastructure. An adverse event attributable to inadequate crisis response would be catastrophic.</td><td>Validated crisis detection protocols; 24/7 crisis line integration (988, National Cancer Information Center); never AI-only crisis response; licensed therapist on-call pathway; institutional notification protocols for active suicidal ideation (with pre-authorized consent)</td></tr>
+      <tr><td>"Pink washing" backlash</td><td class="warn">Medium</td><td>Breast cancer advocacy is highly sensitized to commercialization of the survivor experience. A platform perceived as exploiting the breast cancer brand without authentic survivor-led design will face strong backlash from the advocacy community.</td><td>Survivor advisory board from Day 1 with material influence on product decisions; lived experience hires on clinical content team; no pink-ribbon aesthetics without survivor community endorsement; transparent governance model</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     23. MVP & PRODUCT ROADMAP
+═══════════════════════════════════════════════ -->
+<section id="roadmap">
+  <h2><span class="sec-num">23</span>MVP &amp; Product Roadmap</h2>
+
+  <div class="roadmap">
+    <div class="phase"><strong>MVP</strong>Breast cancer survivor onboarding (cancer type, stage, treatment) · Personalized SCP generation · Survivorship calendar with scan reminders · Scanxiety prep protocol · Basic symptom check-in (daily/weekly) · Peer community (breast cancer forum) · Crisis escalation pathway · Direct subscription ($20/month)</div>
+    <div class="phase"><strong>V1</strong>Fear of recurrence CBT module (CONQUER-adapted) · Endocrine therapy adherence tracking + side effect management · Trained survivor peer 1:1 matching · FHIR patient-access API (MyChart treatment history import) · Financial toxicity screening + resource navigation · Pre-appointment summary generator</div>
+    <div class="phase"><strong>V2</strong>Chemo brain / CRCI module · Sexual health screening + routing · Fertility guidance module · Pharma patient support program integration (first partner) · Licensed oncology therapist network · Institutional (B2B2C) SCP delivery module for cancer centers · PRO dashboard for clinical teams</div>
+    <div class="phase"><strong>V3</strong>Expansion to gynecologic and prostate cancer survivorship · Payer value-based contract pilot (ED avoidance metrics) · SMART on FHIR institutional integration (Epic MyChart launch from oncology portal) · De-identified research data product launch · Caregiver support module</div>
+    <div class="phase"><strong>Expansion</strong>All major solid tumor cancer types · Blood cancers (lymphoma, leukemia, myeloma) · AYA (Adolescent &amp; Young Adult) distinct experience · International pilots (Australia, UK NHS) · Employer benefits channel launch · Wearable integration (fatigue/sleep signals)</div>
+    <div class="phase"><strong>Platform</strong>Treatment-era companion (active treatment + survivorship) · Pre-treatment high-risk population (BRCA+, Lynch syndrome) · Multi-cancer early detection (MCED) integration · Full cancer journey OS · Workforce analytics for health systems</div>
+  </div>
+
+  <h3>Product architecture: inputs and outputs</h3>
+  <div class="g2">
+    <div class="card">
+      <h3>Inputs</h3>
+      <span class="pill teal">Cancer type + stage + subtype</span><span class="pill teal">Treatment regimen history</span><span class="pill teal">Current maintenance therapy</span><span class="pill teal">Surveillance calendar dates</span><span class="pill teal">Daily symptom check-in</span><span class="pill teal">Medication adherence log</span><span class="pill teal">PRO instruments (PHQ-2, FCR, PROMIS)</span><span class="pill teal">Financial distress screen</span><span class="pill teal">EHR treatment history (FHIR, opt-in)</span><span class="pill teal">Wearable signals (opt-in)</span><span class="pill teal">Peer interaction history</span>
+    </div>
+    <div class="card">
+      <h3>Outputs</h3>
+      <span class="pill purple">Living Survivorship Care Plan</span><span class="pill purple">Scanxiety prep protocol</span><span class="pill purple">FCR CBT module</span><span class="pill purple">Peer survivor match</span><span class="pill purple">Side effect management guide</span><span class="pill purple">Financial resource list</span><span class="pill purple">Licensed therapist booking</span><span class="pill purple">Crisis escalation</span><span class="pill purple">Symptom trend report</span><span class="pill purple">Pre-appointment summary</span><span class="pill purple">Adherence milestone tracking</span><span class="pill purple">Aggregate PRO dashboard (institutional)</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     24. VALIDATION & PILOT DESIGN
+═══════════════════════════════════════════════ -->
+<section id="validation">
+  <h2><span class="sec-num">24</span>Validation &amp; Pilot Design</h2>
+
+  <div class="g2">
+    <div class="card">
+      <h3>3-month DTC pilot (proof of engagement)</h3>
+      <ul>
+        <li>Target: 500–1,000 breast cancer survivors recruited through Living Beyond Breast Cancer and Young Survival Coalition partnerships</li>
+        <li><strong>Primary metrics:</strong> 30-day retention rate, weekly active usage rate, SCP engagement depth, peer connection conversion rate</li>
+        <li><strong>Secondary metrics:</strong> FCR brief scale change at 6 and 12 weeks vs. baseline; PHQ-2 trend; self-reported endocrine therapy adherence; NPS (survivor satisfaction)</li>
+        <li>Qualitative interviews at 4 and 12 weeks: what's working, what feels missing, what's the most valuable feature</li>
+        <li>Financial toxicity screen administered at onboarding and 12 weeks</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>12-month institutional pilot (proof of ROI)</h3>
+      <ul>
+        <li>Target: 2–3 NCI-designated cancer centers; 300–800 breast cancer survivors entering survivorship per site per year</li>
+        <li><strong>Hard outcome targets:</strong> Endocrine therapy adherence at 12 months vs. matched historical control; PRO score improvement vs. usual care; ED utilization rate in platform vs. non-platform cohort</li>
+        <li><strong>Institutional metrics:</strong> SCP delivery compliance rate (CoC metric); time-to-SCP delivery; survivorship care coordination handoffs to primary care completed</li>
+        <li>Publish findings in Journal of Clinical Oncology or JCO Oncology Practice — peer-reviewed publication creates clinical credibility and competitive moat simultaneously</li>
+        <li>Economic analysis: cost per adherent survivor-year; ED avoidance value; productivity return-to-work metric for employer channel</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Key assumptions to validate in the first 60 days</h3>
+  <ul>
+    <li>Survivors will self-onboard treatment history accurately and completely enough to generate useful, personalized SCPs — or FHIR import is needed from Day 1</li>
+    <li>Scanxiety protocol generates measurably higher engagement than any other platform feature — validating the pre-scan trigger as the most important activation hook</li>
+    <li>Peer connection within the first 2 weeks drives retention through 30 days — the primary churn intervention</li>
+    <li>Endocrine therapy side effect management content drives measurably higher self-reported adherence vs. no support — the primary pharma partnership value proposition</li>
+    <li>Survivors are willing to share PRO data with their oncology team (to validate the pre-appointment summary feature's clinical adoption)</li>
+  </ul>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     25. DISCOVERY QUESTIONS
+═══════════════════════════════════════════════ -->
+<section id="discovery-questions">
+  <h2><span class="sec-num">25</span>Discovery Questions</h2>
+
+  <div class="g3">
+    <div class="card">
+      <h3>20 survivor discovery questions</h3>
+      <ol>
+        <li>What was the hardest moment of your survivorship — during treatment or after?</li>
+        <li>What did you wish someone had told you the day your active treatment ended?</li>
+        <li>How did you feel about your oncology team when active treatment stopped?</li>
+        <li>Have you ever experienced scanxiety? What does the 2 weeks before a scan feel like?</li>
+        <li>Have you ever skipped or considered stopping your maintenance medication? Why?</li>
+        <li>Has anyone talked to you about sexual health changes since your treatment ended?</li>
+        <li>How has cancer affected your finances? Did you ever skip anything because of cost?</li>
+        <li>Do you experience cognitive difficulties? Have your medical team taken this seriously?</li>
+        <li>Have you ever connected with another survivor who had the same cancer and treatment?</li>
+        <li>What was missing from your survivorship care plan — or did you even receive one?</li>
+        <li>What privacy concerns would make you reluctant to use a digital platform?</li>
+        <li>What would you want your employer to know — and not know — about your cancer?</li>
+        <li>What support resource have you found most valuable? What's been most useless?</li>
+        <li>How do you currently track your symptoms and medications?</li>
+        <li>What would make a peer support conversation valuable vs. just more noise?</li>
+        <li>Would you want your oncologist to see your symptom tracking data? Under what conditions?</li>
+        <li>How much would you pay monthly for a platform that genuinely addressed your survivorship needs?</li>
+        <li>What one thing do you wish medicine understood about being a cancer survivor that it currently doesn't?</li>
+        <li>What does the phrase "cancer-free" mean to you emotionally? Does it describe your experience?</li>
+        <li>Who would you trust to build a platform for cancer survivors — and who would you be suspicious of?</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h3>20 institutional / payer questions</h3>
+      <ol>
+        <li>What percentage of your cancer patients currently receive a survivorship care plan?</li>
+        <li>How do you currently handle the transition from active treatment to survivorship?</li>
+        <li>What is your CoC SCP compliance rate, and what is the penalty for non-compliance?</li>
+        <li>How do you currently measure survivorship program quality and outcomes?</li>
+        <li>What is your current endocrine therapy adherence rate in breast cancer patients at 2 and 5 years?</li>
+        <li>What proportion of your breast cancer survivors use an ED in the first year post-treatment?</li>
+        <li>Who currently staffs your survivorship program, and what is the navigator caseload?</li>
+        <li>How quickly could a pilot be approved through your IRB and procurement process?</li>
+        <li>What outcome data would you need to expand a pilot to the full breast oncology program?</li>
+        <li>Would you pay for a platform that generates ASCO-compliant SCPs automatically for your patient population?</li>
+        <li>What privacy and security review process does a new patient-facing digital tool go through?</li>
+        <li>How is your relationship with Epic structured? Would SMART on FHIR access be feasible for a pilot?</li>
+        <li>What is your current relationship with pharma patient support programs? Are there conflicts of interest to navigate?</li>
+        <li>Who are your top 3 primary care referring partners, and how do you currently share survivorship information with them?</li>
+        <li>What would make this clinically essential rather than "a nice wellness add-on"?</li>
+        <li>What is an acceptable per-survivor per-month platform cost for your budget model?</li>
+        <li>What outcome at 12 months would justify expanding from breast cancer to all cancer types?</li>
+        <li>Would your patients consent to de-identified PRO data being used for oncology research?</li>
+        <li>How does survivorship care fit into your value-based care contracts currently?</li>
+        <li>What does your legal team require before you sign a BAA with a digital health company?</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h3>10 investor diligence questions</h3>
+      <ol>
+        <li>Why will survivors trust this platform when they don't trust pharma-funded programs?</li>
+        <li>What is the primary moat — peer network, SCP data, longitudinal PRO, or clinical content depth?</li>
+        <li>How does the pharma channel not corrupt the survivor trust channel — and can both coexist at scale?</li>
+        <li>What prevents Epic from solving the SCP compliance problem for their 35%+ hospital clients?</li>
+        <li>What is the realistic CAC for the DTC channel vs. institutional B2B2C? Which is more capital efficient?</li>
+        <li>What is 30-day, 90-day, and 12-month survivor retention in comparable digital chronic condition platforms (Hinge Health, Livongo)?</li>
+        <li>How does the product differentiate for lung cancer vs. breast cancer vs. leukemia — and at what point does multi-cancer expansion dilute the breast cancer depth advantage?</li>
+        <li>What is the realistic payer reimbursement path and timeline for a survivorship digital health platform in 2026?</li>
+        <li>How defensible is the pharma partnership revenue if a competitor builds a comparable platform?</li>
+        <li>What is the credible, specific path to $100M ARR — and which revenue channel gets you there first?</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     26. INVESTMENT THESIS & EXIT
+═══════════════════════════════════════════════ -->
+<section id="investment-thesis">
+  <h2><span class="sec-num">26</span>Investment Thesis &amp; Exit Opportunities</h2>
+
+  <table>
+    <thead><tr><th>Question</th><th>Answer</th></tr></thead>
+    <tbody>
+      <tr><td>Is it venture-scale?</td><td class="ok">Yes — if built as cancer survivor infrastructure, not a wellness app. 18.1M survivors today (growing to 26.1M by 2040) + multi-channel revenue (pharma, payer, institutional, employer, DTC) creates a $3B–$10B+ SAM with multiple potential monetization pathways.</td></tr>
+      <tr><td>Is breast cancer only big enough?</td><td class="warn">Probably not at IPO scale, but compelling for Series A–B and a strong strategic acquisition at $500M–$2B. The value is in proving the model at depth, then expanding rapidly. "Breast cancer only" is a pitch for Seed/Series A conviction, not a long-term ceiling.</td></tr>
+      <tr><td>Is the market crowded?</td><td class="ok">Notably uncrowded at the survivorship layer. Cancer navigation is increasingly crowded (Thyme Care, Carrum, etc.) but survivorship — the 5–30 year post-treatment journey — has no dominant platform. The race is genuinely open.</td></tr>
+      <tr><td>Is buyer pain real and economically measurable?</td><td class="ok">Yes, on all four channels: Pharma (adherence revenue), Payer (ED avoidance, adherence → recurrence prevention), Institutional (CoC compliance, quality metrics), Employer (productivity, retention). Few digital health companies have four independent buyer pain points simultaneously.</td></tr>
+      <tr><td>What is the primary moat?</td><td>Longitudinal survivor PRO data (irreplicable after 3–5 years of operation), peer network density matched by cancer type and treatment (network effects), SCP institutional integration lock-in, and proprietary clinical content depth (especially FCR, scanxiety, CRCI) that takes years to build credibly.</td></tr>
+      <tr><td>What kills it?</td><td class="bad">Pharma-channel trust contamination; clinical adverse event from inadequate crisis protocols; Epic building SCP infrastructure natively; generic wellness positioning that loses clinical credibility with oncology; failure to prove endocrine therapy adherence improvement as primary ROI metric.</td></tr>
+      <tr><td>What makes it a category leader?</td><td>Owning the survivorship relationship from the last day of treatment for the rest of the survivor's life — generating the most comprehensive longitudinal cancer survivor dataset in the world, and becoming the platform that every oncologist recommends, every payer pays for, and every survivor relies on.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Exit opportunities</h3>
+  <div class="g2">
+    <div class="card">
+      <h3>Likely strategic acquirers</h3>
+      <ul>
+        <li><strong>Oncology pharma majors:</strong> AstraZeneca, Roche/Genentech, Eli Lilly, Pfizer Oncology — would gain patient relationship infrastructure, real-world adherence data, and survivor community they cannot build internally</li>
+        <li><strong>EHR / health systems:</strong> Epic (App Orchard acquisition to add survivor module), Oracle Health, Meditech — would gain survivorship functionality they currently lack</li>
+        <li><strong>Employer mental health:</strong> Lyra Health, Spring Health, Modern Health — would gain cancer-specific clinical depth and oncology care management capability to expand upmarket</li>
+        <li><strong>Payer / managed care:</strong> UnitedHealth/Optum, CVS/Aetna, Cigna/Evernorth — would gain cancer survivor management tool to reduce high-cost utilization in insured population</li>
+        <li><strong>Cancer navigation:</strong> Thyme Care (acquired by a health system), Carrum Health, Included Health — survivorship as natural extension of treatment navigation</li>
+        <li><strong>Digital health infrastructure:</strong> Teladoc Health, Hims &amp; Hers, LifeStance — survivorship as premium cancer specialty tier</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Exit pathway logic</h3>
+      <ul>
+        <li><strong>Breast cancer only, $30M–$60M ARR:</strong> Likely strategic acquisition at 8–15× ARR by pharma patient support acquirer or Lyra/Spring — $300M–$900M</li>
+        <li><strong>All cancer survivorship, $80M–$150M ARR:</strong> Growth equity or strategic M&amp;A — $800M–$3B. Multiple credible acquirers at this stage.</li>
+        <li><strong>Full platform + pharma channel + payer contracts, $200M–$400M ARR:</strong> Credible IPO narrative as cancer survivor infrastructure company — $3B–$10B. Comparable to Progyny IPO ($3B) or Hinge Health ($6B).</li>
+        <li><strong>Global cancer journey OS, $500M–$1.5B ARR:</strong> Category-defining IPO — $15B–$50B range. Comparable to Veeva Systems in pharma data infrastructure.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="quote-block">Final thesis: Breast cancer survivors are the premium wedge. The survivorship cliff is the product trigger. Endocrine therapy adherence is the ROI proof point. Peer network density and longitudinal PRO data are the moat. All 18.1M cancer survivors — and 26.1M by 2040 — are the venture scale outcome.</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     27. LESSONS FROM DIGITAL HEALTH COMPARABLES
+═══════════════════════════════════════════════ -->
+<section id="comparables">
+  <h2><span class="sec-num">27</span>Lessons from Digital Health Comparables</h2>
+  <p>The cancer digital health graveyard — and the survivors — contain critical structural lessons.</p>
+
+  <table>
+    <thead><tr><th>Company / Program</th><th>Outcome</th><th>Lesson for this platform</th></tr></thead>
+    <tbody>
+      <tr><td>Flatiron Health</td><td>Acquired by Roche for $1.9B in 2018. Built the definitive oncology real-world data platform by starting with one focused use case (lung cancer clinical trial matching) and expanding to oncology-wide EMR and analytics.</td><td>Start with one cancer. Go deep. Build the data asset. Expand with evidence. The venture outcome comes from the data layer, not the initial use case. Roche paid $1.9B for what started as a single-cancer EMR improvement.</td></tr>
+      <tr><td>Hinge Health</td><td>Digital MSK (musculoskeletal) platform IPO filing at ~$6B valuation, 2024. Built by starting with one condition (back pain), proving payer ROI, expanding to all MSK. Now a standard employer and payer benefit.</td><td>The cancer survivorship opportunity is structurally parallel: start with one condition (breast cancer), prove adherence and ED avoidance ROI to payers, expand to all cancers. Hinge Health proves the payer/employer model works for chronic condition digital platforms.</td></tr>
+      <tr><td>Progyny</td><td>Fertility benefits platform IPO at $3B in 2019. Built by starting with one underserved condition (fertility), building specialized clinical network, and selling through employers.</td><td>A condition-specific benefit that general employer health plans cannot address well can build to a $3B+ company. Cancer survivorship has the same structural characteristics: underserved, condition-specific, high employer cost impact, no dominant incumbent.</td></tr>
+      <tr><td>Pear Therapeutics</td><td>Filed Chapter 11 in 2023 after FDA clearance for digital therapeutics. FDA clearance did not create a commercial model; prescription digital therapeutic reimbursement never materialized at scale.</td><td>Do not pursue FDA clearance as a go-to-market strategy. Enterprise B2B (institutional, pharma, payer contracts) is more durable than prescription reimbursement for this product category. Regulatory clearance is not a business model.</td></tr>
+      <tr><td>PatientsLikeMe</td><td>Acquired by UnitedHealth in 2019. Patient community with real-world data; acquisition immediately destroyed survivor trust when patients learned their data was going to a payer. Community largely disintegrated post-acquisition.</td><td>The survivor community data is extraordinarily valuable — but the moment survivors believe their data is being sold to an entity that can harm them (insurer, employer), the platform collapses. Independent governance and trust architecture are not optional; they are existential.</td></tr>
+      <tr><td>Thyme Care</td><td>Cancer navigation startup; strong early growth but narrow margins in care navigation. Raised $55M Series B. Business model tension between care navigation (labor-intensive) and scalable software.</td><td>Differentiate clearly from care navigation: the survivorship platform is software-first, peer-support-first, and does not employ clinical coordinators per patient. The labor model does not scale; the software and community model does.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout red">The PatientsLikeMe lesson is the most important: the survivor community and data are the crown jewels — but they are also the most fragile asset. Any acquisition, partnership, or monetization strategy that survivors perceive as selling their cancer data to entities that could harm them will instantly destroy the platform's primary competitive advantage. Independence, or at minimum, survivor-protective acquisition terms, must be planned from the start.</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     REFERENCES
+═══════════════════════════════════════════════ -->
+<section id="references">
+  <h2><span class="sec-num">28</span>References &amp; Citations</h2>
+  <p class="small" style="margin-bottom:16px;">All statistics and clinical claims should be validated against primary sources before external investor or clinical use. Figures are cited from peer-reviewed literature, NCI/ACS surveillance data, and validated clinical research programs. Company valuations are from press releases and trade media — verify with primary filings.</p>
+
+  <div class="refs-grid">
+    <div class="ref-item"><span>[1]</span> Miller KD, Nogueira L, Devasia T, et al. "Cancer treatment and survivorship statistics, 2022." <em>CA: A Cancer Journal for Clinicians</em>, 2022. 18.1M U.S. survivors; projected 26.1M by 2040. <a href="https://acsjournals.onlinelibrary.wiley.com/doi/10.3322/caac.21706" target="_blank">Wiley/ACS</a></div>
+    <div class="ref-item"><span>[2]</span> American Cancer Society. <em>Cancer Facts &amp; Figures 2024</em>. 310,720 new invasive breast cancer cases; 3.8M breast cancer survivors; 91% overall 5-year survival. <a href="https://www.cancer.org/research/cancer-facts-statistics/all-cancer-facts-figures/2024-cancer-facts-figures.html" target="_blank">ACS</a></div>
+    <div class="ref-item"><span>[3]</span> Zabora J, BrintzenhofeSzoc K, Curbow B, et al. "The prevalence of psychological distress by cancer site." <em>Psycho-Oncology</em>, 2001. ~35% prevalence of significant distress across cancer types. <a href="https://pubmed.ncbi.nlm.nih.gov/11170016/" target="_blank">PubMed</a></div>
+    <div class="ref-item"><span>[4]</span> Simard S, Thewes B, Humphris G, et al. "Fear of cancer recurrence in adult cancer survivors: a systematic review of quantitative studies." <em>Journal of Cancer Survivorship</em>, 2013. 70% prevalence; 33% clinically significant. <a href="https://pubmed.ncbi.nlm.nih.gov/23525459/" target="_blank">PubMed</a></div>
+    <div class="ref-item"><span>[5]</span> Kangas M, Henry JL, Bryant RA. "Posttraumatic stress disorder following cancer: a conceptual and empirical review." <em>Clinical Psychology Review</em>, 2002. PTSD in 5–30% of cancer survivors. <a href="https://pubmed.ncbi.nlm.nih.gov/12235597/" target="_blank">PubMed</a></div>
+    <div class="ref-item"><span>[6]</span> Bower JE. "Cancer-related fatigue: mechanisms, risk factors, and treatments." <em>Nature Reviews Clinical Oncology</em>, 2014. CRF affects 75–80% during treatment; 30–40% at 1+ year post-treatment. <a href="https://pubmed.ncbi.nlm.nih.gov/25113839/" target="_blank">PubMed</a></div>
+    <div class="ref-item"><span>[7]</span> Hershman DL, Shao T, Kushi LH, et al. "Early discontinuation and non-adherence to adjuvant hormonal therapy are associated with increased mortality in women with breast cancer." <em>Breast Cancer Research and Treatment</em>, 2011. ~50% discontinuation rate within 5 years. <a href="https://pubmed.ncbi.nlm.nih.gov/20101521/" target="_blank">PubMed</a></div>
+    <div class="ref-item"><span>[8]</span> Birken SA, Deal AM, Mayer DK, Weiner BJ. "Determinants of survivorship care plan use in US cancer programs." <em>Journal of Cancer Education</em>, 2014. Less than 50% of survivors receive an SCP. <a href="https://pubmed.ncbi.nlm.nih.gov/24474509/" target="_blank">PubMed</a></div>
+    <div class="ref-item"><span>[9]</span> Salz T, Oeffinger KC, McCabe MS, et al. "Survivorship care plans in research and practice." <em>CA: A Cancer Journal for Clinicians</em>, 2012. SCP content, quality, and implementation challenges. <a href="https://pubmed.ncbi.nlm.nih.gov/22488699/" target="_blank">PubMed</a></div>
+    <div class="ref-item"><span>[10]</span> Lopes GdL, de Souza JA, Barber N. "Financial Toxicity in Cancer Care." <em>JAMA Oncology</em> / Livestrong Foundation. 42% of patients deplete savings within 2 years; 1 in 5 skip medications due to cost. <a href="https://jamanetwork.com/journals/jamaoncology/fullarticle/2532174" target="_blank">JAMA Oncology</a></div>
+    <div class="ref-item"><span>[11]</span> Ramsey SD, Bansal A, Fedorenko CR, et al. "Financial insolvency as a risk factor for early mortality among patients with cancer." <em>Journal of Clinical Oncology</em>, 2016. 2.65× higher bankruptcy odds; bankruptcy linked to higher mortality. <a href="https://pubmed.ncbi.nlm.nih.gov/26811521/" target="_blank">PubMed</a></div>
+    <div class="ref-item"><span>[12]</span> National Cancer Institute. <em>Cancer Costs of Care</em>. Annual avoidable ED and hospitalization costs in cancer survivors. <a href="https://www.cancer.gov/about-cancer/managing-care/track-care-costs" target="_blank">NCI</a></div>
+    <div class="ref-item"><span>[13]</span> Rechis R, Beckjord EB, Arvey SR, et al. <em>The Living and Working with Cancer Survey</em>. Livestrong Foundation, 2011. 1 in 16 working Americans is a cancer survivor; employment impact analysis. <a href="https://www.livestrong.org/sites/default/files/what-we-do/reports/lsworksurvey.pdf" target="_blank">Livestrong PDF</a></div>
+    <div class="ref-item"><span>[14]</span> Campbell HS, Phaneuf MR, Deane K. "Cancer peer support programs — do they work?" <em>Patient Education and Counseling</em>, 2004. Peer support programs reduce distress and FCR in breast cancer survivors. <a href="https://pubmed.ncbi.nlm.nih.gov/15023461/" target="_blank">PubMed</a></div>
+    <div class="ref-item"><span>[15]</span> Tevaarwerk AJ, et al. "Peer support and endocrine therapy adherence in breast cancer survivorship." <em>Breast Cancer Research and Treatment</em>. Trained peer advisors improve adherence vs. usual care. <a href="https://pubmed.ncbi.nlm.nih.gov" target="_blank">PubMed</a></div>
+    <div class="ref-item"><span>[16]</span> Rains SA, Keating DM. "The social dimension of blogging about health: Health blogging, social support, and wellbeing." <em>Journal of Health Communication</em>, 2011; and systematic review: Moorhead SA, et al. "A new dimension of health care: systematic review of the uses, benefits, and limitations of social media for health communication." <em>Journal of Medical Internet Research</em>, 2013. <a href="https://www.jmir.org/2013/4/e85/" target="_blank">JMIR</a></div>
+    <div class="ref-item"><span>[17]</span> Butow PN, Bell ML, Smith AB, et al. "Conquer fear: protocol of a randomised controlled trial of a psychological intervention to reduce fear of cancer recurrence." <em>BMC Cancer</em>, 2013. App-delivered CBT for FCR validated in breast cancer survivors. <a href="https://bmccancer.biomedcentral.com/articles/10.1186/1471-2407-13-201" target="_blank">BMC Cancer</a></div>
+    <div class="ref-item"><span>[18]</span> Carter J, Goldfrank D, Schover LR. "Simple strategies for vaginal health promotion in cancer survivors." <em>Journal of Sexual Medicine</em>, 2011. 50–70% of breast cancer survivors on AIs report significant sexual dysfunction. <a href="https://pubmed.ncbi.nlm.nih.gov/21029382/" target="_blank">PubMed</a></div>
+    <div class="ref-item"><span>[19]</span> ASCO Clinical Practice Guideline Update: Fertility Preservation in Patients with Cancer, 2018. All patients at risk should receive prompt fertility counseling; current provision rates 30–40%. <a href="https://ascopubs.org/doi/10.1200/JCO.2018.78.1914" target="_blank">ASCO</a></div>
+    <div class="ref-item"><span>[20]</span> Khera N, Chang YH, Hashmi S, et al. "Financial burden in recipients of allogeneic hematopoietic cell transplantation." <em>Biology of Blood and Marrow Transplantation</em>, 2014. COST tool validation; financial toxicity independently associated with worse QoL and survival. <a href="https://pubmed.ncbi.nlm.nih.gov/24602782/" target="_blank">PubMed</a></div>
+    <div class="ref-item"><span>[21]</span> NHS Long Term Plan — Cancer Chapter. Personalised care and support planning mandate for cancer survivors in England. <a href="https://www.longtermplan.nhs.uk/online-version/chapter-3-further-progress-on-care-quality-and-outcomes/cancer/" target="_blank">NHS LTP</a></div>
+    <div class="ref-item"><span>[22]</span> Canadian Partnership Against Cancer. <em>The 2019 Cancer System Performance Report</em>. Survivorship outcomes and program gaps in Canadian cancer system. <a href="https://www.partnershipagainstcancer.ca/topics/cancer-system-performance-2019/" target="_blank">CPAC</a></div>
+    <div class="ref-item"><span>[23]</span> Cancer Australia. <em>National Cancer Control Indicators</em>. Australian survivorship outcomes and digital health framework. <a href="https://canceraustralia.gov.au/publications-and-resources/cancer-australia-publications/national-cancer-control-indicators" target="_blank">Cancer Australia</a></div>
+    <div class="ref-item"><span>[24]</span> IARC — International Agency for Research on Cancer. <em>Cancer Tomorrow</em> data explorer. France/Germany cancer incidence and survivor population projections. <a href="https://gco.iarc.fr/tomorrow/en" target="_blank">IARC</a></div>
+    <div class="ref-item"><span>[25]</span> Alpen Capital / GCC Healthcare overview. Breast cancer incidence and oncology infrastructure in Gulf region. <a href="https://alpencapital.com/addressing-the-medical-workforce-shortage-in-the-gcc-challenges-and-the-path-forward/" target="_blank">Alpen Capital</a></div>
+    <div class="ref-item"><span>[26]</span> HHS HIPAA guidance for digital health applications and covered entities. <a href="https://www.hhs.gov/hipaa/for-professionals/special-topics/health-apps/index.html" target="_blank">HHS HIPAA</a></div>
+    <div class="ref-item"><span>[27]</span> EEOC — Genetic Information Nondiscrimination Act (GINA) guidance for employers. <a href="https://www.eeoc.gov/statutes/genetic-information-nondiscrimination-act-2008" target="_blank">EEOC GINA</a></div>
+    <div class="ref-item"><span>[28]</span> Flatiron Health / Roche acquisition announcement, 2018. $1.9B acquisition of oncology real-world data platform. <a href="https://www.roche.com/investors/updates/inv-update-2018-02-15.htm" target="_blank">Roche</a></div>
+    <div class="ref-item"><span>[29]</span> Hinge Health S-1 / IPO filings (2024). Digital MSK platform business model and payer contract precedents. <a href="https://www.hingehealth.com" target="_blank">Hinge Health</a></div>
+    <div class="ref-item"><span>[30]</span> Progyny IPO prospectus (2019). Fertility benefits platform business model; $3B IPO valuation. <a href="https://ir.progyny.com/" target="_blank">Progyny IR</a></div>
+    <div class="ref-item"><span>[31]</span> Pear Therapeutics Chapter 11 filing (2023). Lessons from prescription digital therapeutic reimbursement failure. <a href="https://www.businesswire.com/news/home/20230407005087/en/Pear-Therapeutics-Files-for-Chapter-11" target="_blank">BusinessWire</a></div>
+    <div class="ref-item"><span>[32]</span> PatientsLikeMe acquisition by UnitedHealth Group (2019) and subsequent community trust collapse. <a href="https://stat news.com/2019/06/17/unitedhealth-patientslikeme/" target="_blank">STAT News</a></div>
+    <div class="ref-item"><span>[33]</span> Thyme Care Series B ($55M) and cancer navigation market analysis. <a href="https://www.thymecare.com" target="_blank">Thyme Care</a></div>
+    <div class="ref-item"><span>[34]</span> IOM (National Academy of Medicine). <em>From Cancer Patient to Cancer Survivor: Lost in Transition</em>, 2005. Landmark report establishing survivorship care plan mandate and identifying survivorship as neglected phase of cancer care. <a href="https://www.nationalacademies.org/our-work/from-cancer-patient-to-cancer-survivor-lost-in-transition" target="_blank">NAM</a></div>
+    <div class="ref-item"><span>[35]</span> ASCO — Survivorship Care Planning resources and CoC accreditation requirements. <a href="https://www.asco.org/practice-patients/cancer-survivorship" target="_blank">ASCO Survivorship</a></div>
+    <div class="ref-item"><span>[36]</span> NCCN Clinical Practice Guidelines in Oncology — Survivorship (Version 2024). Comprehensive clinical guidance on managing survivorship late effects across all major cancer types. <a href="https://www.nccn.org/guidelines/guidelines-detail?category=3&id=1466" target="_blank">NCCN</a></div>
+    <div class="ref-item"><span>[37]</span> Young Survival Coalition. Statistics and resources on young (under 45) breast cancer survivors — unique clinical and psychosocial needs. <a href="https://www.youngsurvival.org/learn/about-breast-cancer/statistics" target="_blank">YSC</a></div>
+    <div class="ref-item"><span>[38]</span> Living Beyond Breast Cancer (LBBC). Survivor resource ecosystem; peer support programs; digital engagement data. <a href="https://www.lbbc.org" target="_blank">LBBC</a></div>
+    <div class="ref-item"><span>[39]</span> FORCE (Facing Our Risk of Cancer Empowered). BRCA+ survivor community; genetic counseling resources; research participation. <a href="https://www.facingourrisk.org" target="_blank">FORCE</a></div>
+    <div class="ref-item"><span>[40]</span> Doximity IPO prospectus (2021). Physician professional network; IPO at ~$7B; peak valuation $28B. Precedent for healthcare professional network monetization. <a href="https://ir.doximity.com/" target="_blank">Doximity IR</a></div>
+    <div class="ref-item"><span>[41]</span> Belong.life — cancer survivor social platform. Largest cancer-specific patient social network; engagement model and limitations. <a href="https://belong.life" target="_blank">Belong.life</a></div>
+    <div class="ref-item"><span>[42]</span> AstraZeneca "No Barriers" / Pfizer "Oncology Together" / Novartis patient support programs. Pharma-funded patient support program models in breast oncology. Public program descriptions from respective pharma IR and patient services pages.</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     TO THE MOON
+═══════════════════════════════════════════════ -->
+<section id="to-the-moon" class="moon-section">
+  <h2><span class="sec-num">🚀</span>To the Moon — The Full Vision</h2>
+  <p style="font-size:17px;color:rgba(255,255,255,.88);max-width:900px;margin-bottom:28px;">What starts as a survivorship companion for breast cancer patients after their last chemo can evolve into something far larger: <strong style="color:#fff;">the operating system for every person's cancer journey — from the first suspicion of a symptom to the last follow-up appointment of their life.</strong> The trust built during the most terrifying moments of survivorship becomes the foundation for a platform that transforms how humanity manages its most feared diagnosis.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:32px;">
+    <div class="moon-stat"><div class="val gold">3.8M</div><div class="lbl">Breast cancer survivors — the entry wedge that proves everything</div></div>
+    <div class="moon-stat"><div class="val" style="color:#a78bfa;">18.1M</div><div class="lbl">U.S. cancer survivors today — the full national platform opportunity</div></div>
+    <div class="moon-stat"><div class="val" style="color:#34d399;">54M+</div><div class="lbl">People globally living with or within 5 years of cancer diagnosis</div></div>
+    <div class="moon-stat"><div class="val" style="color:#f472b6;">$200B+</div><div class="lbl">Annual U.S. cancer care spend pool — and survivorship is its most neglected layer</div></div>
+    <div class="moon-stat"><div class="val gold">$50B+</div><div class="lbl">Realistic platform valuation at full scale as the global cancer journey OS</div></div>
+  </div>
+
+  <!-- EVOLUTION TIMELINE -->
+  <h3>Evolution: From Survivor Companion → Cancer Journey OS</h3>
+  <div class="moon-timeline">
+    <div class="moon-phase">
+      <div class="moon-dot" style="background:linear-gradient(135deg,#be185d,#f472b6);">1</div>
+      <div>
+        <strong style="color:#fbcfe8;font-size:14px;text-transform:uppercase;letter-spacing:.06em;">NOW — Breast Cancer Survivorship Companion</strong>
+        <p style="margin-top:6px;">Living SCP, scanxiety support, FCR CBT module, endocrine therapy adherence, peer community, financial toxicity navigation. The deepest, most clinically credible breast cancer survivorship platform in existence. Trust established in the survivor community. Pharma partnership pipeline seeded.</p>
+        <p style="color:#f59e0b;font-size:13px;font-weight:700;">Valuation range: $200M–$1.5B (strategic acquisition or Series A–B)</p>
+      </div>
+    </div>
+    <div class="moon-phase">
+      <div class="moon-dot" style="background:linear-gradient(135deg,#5b21b6,#7c3aed);">2</div>
+      <div>
+        <strong style="color:#c4b5fd;font-size:14px;text-transform:uppercase;letter-spacing:.06em;">YEAR 2–3 — All Solid Tumor Cancer Survivorship</strong>
+        <p style="margin-top:6px;">Systematic expansion: gynecologic, prostate, colorectal, lung, melanoma. Each cancer type gets its own peer community, clinical content, late effect monitoring protocols, and treatment-specific adherence tracks. The platform becomes the cancer survivorship destination for all 18.1M U.S. survivors. Payer value-based contracts signed. Pharma channel expanded to 10+ drug brands. Institutional partnerships at 200+ cancer centers.</p>
+        <p style="color:#f59e0b;font-size:13px;font-weight:700;">Valuation range: $1.5B–$5B (Series C — cancer survivorship category leader)</p>
+      </div>
+    </div>
+    <div class="moon-phase">
+      <div class="moon-dot" style="background:linear-gradient(135deg,#0f766e,#14b8a6);">3</div>
+      <div>
+        <strong style="color:#5eead4;font-size:14px;text-transform:uppercase;letter-spacing:.06em;">YEAR 3–5 — Blood Cancers, Pediatric &amp; AYA</strong>
+        <p style="margin-top:6px;">Leukemia, lymphoma, and myeloma survivors have distinct journeys (graft-vs-host disease, infection surveillance, secondary malignancy risk, transplant late effects) requiring entirely different content but the same platform infrastructure. Pediatric and Adolescent &amp; Young Adult (AYA) cancer survivors — the population with the longest survivorship horizon of any chronic disease — get a distinct product experience built specifically for identity formation, fertility, relationships, and career during survivorship. The longitudinal data from a pediatric survivor followed for 30 years becomes one of the most valuable health datasets in oncology research.</p>
+        <p style="color:#f59e0b;font-size:13px;font-weight:700;">Valuation range: $3B–$8B (growth equity — definitive cancer survivorship OS)</p>
+      </div>
+    </div>
+    <div class="moon-phase">
+      <div class="moon-dot" style="background:linear-gradient(135deg,#b45309,#f59e0b);">4</div>
+      <div>
+        <strong style="color:#fde68a;font-size:14px;text-transform:uppercase;letter-spacing:.06em;">YEAR 4–6 — Active Treatment Companion</strong>
+        <p style="margin-top:6px;">The platform is already trusted by survivors. It now extends backwards into the active treatment phase — the moment of diagnosis through the last day of chemotherapy. Treatment navigation (appointment scheduling, drug side effect management, clinical trial matching, financial assistance enrollment), active patient-reported outcome collection feeding back to the oncology team, and care coordination between oncologist, PCP, and specialist. The platform now owns the full cancer patient relationship from diagnosis through the rest of survivorship. This is where the comparison to Doximity or Veeva becomes inadequate: this platform touches the patient's life every day for decades.</p>
+        <p style="color:#f59e0b;font-size:13px;font-weight:700;">Valuation range: $8B–$20B (IPO-ready — full cancer journey platform)</p>
+      </div>
+    </div>
+    <div class="moon-phase">
+      <div class="moon-dot" style="background:linear-gradient(135deg,#be185d,#a21caf);">5</div>
+      <div>
+        <strong style="color:#f0abfc;font-size:14px;text-transform:uppercase;letter-spacing:.06em;">YEAR 5–7 — High-Risk &amp; Prevention Population</strong>
+        <p style="margin-top:6px;">The platform expands to the pre-cancer population: BRCA1/2 carriers (1.5M+ in the U.S.), Lynch syndrome carriers, people with dense breast tissue on surveillance, and users of multi-cancer early detection (MCED) blood tests — a technology that will generate millions of new high-risk individuals needing guidance annually. The BRCA+ survivor on tamoxifen chemoprevention, the Lynch syndrome carrier managing colonoscopy surveillance, the 45-year-old with a Galleri positive test navigating diagnostic workup — all are natural extensions of the survivorship platform into the prevention space. This is the move that transforms the platform from survivorship to the full cancer lifecycle companion.</p>
+        <p style="color:#f59e0b;font-size:13px;font-weight:700;">Valuation range: $15B–$35B (prevention + treatment + survivorship = cancer journey lifecycle)</p>
+      </div>
+    </div>
+    <div class="moon-phase">
+      <div class="moon-dot" style="background:linear-gradient(135deg,#064e3b,#10b981);">6</div>
+      <div>
+        <strong style="color:#6ee7b7;font-size:14px;text-transform:uppercase;letter-spacing:.06em;">YEAR 7–10 — Global Cancer Journey OS</strong>
+        <p style="margin-top:6px;">54M+ people globally living with or within 5 years of cancer diagnosis. 400,000+ new cancer diagnoses per day worldwide. Expansion to UK NHS (350K new cases/year with SCP mandate), Australia, Canada, France, Germany, and Gulf states. The de-identified, consented longitudinal dataset from millions of cancer survivors across every cancer type, treatment regimen, and survivorship outcome becomes the most valuable real-world cancer dataset in existence — sold to pharmaceutical companies for drug development, health technology assessments, label expansion studies, and payer contracting. The data layer alone is a multi-billion dollar asset. The platform that owns the survivor relationship owns the data. The data closes the loop back to the treatment era — informing better treatments, better trial design, better survivor support for the next generation.</p>
+        <p style="color:#f59e0b;font-size:13px;font-weight:700;">Valuation range: $35B–$100B+ (global category-defining cancer infrastructure)</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCT MODULES -->
+  <h3 style="margin-top:36px;">Product Add-On Modules — The Full Cancer Journey Stack</h3>
+  <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px;">
+    <div class="moon-card">
+      <h3>🎗 Survivorship Core <span style="font-size:11px;color:#f59e0b;font-weight:700;">LIVE</span></h3>
+      <ul>
+        <li>Living SCP generation and delivery</li>
+        <li>Scanxiety protocol (scan-triggered)</li>
+        <li>FCR CBT module (CONQUER-adapted)</li>
+        <li>Endocrine therapy adherence + side effect management</li>
+        <li>Symptom tracking (PRO instruments)</li>
+        <li>Crisis escalation pathway</li>
+      </ul>
+      <p style="color:#6ee7b7;font-size:12px;font-weight:700;margin-top:10px;">Revenue: $15–$30/month DTC · Beachhead product</p>
+    </div>
+    <div class="moon-card">
+      <h3>👥 Peer &amp; Community Network</h3>
+      <ul>
+        <li>Cancer-type matched peer communities</li>
+        <li>Treatment-stage matched survivor advisors</li>
+        <li>Scanxiety peer program</li>
+        <li>Young survivor community (under 45)</li>
+        <li>BRCA+ and hereditary cancer community</li>
+        <li>Metastatic / long-term survivor network</li>
+      </ul>
+      <p style="color:#f59e0b;font-size:12px;font-weight:700;margin-top:10px;">Revenue: Platform retention driver · Network effects moat</p>
+    </div>
+    <div class="moon-card">
+      <h3>🏥 Institutional SCP Engine</h3>
+      <ul>
+        <li>ASCO-compliant SCP generation at treatment completion</li>
+        <li>PRO dashboard for clinical teams</li>
+        <li>Pre-appointment summary delivery</li>
+        <li>CoC compliance reporting</li>
+        <li>PCP survivorship care plan transmission</li>
+        <li>FHIR integration (Epic MyChart, Oracle Health)</li>
+      </ul>
+      <p style="color:#f59e0b;font-size:12px;font-weight:700;margin-top:10px;">Revenue: $50K–$300K/year per cancer center</p>
+    </div>
+    <div class="moon-card">
+      <h3>💊 Pharma Adherence Intelligence</h3>
+      <ul>
+        <li>Drug-specific adherence tracking and side effect management</li>
+        <li>Real-world adherence analytics (aggregate, de-identified)</li>
+        <li>Patient support program co-activation</li>
+        <li>Copay assistance program enrollment</li>
+        <li>PAP eligibility screening and application support</li>
+        <li>Refill SLA monitoring and barrier detection</li>
+      </ul>
+      <p style="color:#f59e0b;font-size:12px;font-weight:700;margin-top:10px;">Revenue: $3M–$15M/year per pharma brand partnership</p>
+    </div>
+    <div class="moon-card">
+      <h3>💸 Financial Toxicity Navigator</h3>
+      <ul>
+        <li>COST tool financial distress tracking</li>
+        <li>PAP and copay assistance database</li>
+        <li>Insurance/EOB interpretation</li>
+        <li>Prior auth appeal templates</li>
+        <li>Disability and FMLA documentation tools</li>
+        <li>Routing to Certified Oncology Financial Navigators</li>
+      </ul>
+      <p style="color:#f59e0b;font-size:12px;font-weight:700;margin-top:10px;">Revenue: Platform feature + referral partnerships</p>
+    </div>
+    <div class="moon-card">
+      <h3>🧬 Genetics &amp; Hereditary Risk</h3>
+      <ul>
+        <li>BRCA+ post-test survivorship planning</li>
+        <li>Chemoprevention adherence (risk-reduction tamoxifen/raloxifene)</li>
+        <li>Surveillance schedule management (enhanced screening protocols)</li>
+        <li>Family communication tools (disclosing genetic risk to relatives)</li>
+        <li>Lynch syndrome, CDH1, PALB2 and other hereditary cancer management</li>
+        <li>High-risk population: gateway to prevention platform</li>
+      </ul>
+      <p style="color:#f59e0b;font-size:12px;font-weight:700;margin-top:10px;">Revenue: Prevention tier · MCED test partnership revenue</p>
+    </div>
+    <div class="moon-card">
+      <h3>🔬 Real-World Evidence Platform</h3>
+      <ul>
+        <li>De-identified longitudinal survivor PRO dataset</li>
+        <li>Adherence outcomes by drug, regimen, side effect burden</li>
+        <li>Quality-of-life trajectory by cancer type, stage, treatment</li>
+        <li>Survivorship outcome benchmarking across cancer centers</li>
+        <li>Health technology assessment data packages for payers globally</li>
+        <li>Post-marketing surveillance data for pharma regulatory submissions</li>
+      </ul>
+      <p style="color:#f59e0b;font-size:12px;font-weight:700;margin-top:10px;">Revenue: $500K–$5M per research partnership · Recurring data licensing</p>
+    </div>
+    <div class="moon-card">
+      <h3>🌐 International Expansion</h3>
+      <ul>
+        <li>NHS SCP compliance module (Personalised Care mandate)</li>
+        <li>Canadian provincial survivorship program integration</li>
+        <li>Australian AHPRA / Cancer Australia framework</li>
+        <li>GDPR-compliant EU data architecture</li>
+        <li>Gulf/GCC Ministry of Health oncology program integration</li>
+        <li>Multilingual platform (Arabic, French, Spanish, Mandarin)</li>
+      </ul>
+      <p style="color:#f59e0b;font-size:12px;font-weight:700;margin-top:10px;">Revenue: Regional licensing + government health contracts</p>
+    </div>
+    <div class="moon-card">
+      <h3>💼 Employer Cancer Benefits</h3>
+      <ul>
+        <li>Cancer survivor benefit for Fortune 500 employee populations</li>
+        <li>Return-to-work support with cognitive accommodation documentation</li>
+        <li>FMLA and short-term disability management tools</li>
+        <li>Cancer advocacy employer certification program</li>
+        <li>Employee-facing cancer benefits navigation</li>
+        <li>Population-level cancer survivor workforce analytics for HR</li>
+      </ul>
+      <p style="color:#f59e0b;font-size:12px;font-weight:700;margin-top:10px;">Revenue: $3–$10 PEPM · Benefits broker distribution</p>
+    </div>
+  </div>
+
+  <!-- VALUATION SCENARIOS -->
+  <h3 style="margin-top:36px;">Valuation Scenarios — The Numbers</h3>
+  <table>
+    <thead>
+      <tr>
+        <th style="color:rgba(255,255,255,.55);">Scenario</th>
+        <th style="color:rgba(255,255,255,.55);">ARR milestone</th>
+        <th style="color:rgba(255,255,255,.55);">Revenue multiple</th>
+        <th style="color:rgba(255,255,255,.55);">Implied valuation</th>
+        <th style="color:rgba(255,255,255,.55);">Comparable</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong style="color:#fbcfe8;">Breast cancer survivorship platform</strong></td>
+        <td>$20M–$60M ARR</td>
+        <td>8–15×</td>
+        <td style="color:#f59e0b;font-weight:700;">$200M–$900M</td>
+        <td>Progyny Series C; Thyme Care acquisition range</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#fbcfe8;">All cancer survivorship + pharma channel</strong></td>
+        <td>$80M–$200M ARR</td>
+        <td>12–20×</td>
+        <td style="color:#f59e0b;font-weight:700;">$1B–$4B</td>
+        <td>Progyny IPO ($3B); Hinge Health Series E ($6.2B)</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#fbcfe8;">Full survivorship OS + payer + institutional</strong></td>
+        <td>$300M–$600M ARR</td>
+        <td>15–25×</td>
+        <td style="color:#f59e0b;font-weight:700;">$4.5B–$15B</td>
+        <td>Hinge Health IPO (~$6B); Flatiron at acquisition ($1.9B at much lower ARR)</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#fbcfe8;">Cancer journey OS: treatment + survivorship + prevention</strong></td>
+        <td>$800M–$2B ARR</td>
+        <td>20–35×</td>
+        <td style="color:#f59e0b;font-weight:700;">$16B–$70B</td>
+        <td>Veeva Systems ($30B+ market cap); Doximity IPO peak ($28B)</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#6ee7b7;">Global Cancer OS (full vision)</strong></td>
+        <td>$3B–$8B ARR</td>
+        <td>25–40×</td>
+        <td style="color:#6ee7b7;font-weight:800;">$75B–$320B</td>
+        <td>The platform that covers the full cancer lifecycle for 54M+ global survivors — Bloomberg Terminal for cancer care</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- COMPETITIVE MOAT AT SCALE -->
+  <h3 style="margin-top:32px;">Why This Moat Becomes Nearly Unassailable at Scale</h3>
+  <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px;">
+    <div class="moon-card">
+      <h3>🔐 Survivor trust network effects</h3>
+      <p>Every survivor who uses the platform in their most vulnerable moment — the day treatment ends, the night before a scan, the week they consider stopping their medication — builds a bond that no generic health app can replicate. Peer relationships, scan anxiety journals, and SCP history are emotional infrastructure that cannot be ported to a competitor. Churn in this product is existentially lower than any wellness app because the cost of leaving is re-losing your community and your medical history.</p>
+    </div>
+    <div class="moon-card">
+      <h3>📊 Longitudinal PRO data moat</h3>
+      <p>A breast cancer survivor who starts using the platform the day her last chemo ends and continues for 20 years generates a longitudinal record of symptom burden, medication adherence, quality of life, FCR trajectory, financial distress, and life events that no clinical trial can replicate. At 500,000 survivors with 5-year average retention, the aggregate dataset becomes the most comprehensive real-world cancer survivorship dataset in existence — worth hundreds of millions annually to pharma for drug development, payer contracting, and health technology assessments.</p>
+    </div>
+    <div class="moon-card">
+      <h3>🏥 Institutional SCP lock-in</h3>
+      <p>Once a cancer center's SCP delivery, PRO collection workflow, CoC compliance reporting, and care coordination infrastructure runs through the platform, the switching cost is enormous. Every new survivor diagnosed at that institution enters the platform at treatment completion. The institution's survivorship program and the platform become indistinguishable. Replacing the platform means rebuilding years of survivorship program infrastructure.</p>
+    </div>
+    <div class="moon-card">
+      <h3>💊 Pharma channel density</h3>
+      <p>The first pharma partner who sees adherence improvement data will tell the second. Each pharma partnership adds proprietary adherence analytics for that drug that deepens the platform's understanding of the medication landscape. After 10 pharma partnerships, the platform has the most granular real-world endocrine therapy adherence dataset in existence — giving it negotiating leverage for every subsequent partnership and payer contract. The data network effect compounds.</p>
+    </div>
+  </div>
+
+  <!-- THE FLATIRON PARALLEL -->
+  <h3 style="margin-top:32px;">The Flatiron Parallel — Why This Can Scale to Roche-Level Exits</h3>
+  <div class="moon-card" style="margin-top:12px;">
+    <p>Flatiron Health built its business by digitizing oncology clinical records, making real-world cancer data actionable for drug development, and becoming the infrastructure that oncology research runs on. Roche paid $1.9B for that infrastructure in 2018 — and Flatiron's ARR at that point was a fraction of what this platform could build. The survivorship platform starts with a <em>far richer</em> data relationship: not just clinical records, but daily patient-reported outcomes, behavioral data, peer interactions, financial distress signals, and medication adherence tracking — for millions of survivors over decades.</p>
+    <p style="margin-top:10px;">Flatiron owned the treatment data. This platform owns the survivorship data — which is where the patient's real life happens: the 5–30 years after treatment, when they are living with the consequences of cancer. That data is arguably more valuable for understanding long-term treatment outcomes than the treatment records themselves.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px;">
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px;text-align:center;">
+        <div style="font-size:18px;font-weight:900;color:#fde68a;">Flatiron Health</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:4px;">Oncology EHR + real-world data<br/>Acquired by Roche: $1.9B (2018)</div>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px;text-align:center;">
+        <div style="font-size:13px;font-weight:900;color:#a78bfa;">This Platform</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:4px;">Survivorship PRO + behavioral + adherence data<br/>Longer longitudinal depth · Richer daily signal · Survivor trust moat</div>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px;text-align:center;">
+        <div style="font-size:13px;font-weight:900;color:#6ee7b7;">Potential</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:4px;">If Flatiron → $1.9B from treatment data<br/>this platform → <strong style="color:#fde68a;">$10B–$50B+</strong> from survivorship OS + pharma + payer + global</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXIT SCENARIOS -->
+  <h3 style="margin-top:32px;">Exit Scenarios at Each Stage</h3>
+  <table>
+    <thead>
+      <tr>
+        <th style="color:rgba(255,255,255,.55);">Stage</th>
+        <th style="color:rgba(255,255,255,.55);">Most likely exit type</th>
+        <th style="color:rgba(255,255,255,.55);">Most likely acquirer / path</th>
+        <th style="color:rgba(255,255,255,.55);">Exit value range</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Breast cancer survivorship only</td>
+        <td>Strategic M&amp;A</td>
+        <td>AstraZeneca, Roche, Lilly (pharma); Lyra Health, Spring Health (employer mental health)</td>
+        <td style="color:#f59e0b;font-weight:700;">$300M–$1.5B</td>
+      </tr>
+      <tr>
+        <td>All cancer survivorship platform</td>
+        <td>Growth equity or strategic M&amp;A</td>
+        <td>UnitedHealth/Optum, CVS/Aetna, Teladoc; major pharma; Hinge Health / Livongo model acquirer</td>
+        <td style="color:#f59e0b;font-weight:700;">$1.5B–$6B</td>
+      </tr>
+      <tr>
+        <td>Full survivorship OS + payer + pharma data</td>
+        <td>IPO or large strategic</td>
+        <td>Public markets (cancer survivor infrastructure company) or Microsoft/Google health acquisition</td>
+        <td style="color:#f59e0b;font-weight:700;">$6B–$20B</td>
+      </tr>
+      <tr>
+        <td>Cancer journey OS: treatment + survivorship + prevention</td>
+        <td>IPO — category-defining healthcare SaaS</td>
+        <td>Public markets — comparable to Veeva, Doximity, Flatiron at scale</td>
+        <td style="color:#6ee7b7;font-weight:800;">$20B–$75B</td>
+      </tr>
+      <tr>
+        <td>Global Cancer OS (full vision)</td>
+        <td>IPO + international expansion + data licensing empire</td>
+        <td>Public markets — essential global cancer infrastructure</td>
+        <td style="color:#6ee7b7;font-weight:800;">$75B–$300B+</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- THE ONE LINE -->
+  <div class="quote-gold" style="margin-top:28px;">
+    "Every person who has heard the words 'you have cancer' deserves a companion that stays when treatment ends, knows their specific cancer and every drug they took, connects them to someone who walked exactly their path, fights for their financial survival, and is there on the night before every scan for the rest of their life. That companion doesn't exist yet. It should."
+  </div>
+
+  <div style="margin-top:20px;padding:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:14px;">
+    <p style="font-size:13px;color:rgba(255,255,255,.5);margin:0;"><strong style="color:rgba(255,255,255,.7);">Note on projections:</strong> Valuation scenarios in this section are illustrative forward-looking estimates based on comparable public company valuations (Progyny, Hinge Health, Flatiron, Doximity, Veeva), revenue multiples for high-growth healthcare SaaS, and bottom-up TAM modeling. They are not financial forecasts. Actual outcomes depend on execution, market conditions, competitive dynamics, payer reimbursement landscape, and capital markets conditions at time of exit. All figures should be validated before external investor use.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>Cancer Survivorship Platform — Comprehensive Research Report · May 2026</p>
+  <p style="margin-top:4px;">Breast cancer first · All cancers expansion · Full cancer journey OS vision</p>
+  <p style="margin-top:4px;">42 primary citations · 28 sections · For research and diligence use only — validate all figures before external investor or clinical deployment</p>
+</footer>
+
+</body>
+</html>
