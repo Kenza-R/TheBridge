@@ -12,72 +12,81 @@
     --blue-hover: #1a3be0;
     --muted: #6b7280;
     --bg: #f4f6fb;
+    --green: #047857;
+    --green-soft: #ecfdf5;
+    --amber: #b45309;
+    --amber-soft: #fffbeb;
+    --red: #b91c1c;
+    --red-soft: #fef2f2;
+    --line: #e5e7eb;
+    --card: #fff;
+    --shadow: 0 8px 40px rgba(15,25,60,.10);
   }
-  html, body { height: 100%; }
+  html { scroll-behavior: smooth; }
   body {
     font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     background: var(--bg);
     color: var(--navy);
+    min-height: 100vh;
+    padding: 0 0 80px;
+  }
+
+  /* ── HERO ── */
+  .hero {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 32px 20px;
+    padding: 72px 20px 56px;
+    text-align: center;
   }
   .logo {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 900;
-    letter-spacing: .08em;
+    letter-spacing: .1em;
     text-transform: uppercase;
     color: var(--blue);
-    margin-bottom: 12px;
+    margin-bottom: 16px;
   }
-  h1 {
-    font-size: clamp(28px, 5vw, 46px);
+  .hero h1 {
+    font-size: clamp(30px, 5vw, 52px);
     font-weight: 900;
-    letter-spacing: -.02em;
-    line-height: 1.15;
-    text-align: center;
-    margin-bottom: 14px;
+    letter-spacing: -.025em;
+    line-height: 1.12;
+    margin-bottom: 16px;
   }
-  .subtitle {
-    font-size: 16px;
+  .hero .subtitle {
+    font-size: 17px;
     color: var(--muted);
-    text-align: center;
     max-width: 480px;
+    line-height: 1.65;
     margin-bottom: 56px;
-    line-height: 1.6;
   }
+
+  /* ── REPORT CARDS ── */
   .cards {
     display: flex;
     gap: 24px;
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
-    max-width: 840px;
+    max-width: 860px;
+    margin: 0 auto;
   }
   .card {
-    background: #fff;
+    background: var(--card);
     border-radius: 20px;
-    box-shadow: 0 8px 40px rgba(15,25,60,.10);
+    box-shadow: var(--shadow);
     padding: 40px 36px;
     flex: 1;
     min-width: 280px;
-    max-width: 380px;
+    max-width: 390px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
     transition: transform .18s, box-shadow .18s;
   }
-  .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 56px rgba(15,25,60,.14);
-  }
-  .card-icon {
-    font-size: 36px;
-    line-height: 1;
-  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 16px 56px rgba(15,25,60,.14); }
+  .card-icon { font-size: 36px; line-height: 1; }
   .card-label {
     font-size: 11px;
     font-weight: 700;
@@ -85,18 +94,8 @@
     text-transform: uppercase;
     color: var(--muted);
   }
-  .card h2 {
-    font-size: 20px;
-    font-weight: 800;
-    line-height: 1.3;
-    letter-spacing: -.01em;
-  }
-  .card p {
-    font-size: 14px;
-    color: var(--muted);
-    line-height: 1.6;
-    flex: 1;
-  }
+  .card h2 { font-size: 20px; font-weight: 800; line-height: 1.3; letter-spacing: -.01em; }
+  .card p { font-size: 14px; color: var(--muted); line-height: 1.65; flex: 1; }
   .btn {
     display: inline-block;
     background: var(--blue);
@@ -112,8 +111,189 @@
     margin-top: 8px;
   }
   .btn:hover { background: var(--blue-hover); text-decoration: none; }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    max-width: 860px;
+    margin: 72px auto 0;
+    padding: 0 20px;
+    border-top: 1px solid var(--line);
+  }
+  .section-title {
+    font-size: clamp(22px, 3vw, 34px);
+    font-weight: 900;
+    letter-spacing: -.02em;
+    margin-top: 56px;
+    margin-bottom: 8px;
+  }
+  .section-sub {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 40px;
+    max-width: 640px;
+  }
+
+  /* ── SCORECARD TABLE ── */
+  .scorecard-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 20px;
+    overflow-x: auto;
+  }
+  table.scorecard {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: var(--card);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  table.scorecard thead tr {
+    background: var(--navy);
+    color: #fff;
+  }
+  table.scorecard thead th {
+    padding: 16px 20px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+  }
+  table.scorecard tbody tr { border-bottom: 1px solid var(--line); }
+  table.scorecard tbody tr:last-child { border-bottom: none; }
+  table.scorecard tbody td { padding: 15px 20px; vertical-align: middle; }
+  table.scorecard tbody td:first-child { font-weight: 600; color: var(--navy); }
+  .badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .badge-hcw { background: #dbeafe; color: #1d4ed8; }
+  .badge-cs  { background: #fce7f3; color: #9d174d; }
+  .badge-draw { background: #f3f4f6; color: #374151; }
+
+  /* ── ANALYSIS SECTIONS ── */
+  .analysis-grid {
+    max-width: 860px;
+    margin: 48px auto 0;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .analysis-card {
+    background: var(--card);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 36px 40px;
+  }
+  .analysis-card h3 {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -.01em;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .analysis-card .winner-tag {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+  .winner-tag-hcw { background: #dbeafe; color: #1d4ed8; }
+  .winner-tag-cs  { background: #fce7f3; color: #9d174d; }
+  .winner-tag-draw { background: #f3f4f6; color: #374151; }
+  .analysis-card .verdict {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
+  .analysis-card p { font-size: 15px; color: #374151; line-height: 1.7; margin-bottom: 12px; }
+  .analysis-card p:last-child { margin-bottom: 0; }
+  .analysis-card ul { padding-left: 20px; margin-bottom: 12px; }
+  .analysis-card ul li { font-size: 15px; color: #374151; line-height: 1.7; margin-bottom: 6px; }
+  .analysis-card strong { color: var(--navy); }
+
+  /* ── TWO-COL COMPARE ── */
+  .compare-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 20px;
+  }
+  @media(max-width:600px){ .compare-cols { grid-template-columns: 1fr; } }
+  .compare-col { background: var(--bg); border-radius: 10px; padding: 20px; }
+  .compare-col h4 { font-size: 13px; font-weight: 800; letter-spacing: .04em; margin-bottom: 10px; text-transform: uppercase; }
+  .compare-col.hcw h4 { color: #1d4ed8; }
+  .compare-col.cs h4  { color: #9d174d; }
+  .compare-col ul { padding-left: 18px; }
+  .compare-col ul li { font-size: 14px; color: #374151; line-height: 1.65; margin-bottom: 5px; }
+
+  /* ── STAT ROW ── */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .stat-box {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 18px 20px;
+    text-align: center;
+  }
+  .stat-box .num { font-size: 26px; font-weight: 900; letter-spacing: -.02em; }
+  .stat-box .lbl { font-size: 12px; color: var(--muted); margin-top: 4px; font-weight: 600; letter-spacing: .03em; }
+  .stat-box.blue .num { color: #1d4ed8; }
+  .stat-box.pink .num { color: #9d174d; }
+
+  /* ── VERDICT BOX ── */
+  .verdict-box {
+    max-width: 860px;
+    margin: 48px auto 0;
+    padding: 0 20px;
+  }
+  .verdict-inner {
+    background: var(--navy);
+    border-radius: 20px;
+    padding: 48px 48px;
+    color: #fff;
+  }
+  .verdict-inner h2 {
+    font-size: clamp(20px, 3vw, 30px);
+    font-weight: 900;
+    letter-spacing: -.02em;
+    margin-bottom: 24px;
+  }
+  .verdict-inner p { font-size: 16px; line-height: 1.75; color: rgba(255,255,255,.82); margin-bottom: 16px; }
+  .verdict-inner p:last-child { margin-bottom: 0; }
+  .verdict-inner strong { color: #fff; }
+  .verdict-inner .caveat {
+    margin-top: 28px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,.15);
+    font-size: 14px;
+    color: rgba(255,255,255,.6);
+    line-height: 1.65;
+  }
+
   .footer {
-    margin-top: 64px;
+    margin-top: 80px;
     font-size: 12px;
     color: var(--muted);
     text-align: center;
@@ -122,12 +302,13 @@
 </head>
 <body>
 
+<!-- ═══ HERO ═══ -->
+<div class="hero">
   <div class="logo">TheBridge</div>
   <h1>Research Reports</h1>
   <p class="subtitle">Comprehensive due-diligence research on healthcare's most pressing challenges.</p>
 
   <div class="cards">
-
     <div class="card">
       <div class="card-icon">🏥</div>
       <div class="card-label">Diligence Report</div>
@@ -143,10 +324,254 @@
       <p>Comprehensive analysis of psychological burden, survivorship care gaps, and market opportunity for cancer survivors.</p>
       <a class="btn" href="cancer-survivors.html">View Report</a>
     </div>
+  </div>
+</div>
 
+<!-- ═══ COMPARATIVE ANALYSIS ═══ -->
+<div class="section-divider">
+  <div class="section-title">Comparative Analysis</div>
+  <p class="section-sub">A rigorous, multi-dimensional evaluation of both opportunities to determine which merits pursuit. Analysis revised after stress-testing initial conclusions.</p>
+</div>
+
+<!-- SCORECARD -->
+<div class="scorecard-wrap">
+  <table class="scorecard">
+    <thead>
+      <tr>
+        <th style="width:38%">Criterion</th>
+        <th style="width:31%">Healthcare Worker</th>
+        <th style="width:31%">Cancer Survivors</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Market size (TAM)</td>
+        <td>$12B–$22B</td>
+        <td><strong>$60B–$100B+</strong> &nbsp;<span class="badge badge-cs">Edge: CS</span></td>
+      </tr>
+      <tr>
+        <td>Speed to first dollar</td>
+        <td><strong>3–9 months</strong> &nbsp;<span class="badge badge-hcw">Edge: HCW</span></td>
+        <td>6–24 months</td>
+      </tr>
+      <tr>
+        <td>ROI clarity for buyer</td>
+        <td><strong>Single metric (turnover cost)</strong> &nbsp;<span class="badge badge-hcw">Edge: HCW</span></td>
+        <td>Multi-buyer, multi-metric</td>
+      </tr>
+      <tr>
+        <td>Business model resilience</td>
+        <td colspan="2" style="text-align:center"><span class="badge badge-draw">Draw — each has structural fragility</span></td>
+      </tr>
+      <tr>
+        <td>Competitive defensibility</td>
+        <td><strong>Privacy moat; Epic can't replicate trust</strong> &nbsp;<span class="badge badge-hcw">Edge: HCW</span></td>
+        <td>Epic already owns SCP distribution</td>
+      </tr>
+      <tr>
+        <td>Engagement depth / retention</td>
+        <td colspan="2" style="text-align:center"><span class="badge badge-draw">Draw — both face app churn risk</span></td>
+      </tr>
+      <tr>
+        <td>Valuation ceiling (realistic)</td>
+        <td colspan="2" style="text-align:center"><span class="badge badge-draw">Draw — Doximity vs. Progyny comps converge</span></td>
+      </tr>
+      <tr>
+        <td>Execution simplicity</td>
+        <td><strong>One buyer, one metric, one wedge</strong> &nbsp;<span class="badge badge-hcw">Edge: HCW</span></td>
+        <td>4 channels, 4 sales cycles, 4 stakeholders</td>
+      </tr>
+      <tr>
+        <td>Risk severity</td>
+        <td><strong>Mostly operational</strong> &nbsp;<span class="badge badge-hcw">Edge: HCW</span></td>
+        <td>Several existential (pharma trust, Epic, FDA)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ANALYSIS CARDS -->
+<div class="analysis-grid">
+
+  <!-- 1. Market Size -->
+  <div class="analysis-card">
+    <h3>1. Market Size &amp; Financial Scale <span class="winner-tag winner-tag-cs">Cancer Survivors</span></h3>
+    <div class="verdict">Only clear win for Cancer Survivors — but size alone does not decide the bet</div>
+    <div class="stat-row">
+      <div class="stat-box blue"><div class="num">$22B</div><div class="lbl">HCW TAM (ceiling)</div></div>
+      <div class="stat-box pink"><div class="num">$100B+</div><div class="lbl">Cancer Survivors TAM</div></div>
+      <div class="stat-box blue"><div class="num">18M</div><div class="lbl">HCW target population</div></div>
+      <div class="stat-box pink"><div class="num">26.1M</div><div class="lbl">Survivors by 2040</div></div>
+    </div>
+    <p>Cancer Survivors' TAM is 3–5× larger and growing structurally (cancer incidence + survival rates both rising). At realistic SOM targets, Cancer Survivors projects $100M–$500M ARR vs. $50M–$300M ARR for Healthcare Worker within 5–7 years.</p>
+    <p>However, a large TAM only matters if it is capturable. The Healthcare Worker market is smaller but far more concentrated and accessible — 167K U.S. residents, 1.2M physicians, organized through GME programs and IDNs. The Cancer Survivors market requires simultaneously winning four independent channels.</p>
   </div>
 
-  <div class="footer">TheBridge &mdash; Venture Research</div>
+  <!-- 2. Buyer & Sales Cycle -->
+  <div class="analysis-card">
+    <h3>2. Buyer Structure &amp; Time to Revenue <span class="winner-tag winner-tag-hcw">Healthcare Worker</span></h3>
+    <div class="verdict">Cleaner buyer, faster cycle, more predictable ARR in Years 1–3</div>
+    <div class="compare-cols">
+      <div class="compare-col hcw">
+        <h4>Healthcare Worker</h4>
+        <ul>
+          <li>Primary buyer: CMO / Chief Wellness Officer / GME Director</li>
+          <li>Sales cycle: <strong>3–9 months</strong> for institutional pilots</li>
+          <li>ACGME well-being mandate creates compliance demand</li>
+          <li>GME programs = concentrated, fast-moving buyer</li>
+          <li>One contract = one check, one stakeholder coalition</li>
+        </ul>
+      </div>
+      <div class="compare-col cs">
+        <h4>Cancer Survivors</h4>
+        <ul>
+          <li>4 independent buyers: pharma VP, payer medical director, oncology CMO, DTC</li>
+          <li>Sales cycles: <strong>6–24 months</strong> depending on channel</li>
+          <li>Pharma partnerships = volatile (drug lifecycle, M&amp;A, CMO turnover)</li>
+          <li>Payer reimbursement for digital mental health still in active flux</li>
+          <li>DTC: 42% of survivors depleted savings within 2 years — WTP is uncertain</li>
+        </ul>
+      </div>
+    </div>
+    <p>Once a health system signs for clinician wellness, they rarely churn — it enters the budget cycle and GME compliance reporting. Cancer Survivors' multi-channel model looks resilient on paper but each channel has its own fragility. The pharma channel can evaporate overnight if a drug loses patent or a VP changes priorities.</p>
+  </div>
+
+  <!-- 3. ROI Case -->
+  <div class="analysis-card">
+    <h3>3. Economic ROI for the Buyer <span class="winner-tag winner-tag-hcw">Healthcare Worker</span></h3>
+    <div class="verdict">Single-metric ROI wins pilots — complexity kills procurement</div>
+    <div class="stat-row">
+      <div class="stat-box blue"><div class="num">$7,600</div><div class="lbl">Burnout cost per physician/year</div></div>
+      <div class="stat-box blue"><div class="num">$1M+</div><div class="lbl">Physician replacement cost</div></div>
+      <div class="stat-box blue"><div class="num">5–15×</div><div class="lbl">ROI ratio on replacement cost alone</div></div>
+      <div class="stat-box pink"><div class="num">$8,000</div><div class="lbl">Excess acute care per distressed survivor/year</div></div>
+    </div>
+    <p>Healthcare Worker's ROI case fits on one slide: prevent 2 physician departures per year, save $2M, the product costs $360K. The buyer does not need a health economist. That simplicity wins in procurement committees.</p>
+    <p>Cancer Survivors' ROI is compelling — pharma adherence, ED avoidance, CoC compliance — but it requires a different proof for every buyer. Each channel requires separate pilot design, separate metrics, and separate executive champions. That is 4× the sales and clinical validation work.</p>
+  </div>
+
+  <!-- 4. Business Model Resilience -->
+  <div class="analysis-card">
+    <h3>4. Business Model Resilience <span class="winner-tag winner-tag-draw">Draw</span></h3>
+    <div class="verdict">Multi-channel looks safer — but each channel has a hidden single point of failure</div>
+    <div class="compare-cols">
+      <div class="compare-col hcw">
+        <h4>Healthcare Worker — Risks</h4>
+        <ul>
+          <li>Buyer concentration: loss of one large IDN hurts meaningfully</li>
+          <li>Health system consolidation could shrink buyer count</li>
+          <li>BUT: once in GME, embedded for years — very low churn</li>
+          <li>Institutional contract = predictable ARR, not project revenue</li>
+        </ul>
+      </div>
+      <div class="compare-col cs">
+        <h4>Cancer Survivors — Risks</h4>
+        <ul>
+          <li>Pharma channel: volatile, project-based, not recurring ARR</li>
+          <li>Payer channel: reimbursement in active regulatory flux</li>
+          <li>DTC: financially stressed survivors, low willingness to pay</li>
+          <li>Multi-channel ≠ resilience if all channels require 12+ months to close</li>
+        </ul>
+      </div>
+    </div>
+    <p>The multi-channel narrative for Cancer Survivors is compelling at Series C scale. But in Years 1–3, all four channels are simultaneously in pilot/negotiation — meaning the business has no reliable ARR foundation. Healthcare Worker's institutional model, while concentrated, generates predictable recurring revenue from Month 1 of each contract.</p>
+  </div>
+
+  <!-- 5. Competitive Defensibility -->
+  <div class="analysis-card">
+    <h3>5. Competitive Defensibility <span class="winner-tag winner-tag-hcw">Healthcare Worker</span></h3>
+    <div class="verdict">This dimension flips from the initial analysis — Epic is a far bigger threat to Cancer Survivors</div>
+    <div class="compare-cols">
+      <div class="compare-col hcw">
+        <h4>Healthcare Worker — Moat</h4>
+        <ul>
+          <li><strong>Circle of Trust:</strong> architecture-level anti-surveillance; Epic cannot replicate this — their buyer is the hospital administrator, not the clinician</li>
+          <li>Peer network density by specialty is sticky and grows over time</li>
+          <li>EHR-native event-triggered launch — physicians do not need to remember to open an app</li>
+          <li>Clinical trust brand is extremely hard to rebuild after loss</li>
+        </ul>
+      </div>
+      <div class="compare-col cs">
+        <h4>Cancer Survivors — Threat</h4>
+        <ul>
+          <li>Epic already owns survivorship care plans in Beacon/MyChart</li>
+          <li>Adding a CoC compliance module is a 6-month Epic project — directly attacks the wedge</li>
+          <li>Community competitors (Belong.life, Cancer Support Community) are established and trusted</li>
+          <li>Pharma-funded patient apps are already proliferating (AstraZeneca, Pfizer, Novartis)</li>
+        </ul>
+      </div>
+    </div>
+    <p>The initial analysis gave this to Cancer Survivors based on multi-channel revenue diversity. That was wrong. Revenue channel diversity is not the same as competitive defensibility. Epic's threat to the survivorship care plan wedge is direct and credible. Epic's ability to replicate a clinician peer-support product built on physician trust is structurally constrained — hospitals would not trust it and physicians would not use it.</p>
+  </div>
+
+  <!-- 6. Engagement & Retention -->
+  <div class="analysis-card">
+    <h3>6. Engagement Depth &amp; Retention <span class="winner-tag winner-tag-draw">Draw</span></h3>
+    <div class="verdict">Lifelong condition ≠ lifelong engagement — both face the 90-day churn wall</div>
+    <p><strong>The cancer survivor identity fatigue problem is real.</strong> Many survivors actively want to stop being defined by their diagnosis after 12–18 months post-treatment. Peak engagement clusters around scan days (scanxiety spikes) and treatment anniversaries — not daily use. That is event-driven retention, not habitual retention.</p>
+    <p><strong>Healthcare Worker's EHR-native model has a structural retention advantage</strong> that the initial analysis underweighted. Physicians open their EHR every single day. A product launched directly from within Epic after an adverse event has daily passive exposure baked in — no separate app to remember, no push notification to ignore. If EHR integration is achieved, daily active context is built-in.</p>
+    <p>Both products face the same fundamental challenge: mental health apps across all indications see sharp engagement drops after 30–90 days. The winner is whichever product designs the strongest event-triggered re-engagement system.</p>
+  </div>
+
+  <!-- 7. Valuation -->
+  <div class="analysis-card">
+    <h3>7. Valuation Ceiling (Realistic) <span class="winner-tag winner-tag-draw">Draw</span></h3>
+    <div class="verdict">The $70B cancer OS scenario is speculative — realistic comps converge</div>
+    <div class="stat-row">
+      <div class="stat-box blue"><div class="num">$7B+</div><div class="lbl">Doximity IPO (HCW comp)</div></div>
+      <div class="stat-box pink"><div class="num">$3B</div><div class="lbl">Progyny IPO (CS comp)</div></div>
+      <div class="stat-box blue"><div class="num">$15B</div><div class="lbl">HCW platform ceiling</div></div>
+      <div class="stat-box pink"><div class="num">$6B</div><div class="lbl">Hinge Health IPO (CS comp)</div></div>
+    </div>
+    <p>The cancer survivorship reports project scenarios up to $70B+ ("Bloomberg Terminal for cancer"). These are intellectually honest as ceiling cases but require 20-year global dominance across treatment, survivorship, and prevention — not a venture outcome. The realistic comparables are Progyny ($3B IPO, condition-specific benefits platform) and Hinge Health ($6B IPO, condition-specific payer/employer model).</p>
+    <p>Healthcare Worker's realistic comp is Doximity — a physician network that IPO'd at $7B+ by owning a trusted, clinician-facing product with institutional distribution. A clinician wellness platform with EHR integration and peer network effects maps well to that trajectory.</p>
+    <p>At Series C, both opportunities converge in the $1B–$6B range. The Healthcare Worker path to $10B+ (workforce OS) is arguably more proven given Doximity's demonstrated playbook.</p>
+  </div>
+
+  <!-- 8. Key Risks -->
+  <div class="analysis-card">
+    <h3>8. Existential Risk Profile <span class="winner-tag winner-tag-hcw">Healthcare Worker</span></h3>
+    <div class="verdict">Cancer Survivors carries three risks that can kill the company — not just slow it down</div>
+    <div class="compare-cols">
+      <div class="compare-col hcw">
+        <h4>Healthcare Worker — Top Risks</h4>
+        <ul>
+          <li>Low engagement: physicians ignore wellness tools (mitigable with event-triggering)</li>
+          <li>Privacy backlash: one breach = trust destroyed in clinical networks</li>
+          <li>Alert fatigue: EHR over-prompting leads to deletion</li>
+          <li>Epic wellness module: possible but structurally constrained by trust problem</li>
+          <li><strong>All risks are operational/execution — none are existential if trust is maintained</strong></li>
+        </ul>
+      </div>
+      <div class="compare-col cs">
+        <h4>Cancer Survivors — Top Risks</h4>
+        <ul>
+          <li><strong>Pharma perception risk:</strong> if survivors perceive platform as pharma data tool, entire model collapses and community backlash spreads instantly via advocacy networks</li>
+          <li><strong>FDA clinical overreach:</strong> symptom escalation interpreted as clinical decision support triggers regulatory review</li>
+          <li><strong>"Pink washing" backlash:</strong> advocacy communities are sensitized to commercialization — one wrong move is permanent reputational damage</li>
+          <li>Epic CoC module: direct attack on primary wedge</li>
+        </ul>
+      </div>
+    </div>
+    <p>Healthcare Worker's risks are real but navigable — they are about product design and execution. Cancer Survivors carries three risks that do not have clean mitigation paths: pharma trust collapse, FDA attention, and advocacy community backlash. Any one of these can end the company regardless of product quality.</p>
+  </div>
+
+</div>
+
+<!-- ═══ FINAL VERDICT ═══ -->
+<div class="verdict-box">
+  <div class="verdict-inner">
+    <h2>Final Recommendation</h2>
+    <p>The initial analysis overweighted Cancer Survivors across four dimensions. After stress-testing, the gap narrows significantly: <strong>Healthcare Worker wins on 5 criteria outright, Cancer Survivors wins on 1 (market size), and 3 are genuine draws.</strong></p>
+    <p><strong>Pursue Healthcare Worker Mental Health Companion.</strong> It is the more defensible, faster, and risk-adjusted opportunity. The buyer is clear, the ROI fits on one slide, the sales cycle is 3–9 months, Epic cannot replicate the clinician trust architecture, and the Doximity precedent proves the category can reach $7B+ at IPO.</p>
+    <p>Cancer Survivors is the larger long-term opportunity on TAM alone. But it requires simultaneously executing 4 independent go-to-market tracks, navigating three existential risks (pharma trust, FDA, advocacy backlash), and competing directly with Epic's existing SCP infrastructure — all while proving product-market fit. That is venture-on-hard-mode.</p>
+    <div class="caveat">
+      <strong>Exception:</strong> If you have deep oncology relationships, a pharma co-development partner already committed, or a co-founder with cancer center access and advocacy credibility — Cancer Survivors unlocks a larger ceiling and that context changes the calculus meaningfully. Without those unfair advantages, Healthcare Worker is the right first bet.
+    </div>
+  </div>
+</div>
+
+<div class="footer">TheBridge &mdash; Venture Research</div>
 
 </body>
 </html>
