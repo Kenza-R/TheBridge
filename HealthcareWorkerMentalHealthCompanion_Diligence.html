@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Healthcare Worker Mental Health Companion - Diligence</title>
+  <style>
+    :root { --bg:#f5f7fb; --card:#fff; --ink:#111827; --muted:#4b5563; --line:#e5e7eb; --brand:#1d4ed8; --ok:#047857; --warn:#b45309; --bad:#b91c1c; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif; line-height:1.5; }
+    .wrap { max-width:1200px; margin:0 auto; padding:24px 16px 48px; }
+    header { background:linear-gradient(135deg,#0f172a,#1d4ed8); color:#fff; border-radius:16px; padding:24px; margin-bottom:14px; }
+    h1 { margin:0 0 8px; font-size:clamp(28px,5vw,48px); line-height:1.05; }
+    .sub { margin:0; opacity:.92; }
+    .grid4 { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin-top:14px; }
+    .m { border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.1); border-radius:10px; padding:10px; font-size:12px; }
+    .m b { display:block; font-size:18px; margin-bottom:3px; }
+    section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px; margin:12px 0; }
+    h2 { margin:0 0 10px; font-size:22px; }
+    h3 { margin:12px 0 6px; font-size:16px; }
+    .grid2 { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    .box { border:1px solid var(--line); border-radius:10px; padding:10px; }
+    ul { margin:6px 0 8px; padding-left:20px; }
+    table { width:100%; border-collapse:collapse; font-size:13px; margin-top:8px; }
+    th,td { text-align:left; padding:8px; border-bottom:1px solid var(--line); vertical-align:top; }
+    th { font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:#374151; background:#f8fafc; }
+    .ok { color:var(--ok); font-weight:700; } .warn { color:var(--warn); font-weight:700; } .bad { color:var(--bad); font-weight:700; }
+    .note { background:#eff6ff; border-left:4px solid var(--brand); border-radius:8px; padding:10px 12px; font-size:13px; }
+    .small { font-size:12px; color:var(--muted); }
+    .refs { columns:2; column-gap:20px; font-size:12px; }
+    a { color:var(--brand); text-decoration:none; } a:hover { text-decoration:underline; }
+    @media (max-width:980px){ .grid4,.grid2{grid-template-columns:1fr;} .refs{columns:1;} }
+  </style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <h1>Mental Health Companion for Healthcare Workers</h1>
+    <p class="sub">Venture diligence report focused on physicians first, then nurses/residents/clinical staff. Includes market, competition, feasibility, compliance, GTM, validation plan, and risk analysis.</p>
+    <div class="grid4">
+      <div class="m"><b>Conditional Build</b>Viable if privacy + ROI are strong</div>
+      <div class="m"><b>Best Wedge</b>Post-adverse-event support in high-acuity teams</div>
+      <div class="m"><b>Main Risk</b>Trust failure and low engagement</div>
+      <div class="m"><b>MVP Path</b>No deep EHR dependency at launch</div>
+    </div>
+  </header>
+
+  <section>
+    <h2>1) Executive Verdict</h2>
+    <div class="grid2">
+      <div class="box">
+        <ul>
+          <li><strong>Venture-scale?</strong> <span class="ok">Yes, but conditional</span>. Strong if positioned as workforce resilience infrastructure, not generic wellness.</li>
+          <li><strong>Strongest version:</strong> Event-triggered support router + peer network + Circle of Trust + aggregate leadership insights.</li>
+          <li><strong>Weakest assumption:</strong> Clinicians will trust hospital-sponsored mental health tooling without strict privacy separation.</li>
+        </ul>
+      </div>
+      <div class="box">
+        <ul>
+          <li><strong>Start segment:</strong> Physicians/residents in ED, ICU, surgery, OB/GYN, oncology.</li>
+          <li><strong>Do not start broad:</strong> “All HCWs” at once dilutes signal and implementation speed.</li>
+          <li><strong>Initial buyer:</strong> Academic medical centers / health systems (CMO, CWO, GME, quality/risk co-sponsor).</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note"><strong>Decision:</strong> Build only under specific conditions: privacy-by-design, peer-support-first workflows, measurable retention/quality outcomes, and phased integration strategy.</p>
+  </section>
+
+  <section>
+    <h2>2) Problem Analysis</h2>
+    <ul>
+      <li>US physician burnout remains high: <strong>43.2%</strong> in 2024 AMA data.</li>
+      <li>Resident burnout remains material (AMA resident comparison report shows meaningful burden by training year).</li>
+      <li>Nursing workforce still fragile: high leave intent and burnout-linked exit pressure in 2024 workforce data.</li>
+      <li>Second-victim burden is large (ICU review reports lifetime prevalence around <strong>58%</strong>).</li>
+      <li>Burnout correlates with patient safety events and medical errors in multiple meta-analyses.</li>
+    </ul>
+    <h3>Clinical constructs to separate in product design</h3>
+    <ul>
+      <li><strong>Burnout:</strong> occupational exhaustion/depersonalization.</li>
+      <li><strong>Moral distress/injury:</strong> ethical conflict or betrayal under constraints.</li>
+      <li><strong>Second victim:</strong> post-adverse-event emotional sequelae.</li>
+      <li><strong>Compassion fatigue:</strong> depletion from repeated trauma exposure.</li>
+      <li><strong>Depression/anxiety:</strong> clinical disorders requiring care pathways.</li>
+    </ul>
+    <h3>Why current options underperform</h3>
+    <ul>
+      <li>EAP and wellness app utilization is often low due to stigma, privacy concerns, and workflow mismatch.</li>
+      <li>MIT Sloan thesis findings support that digital tools work better when combined with organizational redesign, leadership endorsement, and explicit privacy framing.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>3) Market Size</h2>
+    <table>
+      <thead><tr><th>Layer</th><th>Range</th><th>Logic</th></tr></thead>
+      <tbody>
+        <tr><td>TAM (US)</td><td>$12B-$22B+</td><td>Employer mental health / wellness / EAP budget pool where healthcare workforce use case can win.</td></tr>
+        <tr><td>SAM (US healthcare workforce)</td><td>$3.6B-$10B+</td><td>Bottom-up: addressable clinicians x realistic PMPM bands.</td></tr>
+        <tr><td>SOM (5-7 year)</td><td>$50M-$300M ARR</td><td>Attainable only with strong retention and safety ROI evidence.</td></tr>
+      </tbody>
+    </table>
+    <h3>International potential (priority order)</h3>
+    <ul>
+      <li><strong>Tier 1:</strong> UK, Canada, Australia, Germany, France (large workforce + pressure).</li>
+      <li><strong>Tier 2:</strong> Gulf countries (high shortage/retention urgency; procurement concentration can accelerate pilots).</li>
+      <li><strong>Tier 3:</strong> Morocco / broader MENA frontier markets (high need, lower early willingness-to-pay, public partnership required).</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>4) Competition</h2>
+    <table>
+      <thead><tr><th>Competitor group</th><th>Examples</th><th>Threat</th><th>Implication</th></tr></thead>
+      <tbody>
+        <tr><td>Clinician mental health point solutions</td><td>Marvin, VITAL WorkLife</td><td class="warn">High</td><td>Validate need; force differentiation via workflow and trust architecture.</td></tr>
+        <tr><td>Enterprise mental health giants</td><td>Lyra, Spring, Modern, Headspace</td><td class="warn">High</td><td>Own HR budgets; partner or out-specialize on acute clinical moments.</td></tr>
+        <tr><td>EAP incumbents</td><td>ComPsych, broad EAP vendors</td><td class="warn">High</td><td>Large distribution; likely channel partner or bundling risk.</td></tr>
+        <tr><td>Workforce ops platforms</td><td>QGenda</td><td class="warn">Medium-high</td><td>Control schedule data and buyer relationships.</td></tr>
+        <tr><td>Risk/safety platforms</td><td>RLDatix ecosystem</td><td class="warn">Medium-high</td><td>Strong overlap with adverse-event workflows.</td></tr>
+        <tr><td>Ambient AI documentation</td><td>Abridge, Ambience, Nabla, Suki, Nuance DAX</td><td class="warn">High</td><td>Reduce documentation burden, but do not fully solve post-event emotional recovery.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>5) Why Now?</h2>
+    <div class="grid2">
+      <div class="box">
+        <h3>Pro</h3>
+        <ul>
+          <li>Burnout crisis remains unresolved despite modest post-peak improvement.</li>
+          <li>AI copilots and EHR-adjacent tools have normalized clinician-facing AI.</li>
+          <li>Retention economics create executive urgency.</li>
+          <li>Wearables + EMA/EMI methods are operationally more feasible.</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Con</h3>
+        <ul>
+          <li>Privacy trust gap remains a core adoption blocker.</li>
+          <li>Hospital buying cycles and integration governance are slow.</li>
+          <li>Category crowding increases CAC and differentiation pressure.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>6) Feasibility and Implementation</h2>
+    <table>
+      <thead><tr><th>Model</th><th>Feasibility</th><th>Compliance</th><th>Sales cycle</th><th>MVP fit</th></tr></thead>
+      <tbody>
+        <tr><td>A) No EHR (self-report/schedule/wearables)</td><td class="ok">High</td><td class="ok">Lower</td><td class="ok">Short</td><td class="ok">Excellent</td></tr>
+        <tr><td>B) Limited integration (roster/calendar/incident feeds)</td><td class="ok">High</td><td class="warn">Medium</td><td class="warn">Medium</td><td class="ok">Best phase-1</td></tr>
+        <tr><td>C) EHR-adjacent (FHIR triggers/metadata)</td><td class="warn">Medium</td><td class="warn">Medium-high</td><td class="warn">Long</td><td class="warn">Phase-2</td></tr>
+        <tr><td>D) Deep Epic/Cerner integration</td><td class="bad">Complex</td><td class="bad">High</td><td class="bad">Longest</td><td class="bad">Not MVP</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>7) Privacy, Compliance, Ethics</h2>
+    <ul>
+      <li>HIPAA often does <em>not</em> cover employer-held employment records; HIPAA can apply when structured through group health plan channels.</li>
+      <li>ADA/GINA require voluntary programs, confidentiality, and constrained incentives in wellness contexts.</li>
+      <li>Employer access should be aggregate-only; individual clinician mental health data must remain separated.</li>
+      <li>Consent model should be granular: peer alerts, Circle-of-Trust escalation, wearable ingestion, crisis overrides.</li>
+      <li>Data minimization: avoid patient-content ingestion in early phases; use low-risk operational metadata first.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>8) Product Strategy (Best MVP + What not to build)</h2>
+    <h3>MVP blueprint</h3>
+    <ul>
+      <li>Trigger engine: shift load, repeated nights, hard-event self-tags, optional incident events.</li>
+      <li>Intervention menu: 3-minute reset, peer connect, recovery/social time block, trusted coworker ping.</li>
+      <li>Circle of Trust: only alert after multiple signals + explicit physician approval rules.</li>
+      <li>Leadership analytics: only de-identified patterns (unit-level stress load, utilization, response latency).</li>
+    </ul>
+    <h3>Do not build first</h3>
+    <ul>
+      <li>No diagnostic/therapeutic AI claims.</li>
+      <li>No individual risk dashboards for management.</li>
+      <li>No deep EHR writeback automation in first release.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>9) Business Model</h2>
+    <ul>
+      <li><strong>Best first model:</strong> department or specialty cohort contract + per-clinician PMPM.</li>
+      <li><strong>Why:</strong> matches acute pain, easier pilot governance, faster proof of ROI.</li>
+      <li><strong>Expansion:</strong> hospital-wide PMPM after evidence; insurer/malpractice-sponsored channels as multiplier.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>10) Go-to-Market</h2>
+    <h3>Beachhead</h3>
+    <p>Emergency medicine, ICU, surgery, OB/GYN, oncology in academic and large private systems.</p>
+    <h3>Buying committee</h3>
+    <ul>
+      <li><strong>Champion:</strong> department chair + physician wellbeing leader.</li>
+      <li><strong>Economic buyer:</strong> CMO/CWO/COO (with HR and quality/risk).</li>
+      <li><strong>Pilot metrics:</strong> engagement, time-to-support, burnout change, turnover intent, absenteeism, safety proxy movement.</li>
+      <li><strong>Procurement barriers:</strong> privacy review, data governance, security, EMR integration requests.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>11) Evidence and Clinical Validation</h2>
+    <h3>3-month pilot</h3>
+    <ul>
+      <li>2-3 high-acuity departments, 150-400 clinicians.</li>
+      <li>Primary: adoption (weekly active usage), peer-response SLA, debrief completion.</li>
+      <li>Secondary: burnout subscales, loneliness, sleep quality proxy, absenteeism trend.</li>
+    </ul>
+    <h3>12-month pilot</h3>
+    <ul>
+      <li>Scale to multi-site with matched control units if feasible.</li>
+      <li>Track retention, sick days, incident-report dynamics, and patient-safety proxies.</li>
+      <li>Quantify economic impact per department and per hospital.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>12) Strategic Risks</h2>
+    <table>
+      <thead><tr><th>Risk</th><th>Severity</th><th>Mitigation</th></tr></thead>
+      <tbody>
+        <tr><td>Low engagement</td><td class="bad">High</td><td>Make support event-triggered and action-oriented, not survey-heavy.</td></tr>
+        <tr><td>Privacy backlash</td><td class="bad">High</td><td>Aggregate-only employer outputs, transparent governance, clinician advisory council.</td></tr>
+        <tr><td>Alert fatigue</td><td class="warn">Medium-high</td><td>Rate limits, contextual confidence thresholds, manual snooze logic.</td></tr>
+        <tr><td>Integration delays</td><td class="warn">Medium</td><td>Start with non-EHR signals; phase integrations.</td></tr>
+        <tr><td>Weak ROI proof</td><td class="bad">High</td><td>Design pilots with hard baseline-control comparisons from day 1.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>13) Startup Landscape and Case Studies</h2>
+    <ul>
+      <li><strong>Headspace + Ginger:</strong> consolidation to combine low-acuity self-care with clinical services; category validates demand.</li>
+      <li><strong>Pear Therapeutics:</strong> FDA-cleared digital therapeutics still struggled with reimbursement/commercial model; bankruptcy and asset sale.</li>
+      <li><strong>Babylon:</strong> scale narrative without durable economics led to bankruptcy and asset breakup.</li>
+      <li><strong>Olive AI:</strong> healthcare AI automation company shut down after rapid scaling and business refocus problems.</li>
+    </ul>
+    <p class="note"><strong>Lesson:</strong> This company should avoid “AI platform sprawl.” Focus on one high-value workflow: post-high-stress event support and retention outcomes.</p>
+  </section>
+
+  <section>
+    <h2>14) International Analysis</h2>
+    <ul>
+      <li><strong>UK NHS:</strong> very strong need, but procurement and budget complexity are major barriers.</li>
+      <li><strong>Canada:</strong> strong workforce stress signal; provincial buying and evidence requirements matter.</li>
+      <li><strong>France/Germany:</strong> scale opportunity with higher governance and labor/privacy constraints.</li>
+      <li><strong>Australia:</strong> high digital readiness; good early expansion candidate.</li>
+      <li><strong>Gulf:</strong> workforce shortages and retention dependence can create high urgency for enterprise deployment.</li>
+      <li><strong>Morocco/MENA frontier:</strong> high unmet need, lower near-term monetization; partner-heavy model required.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>15) Final Recommendation</h2>
+    <h3>Build / Do not build</h3>
+    <p><strong>Build only under specific conditions.</strong> Start narrow, prove ROI hard, and treat trust architecture as the product moat.</p>
+    <h3>Best wedge / MVP / first customer / model</h3>
+    <ul>
+      <li><strong>Best wedge:</strong> post-adverse-event support for high-acuity physician teams.</li>
+      <li><strong>Best MVP:</strong> schedule/event-triggered check-ins + peer routing + Circle-of-Trust with physician approval + aggregate analytics.</li>
+      <li><strong>Best first customer:</strong> academic medical center with visible burnout and active safety leadership.</li>
+      <li><strong>Best first model:</strong> department-level enterprise pilot with per-clinician pricing and optional quality/risk add-on.</li>
+    </ul>
+
+    <h3>Key assumptions to test in 30 days</h3>
+    <ul>
+      <li>Clinicians trust the privacy model enough to use it repeatedly.</li>
+      <li>Peer-support response can reliably happen inside useful time windows.</li>
+      <li>Trigger precision is high enough to avoid alert fatigue.</li>
+      <li>Department leaders perceive measurable operational value.</li>
+      <li>Procurement can approve a non-EHR-first pilot rapidly.</li>
+    </ul>
+
+    <h3>20 physician discovery questions</h3>
+    <ol>
+      <li>What moments in a shift leave you emotionally depleted?</li><li>What do you do right after a difficult case today?</li><li>What support would you actually use in 3 minutes?</li><li>When do you avoid asking for help?</li><li>What privacy fear is most important?</li><li>Which colleagues are trusted for debrief?</li><li>Would you use a one-tap peer request?</li><li>Would you allow wearable-triggered prompts?</li><li>What would feel intrusive?</li><li>What would make this feel unsafe?</li><li>How should alerts be timed?</li><li>What language feels supportive vs performative?</li><li>Would you pre-select a Circle of Trust?</li><li>What events should never trigger outreach?</li><li>How should crisis escalation work?</li><li>What metric would prove personal value?</li><li>Would you use this weekly?</li><li>Would residents use it differently?</li><li>What would make peers respond fast?</li><li>Would you recommend this to colleagues?</li>
+    </ol>
+
+    <h3>20 hospital executive discovery questions</h3>
+    <ol>
+      <li>What is current clinician turnover cost by specialty?</li><li>Which units have highest distress and attrition?</li><li>What support programs already exist and their usage?</li><li>Where do current programs fail?</li><li>Who owns clinician wellbeing budget?</li><li>Who owns post-adverse-event response?</li><li>How do you measure success today?</li><li>What pilot duration is acceptable?</li><li>What outcomes are required to buy?</li><li>What privacy constraints are non-negotiable?</li><li>Would aggregate-only reporting be sufficient?</li><li>How quickly can department pilots launch?</li><li>How many approvals are required?</li><li>Would malpractice partner co-funding help?</li><li>Which integration is mandatory in phase 1?</li><li>How do you evaluate security vendors?</li><li>What evidence threshold unlocks enterprise rollout?</li><li>How important is resident wellbeing vs attending?</li><li>What is acceptable PMPM range?</li><li>What would make this strategically essential?</li>
+    </ol>
+
+    <h3>10 investor diligence questions</h3>
+    <ol>
+      <li>Why will clinicians trust this product?</li><li>Why won’t Lyra/Spring/Headspace absorb this niche?</li><li>What is unique data moat beyond engagement metrics?</li><li>Can this scale without deep EHR dependencies?</li><li>What is CAC/payback in hospital enterprise sales?</li><li>What is annual net retention and expansion motion?</li><li>How defensible is peer-support network density?</li><li>What is the regulatory downside scenario?</li><li>How does this avoid “wellness app churn”?</li><li>What credible path gets to $100M+ ARR?</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Sources and Citations</h2>
+    <p class="small">Key sources used across the analysis, including the MIT Sloan thesis requested as core input.</p>
+    <div class="refs">
+      <p>[1] MIT Sloan thesis on digital mental health in the corporate sphere: <a href="https://dspace.mit.edu/handle/1721.1/156050?show=full">dspace.mit.edu</a></p>
+      <p>[2] MIT Sloan thesis PDF: <a href="https://dspace.mit.edu/bitstream/handle/1721.1/156050/zou-mariazou-msms-sloan-2024-thesis.pdf?isAllowed=y&sequence=1">PDF</a></p>
+      <p>[3] EMPOWER workplace digital mental health uptake factors: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12861261/">PMC</a></p>
+      <p>[4] AMA physician burnout 2024 data: <a href="https://www.ama-assn.org/practice-management/physician-health/us-physician-burnout-hits-lowest-rate-covid-19">AMA</a></p>
+      <p>[5] AMA resident burnout trends: <a href="https://www.ama-assn.org/medical-residents/medical-resident-wellness/new-data-resident-physician-burnout-4-things-know">AMA residents</a></p>
+      <p>[6] Physician suicide meta-analysis (BMJ): <a href="https://www.bmj.com/content/386/bmj-2023-078964">BMJ</a></p>
+      <p>[7] Second victim syndrome meta-analysis: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7386870/">PMC</a></p>
+      <p>[8] ICU second victim prevalence: <a href="https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0292108">PLOS One</a></p>
+      <p>[9] Burnout and patient safety meta-analysis: <a href="https://pubmed.ncbi.nlm.nih.gov/30193239/">PubMed</a></p>
+      <p>[10] Burnout and self-reported errors meta-analysis: <a href="https://pubmed.ncbi.nlm.nih.gov/34951608/">PubMed</a></p>
+      <p>[11] Nurse burnout and safety/quality meta-analysis: <a href="https://jamanetwork-com.libproxy.ajou.ac.kr/journals/jamanetworkopen/fullarticle/2825639">JAMA Network Open</a></p>
+      <p>[12] NCSBN nursing workforce study summary: <a href="https://www.ncsbn.org/news/ncsbn-research-highlights-small-steps-toward-nursing-workforce-recovery-burnout-and-staffing-challenges-persist">NCSBN</a></p>
+      <p>[13] EAP under-utilization evidence: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10102824/">PMC</a></p>
+      <p>[14] HIPAA employer/workplace guidance: <a href="https://www.hhs.gov/hipaa/for-individuals/employers-health-information-workplace/index.html">HHS</a></p>
+      <p>[15] HIPAA workplace wellness FAQ: <a href="https://www.hhs.gov/hipaa/for-professionals/privacy/workplace-wellness/index.html">HHS Wellness</a></p>
+      <p>[16] EEOC wellness/ADA/GINA guidance: <a href="https://www.eeoc.gov/newsroom/eeoc-issues-final-rules-employer-wellness-programs">EEOC</a></p>
+      <p>[17] QGenda acquisition by Hearst: <a href="https://www.hearst.com/-/hearst-agrees-to-acquire-qgenda-a-leader-in-healthcare-workforce-management-solutions">Hearst</a></p>
+      <p>[18] RLDatix growth investment by Nordic Capital: <a href="https://www.rldatix.com/en-nam/company/news/rldatix-announces-new-growth-investment-by-nordic-capital/">RLDatix</a></p>
+      <p>[19] Lyra Series G valuation report: <a href="https://www.fiercehealthcare.com/digital-health/lyra-health-gets-235m-soars-to-5-85b-valuation-new-acquisition-for-global-expansion">Fierce</a></p>
+      <p>[20] Spring Health Series E valuation: <a href="https://www.springhealth.com/news/series-e-funding-accelerate-growth-expand-global-access">Spring Health</a></p>
+      <p>[21] Modern Health funding and valuation: <a href="https://www.modernhealth.com/post/post-series-d-and-a-1-17-billion-valuation-were-energized-by-the-task-ahead">Modern Health</a></p>
+      <p>[22] Headspace + Ginger merger: <a href="https://www.businesswire.com/news/home/20210825005262/en/Ginger-and-Headspace-Will-Merge-to-Meet-Escalating-Global-Demand-for-Mental-Health-Support%7c">BusinessWire</a></p>
+      <p>[23] Abridge Series C: <a href="https://www.abridge.com/press-release/series-c-150">Abridge</a></p>
+      <p>[24] Ambience Series B: <a href="https://www.ambiencehealthcare.com/blog/ambience-healthcare-raises-70m-to-scale-the-most-comprehensive-ai-operating-system-for-healthcare-organizations">Ambience</a></p>
+      <p>[25] Nabla Series C: <a href="https://www.prnewswire.com/news-releases/nabla-raises-70m-series-c-to-deliver-agentic-ai-to-the-heart-of-clinical-workflows-bringing-total-funding-to-120m-302483646.html">PRNewswire</a></p>
+      <p>[26] Suki Series D: <a href="https://www.businesswire.com/news/home/20241010687252/en/Suki-Secures-%2470M-Series-D-Funding-as-Demand-Surges-Expands-Strategic-Partnership-with-MedStar-Health">BusinessWire</a></p>
+      <p>[27] Nuance DAX in Epic GA: <a href="https://www.prnewswire.com/news-releases/nuance-announces-general-availability-of-dax-copilot-embedded-in-epic-transforming-healthcare-experiences-with-automated-clinical-documentation-302037590.html">PRNewswire</a></p>
+      <p>[28] WHOOP feasibility in emergency clinicians: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10921319/">JMIR/PMC</a></p>
+      <p>[29] Oura + nursing wellbeing pilot: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12077477/">PMC</a></p>
+      <p>[30] CUIDA-TE EMA/EMI trial protocol: <a href="https://link.springer.com/article/10.1186/s12888-022-03800-x">BMC Psychiatry</a></p>
+      <p>[31] OECD workforce shortage context: <a href="https://www.oecd.org/en/publications/health-at-a-glance-europe-2024_b3704e14-en.html">OECD Europe 2024</a></p>
+      <p>[32] NHS workforce data: <a href="https://digital.nhs.uk/data-and-information/publications/statistical/nhs-workforce-statistics/december-2024/data-summary">NHS Digital</a></p>
+      <p>[33] Canada workforce (CIHI): <a href="https://www.cihi.ca/en/the-state-of-the-health-workforce-in-canada-2024/health-workforce-2024-supply-and-direct-care">CIHI</a></p>
+      <p>[34] Australia workforce statistics: <a href="https://hwd.health.gov.au/resources/data/summary-nrmw.html">AU Nursing</a>, <a href="https://hwd.health.gov.au/resources/data/summary-mdcl.html">AU Medical</a></p>
+      <p>[35] Gulf workforce shortage context: <a href="https://alpencapital.com/addressing-the-medical-workforce-shortage-in-the-gcc-challenges-and-the-path-forward/">Alpen Capital</a></p>
+      <p>[36] Morocco workforce trend analysis: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12777332/">PMC</a></p>
+      <p>[37] Babylon bankruptcy and wind-down: <a href="https://techcrunch.com/2023/08/31/the-fall-of-babylon-failed-tele-health-startup-once-valued-at-nearly-2b-goes-bankrupt-and-sold-for-parts/">TechCrunch</a></p>
+      <p>[38] Pear Therapeutics Chapter 11: <a href="https://www.businesswire.com/news/home/20230407005087/en/Pear-Therapeutics-Files-for-Chapter-11-and-Will-Seek-to-Sell-Assets-Through-Sales-Process">BusinessWire</a></p>
+      <p>[39] Olive AI shutdown: <a href="https://www.healthcaredive.com/news/olive-ai-shuts-down/698455/">Healthcare Dive</a></p>
+    </div>
+    <p class="small">Note: Some company-specific traction/funding metrics come from company press releases and trade media; treat those as directional and verify in investor diligence with primary filings where possible.</p>
+  </section>
+
+</main>
+</body>
+</html>
