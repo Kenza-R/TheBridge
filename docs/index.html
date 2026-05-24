@@ -24,6 +24,35 @@ nav{position:sticky;top:0;z-index:100;background:rgba(11,17,36,.97);backdrop-fil
 .nav-inner a{color:rgba(255,255,255,.78);font-size:12px;font-weight:700;letter-spacing:.04em;white-space:nowrap;padding:13px 10px;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;}
 .nav-inner a:hover{color:#fff;border-bottom-color:var(--blue);text-decoration:none;}
 .nav-logo{color:#fff;font-weight:900;font-size:13px;letter-spacing:-.02em;padding:13px 12px 13px 0;border-right:1px solid rgba(255,255,255,.15);margin-right:8px;white-space:nowrap;}
+.nav-moon{background:linear-gradient(90deg,#f59e0b,#f97316);color:#000!important;border-radius:999px;padding:6px 14px!important;margin-left:8px;font-weight:900!important;letter-spacing:.04em;border-bottom:none!important;}
+.nav-moon:hover{opacity:.9;text-decoration:none!important;}
+
+/* TO THE MOON SECTION */
+.moon-section{background:linear-gradient(145deg,#03050f 0%,#0a0f2e 40%,#120829 70%,#050d1a 100%);border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:48px 40px;margin:16px 0;color:#fff;position:relative;overflow:hidden;}
+.moon-section::before{content:"";position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.12) 0%,transparent 70%);top:-200px;right:-200px;pointer-events:none;}
+.moon-section::after{content:"";position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(251,191,36,.07) 0%,transparent 70%);bottom:-150px;left:-100px;pointer-events:none;}
+.moon-section h2{color:#fff;font-size:28px;}
+.moon-section h2 .sec-num{color:#f59e0b;}
+.moon-section h3{color:rgba(255,255,255,.9);margin:24px 0 10px;}
+.moon-section p{color:rgba(255,255,255,.78);}
+.moon-section ul li{color:rgba(255,255,255,.78);}
+.moon-section table{color:rgba(255,255,255,.85);}
+.moon-section th{background:rgba(255,255,255,.07);color:rgba(255,255,255,.6);}
+.moon-section td{border-bottom:1px solid rgba(255,255,255,.08);}
+.moon-section tr:last-child td{border-bottom:none;}
+.moon-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px;}
+.moon-card h3{margin-top:0;color:#fff;}
+.moon-card p,.moon-card li{color:rgba(255,255,255,.75);}
+.moon-stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:18px 16px;text-align:center;}
+.moon-stat .val{font-size:26px;font-weight:900;letter-spacing:-.03em;line-height:1;margin-bottom:6px;}
+.moon-stat .lbl{font-size:12px;color:rgba(255,255,255,.65);line-height:1.4;}
+.gold{color:#f59e0b;}
+.moon-timeline{display:grid;gap:0;position:relative;margin-top:16px;}
+.moon-timeline::before{content:"";position:absolute;left:22px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,#f59e0b,#8b5cf6,#3b82f6,#10b981);border-radius:2px;}
+.moon-phase{display:grid;grid-template-columns:46px 1fr;gap:16px;align-items:start;padding:16px 0;}
+.moon-dot{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:13px;z-index:1;flex-shrink:0;}
+.quote-gold{background:linear-gradient(135deg,#78350f,#92400e);border:1px solid #f59e0b44;border-radius:16px;padding:22px 24px;margin:16px 0;font-size:19px;font-weight:800;line-height:1.35;letter-spacing:-.02em;color:#fde68a;}
+.valuation-bar{height:10px;border-radius:999px;margin:6px 0 2px;}
 
 /* LAYOUT */
 .page{max-width:1280px;margin:0 auto;padding:36px 20px 80px;}
@@ -174,6 +203,7 @@ sup{font-size:10px;color:var(--blue);font-weight:700;}
     <a href="#investment-thesis">Investment</a>
     <a href="#comparables">Comparables</a>
     <a href="#references">References</a>
+    <a href="#to-the-moon" class="nav-moon">🚀 To the Moon</a>
   </div>
 </nav>
 
@@ -1349,6 +1379,334 @@ sup{font-size:10px;color:var(--blue);font-weight:700;}
     <div class="ref-item"><span>[42]</span> Mayo Clinic longitudinal study of 2,500 physicians: 1-point burnout increase → 30–50% greater likelihood of reduced work effort within 24 months. AMA STEPS Forward module: $1 wellness investment → $3–$6 ROI. <a href="https://www.ama-assn.org/practice-management/physician-health/how-much-physician-burnout-costing-your-organization" target="_blank">AMA</a></div>
     <div class="ref-item"><span>[43]</span> NSI Nursing Solutions. <em>National Healthcare Retention &amp; RN Staffing Report</em>, 2019 and annual updates. Nurse turnover cost $37,700–$58,400/nurse; hospital annual cost $4.4M–$6.9M; each 1% RN turnover change = $380,600/year per hospital. <a href="https://www.nsinursingsolutions.com/Documents/Library/NSI_National_Health_Care_Retention_Report.pdf" target="_blank">NSI</a></div>
     <div class="ref-item"><span>[44]</span> Muir J, Keim-Malpass J, LeBaron V, Lobo J, Wanchek T. "Evaluating the Costs of Nurse Burnout-Attributed Turnover." <em>Journal of Patient Safety</em>. Hospitals with burnout programs: $11,592 vs. $16,736/nurse/year without; 30% cost reduction; nurses stay ~20% longer. <a href="https://news.virginia.edu/content/study-preventing-nurse-burnout-makes-good-economic-sense" target="_blank">UVA News</a></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     TO THE MOON
+═══════════════════════════════════════════════ -->
+<section id="to-the-moon" class="moon-section">
+  <h2><span class="sec-num">🚀</span>To the Moon — The Full Vision</h2>
+  <p style="font-size:17px;color:rgba(255,255,255,.88);max-width:900px;margin-bottom:28px;">What starts as a mental health companion for physicians after hard shifts can evolve into something far larger: <strong style="color:#fff;">the operating system for every healthcare worker's professional life.</strong> The trust built in the darkest clinical moments becomes the foundation for an all-encompassing personal assistant that follows a clinician from residency to retirement.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:32px;">
+    <div class="moon-stat"><div class="val gold">$4.6B</div><div class="lbl">Current physician burnout cost to the U.S. system — the entry wedge</div></div>
+    <div class="moon-stat"><div class="val" style="color:#a78bfa;">$50B+</div><div class="lbl">Realistic platform valuation at scale as healthcare worker super-app</div></div>
+    <div class="moon-stat"><div class="val" style="color:#34d399;">60M+</div><div class="lbl">Global healthcare workers — the eventual total addressable user base</div></div>
+    <div class="moon-stat"><div class="val" style="color:#f472b6;">$300B+</div><div class="lbl">Global healthcare workforce spend pool across benefits, tools &amp; infrastructure</div></div>
+    <div class="moon-stat"><div class="val gold">10+</div><div class="lbl">Distinct high-value product modules buildable on the trust layer</div></div>
+  </div>
+
+  <!-- EVOLUTION TIMELINE -->
+  <h3>Evolution: From Support Layer → Healthcare Worker OS</h3>
+  <div class="moon-timeline">
+    <div class="moon-phase">
+      <div class="moon-dot" style="background:linear-gradient(135deg,#1d4ed8,#3b82f6);">1</div>
+      <div>
+        <strong style="color:#93c5fd;font-size:14px;text-transform:uppercase;letter-spacing:.06em;">NOW — Mental Health Companion</strong>
+        <p style="margin-top:6px;">Context-aware burnout support, peer routing, Circle of Trust, post-event debrief. Trust established. Privacy proven. Physicians adopt the platform in their most vulnerable moments.</p>
+        <p style="color:#f59e0b;font-size:13px;font-weight:700;">Market cap range: $200M–$800M (strategic acquisition or seed/Series A exit)</p>
+      </div>
+    </div>
+    <div class="moon-phase">
+      <div class="moon-dot" style="background:linear-gradient(135deg,#5b21b6,#7c3aed);">2</div>
+      <div>
+        <strong style="color:#c4b5fd;font-size:14px;text-transform:uppercase;letter-spacing:.06em;">YEAR 2–3 — Career Intelligence Layer</strong>
+        <p style="margin-top:6px;">Add licensing status tracking, CME credit management, credentialing alerts, contract review summaries, DEA renewal reminders, board certification timelines, and specialty exam preparation. The platform becomes indispensable to the physician's career infrastructure — not just their emotional wellbeing.</p>
+        <p style="color:#f59e0b;font-size:13px;font-weight:700;">Market cap range: $1B–$3B (Series B/C — unicorn milestone)</p>
+      </div>
+    </div>
+    <div class="moon-phase">
+      <div class="moon-dot" style="background:linear-gradient(135deg,#0f766e,#14b8a6);">3</div>
+      <div>
+        <strong style="color:#5eead4;font-size:14px;text-transform:uppercase;letter-spacing:.06em;">YEAR 3–5 — Financial &amp; Professional Wellness</strong>
+        <p style="margin-top:6px;">Physician-specific financial tools: student loan optimization ($200K+ average medical school debt), malpractice insurance navigation, contract negotiation intelligence, retirement planning for irregular income profiles, disability insurance guidance, and practice ownership decision support. No financial product has been built specifically for the physician's financial reality.</p>
+        <p style="color:#f59e0b;font-size:13px;font-weight:700;">Market cap range: $3B–$8B (growth equity — financial services revenue unlock)</p>
+      </div>
+    </div>
+    <div class="moon-phase">
+      <div class="moon-dot" style="background:linear-gradient(135deg,#b45309,#f59e0b);">4</div>
+      <div>
+        <strong style="color:#fde68a;font-size:14px;text-transform:uppercase;letter-spacing:.06em;">YEAR 4–6 — Clinical Intelligence &amp; Workflow Companion</strong>
+        <p style="margin-top:6px;">EHR-native AI co-pilot for non-patient-care tasks: prior authorization navigation, inbox triage &amp; delegation, documentation summarization, referral pattern optimization, research literature synthesis, and administrative burden reduction. The platform already sits inside the EHR via SMART on FHIR — extending into adjacent workflow tasks is a natural progression, and trust has already been established.</p>
+        <p style="color:#f59e0b;font-size:13px;font-weight:700;">Market cap range: $8B–$20B (IPO-ready — comparable to Veeva, Doximity, Health Catalyst)</p>
+      </div>
+    </div>
+    <div class="moon-phase">
+      <div class="moon-dot" style="background:linear-gradient(135deg,#be185d,#ec4899);">5</div>
+      <div>
+        <strong style="color:#fbcfe8;font-size:14px;text-transform:uppercase;letter-spacing:.06em;">YEAR 5–8 — Healthcare Worker Super-App</strong>
+        <p style="margin-top:6px;">The full stack: mental health + career + financial wellness + clinical workflow + social/peer network + shift marketplace + CME + research + continuing education + workforce analytics. One platform that a healthcare worker interacts with every single day — from morning schedule review to post-shift debrief to annual contract renewal. Comparable to what Salesforce is to sales, or what Bloomberg Terminal is to finance.</p>
+        <p style="color:#f59e0b;font-size:13px;font-weight:700;">Market cap range: $20B–$50B+ (category-defining healthcare workforce platform)</p>
+      </div>
+    </div>
+    <div class="moon-phase">
+      <div class="moon-dot" style="background:linear-gradient(135deg,#064e3b,#10b981);">6</div>
+      <div>
+        <strong style="color:#6ee7b7;font-size:14px;text-transform:uppercase;letter-spacing:.06em;">YEAR 7–10 — Global Healthcare OS</strong>
+        <p style="margin-top:6px;">60M+ global healthcare workers. Expansion to UK NHS, Canada, Australia, Gulf, EU. Workforce intelligence sold to ministries of health, hospital groups, and health insurers globally. The data layer — anonymized, aggregated insights on workforce stress, retention patterns, specialty burnout cycles, and clinical event impact — becomes a premium product for health systems and policymakers worldwide.</p>
+        <p style="color:#f59e0b;font-size:13px;font-weight:700;">Market cap range: $50B–$100B+ (global category leader — this is the full moon)</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCT MODULES -->
+  <h3 style="margin-top:36px;">Product Add-On Modules — The Full Stack</h3>
+  <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px;">
+    <div class="moon-card">
+      <h3>🧠 Mental Health Core <span style="font-size:11px;color:#f59e0b;font-weight:700;">LIVE</span></h3>
+      <ul>
+        <li>Event-triggered burnout support</li>
+        <li>Peer support routing (POST/RISE)</li>
+        <li>Circle of Trust</li>
+        <li>Crisis escalation pathway</li>
+        <li>Aggregate workforce analytics</li>
+      </ul>
+      <p style="color:#6ee7b7;font-size:12px;font-weight:700;margin-top:10px;">Revenue: $25–$60 PMPM · Beachhead product</p>
+    </div>
+    <div class="moon-card">
+      <h3>📋 Licensing &amp; Credentialing Hub</h3>
+      <ul>
+        <li>State medical license tracker (all 50 states)</li>
+        <li>DEA registration renewal alerts</li>
+        <li>Hospital privilege expiration monitoring</li>
+        <li>Board certification timelines</li>
+        <li>CME credit tracker with auto-logging</li>
+        <li>ECFMG, NPI, and payer enrollment status</li>
+      </ul>
+      <p style="color:#f59e0b;font-size:12px;font-weight:700;margin-top:10px;">Revenue: $15–$40/month direct or enterprise bundle</p>
+    </div>
+    <div class="moon-card">
+      <h3>💰 Physician Financial Wellness</h3>
+      <ul>
+        <li>Medical student loan optimization engine</li>
+        <li>PSLF eligibility tracking</li>
+        <li>Malpractice insurance comparison</li>
+        <li>Physician-specific disability insurance navigator</li>
+        <li>Contract compensation benchmarking by specialty/market</li>
+        <li>Practice ownership financial modeling</li>
+      </ul>
+      <p style="color:#f59e0b;font-size:12px;font-weight:700;margin-top:10px;">Revenue: SaaS + referral fees + insurance commissions</p>
+    </div>
+    <div class="moon-card">
+      <h3>📬 Inbox &amp; Admin Relief</h3>
+      <ul>
+        <li>Prior authorization AI drafting</li>
+        <li>In-basket triage and smart delegation</li>
+        <li>Referral letter generation</li>
+        <li>Patient message categorization</li>
+        <li>Results review queue optimization</li>
+        <li>Documentation burden analytics</li>
+      </ul>
+      <p style="color:#f59e0b;font-size:12px;font-weight:700;margin-top:10px;">Revenue: Enterprise add-on · High retention driver</p>
+    </div>
+    <div class="moon-card">
+      <h3>📚 CME &amp; Education Platform</h3>
+      <ul>
+        <li>Personalized CME recommendations by specialty</li>
+        <li>Board exam prep modules</li>
+        <li>Micro-learning during natural workflow pauses</li>
+        <li>Research literature digest (daily/weekly)</li>
+        <li>Accredited wellness and resilience CME</li>
+        <li>Conference and grand rounds aggregation</li>
+      </ul>
+      <p style="color:#f59e0b;font-size:12px;font-weight:700;margin-top:10px;">Revenue: Accreditation partnerships + CME marketplace</p>
+    </div>
+    <div class="moon-card">
+      <h3>🔗 Peer &amp; Professional Network</h3>
+      <ul>
+        <li>Verified physician-only peer community</li>
+        <li>Specialty-specific discussion forums</li>
+        <li>Anonymized case consultation</li>
+        <li>Mentorship matching (resident ↔ attending)</li>
+        <li>Research collaboration matching</li>
+        <li>Job opportunity and locum marketplace</li>
+      </ul>
+      <p style="color:#f59e0b;font-size:12px;font-weight:700;margin-top:10px;">Revenue: Marketplace fees + premium network tier</p>
+    </div>
+    <div class="moon-card">
+      <h3>📊 Workforce Intelligence Platform</h3>
+      <ul>
+        <li>Department-level burnout heatmaps</li>
+        <li>Predictive attrition modeling</li>
+        <li>Specialty-level stress cycle detection</li>
+        <li>Shift burden and schedule optimization signals</li>
+        <li>Benchmarking against peer institutions</li>
+        <li>ROI reporting for CHROs and CMOs</li>
+      </ul>
+      <p style="color:#f59e0b;font-size:12px;font-weight:700;margin-top:10px;">Revenue: Enterprise analytics tier · High ACV</p>
+    </div>
+    <div class="moon-card">
+      <h3>⌚ Wearable &amp; Biometric Integration</h3>
+      <ul>
+        <li>Sleep quality and recovery tracking (Oura, WHOOP)</li>
+        <li>HRV-based stress detection</li>
+        <li>Shift fatigue prediction from biometric baselines</li>
+        <li>Personalized recovery recommendations</li>
+        <li>Longitudinal wellness trend visualization</li>
+        <li>Opt-in aggregate biometric workforce insights</li>
+      </ul>
+      <p style="color:#f59e0b;font-size:12px;font-weight:700;margin-top:10px;">Revenue: Hardware partnerships + premium tier</p>
+    </div>
+    <div class="moon-card">
+      <h3>🌍 Global Expansion Modules</h3>
+      <ul>
+        <li>NHS-specific credentialing and revalidation tracking (UK)</li>
+        <li>CPSO/provincial licensing management (Canada)</li>
+        <li>AHPRA registration tracking (Australia)</li>
+        <li>Gulf MOH licensing and Dataflow compliance</li>
+        <li>Multilingual AI debrief (Arabic, French, Spanish, Mandarin)</li>
+        <li>Local peer-support network seeding per market</li>
+      </ul>
+      <p style="color:#f59e0b;font-size:12px;font-weight:700;margin-top:10px;">Revenue: Regional licensing + government contracts</p>
+    </div>
+  </div>
+
+  <!-- MARKET CAP SCENARIOS -->
+  <h3 style="margin-top:36px;">Valuation Scenarios — The Numbers</h3>
+  <table>
+    <thead>
+      <tr>
+        <th style="color:rgba(255,255,255,.55);">Scenario</th>
+        <th style="color:rgba(255,255,255,.55);">ARR milestone</th>
+        <th style="color:rgba(255,255,255,.55);">Revenue multiple</th>
+        <th style="color:rgba(255,255,255,.55);">Implied valuation</th>
+        <th style="color:rgba(255,255,255,.55);">Comparable</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong style="color:#93c5fd;">Physician-only platform</strong></td>
+        <td>$30M–$80M ARR</td>
+        <td>8–15×</td>
+        <td style="color:#f59e0b;font-weight:700;">$300M–$1.2B</td>
+        <td>Marvin, VITAL WorkLife acquisition range</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#93c5fd;">Clinical workforce platform</strong></td>
+        <td>$100M–$200M ARR</td>
+        <td>12–20×</td>
+        <td style="color:#f59e0b;font-weight:700;">$1.2B–$4B</td>
+        <td>Spring Health (~$3.3B), Modern Health (~$1.2B)</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#93c5fd;">Workforce OS + analytics</strong></td>
+        <td>$300M–$600M ARR</td>
+        <td>15–25×</td>
+        <td style="color:#f59e0b;font-weight:700;">$5B–$15B</td>
+        <td>Doximity IPO (~$7B), Veeva (~$10B early), Lyra (~$5.85B)</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#93c5fd;">Super-app: mental health + career + financial + workflow</strong></td>
+        <td>$800M–$1.5B ARR</td>
+        <td>20–35×</td>
+        <td style="color:#f59e0b;font-weight:700;">$16B–$52B</td>
+        <td>Workday ($60B), ServiceNow ($100B) — category-defining SaaS</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#6ee7b7;">Global Healthcare OS (full vision)</strong></td>
+        <td>$2B–$5B ARR</td>
+        <td>25–40×</td>
+        <td style="color:#6ee7b7;font-weight:800;">$50B–$200B</td>
+        <td>Bloomberg Terminal ($6B ARR, ~$80B implied) — essential professional infrastructure</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- COMPETITIVE MOAT AT SCALE -->
+  <h3 style="margin-top:32px;">Why This Moat Becomes Nearly Unassailable at Scale</h3>
+  <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px;">
+    <div class="moon-card">
+      <h3>🔐 Trust network effects</h3>
+      <p>Every physician who shares a vulnerable moment on the platform deepens their commitment to it. Peer support networks built inside the platform become sticky — the peer relationships, the Circle of Trust history, the debrief journal — none of it transfers to a competitor. This is <em>emotional infrastructure</em>, not a SaaS subscription.</p>
+    </div>
+    <div class="moon-card">
+      <h3>📈 Longitudinal data moat</h3>
+      <p>A physician who starts using the platform as a PGY-1 resident and continues through 30 years of practice generates an unparalleled longitudinal wellbeing and career dataset. Aggregate career-lifecycle insights — when burnout peaks by specialty, what interventions actually work long-term — become a proprietary research and intelligence asset no competitor can replicate from scratch.</p>
+    </div>
+    <div class="moon-card">
+      <h3>🏥 Institutional lock-in</h3>
+      <p>Once a health system's POST/RISE peer support program, credentialing workflow, workforce analytics, and EHR integration all run through this platform, the switching cost is enormous. Replacing it means dismantling peer networks, rebuilding analytics baselines, and renegotiating EHR integrations across dozens of hospital departments.</p>
+    </div>
+    <div class="moon-card">
+      <h3>🌐 Identity layer for healthcare</h3>
+      <p>At full scale, the platform holds the verified professional identity of every clinician: licenses, credentials, CME, peer relationships, career history, wellbeing baseline. This becomes the "LinkedIn + Bloomberg + Calm + Doximity" of healthcare — except the data is richer, the trust is deeper, and the switching cost is existential.</p>
+    </div>
+  </div>
+
+  <!-- EXIT SCENARIOS -->
+  <h3 style="margin-top:32px;">Exit Scenarios at Each Stage</h3>
+  <table>
+    <thead>
+      <tr>
+        <th style="color:rgba(255,255,255,.55);">Stage</th>
+        <th style="color:rgba(255,255,255,.55);">Most likely exit type</th>
+        <th style="color:rgba(255,255,255,.55);">Most likely acquirer / path</th>
+        <th style="color:rgba(255,255,255,.55);">Exit value range</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Physician mental health only</td>
+        <td>Strategic M&amp;A</td>
+        <td>Lyra, Spring Health, ComPsych, Optum</td>
+        <td style="color:#f59e0b;font-weight:700;">$300M–$1B</td>
+      </tr>
+      <tr>
+        <td>Clinical workforce platform</td>
+        <td>Growth equity or strategic M&amp;A</td>
+        <td>QGenda/Hearst, UKG, Workday, RLDatix, Teladoc</td>
+        <td style="color:#f59e0b;font-weight:700;">$1B–$5B</td>
+      </tr>
+      <tr>
+        <td>Workforce OS + analytics + financial</td>
+        <td>IPO or large strategic acquisition</td>
+        <td>Microsoft (healthcare), Epic (strategic), or public markets</td>
+        <td style="color:#f59e0b;font-weight:700;">$5B–$20B</td>
+      </tr>
+      <tr>
+        <td>Super-app (full module stack)</td>
+        <td>IPO — category-defining healthcare SaaS</td>
+        <td>Public markets — comparable to Doximity, Veeva, Health Catalyst</td>
+        <td style="color:#6ee7b7;font-weight:800;">$20B–$50B</td>
+      </tr>
+      <tr>
+        <td>Global Healthcare OS</td>
+        <td>IPO + international expansion</td>
+        <td>Public markets — essential global healthcare infrastructure</td>
+        <td style="color:#6ee7b7;font-weight:800;">$50B–$100B+</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- DOXIMITY COMPARISON -->
+  <h3 style="margin-top:32px;">The Doximity Precedent — Why This Can Work</h3>
+  <div class="moon-card" style="margin-top:12px;">
+    <p>Doximity built a verified professional network for U.S. physicians — starting with a simple medical directory and secure messaging tool — and went public in 2021 at a ~<strong style="color:#fde68a;">$7B valuation</strong>, peaking above $28B. Revenue model: pharmaceutical companies and health systems pay to access the verified physician network. The platform never handled anything as intimate or deeply trusted as mental health, peer support, or crisis intervention.</p>
+    <p style="margin-top:10px;">This platform starts with a <em>far deeper</em> trust relationship — a physician's most vulnerable moments, their Circle of Trust, their peer relationships — and builds outward from there. If Doximity reached $7B+ starting from a medical directory, a platform that owns the emotional and professional infrastructure of a physician's career has a credible path to multiples of that valuation.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px;">
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px;text-align:center;">
+        <div style="font-size:18px;font-weight:900;color:#fde68a;">Doximity</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:4px;">Verified physician directory + messaging<br/>IPO: ~$7B · Peak: ~$28B</div>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px;text-align:center;">
+        <div style="font-size:13px;font-weight:900;color:#a78bfa;">This Platform</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:4px;">Emotional trust + career + financial + clinical OS<br/>Deeper relationship · More data · More revenue streams</div>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px;text-align:center;">
+        <div style="font-size:13px;font-weight:900;color:#6ee7b7;">Potential</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:4px;">If Doximity → $7B–$28B from a directory<br/>this platform → <strong style="color:#fde68a;">$20B–$100B+</strong> from deep trust OS</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE ONE LINE -->
+  <div class="quote-gold" style="margin-top:28px;">
+    "Every healthcare worker — from their first day of residency to their last shift before retirement — should have one platform that knows their workload, guards their mental health, manages their career, protects their finances, and makes them better at the job they gave their life to. That platform doesn't exist yet."
+  </div>
+
+  <div style="margin-top:20px;padding:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:14px;">
+    <p style="font-size:13px;color:rgba(255,255,255,.5);margin:0;"><strong style="color:rgba(255,255,255,.7);">Note on projections:</strong> Valuation scenarios and market cap figures in this section are illustrative forward-looking estimates based on comparable public company valuations (Doximity, Veeva, Workday, Spring Health, Lyra Health), revenue multiples for high-growth healthcare SaaS, and bottom-up TAM modeling. They are not financial forecasts. Actual outcomes depend on execution, market conditions, competitive dynamics, and capital markets at time of exit.</p>
   </div>
 </section>
 
