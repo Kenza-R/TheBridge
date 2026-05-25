@@ -1,0 +1,203 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Hospital {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name      String   @db.VarChar(255)
+  epicFhirBaseUrl String? @map("epic_fhir_base_url") @db.VarChar(512)
+  timezone  String   @default("America/New_York") @db.VarChar(64)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  physicians              Physician[]
+  aggregateSnapshots      HospitalAggregateSnapshot[]
+  concernFlags            ConcernFlag[]
+
+  @@map("hospitals")
+}
+
+/// PII is minimal by design — clinical identity via NPI + Auth0 subject
+model Physician {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  auth0Subject      String    @unique @map("auth0_subject") @db.VarChar(128)
+  npi               String    @unique @db.VarChar(10)
+  hospitalId        String    @map("hospital_id") @db.Uuid
+  specialty         String?   @db.VarChar(50)
+  careerStage       String?   @map("career_stage") @db.VarChar(20)
+  displayName       String?   @map("display_name") @db.VarChar(120)
+  onboardingDone    Boolean   @default(false) @map("onboarding_done")
+  wearableType      String?   @map("wearable_type") @db.VarChar(20)
+  thresholdConfig   Json      @default("{\"sustained_days\":3,\"sustained_score\":70,\"acute\":90}") @map("threshold_config")
+  notificationPrefs Json      @default("{\"silent_start\":\"07:00\",\"silent_end\":\"19:00\",\"max_per_day\":1}") @map("notification_prefs")
+  messageVaultKeyId String?   @map("message_vault_key_id") @db.VarChar(64)
+  epicFhirPatientId String?   @map("epic_fhir_patient_id") @db.VarChar(128)
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  deletedAt         DateTime? @map("deleted_at") @db.Timestamptz(6)
+
+  hospital            Hospital @relation(fields: [hospitalId], references: [id])
+  distressScores      DistressScore[]
+  ownedCircles        CircleMember[] @relation("CircleOwner")
+  memberCircles       CircleMember[] @relation("CircleMember")
+  sentMessages        PeerMessage[]  @relation("MessageSender")
+  receivedMessages    PeerMessage[]  @relation("MessageRecipient")
+  selfReports         SelfReport[]
+  wellnessSessions    WellnessSession[]
+  concernFlagsRaised  ConcernFlag[]  @relation("FlagRaisedBy")
+  concernFlagsAbout   ConcernFlag[]  @relation("FlagTarget")
+  notifications       Notification[]
+
+  @@index([hospitalId])
+  @@map("physicians")
+}
+
+model CircleMember {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  ownerId    String    @map("owner_id") @db.Uuid
+  memberId   String    @map("member_id") @db.Uuid
+  role       String    @db.VarChar(20)
+  notifyRule String    @map("notify_rule") @db.VarChar(30)
+  status     String    @default("pending") @db.VarChar(20)
+  invitedAt  DateTime  @default(now()) @map("invited_at") @db.Timestamptz(6)
+  acceptedAt DateTime? @map("accepted_at") @db.Timestamptz(6)
+
+  owner  Physician @relation("CircleOwner", fields: [ownerId], references: [id])
+  member Physician @relation("CircleMember", fields: [memberId], references: [id])
+
+  @@unique([ownerId, memberId])
+  @@map("circle_members")
+}
+
+/// Computed scores only — raw biometrics never stored server-side
+model DistressScore {
+  id                 String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  physicianId        String   @map("physician_id") @db.Uuid
+  date               DateTime @db.Date
+  compositeScore     Int      @map("composite_score") @db.SmallInt
+  ehrSubScore        Int?     @map("ehr_sub_score") @db.SmallInt
+  wearableSubScore   Int?     @map("wearable_sub_score") @db.SmallInt
+  selfReportSubScore Int?     @map("self_report_sub_score") @db.SmallInt
+  signalFlags        Json     @default("{}") @map("signal_flags")
+  triggerFired       Boolean  @default(false) @map("trigger_fired")
+  triggerType        String?  @map("trigger_type") @db.VarChar(20)
+
+  physician Physician @relation(fields: [physicianId], references: [id])
+
+  @@unique([physicianId, date])
+  @@index([physicianId, date(sort: Desc)])
+  @@map("distress_scores")
+}
+
+model PeerMessage {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  senderId    String    @map("sender_id") @db.Uuid
+  recipientId String    @map("recipient_id") @db.Uuid
+  messageBody String    @map("message_body")
+  messageType String    @map("message_type") @db.VarChar(20)
+  status      String    @default("sent") @db.VarChar(20)
+  scheduledAt DateTime? @map("scheduled_at") @db.Timestamptz(6)
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  expiresAt   DateTime  @map("expires_at") @db.Timestamptz(6)
+
+  sender    Physician @relation("MessageSender", fields: [senderId], references: [id])
+  recipient Physician @relation("MessageRecipient", fields: [recipientId], references: [id])
+
+  @@index([expiresAt])
+  @@index([recipientId, status])
+  @@map("peer_messages")
+}
+
+model HospitalAggregateSnapshot {
+  id                      String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  hospitalId              String   @map("hospital_id") @db.Uuid
+  weekStart               DateTime @map("week_start") @db.Date
+  activePhysicians        Int      @map("active_physicians")
+  pctElevated             Decimal? @map("pct_elevated") @db.Decimal(5, 2)
+  peerSupportUtilization  Decimal? @map("peer_support_utilization") @db.Decimal(5, 2)
+  totalWellnessSessions   Int      @default(0) @map("total_wellness_sessions")
+  medianRecoveryDays      Decimal? @map("median_recovery_days") @db.Decimal(5, 2)
+  createdAt               DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  hospital Hospital @relation(fields: [hospitalId], references: [id])
+
+  @@unique([hospitalId, weekStart])
+  @@map("hospital_aggregate_snapshots")
+}
+
+model SelfReport {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  physicianId String   @map("physician_id") @db.Uuid
+  tag         String   @db.VarChar(40)
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  physician Physician @relation(fields: [physicianId], references: [id])
+
+  @@index([physicianId, createdAt(sort: Desc)])
+  @@map("self_reports")
+}
+
+model ConcernFlag {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  hospitalId  String    @map("hospital_id") @db.Uuid
+  raisedById  String    @map("raised_by_id") @db.Uuid
+  targetId    String    @map("target_id") @db.Uuid
+  privateNote String?   @map("private_note")
+  status      String    @default("active") @db.VarChar(20)
+  expiresAt   DateTime  @map("expires_at") @db.Timestamptz(6)
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  hospital  Hospital  @relation(fields: [hospitalId], references: [id])
+  raisedBy  Physician @relation("FlagRaisedBy", fields: [raisedById], references: [id])
+  target    Physician @relation("FlagTarget", fields: [targetId], references: [id])
+
+  @@index([targetId, status])
+  @@map("concern_flags")
+}
+
+model WellnessSession {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  physicianId String   @map("physician_id") @db.Uuid
+  sessionType String   @map("session_type") @db.VarChar(40)
+  durationSec Int      @map("duration_sec")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  physician Physician @relation(fields: [physicianId], references: [id])
+
+  @@map("wellness_sessions")
+}
+
+model Notification {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  physicianId  String    @map("physician_id") @db.Uuid
+  jobName      String    @map("job_name") @db.VarChar(64)
+  triggerType  String?   @map("trigger_type") @db.VarChar(20)
+  copyVariant  Int?      @map("copy_variant")
+  deliveredAt  DateTime? @map("delivered_at") @db.Timestamptz(6)
+  readAt       DateTime? @map("read_at") @db.Timestamptz(6)
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  physician Physician @relation(fields: [physicianId], references: [id])
+
+  @@index([physicianId, createdAt(sort: Desc)])
+  @@map("notifications")
+}
+
+/// HIPAA — retain API audit logs 6 years
+model AuditLog {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  actorSubject String?  @map("actor_subject") @db.VarChar(128)
+  actorRole    String   @map("actor_role") @db.VarChar(32)
+  method       String   @db.VarChar(10)
+  path         String   @db.VarChar(512)
+  statusCode   Int      @map("status_code")
+  ipAddress    String?  @map("ip_address") @db.VarChar(45)
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([createdAt(sort: Desc)])
+  @@map("audit_logs")
+}

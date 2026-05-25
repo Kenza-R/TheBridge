@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Bridge — Preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #050506;
+        --fg: #f5f5f7;
+        --muted: #6e6e73;
+        --surface: #111113;
+        --raised: #1a1a1d;
+        --border: rgba(255, 255, 255, 0.06);
+        --gold: #d4b896;
+        --mint: #7dd3a8;
+        --font: "Inter", system-ui, sans-serif;
+      }
+      * { box-sizing: border-box; margin: 0; }
+      body {
+        font-family: var(--font);
+        background: radial-gradient(120% 80% at 50% -20%, #1a1814 0%, var(--bg) 55%);
+        color: var(--fg);
+        min-height: 100dvh;
+        -webkit-font-smoothing: antialiased;
+      }
+      .phone {
+        max-width: 390px;
+        margin: 0 auto;
+        min-height: 100dvh;
+        padding-bottom: calc(72px + env(safe-area-inset-bottom));
+      }
+      .screen { display: none; padding: 1rem 1.25rem 1.5rem; animation: fade 0.4s ease; }
+      .screen.active { display: block; }
+      @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+      .label {
+        font-size: 0.68rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      h1 { font-size: 1.35rem; font-weight: 600; letter-spacing: -0.03em; margin-top: 0.25rem; }
+      .sub { font-size: 0.875rem; color: var(--muted); margin-top: 0.35rem; }
+      .card {
+        background: var(--raised);
+        border: 1px solid var(--border);
+        border-radius: 1.5rem;
+        padding: 1rem 1.125rem;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        gap: 0.875rem;
+        padding: 1rem 1.125rem;
+        background: var(--raised);
+        border: 1px solid var(--border);
+        border-radius: 1.25rem;
+        margin-bottom: 0.5rem;
+      }
+      .row .ico {
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 50%;
+        background: var(--surface);
+        display: grid;
+        place-items: center;
+        font-size: 0.9rem;
+      }
+      .row .val { margin-left: auto; font-size: 1.1rem; font-weight: 600; }
+      .ring-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1.5rem 0 1rem;
+        position: relative;
+      }
+      .ring-glow {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: conic-gradient(from 200deg, #7dd3a8, #d4b896, #8fd4c4, #7dd3a8);
+        filter: blur(28px);
+        opacity: 0.35;
+        animation: pulse 4s ease-in-out infinite;
+      }
+      @keyframes pulse { 50% { opacity: 0.5; } }
+      .ring {
+        width: 220px;
+        height: 220px;
+        position: relative;
+      }
+      .ring svg { transform: rotate(-90deg); }
+      .ring-center {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      .score { font-size: 3.25rem; font-weight: 600; line-height: 1; letter-spacing: -0.03em; }
+      .status { font-size: 0.875rem; color: var(--muted); margin-top: 0.35rem; }
+      .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 1.25rem; }
+      .grid2 .card { padding: 1rem; }
+      .emoji-row { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
+      .emoji-row button {
+        flex: 1;
+        aspect-ratio: 1;
+        max-height: 3.25rem;
+        border: none;
+        border-radius: 1rem;
+        background: var(--surface);
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+      .chips { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.25rem; margin-top: 0.75rem; }
+      .chip {
+        flex-shrink: 0;
+        padding: 0.5rem 0.875rem;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        background: var(--raised);
+        border: 1px solid var(--border);
+        color: var(--muted);
+      }
+      nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(10, 10, 11, 0.95);
+        border-top: 1px solid var(--border);
+        backdrop-filter: blur(12px);
+        padding-bottom: env(safe-area-inset-bottom);
+      }
+      nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: space-around;
+        max-width: 390px;
+        margin: 0 auto;
+        padding: 0.5rem 0.25rem;
+      }
+      nav button {
+        background: none;
+        border: none;
+        color: var(--muted);
+        font-family: inherit;
+        font-size: 0.625rem;
+        font-weight: 500;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.35rem 0.75rem;
+        cursor: pointer;
+      }
+      nav button.active { color: var(--fg); }
+      nav svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.75; }
+      .btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 1rem;
+        border-radius: 999px;
+        font-weight: 500;
+        font-size: 0.94rem;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+      }
+      .btn-primary { background: #f5f5f7; color: #0a0a0b; margin-top: 1.5rem; }
+      .welcome-center { text-align: center; padding: 4rem 0 2rem; }
+      .welcome-center h1 { font-size: 2.5rem; }
+      .segmented {
+        display: flex;
+        gap: 0.25rem;
+        padding: 0.25rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        margin-bottom: 1rem;
+      }
+      .segmented button {
+        flex: 1;
+        border: none;
+        background: transparent;
+        color: var(--muted);
+        font-family: inherit;
+        font-size: 0.75rem;
+        font-weight: 500;
+        padding: 0.5rem;
+        border-radius: 999px;
+        cursor: pointer;
+      }
+      .segmented button.on {
+        background: var(--raised);
+        color: var(--fg);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+      }
+      .banner {
+        font-size: 0.7rem;
+        text-align: center;
+        color: var(--muted);
+        padding: 0.5rem;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+      }
+    </style>
+  </head>
+  <body>
+    <p class="banner">Static UI preview — dev server fix in progress</p>
+    <div class="phone">
+      <section id="welcome" class="screen active">
+        <div class="welcome-center">
+          <div class="ring-wrap" style="transform: scale(0.85); margin-bottom: 1rem">
+            <div class="ring-glow"></div>
+            <div class="ring">
+              <svg width="220" height="220" viewBox="0 0 220 220">
+                <circle cx="110" cy="110" r="98" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10" />
+                <circle cx="110" cy="110" r="98" fill="none" stroke="url(#g)" stroke-width="10" stroke-linecap="round" stroke-dasharray="490" stroke-dashoffset="120" />
+                <defs>
+                  <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#7dd3a8" />
+                    <stop offset="50%" stop-color="#d4b896" />
+                    <stop offset="100%" stop-color="#8fd4c4" />
+                  </linearGradient>
+                </defs>
+              </svg>
+              <div class="ring-center">
+                <span class="score">72</span>
+                <span class="label" style="margin-top: 0.5rem">Resilience</span>
+              </div>
+            </div>
+          </div>
+          <h1>Bridge</h1>
+          <p class="sub" style="max-width: 260px; margin: 0.75rem auto 0">
+            Ambient wellbeing for physicians — calm signals, peer support, zero employer visibility.
+          </p>
+        </div>
+        <button class="btn btn-primary" onclick="show('today')">Get started</button>
+      </section>
+
+      <section id="today" class="screen">
+        <header style="display: flex; justify-content: space-between; align-items: flex-start">
+          <div>
+            <p class="label">Today</p>
+            <h1>Good evening, Patel</h1>
+          </div>
+          <div class="ico" style="width: 2.5rem; height: 2.5rem; border-radius: 50%; background: var(--raised); border: 1px solid var(--border)">🔔</div>
+        </header>
+        <div class="ring-wrap">
+          <div class="ring-glow"></div>
+          <div class="ring">
+            <svg width="220" height="220" viewBox="0 0 220 220">
+              <circle cx="110" cy="110" r="98" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10" />
+              <circle cx="110" cy="110" r="98" fill="none" stroke="url(#g2)" stroke-width="10" stroke-linecap="round" stroke-dasharray="490" stroke-dashoffset="95" />
+              <defs>
+                <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#7dd3a8" />
+                  <stop offset="50%" stop-color="#d4b896" />
+                  <stop offset="100%" stop-color="#8fd4c4" />
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="ring-center">
+              <span class="score">78</span>
+              <span class="label" style="margin-top: 0.5rem">Resilience</span>
+              <span class="status">Good</span>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem">
+          <span class="label">Contributors</span>
+          <span style="font-size: 0.75rem; color: var(--muted)">Trends →</span>
+        </div>
+        <div class="row"><span class="ico">🩺</span><div><div style="font-size: 0.875rem; font-weight: 500">Clinical load</div><div class="sub" style="margin: 0">EHR timing patterns</div></div><span class="val">62</span></div>
+        <div class="row"><span class="ico">🌙</span><div><div style="font-size: 0.875rem; font-weight: 500">Recovery</div><div class="sub" style="margin: 0">Wearable trends</div></div><span class="val">71</span></div>
+        <div class="row"><span class="ico">💨</span><div><div style="font-size: 0.875rem; font-weight: 500">How you feel</div><div class="sub" style="margin: 0">Private check-ins</div></div><span class="val">55</span></div>
+        <div class="card" style="margin-top: 1rem">
+          <p class="label" style="margin-bottom: 0.5rem">Daily reflection</p>
+          <p class="sub">How is today landing?</p>
+          <div class="emoji-row">
+            <button>😞</button><button>😕</button><button>😐</button><button>🙂</button><button>😄</button>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="card"><div style="font-size: 1.25rem; margin-bottom: 0.5rem">💨</div><strong style="font-size: 0.875rem">Breathe</strong><div class="sub">90 sec reset</div></div>
+          <div class="card"><div style="font-size: 1.25rem; margin-bottom: 0.5rem">✦</div><strong style="font-size: 0.875rem">Reach out</strong><div class="sub">Your circle</div></div>
+        </div>
+        <div class="chips">
+          <span class="chip">Rough shift</span>
+          <span class="chip">Long shift</span>
+          <span class="chip">Patient death</span>
+        </div>
+      </section>
+
+      <section id="vitals" class="screen">
+        <p class="label">Vitals</p>
+        <h1>Wellness</h1>
+        <p class="sub" style="margin-bottom: 1.25rem">Short, private, on your terms.</p>
+        <div class="segmented">
+          <button class="on">Restore</button>
+          <button>Listen</button>
+          <button>Trends</button>
+        </div>
+        <div class="card" style="padding: 1.5rem">
+          <div style="font-size: 1.75rem; margin-bottom: 0.75rem">💨</div>
+          <div style="font-size: 1.15rem; font-weight: 600">90-second reset</div>
+          <div class="sub">Box · 4-7-8 · extended exhale</div>
+          <div style="margin-top: 1rem; color: var(--gold); font-size: 0.875rem">Start →</div>
+        </div>
+      </section>
+
+      <section id="circle" class="screen">
+        <p class="label">Circle</p>
+        <h1>Your people</h1>
+        <p class="sub" style="margin-bottom: 1rem">3 trusted colleagues</p>
+        <div class="card" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem">
+          <div class="ico" style="width: 3rem; height: 3rem; font-size: 1.25rem">✦</div>
+          <div style="flex: 1"><div style="font-weight: 500">Reach out</div><div class="sub">Private note · 30 days</div></div>
+          <span style="color: var(--muted)">›</span>
+        </div>
+        <div class="row"><span class="ico">MC</span><div><div style="font-weight: 500">Dr. Maya Chen</div><div class="sub" style="margin:0">Internal Medicine</div></div><span style="font-size:0.65rem;color:var(--gold);text-transform:uppercase">First Reach</span></div>
+        <div class="row"><span class="ico">JR</span><div><div style="font-weight: 500">Dr. Jamie Reyes</div><div class="sub" style="margin:0">Pediatrics</div></div><span style="font-size:0.65rem;color:var(--gold);text-transform:uppercase">Buddy</span></div>
+      </section>
+
+      <section id="you" class="screen">
+        <p class="label">You</p>
+        <h1>Dr. Anika Patel</h1>
+        <p class="sub" style="margin-bottom: 1.5rem">Mercy General · Demo mode</p>
+        <div class="card" style="padding: 0 0.5rem">
+          <div class="row" style="border: none; margin: 0; background: transparent"><span class="ico">◎</span><div><div style="font-weight:500">API connection</div><div class="sub" style="margin:0">Configure dev token</div></div><span>›</span></div>
+          <div class="row" style="border: none; margin: 0; background: transparent"><span class="ico">👥</span><div><div style="font-weight:500">Manage circle</div><div class="sub" style="margin:0">3 active</div></div><span>›</span></div>
+          <div class="row" style="border: none; margin: 0; background: transparent"><span class="ico">🔔</span><div><div style="font-weight:500">Notifications</div><div class="sub" style="margin:0">Silent 07:00–19:00</div></div><span>›</span></div>
+        </div>
+      </section>
+    </div>
+
+    <nav>
+      <ul>
+        <li><button type="button" class="active" data-tab="today" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-9.5z"/></svg>Today</button></li>
+        <li><button type="button" data-tab="vitals" onclick="nav(this)"><svg viewBox="0 0 24 24"><path d="M12 21s-6-4.35-6-10a6 6 0 1 1 12 0c0 5.65-6 10-6 10z"/></svg>Vitals</button></li>
+        <li><button type="button" data-tab="circle" onclick="nav(this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg>Circle</button></li>
+        <li><button type="button" data-tab="you" onclick="nav(this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/></svg>You</button></li>
+      </ul>
+    </nav>
+
+    <script>
+      function show(id) {
+        document.querySelectorAll(".screen").forEach((s) => s.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
+        document.querySelectorAll("nav button").forEach((b) => {
+          b.classList.toggle("active", b.dataset.tab === id);
+        });
+        document.querySelector(".banner").style.display = id === "welcome" ? "block" : "none";
+        document.querySelector("nav").style.display = id === "welcome" ? "none" : "block";
+      }
+      function nav(btn) {
+        show(btn.dataset.tab);
+      }
+      show("welcome");
+    </script>
+  </body>
+</html>

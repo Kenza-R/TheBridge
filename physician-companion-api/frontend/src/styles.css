@@ -1,0 +1,238 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-teal: var(--teal);
+  --color-teal-soft: var(--teal-soft);
+  --color-blue: var(--blue);
+  --color-blue-soft: var(--blue-soft);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-mint: var(--mint);
+  --color-mint-soft: var(--mint-soft);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-navy-deep: var(--navy-deep);
+  --color-navy: var(--navy);
+  --font-display: var(--font-family);
+  --font-sans: var(--font-family);
+}
+
+/* Oura-inspired: near-black canvas, warm gold accents, soft elevated surfaces */
+:root {
+  --radius: 1.25rem;
+  --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+
+  --background: #050506;
+  --foreground: #f5f5f7;
+  --card: #141416;
+  --card-foreground: #f5f5f7;
+  --popover: #1c1c1f;
+  --popover-foreground: #f5f5f7;
+
+  --primary: #e8dcc8;
+  --primary-foreground: #0a0a0b;
+  --secondary: #1c1c1f;
+  --secondary-foreground: #a1a1a6;
+  --muted: #1c1c1f;
+  --muted-foreground: #6e6e73;
+  --accent: #2a2a2e;
+  --accent-foreground: #f5f5f7;
+  --destructive: #c45c5c;
+  --border: rgba(255, 255, 255, 0.06);
+  --input: #1c1c1f;
+  --ring: #d4b896;
+
+  --teal: #8fd4c4;
+  --teal-soft: rgba(143, 212, 196, 0.12);
+  --blue: #7eb8e8;
+  --blue-soft: rgba(126, 184, 232, 0.12);
+  --gold: #d4b896;
+  --gold-soft: rgba(212, 184, 150, 0.14);
+  --mint: #7dd3a8;
+  --mint-soft: rgba(125, 211, 168, 0.12);
+
+  --surface: #111113;
+  --surface-raised: #1a1a1d;
+  --navy-deep: #050506;
+  --navy: #0e0e10;
+
+  --gradient-bg: radial-gradient(120% 80% at 50% -20%, #1a1814 0%, #050506 55%);
+  --gradient-ring-good: conic-gradient(from 200deg, #7dd3a8, #d4b896, #8fd4c4, #7dd3a8);
+  --gradient-ring-mid: conic-gradient(from 200deg, #d4b896, #c9a06a, #d4b896);
+  --gradient-ring-low: conic-gradient(from 200deg, #6e6e73, #8a7a6a, #6e6e73);
+  --shadow-soft: 0 12px 40px -12px rgba(0, 0, 0, 0.65);
+  --shadow-glow: 0 0 80px -20px rgba(212, 184, 150, 0.25);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html,
+  body {
+    background: var(--gradient-bg);
+    background-attachment: fixed;
+    color: var(--color-foreground);
+    font-family: var(--font-family);
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.01em;
+  }
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-family);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+}
+
+@layer components {
+  .oura-label {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+
+  .oura-card {
+    border-radius: 1.5rem;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+  }
+
+  .oura-card-flat {
+    border-radius: 1.5rem;
+    background: var(--surface);
+  }
+
+  .oura-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border-radius: 9999px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+  .oura-btn:active {
+    transform: scale(0.98);
+  }
+  .oura-btn-primary {
+    background: #f5f5f7;
+    color: #0a0a0b;
+  }
+  .oura-btn-secondary {
+    background: var(--surface-raised);
+    color: var(--foreground);
+    border: 1px solid var(--border);
+  }
+
+  .oura-metric-row {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 1rem 1.125rem;
+    border-radius: 1.25rem;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+  }
+
+  .oura-chip {
+    padding: 0.5rem 0.875rem;
+    border-radius: 9999px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    color: var(--muted-foreground);
+    white-space: nowrap;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .oura-chip-active {
+    background: rgba(245, 245, 247, 0.1);
+    border-color: rgba(245, 245, 247, 0.2);
+    color: var(--foreground);
+  }
+
+  .oura-segmented {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    border-radius: 9999px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+  .oura-segmented button {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--muted-foreground);
+    transition: background 0.15s, color 0.15s;
+  }
+  .oura-segmented button[data-active="true"] {
+    background: var(--surface-raised);
+    color: var(--foreground);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes ring-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.55s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+.animate-ring-pulse {
+  animation: ring-pulse 4s ease-in-out infinite;
+}
