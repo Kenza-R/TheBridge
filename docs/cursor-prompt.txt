@@ -1,0 +1,610 @@
+BRIDGE — Healthcare Worker Mental Health Companion
+Backend Spec for Cursor
+==========================================================
+
+Build the backend for this product. The privacy constraints in Sections 3 and 8
+MUST be enforced at the database layer via Postgres Row Level Security (RLS),
+not just in application logic. The employer firewall is a hard architectural
+constraint — not a UI feature.
+
+
+==========================================================
+SECTION 1 — PRODUCT CONTEXT (read first)
+==========================================================
+
+Bridge detects physician burnout via EHR workflow signals and wearable biometrics,
+then routes clinicians to peer support through a privacy-first architecture.
+
+KEY ARCHITECTURAL CONSTRAINTS:
+1. Hospital administrators can NEVER query individual physician data — enforced at DB layer
+2. Raw wearable biometrics (HRV values, sleep minutes) never touch the server — only
+   derived sub-scores (0-100 integers) are stored
+3. Peer messages are end-to-end encrypted and auto-deleted after 30 days
+4. Distress scores are readable only by the physician who owns them (Postgres RLS)
+5. Aggregate hospital snapshots suppress any metric where active physician count < 10
+
+TECH STACK:
+- Runtime: Node.js v22 + TypeScript
+- Framework: Fastify
+- Database: PostgreSQL 16 (primary) + Redis 7 (cache + queues)
+- ORM: Prisma
+- Auth: Auth0 + SAML 2.0 (hospital SSO) + SMART on FHIR (Epic OAuth)
+- Queue: BullMQ on Redis
+- Hosting: AWS (EKS for services, RDS Multi-AZ for Postgres, ElastiCache for Redis)
+- Storage: S3 + CloudFront (meditation audio)
+- HIPAA-compliant deployment — BAA required with AWS
+
+
+==========================================================
+SECTION 2 — SIGNAL DETECTION ENGINE
+==========================================================
+
+HOW SCORING WORKS:
+Three input layers combine into a composite distress score (0-100). Higher = more distress.
+Scores are computed server-side nightly (2am local hospital time).
+
+LAYER 1 — EHR Workflow Signals (from Epic FHIR, read-only, no PHI):
+Sourced via Epic FHIR R4. Only practitioner workflow metadata — no patient records.
+Required Epic FHIR scopes: system/AuditEvent.read, system/Practitioner.read, system/Encounter.read
+
+Signals and weights:
+- After-hours in-basket volume (11pm-5am): 22%
+- Documentation time per patient (delta vs. 30-day baseline): 18%
+- Adverse patient outcome events (death, major complication): 20%
+- Number of open encounters at shift end: 12%
+- Time between last patient note and logout: 10%
+- Weekend/holiday login frequency: 8%
+- Remaining: 10% reserved for future signals
+
+LAYER 2 — Wearable Biometrics (opt-in, computed on-device):
+IMPORTANT: Raw values (HRV ms, sleep minutes) are computed on-device via HealthKit /
+Health Connect. The mobile app computes a normalized sub-score (0-100) and POSTs
+only the integer to the API. The server never sees actual biometric values.
+
+Wearable signals weighted within the sub-score:
+- HRV trend (7-day rolling avg vs. 30-day baseline): 30%
+- Sleep duration < 6h for 3+ consecutive nights: 25%
+- Resting heart rate spike (>15% above 30-day mean): 20%
+- Step count collapse (>40% drop vs. weekly norm): 15%
+- Irregular sleep start time (variance > 90min): 10%
+
+LAYER 3 — Self-Report Tags (in-app, optional):
+Tags: rough_shift, lost_patient, bad_handoff, overwhelmed, running_on_empty,
+      need_a_break, actually_fine, family_stuff, conflict_with_colleague,
+      understaffed
+
+COMPOSITE SCORE FORMULA:
+If wearable connected:    (EHR × 0.50) + (Wearable × 0.35) + (Self-report × 0.15)
+If wearable not connected: (EHR × 0.80) + (Self-report × 0.20)
+
+PERSONALIZATION:
+Scores computed against individual's own 30-day baseline, not population averages.
+Days 1-30 after signup: silent calibration period, no triggers fired.
+
+TRIGGER CONDITIONS:
+Sustained trigger: composite_score >= 70 for 3 consecutive days
+Acute trigger: composite_score >= 90 on a single day
+Hard event trigger (immediate, bypass scoring model):
+  - Adverse outcome documented in Epic where physician was primary
+  - Self-report tag = "lost_patient"
+  - Wearable sub-score below absolute floor AND self-report indicates stress
+
+When trigger fires: enqueue notification job in BullMQ.
+Notification job schema:
+{
+  jobName: "score.trigger.notify",
+  data: {
+    physician_id: "uuid",
+    trigger_type: "sustained" | "acute" | "hard_event",
+    score: number,
+    copy_variant: number  // 1-20, selects from copy library
+  },
+  opts: { delay: 0, attempts: 3 }
+}
+
+
+==========================================================
+SECTION 3 — CIRCLE OF TRUST (privacy rules enforced at DB level)
+==========================================================
+
+Circle membership is stored in circle_members table.
+- owner_id = physician whose circle this is
+- member_id = physician in the circle
+- Both are encrypted at rest
+
+CRITICAL DB RULES (enforce via Postgres RLS):
+1. A physician can only SELECT rows from circle_members WHERE owner_id = their own id
+   OR WHERE member_id = their own id (to see circles they are IN)
+2. Hospital admin role has zero SELECT access to circle_members table
+3. No JOIN between circle_members and distress_scores is permitted for admin role
+
+CONCERN FLAG PRIVACY:
+- concern_flags table stores: flagging_physician_id, flagged_physician_id, private_note
+- The flagged physician can query IF they have flags (count only), but NOT who flagged them
+- Implement this: SELECT COUNT(*) FROM concern_flags WHERE flagged_physician_id = $me
+  is allowed. SELECT flagging_physician_id FROM concern_flags WHERE flagged_physician_id = $me
+  is blocked at RLS level.
+
+CIRCLE MESSAGE PRIVACY:
+- peer_messages table: message_body stored AES-256 encrypted
+- Encryption key stored in physician's device Keychain — server never has the key
+- Server stores ciphertext only
+- Messages auto-expire after 30 days (expires_at column, purged hourly by cleanup service)
+
+
+==========================================================
+SECTION 7 — WEARABLE INTEGRATION (API side)
+==========================================================
+
+The mobile app handles all HealthKit / Health Connect reads.
+The backend only receives the computed sub-score.
+
+API endpoint for wearable score submission:
+POST /api/v1/physician/me/score
+Body: {
+  composite: number,       // 0-100
+  ehr: number,             // 0-100
+  wearable: number | null, // 0-100, null if no wearable connected
+  self_report: number,     // 0-100
+  signal_flags: {
+    ehr_afterhours: boolean,
+    ehr_documentation_delta: number,  // % change from baseline
+    ehr_adverse_event: boolean,
+    hrv_low: boolean | null,
+    sleep_short: boolean | null,
+    self_report_tag: string | null
+  }
+}
+
+PRIVACY ENFORCEMENT:
+- The server validates that the wearable sub-score is an integer 0-100
+- If any raw biometric value is accidentally included in the payload, reject with 400
+  and log the incident (do not store the raw value)
+- Hospital admin cannot query wearable connection status for individual physicians
+- Hospital admin CAN see: "X% of physicians have wearables connected" (aggregate only,
+  from hospital_aggregate_snapshots table)
+
+DEVICE SUPPORT:
+- iOS: HealthKit (Apple Watch, WHOOP via HealthKit, Oura via HealthKit)
+- Android: Health Connect API (Garmin, Fitbit, Samsung Galaxy Watch)
+- The backend is device-agnostic — it only receives the sub-score integer
+
+
+==========================================================
+SECTION 8 — HOSPITAL DASHBOARD (aggregate-only rules)
+==========================================================
+
+HARD RULES (enforce both at API middleware AND at Postgres RLS):
+1. Admin JWT cannot access: distress_scores, circle_members, peer_messages,
+   concern_flags, or physician.threshold_config
+2. Admin JWT can only read from: hospital_aggregate_snapshots
+3. Any admin query that attempts to filter to individual physician level returns 403
+4. If a hospital has fewer than 10 active physicians total, suppress ALL aggregate metrics
+   (return {suppressed: true, reason: "insufficient_group_size"})
+
+DASHBOARD PANELS (4 endpoints):
+
+GET /api/v1/admin/dashboard/overview
+Returns: {
+  pct_elevated_this_week: number | null,  // null if < 10 active physicians
+  pct_elevated_30day_avg: number | null,
+  peer_support_utilization_pct: number | null,
+  total_wellness_sessions: number,
+  active_physician_count: number
+}
+
+GET /api/v1/admin/dashboard/patterns
+Returns: {
+  distress_by_shift_type: {
+    day_shift: number | null,
+    night_shift: number | null,
+    weekend: number | null
+  },
+  high_load_weeks: [{ week_start: date, index: number }],
+  median_recovery_days: number | null
+}
+
+GET /api/v1/admin/dashboard/roi
+Returns: {
+  estimated_turnover_reduction_usd: number,
+  cost_per_physician_per_year: number,
+  peer_support_vs_eap_utilization_ratio: number,
+  calculation_methodology: string  // link to methodology doc
+}
+
+GET /api/v1/admin/dashboard/program
+Returns: {
+  active_user_rate_pct: number,
+  circle_completion_rate_pct: number,
+  feature_adoption: {
+    breathing_sessions: number,
+    peer_outreach: number,
+    meditations: number,
+    check_ins: number
+  },
+  nps_score: number | null
+}
+
+PRE-COMPUTATION:
+All dashboard data comes from hospital_aggregate_snapshots, computed weekly by the
+Aggregate Snapshot Generator service (runs Sunday 3am). Admin endpoints never run
+live queries against individual physician tables.
+
+
+==========================================================
+SECTION 10 — BACKEND ARCHITECTURE
+==========================================================
+
+DATABASE SCHEMA (PostgreSQL 16):
+
+-- hospitals
+CREATE TABLE hospitals (
+  id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name            VARCHAR(200) NOT NULL,
+  saml_idp_url    VARCHAR(500),
+  epic_tenant_id  VARCHAR(100),
+  timezone        VARCHAR(50) DEFAULT 'America/New_York',
+  contract_start  DATE,
+  contract_end    DATE,
+  created_at      TIMESTAMPTZ DEFAULT now()
+);
+
+-- physicians (minimal PII by design)
+CREATE TABLE physicians (
+  id                  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  hospital_id         UUID REFERENCES hospitals(id),
+  npi                 VARCHAR(10) UNIQUE NOT NULL,
+  specialty           VARCHAR(50),
+  career_stage        VARCHAR(20),  -- resident | attending | fellow | senior
+  onboarding_done     BOOLEAN DEFAULT false,
+  wearable_type       VARCHAR(20),  -- apple_watch | garmin | whoop | oura | null
+  threshold_config    JSONB DEFAULT '{"sustained_days": 3, "sustained_score": 70, "acute": 90}',
+  notification_prefs  JSONB DEFAULT '{"silent_start": "07:00", "silent_end": "19:00", "max_per_day": 1}',
+  rise_responder      BOOLEAN DEFAULT false,
+  post_coach          BOOLEAN DEFAULT false,
+  created_at          TIMESTAMPTZ DEFAULT now(),
+  deleted_at          TIMESTAMPTZ  -- soft delete only
+);
+
+-- Row Level Security: physician can only see own row
+ALTER TABLE physicians ENABLE ROW LEVEL SECURITY;
+CREATE POLICY physician_self_only ON physicians
+  USING (id = current_setting('app.current_physician_id')::uuid);
+
+-- circle_members
+CREATE TABLE circle_members (
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  owner_id    UUID REFERENCES physicians(id),
+  member_id   UUID REFERENCES physicians(id),
+  role        VARCHAR(20),  -- first_reach | backup | checkin_buddy
+  notify_rule VARCHAR(30),  -- always | delayed_4h | manual_only
+  status      VARCHAR(20),  -- pending | accepted | declined | limited
+  invited_at  TIMESTAMPTZ DEFAULT now(),
+  accepted_at TIMESTAMPTZ,
+  UNIQUE (owner_id, member_id)
+);
+
+-- RLS: physician sees only rows where they are owner or member
+ALTER TABLE circle_members ENABLE ROW LEVEL SECURITY;
+CREATE POLICY circle_member_access ON circle_members
+  USING (
+    owner_id = current_setting('app.current_physician_id')::uuid
+    OR
+    member_id = current_setting('app.current_physician_id')::uuid
+  );
+
+-- distress_scores
+CREATE TABLE distress_scores (
+  id                    UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  physician_id          UUID REFERENCES physicians(id),
+  date                  DATE NOT NULL,
+  composite_score       SMALLINT,   -- 0-100
+  ehr_sub_score         SMALLINT,
+  wearable_sub_score    SMALLINT,   -- NULL if no wearable
+  self_report_sub_score SMALLINT,
+  signal_flags          JSONB,
+  trigger_fired         BOOLEAN DEFAULT false,
+  trigger_type          VARCHAR(20), -- sustained | acute | hard_event | null
+  UNIQUE (physician_id, date)
+);
+
+-- RLS: physician sees only own scores. Admin role blocked entirely.
+ALTER TABLE distress_scores ENABLE ROW LEVEL SECURITY;
+CREATE POLICY score_self_only ON distress_scores
+  USING (physician_id = current_setting('app.current_physician_id')::uuid);
+
+-- peer_messages
+CREATE TABLE peer_messages (
+  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  sender_id    UUID REFERENCES physicians(id),
+  recipient_id UUID REFERENCES physicians(id),
+  message_body TEXT,        -- AES-256 encrypted ciphertext
+  message_type VARCHAR(20), -- outreach | response | schedule | flag
+  status       VARCHAR(20), -- sent | delivered | read | responded
+  scheduled_at TIMESTAMPTZ,
+  created_at   TIMESTAMPTZ DEFAULT now(),
+  expires_at   TIMESTAMPTZ DEFAULT now() + INTERVAL '30 days'
+);
+
+-- RLS: physician sees only messages they sent or received
+ALTER TABLE peer_messages ENABLE ROW LEVEL SECURITY;
+CREATE POLICY message_participant_only ON peer_messages
+  USING (
+    sender_id = current_setting('app.current_physician_id')::uuid
+    OR
+    recipient_id = current_setting('app.current_physician_id')::uuid
+  );
+
+-- concern_flags
+CREATE TABLE concern_flags (
+  id                   UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  flagging_physician_id UUID REFERENCES physicians(id),
+  flagged_physician_id  UUID REFERENCES physicians(id),
+  private_note         TEXT,  -- encrypted, visible only to platform Care Coordination
+  created_at           TIMESTAMPTZ DEFAULT now(),
+  expires_at           TIMESTAMPTZ DEFAULT now() + INTERVAL '14 days'
+);
+
+-- RLS: flagging physician sees their own flags.
+-- Flagged physician sees COUNT only, not who flagged them (enforced at API layer).
+ALTER TABLE concern_flags ENABLE ROW LEVEL SECURITY;
+CREATE POLICY flag_flagger_only ON concern_flags
+  USING (flagging_physician_id = current_setting('app.current_physician_id')::uuid);
+
+-- self_report_tags
+CREATE TABLE self_report_tags (
+  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  physician_id UUID REFERENCES physicians(id),
+  tag          VARCHAR(50),
+  created_at   TIMESTAMPTZ DEFAULT now()
+);
+
+-- hospital_aggregate_snapshots (pre-computed, admin-readable)
+CREATE TABLE hospital_aggregate_snapshots (
+  id                        UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  hospital_id               UUID REFERENCES hospitals(id),
+  week_start                DATE,
+  active_physicians         INT,
+  pct_elevated              NUMERIC(5,2),  -- NULL if active_physicians < 10
+  peer_support_utilization  NUMERIC(5,2),
+  total_wellness_sessions   INT,
+  median_recovery_days      NUMERIC(5,2),
+  feature_adoption          JSONB,
+  created_at                TIMESTAMPTZ DEFAULT now(),
+  UNIQUE (hospital_id, week_start)
+);
+-- No RLS on this table — admin role has SELECT access.
+-- No physician-level data exists in this table by design.
+
+-- wellness_sessions (metadata only, no content)
+CREATE TABLE wellness_sessions (
+  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  physician_id UUID REFERENCES physicians(id),
+  session_type VARCHAR(30),  -- breathing | meditation | debrief
+  duration_sec INT,
+  track_id     VARCHAR(50),  -- for meditations only
+  created_at   TIMESTAMPTZ DEFAULT now()
+);
+
+-- notifications
+CREATE TABLE notifications (
+  id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  physician_id  UUID REFERENCES physicians(id),
+  type          VARCHAR(30),
+  copy_variant  INT,
+  delivered_at  TIMESTAMPTZ,
+  read_at       TIMESTAMPTZ,
+  dismissed_at  TIMESTAMPTZ,
+  created_at    TIMESTAMPTZ DEFAULT now()
+);
+
+
+------------------------------------------------------------
+API ROUTES (Fastify)
+------------------------------------------------------------
+
+All routes require physician JWT unless marked [admin].
+Set app.current_physician_id in Postgres session before each query.
+
+GET    /api/v1/physician/me
+POST   /api/v1/physician/me/score          -- upsert daily distress score
+GET    /api/v1/physician/me/scores?days=90 -- own score history only
+PATCH  /api/v1/physician/me/thresholds     -- update personal trigger thresholds
+PATCH  /api/v1/physician/me/notifications  -- update notification prefs
+DELETE /api/v1/physician/me                -- soft-delete, anonymize within 24h
+
+GET    /api/v1/physician/me/circle
+POST   /api/v1/physician/me/circle/invite  -- {target_physician_id, role, notify_rule}
+PATCH  /api/v1/circle-invites/:id/respond  -- {status: accepted|declined|limited}
+DELETE /api/v1/circle-members/:id          -- remove from own circle
+
+GET    /api/v1/peers/search?q=&specialty=  -- name/specialty search, same hospital only
+                                           -- returns: id, name, specialty, career_stage only
+
+POST   /api/v1/messages                    -- send peer message
+GET    /api/v1/messages?unread=true        -- fetch inbox
+PATCH  /api/v1/messages/:id/read           -- mark read
+DELETE /api/v1/messages/:id                -- sender can delete before expiry
+
+POST   /api/v1/self-report                 -- {tag: string}
+POST   /api/v1/concern-flags               -- {target_id, private_note?}
+GET    /api/v1/concern-flags/received      -- returns {count: number} only, no flaggers
+
+GET    /api/v1/wellness/meditations        -- track metadata + pre-signed S3 URLs
+POST   /api/v1/wellness/sessions           -- log session {type, duration_sec, track_id?}
+
+GET    /api/v1/fhir/ehr-signals            -- fetch Epic metadata for scoring (physician OAuth)
+GET    /api/v1/availability/:physician_id  -- Epic-derived availability status
+
+-- ADMIN ROUTES (hospital_admin JWT only) --
+GET    /api/v1/admin/dashboard/overview
+GET    /api/v1/admin/dashboard/patterns
+GET    /api/v1/admin/dashboard/roi
+GET    /api/v1/admin/dashboard/program
+-- Any admin attempt to access physician-level tables returns 403 --
+
+-- INTERNAL (service-to-service, not exposed to clients) --
+POST   /internal/score/compute             -- called by Score Computation Service
+POST   /internal/snapshots/generate        -- called by Aggregate Snapshot Generator
+
+
+------------------------------------------------------------
+BACKGROUND SERVICES (BullMQ workers on Redis)
+------------------------------------------------------------
+
+1. SCORE COMPUTATION SERVICE
+   Schedule: nightly, 2am local hospital time (per-hospital cron)
+   For each active physician:
+     a. Fetch yesterday's EHR signals from Epic FHIR
+     b. Retrieve yesterday's wearable sub-score from last POST (or null)
+     c. Apply weighting formula → composite_score
+     d. Write to distress_scores (upsert on physician_id + date)
+     e. Check trigger conditions against threshold_config
+     f. If trigger: enqueue score.trigger.notify job in BullMQ
+
+2. EPIC FHIR SYNC SERVICE
+   Schedule: per-hospital, staggered (not all hospitals at once)
+   Uses Epic bulk FHIR export (Group/$export) scoped to practitioner metadata
+   Parses: login timestamps, note creation times, encounter open/close times
+   NEVER stores patient identifiers or clinical content
+   Caches parsed metadata in Redis (24h TTL) for Score Computation Service to read
+
+3. NOTIFICATION DELIVERY SERVICE
+   Consumes BullMQ queue: score.trigger.notify
+   Before sending:
+     a. Check physician notification_prefs (silent hours)
+     b. Check if physician already received a notification today → if yes, drop job
+     c. Select copy variant from library based on trigger_type
+   Delivery: Expo Push API (APNs + FCM)
+   Falls back to in-app inbox if push token unavailable
+   Writes to notifications table on delivery
+
+4. AGGREGATE SNAPSHOT GENERATOR
+   Schedule: Sunday 3am UTC
+   For each hospital:
+     a. Read past week's distress_scores (aggregate only — service account, not RLS-bound)
+     b. Compute metrics
+     c. If active_physicians < 10: set all metric columns to NULL
+     d. Upsert into hospital_aggregate_snapshots
+   This service is the ONLY service that can read distress_scores across physicians.
+   It uses a dedicated Postgres role (snapshot_generator) with no application exposure.
+
+5. MESSAGE EXPIRY SERVICE
+   Schedule: hourly
+   DELETE FROM peer_messages WHERE expires_at < now()
+   DELETE FROM concern_flags WHERE expires_at < now()
+   Runs VACUUM ANALYZE after deletion batch
+   No recovery mechanism — this is intentional and contractual
+
+6. CONCERN FLAG RESOLVER
+   Schedule: daily, 6am
+   For each active concern_flag:
+     a. Check if flagged_physician's score is elevated
+     b. If yes: increment peer_support_suggestion_weight for that physician (Redis key, 7d TTL)
+     c. The notification service reads this weight to boost peer support CTA prominence
+   Auto-expire flags (handled by Message Expiry Service)
+
+
+------------------------------------------------------------
+AUTH ARCHITECTURE
+------------------------------------------------------------
+
+Hospital SSO:
+- SAML 2.0 via Auth0 SAML adapter
+- Hospital IDP maintains identity
+- Auth0 returns: physician_id, hospital_id, role (physician | hospital_admin)
+
+Mobile JWT:
+- Access token: 1h expiry
+- Refresh token: 30 days, stored in device Keychain / Android Keystore
+- Set app.current_physician_id in Postgres session on every request
+
+Epic OAuth (SMART on FHIR):
+- Physician-level authorization (not system-level)
+- Scope: user/AuditEvent.read user/Practitioner.read user/Encounter.read
+- Token stored encrypted in physician's account, refreshed silently
+
+Admin JWT:
+- Separate Auth0 tenant role: hospital_admin
+- Mapped to a separate Postgres role with zero access to physician-level tables
+- Cannot be escalated via application logic — enforced at DB role level
+
+Rate Limiting (Fastify rate-limit plugin):
+- 100 req/min per physician JWT
+- 20 req/min for score submission endpoint
+- 500 req/min per hospital admin JWT (dashboard is read-heavy)
+
+
+------------------------------------------------------------
+INFRASTRUCTURE
+------------------------------------------------------------
+
+Mobile App (React Native / Expo)
+    |
+    |-- HealthKit / Health Connect (on-device only)
+    |       └── Computes wearable sub-score → POST /api/v1/physician/me/score
+    |
+    |-- Expo Push Notification Service
+    |
+    └── HTTPS → AWS ALB
+            |
+            |-- API Service (Fastify, EKS, 3x replicas, auto-scale)
+            |       |-- Auth middleware (Auth0 JWT validation)
+            |       |-- Epic FHIR Sync (separate EKS pod, cron)
+            |       |-- Score Computation Service (separate EKS pod, cron)
+            |       |-- Notification Delivery (BullMQ consumer pod)
+            |       └── Aggregate Snapshot Generator (separate EKS pod, cron)
+            |
+            |-- PostgreSQL 16 (AWS RDS, Multi-AZ, encrypted at rest, KMS)
+            |       └── Row Level Security enforced on all physician tables
+            |
+            |-- Redis 7 (AWS ElastiCache, BullMQ + API cache)
+            |
+            └── S3 + CloudFront (meditation audio files, pre-signed URLs)
+
+Hospital Admin Dashboard (React web app, separate deployment)
+    └── HTTPS → same ALB → /api/v1/admin/* routes (hospital_admin JWT)
+
+Audit Logging:
+- All API calls logged to CloudWatch Logs
+- Retained 6 years (HIPAA requirement)
+- Physicians have right to request audit log of all queries made about their data
+- Implemented: GET /api/v1/physician/me/audit-log returns physician's own access log
+
+
+------------------------------------------------------------
+HIPAA TECHNICAL SAFEGUARDS
+------------------------------------------------------------
+
+Encryption at rest: AES-256 via AWS KMS managed keys (RDS + S3 + ElastiCache)
+Encryption in transit: TLS 1.3 minimum, HSTS enforced
+Message E2E: AES-256, key in physician device Keychain (server holds ciphertext only)
+Backup: automated daily RDS snapshots, 35-day retention, encrypted
+BAA: required with AWS, Expo, Auth0, and any third-party with data access
+Incident response: automated CloudWatch alarm if admin role queries physician tables
+Penetration testing: required annually per BAA
+PHI definition: NPI is the only quasi-identifier stored. No name, DOB, or patient
+data in the Bridge database. EHR patient data is never ingested.
+
+
+------------------------------------------------------------
+MVP BUILD ORDER (Phase 1 — first hospital pilot)
+------------------------------------------------------------
+
+1. Auth (Auth0 SAML + physician JWT)
+2. Physician model + hospital model + RLS policies
+3. POST /physician/me/score endpoint + distress_scores table
+4. BullMQ setup + Score Computation Service (stub Epic, use mock data first)
+5. Notification Delivery Service + Expo Push integration
+6. circle_members table + circle CRUD endpoints
+7. peer_messages table + message send/receive endpoints + 30-day expiry
+8. hospital_aggregate_snapshots + Aggregate Snapshot Generator
+9. Admin dashboard endpoints (/admin/dashboard/*)
+10. Epic FHIR Sync (real integration — requires Epic App Orchard registration)
+
+Phase 2 (after pilot):
+- RISE peer matching service
+- POST coach scheduling
+- Concern flag resolver
+- Wearable sub-score validation + device-specific edge cases
+- Advanced trend analysis + AI insight generation

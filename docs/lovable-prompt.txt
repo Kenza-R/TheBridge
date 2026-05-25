@@ -1,0 +1,361 @@
+BRIDGE — Healthcare Worker Mental Health Companion
+Frontend Spec for Lovable
+==========================================================
+
+Build this in React (or React Native / Expo if mobile). The tone rules below are
+non-negotiable — especially no red, no clinical language, no alarm hierarchy.
+
+
+==========================================================
+SECTION 1 — PRODUCT OVERVIEW & CORE PHILOSOPHY
+==========================================================
+
+ONE-SENTENCE DEFINITION:
+Bridge detects physician burnout before it becomes crisis — using EHR workflow
+signals and wearable biometrics — then routes clinicians to peer support through a
+privacy-first architecture that is entirely controlled by the physician, never the
+employer.
+
+WHAT BRIDGE IS:
+- An ambient signal detector for distress
+- A physician-controlled peer support launcher
+- A safe, low-friction decompression space
+- A privacy-first trust architecture
+
+WHAT BRIDGE IS NOT:
+- Not a surveillance tool for HR or administration
+- Not a crisis hotline
+- Not a mandatory wellness check-in
+- Not something that shares individual data with employers
+
+CORE DESIGN PRINCIPLES:
+- Physician sovereignty — every control belongs to them
+- No auto-send — humans approve every outreach
+- Employer firewall — hospital never sees individual data
+- Friction minimalism — max 2 taps to any feature
+- Non-clinical tone — language that does not pathologize
+
+SEVEN-STEP PRODUCT FLOW (build UI for all 7):
+1. Signal Detection — app silently scores EHR + wearable + self-report data
+2. Threshold Trigger — when distress score crosses threshold, soft in-app banner appears
+3. Three-Option Interface — Reset Now / Talk to Someone / Handle Admin (equal weight)
+4. Physician Decision — physician chooses their path, no auto-escalation ever
+5. Circle of Trust Approval Gate — physician selects who to notify, previews message, sends
+6. Peer Response — circle member receives private in-app message, can respond or schedule
+7. Recovery Loop — 48h later, one optional "how are you feeling?" question
+
+
+==========================================================
+SECTION 3 — CIRCLE OF TRUST (drives 3 screens)
+==========================================================
+
+WHAT IT IS:
+A private list of 2-6 trusted colleagues each physician builds during onboarding.
+No one outside the physician's selected circle can see its membership.
+The hospital cannot see who is in whose circle.
+
+ONBOARDING FLOW (5 steps):
+1. Search colleagues by name or specialty (Bridge users from same hospital only)
+2. Colleague receives in-app invite, can accept / decline / accept-with-limits
+3. Assign roles: First Reach / Backup / Check-In Buddy
+4. Set notification preferences per member: Always notify / Notify after 4h / Manual only
+5. Set threshold: "Always ask me" / "Suggest after 2 hard days" / "Never suggest"
+
+LIVE CIRCLE LAUNCH FLOW (when physician taps "Talk to Someone"):
+- Circle members appear as cards: name, role, specialty, availability status
+- Availability status pulled from Epic (in surgery = unavailable, off shift = green)
+- Physician selects 1+ members
+- Pre-filled default message: "I had a rough one. Could use a quick chat when you're free." — fully editable
+- FULL-SCREEN MESSAGE PREVIEW before send — physician sees exactly what recipient sees
+- Single "Send" tap dispatches the message
+- Confirmation: "Your message is on its way."
+
+ANTI-SURVEILLANCE RULE:
+Hospital admin dashboard shows only: "X% of physicians used peer support this month."
+No names. No who-contacted-whom. No message content. Not even department breakdown
+below a group size of 10.
+
+THIRD-PARTY CONCERN FLAGGING ("Someone on My Radar"):
+- Physician goes to Team tab → selects a colleague → "I'm a bit worried about them"
+- Optional private note (never visible to employer)
+- The concerned physician is never identified to the flagged colleague
+- Flagged colleague sees: "A colleague is thinking of you" — no name of who flagged them
+- Flags auto-expire after 14 days
+
+
+==========================================================
+SECTION 6 — NOTIFICATIONS (use this copy verbatim)
+==========================================================
+
+DESIGN RULES:
+- No clinical language. No alarm words ("crisis", "emergency", "alert").
+- No red badges. No sound during patient care hours (default silent 7am-7pm).
+- Every notification has a single clear action.
+- Maximum 1 notification per day per physician.
+- The notification is an invitation, not a directive.
+
+TRIGGER NOTIFICATIONS (what the physician receives):
+
+TRIGGER: Composite score high for 3 consecutive days
+  Title: "Hey — today's a good day to check in"
+  Body: "You've had a stretch of heavy shifts. Bridge has a few things that might help."
+  Action: [Open Bridge]
+
+TRIGGER: Patient death documented (physician was primary)
+  Title: "That was a hard moment"
+  Body: "Losing a patient is one of the hardest things we face. Your circle is here if you want to talk."
+  Actions: [Open Bridge] [See my circle]
+
+TRIGGER: HRV + sleep both low for 4+ days
+  Title: "Your body is telling you something"
+  Body: "Your HRV has been lower than usual, and your sleep has been choppy. A 2-minute reset might help."
+  Action: [Try a breathing reset]
+
+TRIGGER: 7 days since last peer connection (if score elevated)
+  Title: "It's been a while since you talked to anyone"
+  Body: "Dr. Chen is available this afternoon. Sometimes 10 minutes with the right person makes a week better."
+  Actions: [Reach out] [Maybe later]
+
+TRIGGER: Colleague flagged this physician
+  Title: "A colleague is thinking of you"
+  Body: "Someone in your network wanted to check in. No obligation — just a reminder that you're not alone."
+  Actions: [See my circle] [I'm good, thanks]
+
+TRIGGER: Score drops significantly (recovery)
+  Title: "You seem to be doing better"
+  Body: "The last few days look lighter than last week. Keep it up."
+  Action: [See my trend]
+
+CIRCLE MEMBER NOTIFICATIONS (what peers receive):
+
+When physician initiates outreach:
+  Title: "Dr. Patel reached out"
+  Body: [the physician's message]
+  Actions: [Respond] [Schedule a call]
+
+When physician had hard trigger but did NOT initiate (only if physician opted in):
+  Title: "Check in with Dr. Patel when you can"
+  Body: "They've had a hard few days. No pressure — even a quick 'hey' goes a long way."
+  Action: [Send a note]
+
+
+==========================================================
+SECTION 9 — FRONTEND SCREENS (build all 10)
+==========================================================
+
+TECH STACK:
+React Native (Expo SDK 51+) with TypeScript
+Navigation: Expo Router (file-based)
+State: Zustand + React Query
+Animations: Reanimated 3 + Moti
+No generic UI library — build custom primitives
+Fonts: SF Pro Display (iOS) / Inter (Android)
+Colors: navy palette (#04091a, #0c1a2e) with electric teal (#06b6d4) accent
+
+------------------------------
+S01 — ONBOARDING: WELCOME
+Route: /onboarding/welcome
+------------------------------
+Purpose: First impression. Establish trust and tone. Not clinical. Not alarming.
+
+Components:
+- Background: Full-screen animated dark navy gradient. Subtle particle field
+  (slow drift, 12px white dots at 4% opacity). NOT a hospital setting image.
+- Logo: "Bridge" wordmark, center, white. Syne 900 font. Tagline below:
+  "Built for physicians, by physicians." DM Sans 400.
+- CTA: Single rounded button "Get Started" — electric teal background.
+  Below: "Already have an account? Sign in" in muted text.
+
+Animations:
+- Logo fades in over 800ms
+- Tagline slides up with 300ms delay
+- CTA fades in last at 1200ms
+- Haptic feedback on CTA tap
+
+------------------------------
+S02 — ONBOARDING: HOSPITAL VERIFICATION
+Route: /onboarding/verify
+------------------------------
+Components:
+- Header: "Connect to your hospital"
+- SSO Button: "Sign in with [Hospital Name] SSO" — primary path
+- Alternative: "Use work email" input + NPI number input
+- Security note (small, tappable to expand): "Bridge never sees your EHR patient
+  data. We only request read access to workflow metadata like login times and note counts."
+
+Error States:
+- SSO failure: "Couldn't connect to your hospital's system. Try your work email instead."
+- NPI not found: "We couldn't verify that NPI. Double-check the number or contact support."
+
+------------------------------
+S03 — ONBOARDING: BUILD YOUR CIRCLE
+Route: /onboarding/circle
+------------------------------
+Purpose: CRITICAL screen. If physician builds a circle, they are 3x more likely to
+use Bridge during a hard moment. Make this feel personal and safe, not bureaucratic.
+
+Components:
+- Header copy: "Who do you trust when things get hard?"
+  NOT "Select peer contacts." NOT "Configure notification recipients."
+- Search bar: search colleagues by name. Shows Bridge users from same hospital only.
+  Cards: photo, name, specialty, "Accepted invitation" badge.
+- Circle visualization: As physicians are added, they appear as avatar circles
+  arranged around a central "You" node. Max 6 slots. Animated — new additions
+  pulse into position.
+- Role assignment (inline): Tap a circle member → bottom sheet →
+  "First Reach / Backup / Check-In Buddy" toggle.
+- Skip option: "Set this up later" in small text. No guilt-trip.
+
+UX Notes:
+- Empty state: placeholder avatar circles pulse softly with a "+" icon
+- After adding 2+ members: warm confirmation card slides in at bottom:
+  "Your circle is taking shape. They'll be here when you need them."
+- Invites sent in real-time
+
+------------------------------
+S04 — ONBOARDING: WEARABLE CONNECT
+Route: /onboarding/wearables
+------------------------------
+Components:
+- Header: "Optional: connect your wearable" with small "Why?" tooltip
+- Device tiles: Apple Watch, Garmin, WHOOP, Oura, Fitbit — each as a card
+- Privacy promise (prominent): "Your biometric numbers never leave your device.
+  We only use anonymized trend patterns."
+- Skip: "Skip for now — add later in Settings."
+
+------------------------------
+S05 — HOME SCREEN
+Route: /home
+------------------------------
+Purpose: Default screen. Calm, not data-heavy. Show only what matters right now.
+
+Components (top to bottom):
+- Top bar: Hospital logo (left) + notification bell (right, subtle blue dot if unread).
+  NO score displayed on home — reduces anxiety about "checking your score."
+- Time-aware greeting: "Good morning, Dr. Patel" / "Good evening"
+  Below: rotating daily insight card. Examples:
+  "Your HRV has been stable this week."
+  "You've used peer support 3x this month."
+  "You're on a 5-day breathing streak."
+- Quick Actions row: Three icon buttons — Breathe / My Circle / Journal
+  60px diameter circles, subtle navy background.
+- Today card: If trigger is active → show three-option interface (see S06).
+  If no trigger → show "Daily Check-In" prompt (one-question mood tap, 5 emoji, optional).
+- Recent Activity feed: Last 3 events as tappable cards.
+  "You did a breathing session yesterday"
+  "Dr. Chen responded to your message"
+  "Your sleep was better than average last night"
+- Bottom tab bar: Home / Circle / Wellness / Team / Settings
+  5 tabs. Current tab: electric teal underline.
+
+------------------------------
+S06 — THREE-OPTION INTERFACE (trigger state)
+Route: /home (trigger state)
+------------------------------
+Purpose: Most critical interaction in the product. Must feel like a kind check-in
+from a colleague, not a medical alert.
+
+Header copy (pull from copy library of ~20 variations):
+- "You've had a tough stretch."
+- "This was a hard shift."
+- "That was a lot to carry."
+NEVER: "Your distress score is high."
+NEVER: "You may be experiencing burnout."
+
+Three Option Cards (all same size, equal visual weight):
+
+Card 1 — Reset Now (teal border)
+  Icon: leaf or wave (NOT a heart or cross)
+  Title: "Take a breath."
+  Subtitle: "90-second reset, right here."
+  → taps into S07 (Breathing)
+
+Card 2 — Talk to Someone (blue border)
+  Icon: two abstract shapes (NOT a speech bubble cliché)
+  Title: "Reach out."
+  Subtitle: "Your circle is here."
+  → taps into S08 (Circle launch)
+
+Card 3 — Handle Admin (muted border)
+  Icon: calendar dot
+  Title: "I've got this."
+  Subtitle: "Dismiss for now or schedule a check-in."
+  → confirms dismiss + optionally schedules 1-day or 3-day snooze
+
+Layout Rules:
+- All three cards are the same size — equal visual weight. No card is "more important."
+- NO RED anywhere on this screen. Use teal, blue, and muted navy only.
+- Cards animate in with staggered slide-up (100ms delay between each).
+- Swipe-to-dismiss is NOT allowed — physician must tap a card or the X to dismiss.
+
+------------------------------
+S07 — BREATHING / MICRO-RESET
+Route: /wellness/breathe
+------------------------------
+Components:
+- Full-screen animation: A soft orb (300px diameter on iPhone 14) that expands
+  on inhale, contracts on exhale. Color: deep teal-to-navy gradient during inhale,
+  inverts during exhale. Smooth cubic-bezier easing (not linear).
+- Instruction text: Large, centered. "Breathe in" / "Hold" / "Breathe out"
+  Syne font, white, 28px. Fades between states with 200ms crossfade.
+- Pattern selector (bottom sheet, pre-session):
+  Box Breathing (4-4-4-4, ~64s) / 4-7-8 (~57s) / Extended Exhale (~72s)
+  Default: Box Breathing.
+- Progress ring: Thin arc around the orb that fills over session duration.
+- End screen: "Nice work." (not "Session complete")
+  Optional: "How do you feel?" 1-5 emoji scale.
+  Optional: "Share this moment with your circle" (sends: "I just took a breath. Feeling a bit better.")
+  Skip is the default.
+
+------------------------------
+S08 — CIRCLE OF TRUST LAUNCH
+Route: /circle/launch
+------------------------------
+Components:
+- Header: "Who do you want to reach?"
+- Member cards: horizontal scrollable list. Avatar + name + availability status badge.
+  Green dot = off shift. Gray dot = on shift. Red X = do not disturb (self-set).
+  Never shows exact location.
+- Pre-filled message field: "I had a rough one. Could use a quick chat when you're free."
+  Fully editable. 280 character limit.
+- Full-screen message preview before send.
+  Prominent "Cancel" and "Send" buttons — equal visual weight, "Send" is teal.
+- Additional options at bottom of preview:
+  "Request a walk together" / "Schedule 15 minutes to talk"
+- Confirmation after send: "Your message is on its way. Dr. Chen typically responds
+  within 2 hours." (based on historical pattern, not a promise)
+
+------------------------------
+S09 — WELLNESS TAB (Meditation Library)
+Route: /wellness
+------------------------------
+Components:
+- Tabs within Wellness: Breathing / Meditations / Debrief / My Trends
+- Meditation cards: Title, duration, description (12 words max).
+  Cover art: abstract dark imagery (no stock hospital photos).
+  Tags: "Post-shift" / "Night shift" / "After loss" / "High-volume day"
+- Tracks (10 total, all under 5 min):
+  "After the code" (4 min)
+  "End of shift exhale" (3 min)
+  "Between patients" (2 min)
+  "Night shift grounding" (5 min)
+  "Imposter moment" (4 min)
+  + 5 more
+- Audio player: full-screen dark mode. Waveform animation (not a progress bar).
+  Large artwork. Back 10s / Play / Forward 10s controls.
+- Offline mode: all tracks pre-downloaded on first WiFi connection.
+
+------------------------------
+S10 — MY TRENDS (Private)
+Route: /wellness/trends
+------------------------------
+Components:
+- Wellbeing chart: 90-day smooth line chart.
+  Y-axis labeled "Wellbeing" (not "Distress Score"). Higher = better. Teal color.
+  Events overlaid as dots (tap to expand: "Lost a patient" / "Peer support session")
+- Insight cards (AI-generated, plain English, max 3):
+  "Your score dips on weeks with more than 2 night shifts."
+  "Peer support sessions correlate with faster score recovery for you."
+- Data controls: "What does this include?" expander — shows data sources
+  (EHR signals, wearable, self-report) with toggles to remove each source.
+  Physician can opt out of any layer at any time.

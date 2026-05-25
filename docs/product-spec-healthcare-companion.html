@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healthcare Worker Mental Health Companion — Product Specification</title>
+<style>
+  :root {
+    --bg: #050b14;
+    --surface: #0c1626;
+    --surface-2: #121f35;
+    --border: #1e3050;
+    --border-light: #2a4060;
+    --accent: #3b82f6;
+    --accent-teal: #06b6d4;
+    --accent-green: #10b981;
+    --accent-amber: #f59e0b;
+    --accent-red: #ef4444;
+    --accent-purple: #8b5cf6;
+    --text: #e2e8f0;
+    --text-muted: #7e99b8;
+    --text-dim: #4a6280;
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: rgba(5,11,20,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    padding: 0 2rem;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .nav-links a:hover { color: var(--text); background: var(--surface); }
+
+  /* LAYOUT */
+  .page { max-width: 1100px; margin: 0 auto; padding: 80px 2rem 4rem; }
+
+  /* HERO */
+  .hero {
+    padding: 4rem 2rem 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(59,130,246,0.1);
+    border: 1px solid rgba(59,130,246,0.3);
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.9rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 700px;
+    margin-bottom: 2rem;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .hero-meta-item { font-size: 0.85rem; color: var(--text-dim); }
+  .hero-meta-item strong { color: var(--text-muted); }
+
+  /* SECTION */
+  section {
+    margin-bottom: 4rem;
+    scroll-margin-top: 72px;
+  }
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-num {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    background: rgba(59,130,246,0.1);
+    border: 1px solid rgba(59,130,246,0.25);
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    margin-top: 0.3rem;
+    flex-shrink: 0;
+  }
+  .section-header h2 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.75rem;
+    letter-spacing: -0.03em;
+    color: #fff;
+  }
+  .section-header .section-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 0.35rem;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .card-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .card-title .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-blue { background: var(--accent); }
+  .dot-teal { background: var(--accent-teal); }
+  .dot-green { background: var(--accent-green); }
+  .dot-amber { background: var(--accent-amber); }
+  .dot-red { background: var(--accent-red); }
+  .dot-purple { background: var(--accent-purple); }
+
+  p { color: var(--text-muted); margin-bottom: 0.75rem; font-size: 0.95rem; }
+  p:last-child { margin-bottom: 0; }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+
+  /* STEPS */
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: flex;
+    gap: 1.5rem;
+    position: relative;
+    padding-bottom: 2rem;
+  }
+  .step:last-child { padding-bottom: 0; }
+  .step-left { display: flex; flex-direction: column; align-items: center; }
+  .step-num {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    z-index: 1;
+  }
+  .step-line {
+    width: 1px;
+    flex: 1;
+    background: var(--border);
+    margin-top: 0.5rem;
+  }
+  .step:last-child .step-line { display: none; }
+  .step-body { padding-top: 0.4rem; flex: 1; }
+  .step-body h4 { font-weight: 600; color: #fff; margin-bottom: 0.5rem; }
+  .step-body p { font-size: 0.9rem; margin-bottom: 0; }
+
+  /* CODE BLOCKS */
+  pre {
+    background: #020712;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: #a8c4e0;
+    margin: 1rem 0;
+  }
+  pre .comment { color: var(--text-dim); }
+  pre .key { color: var(--accent-teal); }
+  pre .val { color: #93c5fd; }
+  pre .str { color: #6ee7b7; }
+  pre .type { color: var(--accent-purple); }
+  pre .kw { color: var(--accent-amber); }
+
+  /* BADGES */
+  .badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    margin: 0.15rem;
+  }
+  .badge-blue { background: rgba(59,130,246,0.15); color: #93c5fd; border: 1px solid rgba(59,130,246,0.3); }
+  .badge-teal { background: rgba(6,182,212,0.12); color: #67e8f9; border: 1px solid rgba(6,182,212,0.3); }
+  .badge-green { background: rgba(16,185,129,0.12); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.3); }
+  .badge-amber { background: rgba(245,158,11,0.12); color: #fcd34d; border: 1px solid rgba(245,158,11,0.3); }
+  .badge-red { background: rgba(239,68,68,0.12); color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
+  .badge-purple { background: rgba(139,92,246,0.12); color: #c4b5fd; border: 1px solid rgba(139,92,246,0.3); }
+
+  /* SCREEN WIREFRAMES */
+  .screen {
+    background: var(--surface-2);
+    border: 1px solid var(--border-light);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .screen-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .screen-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #fff;
+  }
+  .screen-route {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent-teal);
+  }
+  .screen-body { padding: 1.25rem 1.5rem; }
+  .screen-body h5 { font-size: 0.8rem; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+
+  /* COMPONENTS */
+  .component {
+    background: rgba(59,130,246,0.05);
+    border: 1px dashed rgba(59,130,246,0.25);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin: 0.5rem 0;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  .component strong { color: var(--accent); }
+
+  /* TABLES */
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.875rem; }
+  th {
+    text-align: left;
+    padding: 0.6rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  td {
+    padding: 0.7rem 1rem;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    vertical-align: top;
+  }
+  td code {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--accent-teal);
+    background: rgba(6,182,212,0.08);
+    padding: 0.1rem 0.35rem;
+    border-radius: 3px;
+  }
+  tr:hover td { background: rgba(255,255,255,0.01); }
+
+  /* NOTIFICATION CARDS */
+  .notif {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+  .notif-trigger { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
+  .notif-title { font-weight: 600; color: #fff; margin-bottom: 0.25rem; }
+  .notif-body { font-size: 0.88rem; color: var(--text-muted); }
+  .notif-action { font-size: 0.78rem; margin-top: 0.5rem; }
+
+  .notif-blue { border-left-color: var(--accent); }
+  .notif-teal { border-left-color: var(--accent-teal); }
+  .notif-green { border-left-color: var(--accent-green); }
+  .notif-amber { border-left-color: var(--accent-amber); }
+  .notif-purple { border-left-color: var(--accent-purple); }
+
+  /* CALLOUT */
+  .callout {
+    background: rgba(59,130,246,0.07);
+    border: 1px solid rgba(59,130,246,0.25);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.25rem 0;
+  }
+  .callout-title { font-weight: 600; color: var(--accent); font-size: 0.9rem; margin-bottom: 0.5rem; }
+  .callout p { font-size: 0.9rem; margin-bottom: 0; }
+
+  .callout-green { background: rgba(16,185,129,0.07); border-color: rgba(16,185,129,0.25); }
+  .callout-green .callout-title { color: var(--accent-green); }
+  .callout-amber { background: rgba(245,158,11,0.07); border-color: rgba(245,158,11,0.25); }
+  .callout-amber .callout-title { color: var(--accent-amber); }
+  .callout-red { background: rgba(239,68,68,0.07); border-color: rgba(239,68,68,0.25); }
+  .callout-red .callout-title { color: var(--accent-red); }
+
+  /* UL */
+  ul.spec-list { list-style: none; padding: 0; margin: 0.75rem 0; }
+  ul.spec-list li {
+    padding: 0.35rem 0 0.35rem 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+  ul.spec-list li:last-child { border-bottom: none; }
+  ul.spec-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.8rem;
+  }
+
+  /* SIGNAL METER */
+  .signal-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .signal-row:last-child { border-bottom: none; }
+  .signal-name { flex: 1; font-size: 0.88rem; color: var(--text-muted); }
+  .signal-weight {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--accent-teal);
+    width: 40px;
+    text-align: right;
+  }
+  .signal-bar-wrap { width: 120px; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .signal-bar { height: 100%; border-radius: 3px; background: var(--accent-teal); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.82rem;
+    margin-top: 4rem;
+  }
+
+  /* SCROLL PROGRESS */
+  #progress-bar {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.1s;
+    z-index: 99;
+  }
+
+  @media (max-width: 768px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .hero h1 { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<nav>
+  <div class="nav-logo">Bridge / HCW Companion</div>
+  <ul class="nav-links">
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#signals">Signals</a></li>
+    <li><a href="#circle">Circle of Trust</a></li>
+    <li><a href="#peer">Peer Network</a></li>
+    <li><a href="#wellness">Wellness</a></li>
+    <li><a href="#notifications">Notifications</a></li>
+    <li><a href="#wearables">Wearables</a></li>
+    <li><a href="#dashboard">Dashboard</a></li>
+    <li><a href="#frontend">Frontend</a></li>
+    <li><a href="#backend">Backend</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">Product Specification v1.0</div>
+    <h1>Healthcare Worker<br><span>Mental Health Companion</span></h1>
+    <p class="hero-sub">Complete product spec for engineering and design. Frontend section: build-ready for Lovable. Backend section: architect-ready for Cursor.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><strong>Codename:</strong> Bridge</div>
+      <div class="hero-meta-item"><strong>Scope:</strong> B2B SaaS, hospital enterprise</div>
+      <div class="hero-meta-item"><strong>Primary users:</strong> Physicians, residents, NPs, PAs</div>
+      <div class="hero-meta-item"><strong>Stack:</strong> React Native + Node.js + PostgreSQL + Epic FHIR</div>
+      <div class="hero-meta-item"><strong>Last updated:</strong> May 2026</div>
+    </div>
+  </div>
+
+  <!-- SECTION 01: PRODUCT PHILOSOPHY -->
+  <section id="overview">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <div>
+        <h2>Product Overview & Core Philosophy</h2>
+        <div class="section-desc">What this product is, what it is not, and the non-negotiable design principles.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">One-Sentence Definition</div>
+      <p>Bridge detects physician burnout before it becomes crisis — using EHR workflow signals and wearable biometrics — then routes clinicians to peer support through a privacy-first architecture that is entirely controlled by the physician, never the employer.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title"><span class="dot dot-blue"></span>What Bridge is</div>
+        <ul class="spec-list">
+          <li>An ambient signal detector for distress</li>
+          <li>A physician-controlled peer support launcher</li>
+          <li>A safe, low-friction decompression space</li>
+          <li>An anonymized aggregate health dashboard for hospital leadership</li>
+          <li>A privacy-first trust architecture</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot dot-red"></span>What Bridge is not</div>
+        <ul class="spec-list">
+          <li>Not a surveillance tool for HR or administration</li>
+          <li>Not a crisis hotline (that's a referral partner)</li>
+          <li>Not a mandatory wellness check-in</li>
+          <li>Not a replacement for professional mental health care</li>
+          <li>Not something that shares individual data with employers</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot dot-green"></span>Core design principles</div>
+        <ul class="spec-list">
+          <li><strong>Physician sovereignty</strong> — every control belongs to them</li>
+          <li><strong>No auto-send</strong> — humans approve every outreach</li>
+          <li><strong>Employer firewall</strong> — aggregate-only hospital view</li>
+          <li><strong>Friction minimalism</strong> — max 2 taps to any feature</li>
+          <li><strong>Non-clinical tone</strong> — language that doesn't pathologize</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:1rem;">
+      <div class="card-title" style="font-size:1.05rem; margin-bottom:1rem;">Seven-Step Product Flow</div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <h4>Signal Detection</h4>
+            <p>EHR workflow data (Epic FHIR), wearable biometrics (Apple Watch, Garmin), and optional self-report tags are continuously scored against the burnout model. Score is computed locally on-device and never sent to employers.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <h4>Threshold Trigger</h4>
+            <p>When the composite distress score crosses a configurable threshold (default: 70/100 for 3 consecutive days, or 90/100 on a single shift), a soft in-app notification appears. No push notification, no sound — just a subtle banner on next app open.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <h4>Three-Option Interface</h4>
+            <p>The physician sees three options — not a wall of text: <strong>Reset Now</strong> (90-second micro-reset, solo), <strong>Talk to Someone</strong> (Circle of Trust peer launcher), or <strong>Handle Admin</strong> (dismiss + schedule a check-in). All three are equally weighted — no "emergency" visual hierarchy that creates alarm.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">4</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <h4>Physician Decision</h4>
+            <p>The physician chooses their path. Bridge never escalates automatically. No auto-notify, no auto-escalate. The physician is always the actor.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">5</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <h4>Circle of Trust Approval Gate</h4>
+            <p>If the physician selects "Talk to Someone," they see their pre-configured Circle of Trust contacts. They choose who to notify. They preview the message before it sends. A single "Send" tap dispatches the request.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">6</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <h4>Peer Response</h4>
+            <p>The selected circle member receives a private in-app message (not SMS, not email — app-only). They can respond, schedule a call, or decline with a supportive template. The hospital never sees this exchange.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">7</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <h4>Recovery & Loop Closure</h4>
+            <p>48 hours post-trigger, Bridge gently asks (one optional question): "How are you feeling today?" Score recalibrates. If score stays elevated for 7+ days, Bridge surfaces the professional referral pathway — EAP, licensed counselor, crisis line — as a gentle suggestion, never a mandate.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 02: SIGNAL DETECTION -->
+  <section id="signals">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <div>
+        <h2>Signal Detection Engine</h2>
+        <div class="section-desc">How Bridge knows something is wrong — three input layers, one composite score.</div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:1.5rem;">
+      <div class="card">
+        <div class="card-title"><span class="dot dot-blue"></span>Layer 1 — EHR Workflow Signals (Epic)</div>
+        <p>Sourced via Epic FHIR R4 read-only scopes. No PHI. Only metadata about clinician behavior patterns.</p>
+        <div style="margin-top:1rem;">
+          <div class="signal-row">
+            <div class="signal-name">After-hours in-basket volume (11pm–5am)</div>
+            <div class="signal-weight">22%</div>
+            <div class="signal-bar-wrap"><div class="signal-bar" style="width:88%"></div></div>
+          </div>
+          <div class="signal-row">
+            <div class="signal-name">Documentation time per patient (delta vs. 30-day baseline)</div>
+            <div class="signal-weight">18%</div>
+            <div class="signal-bar-wrap"><div class="signal-bar" style="width:72%"></div></div>
+          </div>
+          <div class="signal-row">
+            <div class="signal-name">Adverse patient outcome events (death, major complication)</div>
+            <div class="signal-weight">20%</div>
+            <div class="signal-bar-wrap"><div class="signal-bar" style="width:80%"></div></div>
+          </div>
+          <div class="signal-row">
+            <div class="signal-name">Number of open encounters at shift end</div>
+            <div class="signal-weight">12%</div>
+            <div class="signal-bar-wrap"><div class="signal-bar" style="width:48%"></div></div>
+          </div>
+          <div class="signal-row">
+            <div class="signal-name">Time between last patient note and logout</div>
+            <div class="signal-weight">10%</div>
+            <div class="signal-bar-wrap"><div class="signal-bar" style="width:40%"></div></div>
+          </div>
+          <div class="signal-row">
+            <div class="signal-name">Weekend / holiday login frequency</div>
+            <div class="signal-weight">8%</div>
+            <div class="signal-bar-wrap"><div class="signal-bar" style="width:32%"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot dot-teal"></span>Layer 2 — Wearable Biometrics (opt-in)</div>
+        <p>Physician explicitly connects device. Data stored only on-device + encrypted user-private vault. Never shared with hospital.</p>
+        <div style="margin-top:1rem;">
+          <div class="signal-row">
+            <div class="signal-name">HRV trend (7-day rolling average vs. 30-day baseline)</div>
+            <div class="signal-weight">30%</div>
+            <div class="signal-bar-wrap"><div class="signal-bar" style="width:100%; background: var(--accent-teal)"></div></div>
+          </div>
+          <div class="signal-row">
+            <div class="signal-name">Sleep duration &lt; 6h for 3+ consecutive nights</div>
+            <div class="signal-weight">25%</div>
+            <div class="signal-bar-wrap"><div class="signal-bar" style="width:83%; background: var(--accent-teal)"></div></div>
+          </div>
+          <div class="signal-row">
+            <div class="signal-name">Resting heart rate spike (&gt;15% above 30-day mean)</div>
+            <div class="signal-weight">20%</div>
+            <div class="signal-bar-wrap"><div class="signal-bar" style="width:67%; background: var(--accent-teal)"></div></div>
+          </div>
+          <div class="signal-row">
+            <div class="signal-name">Step count collapse (&gt;40% drop vs. weekly norm)</div>
+            <div class="signal-weight">15%</div>
+            <div class="signal-bar-wrap"><div class="signal-bar" style="width:50%; background: var(--accent-teal)"></div></div>
+          </div>
+          <div class="signal-row">
+            <div class="signal-name">Irregular sleep start time (variance &gt; 90min)</div>
+            <div class="signal-weight">10%</div>
+            <div class="signal-bar-wrap"><div class="signal-bar" style="width:33%; background: var(--accent-teal)"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot dot-amber"></span>Layer 3 — Self-Report Tags (in-app, optional)</div>
+      <p>One-tap emotional tags available from the home screen. Never mandatory. When used, they boost signal confidence significantly because they represent conscious self-disclosure.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:1rem;">
+        <span class="badge badge-amber">Rough shift</span>
+        <span class="badge badge-red">Lost a patient</span>
+        <span class="badge badge-amber">Bad handoff</span>
+        <span class="badge badge-blue">Overwhelmed</span>
+        <span class="badge badge-teal">Running on empty</span>
+        <span class="badge badge-purple">Need a break</span>
+        <span class="badge badge-green">Actually fine today</span>
+        <span class="badge badge-amber">Family stuff</span>
+        <span class="badge badge-blue">Conflict with colleague</span>
+        <span class="badge badge-teal">Understaffed</span>
+      </div>
+    </div>
+
+    <div class="callout callout-amber" style="margin-top:1.5rem;">
+      <div class="callout-title">Scoring Architecture</div>
+      <p>Each layer generates a normalized sub-score (0–100). The composite distress score is: <strong>(EHR × 0.5) + (Wearable × 0.35) + (Self-report × 0.15)</strong> if wearable is connected; or <strong>(EHR × 0.80) + (Self-report × 0.20)</strong> if wearable is not connected. The model is personalized — scores are computed against the individual's own 30-day baseline, not population averages. Day 1–30 is a silent calibration period with no triggers.</p>
+    </div>
+
+    <div class="callout callout-red">
+      <div class="callout-title">Hard Triggers (immediate, single-event)</div>
+      <p>Some events bypass the scoring model and trigger the three-option interface immediately: (1) Documenting a patient death in Epic where physician was primary, (2) Self-report tag "Lost a patient," (3) Wearable detects HRV crash below absolute threshold (not just relative) combined with sleep &lt;4h. These are treated as "known-bad" events, not statistical outliers.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 03: CIRCLE OF TRUST -->
+  <section id="circle">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <div>
+        <h2>Circle of Trust</h2>
+        <div class="section-desc">Physician-owned peer network. No employer visibility. Full physician control at every step.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">What is the Circle of Trust?</div>
+      <p>The Circle of Trust is a private list of 2–6 trusted colleagues that each physician builds during onboarding. These are the people they want to be able to reach when things get hard — or who they want notified that they had a rough day. No one outside the physician's selected circle can see its membership. The hospital cannot see who is in whose circle. The circle is stored encrypted in a physician-private vault.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span class="dot dot-blue"></span>Onboarding: Building the Circle (Step-by-Step)</div>
+        <div class="steps" style="margin-top:1rem;">
+          <div class="step">
+            <div class="step-left"><div class="step-num" style="width:28px;height:28px;font-size:0.72rem;">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <h4>Invite via internal directory</h4>
+              <p>Search colleagues by name or specialty. Only existing Bridge users appear. No cold outreach — both parties must have accounts.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-left"><div class="step-num" style="width:28px;height:28px;font-size:0.72rem;">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <h4>Colleague accepts (opt-in)</h4>
+              <p>Receiving physician gets a private in-app invite. They can accept, decline, or "accept with limits" (read-only supporter, not a responder).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-left"><div class="step-num" style="width:28px;height:28px;font-size:0.72rem;">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <h4>Assign roles</h4>
+              <p>For each circle member: <strong>First Reach</strong> (always notified first), <strong>Backup</strong> (if First Reach doesn't respond in 2h), or <strong>Check-In Buddy</strong> (scheduled regular touchpoints).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-left"><div class="step-num" style="width:28px;height:28px;font-size:0.72rem;">4</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <h4>Set notification preferences</h4>
+              <p>Per circle member: "Always notify," "Notify only if I haven't responded in 4h," or "Never auto-suggest — only if I manually select."</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-left"><div class="step-num" style="width:28px;height:28px;font-size:0.72rem;">5</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <h4>Set threshold for circle notification</h4>
+              <p>Should the app suggest notifying a circle member after a hard trigger? Physician sets this: "Always ask me," "Suggest after 2 hard days in a row," or "Never suggest — I'll initiate."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="dot dot-teal"></span>How the Circle Works (Live Flow)</div>
+        <p style="margin-bottom:1rem;">When the physician hits the "Talk to Someone" option in the three-option interface:</p>
+        <ul class="spec-list">
+          <li>Circle members appear as cards: name, role, specialty, availability status</li>
+          <li>Availability status comes from Epic (in surgery = unavailable, off shift = green)</li>
+          <li>Physician selects 1 or more members to notify</li>
+          <li>Default message appears: "I had a rough one. Could use a quick chat when you're free." — fully editable</li>
+          <li>Physician previews the message before it sends — full-screen review, no accidental dispatch</li>
+          <li>One tap: <strong>Send</strong>. Message goes in-app, encrypted, to selected circle members only</li>
+          <li>Receiving member gets a private in-app notification with a single CTA: "Respond to [Name]"</li>
+          <li>No email, no SMS, no calendar invite auto-created — everything stays in-app by default</li>
+          <li>Physician can optionally "Request a walk together" or "Schedule 15 min to talk" as response options</li>
+        </ul>
+        <div class="callout callout-green" style="margin-top:1rem;">
+          <div class="callout-title">Anti-Surveillance Design</div>
+          <p>The hospital admin dashboard shows only: "X% of physicians used peer support this month." No names. No who-contacted-whom. No message content. Not even which department — aggregate institution-wide only below a minimum group size of 10.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:1rem;">
+      <div class="card-title"><span class="dot dot-purple"></span>Third-Party Concern Flagging — "Someone on My Radar"</div>
+      <p>A physician can flag a colleague they're worried about — without the colleague knowing who flagged them. This is separate from the Circle of Trust flow.</p>
+      <div class="grid-2" style="margin-top:1rem;">
+        <div>
+          <h5 style="font-size:0.8rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.5rem;">How it works</h5>
+          <ul class="spec-list">
+            <li>Physician goes to "Team" tab → selects a colleague</li>
+            <li>Taps "I'm a bit worried about them"</li>
+            <li>Optional: adds a private note (visible only to their Circle Admin, never to employer)</li>
+            <li>Bridge records the flag internally. If that colleague's own score is also elevated, Bridge surfaces the peer support option more prominently in the colleague's next session</li>
+            <li>The concerned physician is never identified to the flagged colleague</li>
+            <li>No escalation — this is a soft signal only</li>
+          </ul>
+        </div>
+        <div>
+          <h5 style="font-size:0.8rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.5rem;">Privacy logic</h5>
+          <ul class="spec-list">
+            <li>Flags are visible only to the platform's Care Coordination module (not hospital admin)</li>
+            <li>Multiple flags on the same person from different colleagues → Bridge suggests a direct check-in, not an HR alert</li>
+            <li>Flags auto-expire after 14 days if no corroborating signals</li>
+            <li>A physician can see if they have been "flagged" — shown as "A colleague is thinking of you" — but never who flagged them</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 04: PEER NETWORK -->
+  <section id="peer">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <div>
+        <h2>Peer Support Network — POST / RISE Models</h2>
+        <div class="section-desc">Structured peer support inspired by Johns Hopkins RISE program and Stanford WellMD POST model.</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span class="dot dot-blue"></span>RISE Model (Johns Hopkins)</div>
+        <p>Resilience In Stressful Events. Trained peer responders — physicians who volunteered for 4-hour Bridge peer training — available for immediate same-shift response after adverse events.</p>
+        <ul class="spec-list">
+          <li>RISE responders appear in "Peer Support" tab, not Circle of Trust</li>
+          <li>Anonymous request — physician doesn't know which RISE responder comes</li>
+          <li>Response SLA: within 30 minutes during business hours</li>
+          <li>For critical events (patient death, near-miss): auto-suggested within 2h of documentation</li>
+          <li>RISE session is entirely confidential — not documented in any HR system</li>
+          <li>RISE responders log session metadata only (time, duration, no content) for program reporting</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot dot-teal"></span>POST Model (Kaiser Permanente)</div>
+        <p>Peer Organizational Support Team. Ongoing peer coaching relationship, not just crisis response. Scheduled regular check-ins, specialty-matched.</p>
+        <ul class="spec-list">
+          <li>POST coaches are senior physicians, 1+ year with Bridge</li>
+          <li>Matching criteria: same specialty, similar career stage, opt-in availability</li>
+          <li>Frequency: biweekly 20-min check-in (via in-app video or voice)</li>
+          <li>Not therapy — explicit framing: "This is a colleague conversation, not a clinical session"</li>
+          <li>POST coach can refer to EAP or licensed counselor if needed, with physician consent</li>
+          <li>POST relationship shows in the physician's profile as "Peer Coach" — visible only to them</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:1rem;">
+      <div class="card-title"><span class="dot dot-green"></span>Social Recovery Scheduling</div>
+      <p>One underrated resilience mechanism is structured informal time with colleagues — walks, meals, collegial activities. Bridge makes this trivially easy to schedule.</p>
+      <div class="grid-3" style="margin-top:1rem;">
+        <div class="component">
+          <strong>Walk Together</strong><br>
+          Quick 15-min walk invite sent to circle members. Pull from shared availability (Epic calendar read). One tap to accept.
+        </div>
+        <div class="component">
+          <strong>Lunch Sync</strong><br>
+          Finds overlapping 30-min windows in the next 3 days. Shows as "Dr. Chen is free Tuesday 12:15." One tap to confirm.
+        </div>
+        <div class="component">
+          <strong>Coffee Debrief</strong><br>
+          For post-adverse-event processing. Structured agenda suggestion: "What happened, what you felt, what you'd do differently." No documentation.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 05: MENTAL HEALTH SPACE -->
+  <section id="wellness">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <div>
+        <h2>Mental Health Space</h2>
+        <div class="section-desc">In-app decompression tools — solo micro-resets, guided breathing, meditation, and structured debriefs.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">Design Principle</div>
+      <p>Every tool in the Mental Health Space is available in 90 seconds or less. Physicians won't use anything that requires 10 minutes. The barrier is the duration. Every tool should feel like a coffee break, not a therapy session. Animations use calming colors (not clinical white or warning red). Tone is warm, not instructional.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span class="dot dot-teal"></span>90-Second Micro-Reset</div>
+        <p>The fastest intervention. Available directly from the three-option interface ("Reset Now") and from the home screen.</p>
+        <ul class="spec-list">
+          <li><strong>Box Breathing (4-4-4-4)</strong> — Animated visual guide. Inhale 4s, hold 4s, exhale 4s, hold 4s. 4 cycles = 64 seconds.</li>
+          <li><strong>4-7-8 Breath</strong> — For acute anxiety. Inhale 4s, hold 7s, exhale 8s. 3 cycles = ~57 seconds.</li>
+          <li><strong>Extended Exhale</strong> — For nervous system downregulation. Inhale 4s, exhale 8s. 6 cycles = 72 seconds.</li>
+          <li>Visual: full-screen ambient color fill (blue-green gradient) that expands/contracts with breath</li>
+          <li>Haptic feedback on Apple Watch if connected</li>
+          <li>After session: "How do you feel?" 1–5 scale (optional)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="dot dot-purple"></span>3-Minute Guided Debrief</div>
+        <p>Structured emotional processing after difficult events. Voice-guided or text-guided. Evidence base: Pennebaker expressive writing + structured debriefs from RISE program.</p>
+        <ul class="spec-list">
+          <li><strong>Prompt 1 (60s):</strong> "What happened in that room?" — describe the clinical event (stays private, never transmitted)</li>
+          <li><strong>Prompt 2 (60s):</strong> "What did you feel in that moment?" — name the emotion without judgment</li>
+          <li><strong>Prompt 3 (60s):</strong> "What would you tell a colleague in that same situation?" — reframe with compassion</li>
+          <li>All text stored locally on device. Not synced to server. Physician can export or delete at any time.</li>
+          <li>After debrief: option to share summary (not content) with Circle of Trust member: "I worked through something hard today. I'm okay."</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="dot dot-amber"></span>Meditation Library</div>
+        <p>10 curated audio tracks, each under 5 minutes. Designed specifically for healthcare workers (not generic Calm/Headspace content).</p>
+        <ul class="spec-list">
+          <li>"After the code" — for post-resuscitation emotional processing (4 min)</li>
+          <li>"End of shift exhale" — transition from clinical to personal (3 min)</li>
+          <li>"Between patients" — micro-reset for high-volume clinic days (2 min)</li>
+          <li>"Night shift grounding" — for 3am when everything feels harder (5 min)</li>
+          <li>"Imposter moment" — for the weight of uncertainty in complex cases (4 min)</li>
+          <li>Hosted as offline audio — no streaming latency in ICU with poor wifi</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="dot dot-green"></span>Progress Visualization (Private)</div>
+        <p>A private wellbeing timeline visible only to the physician. Never shared with hospital. Helps them see patterns over time.</p>
+        <ul class="spec-list">
+          <li>Chart: distress score over 90 days (smooth line, no alarming red)</li>
+          <li>Overlaid events: adverse outcomes (marked as dots), peer support sessions (marked), wearable dips</li>
+          <li>Correlation insights: "Your score tends to rise in weeks with 3+ night shifts" — surfaced after 60 days of data</li>
+          <li>Monthly insight card: "This month you used peer support twice. Last month: zero. You're building the habit."</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 06: NOTIFICATIONS -->
+  <section id="notifications">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <div>
+        <h2>Notification System</h2>
+        <div class="section-desc">Exact copy, trigger conditions, and style guidelines for every notification type.</div>
+      </div>
+    </div>
+
+    <div class="callout callout-amber">
+      <div class="callout-title">Notification Design Rules</div>
+      <p>No clinical language. No alarm words ("crisis," "emergency," "alert"). No red badges. No sound during patient care hours (default silent 7am–7pm). Every notification has a single clear action. Maximum 1 notification per day per physician. The notification is an invitation, not a directive.</p>
+    </div>
+
+    <h3 style="color:#fff; font-size:1.1rem; margin: 1.5rem 0 1rem; font-weight:600;">Trigger-Based Notifications</h3>
+
+    <div class="notif notif-blue">
+      <div class="notif-trigger" style="color: var(--accent);">TRIGGER: Composite score ≥ 70 for 3 consecutive days</div>
+      <div class="notif-title">Hey — today's a good day to check in</div>
+      <div class="notif-body">You've had a stretch of heavy shifts. Bridge has a few things that might help.</div>
+      <div class="notif-action"><span class="badge badge-blue">Open Bridge</span></div>
+    </div>
+
+    <div class="notif notif-red">
+      <div class="notif-trigger" style="color: var(--accent-red);">TRIGGER: Adverse outcome documented (patient death, primary physician)</div>
+      <div class="notif-title">That was a hard moment</div>
+      <div class="notif-body">Losing a patient is one of the hardest things we face. Your circle is here if you want to talk.</div>
+      <div class="notif-action"><span class="badge badge-blue">Open Bridge</span> <span class="badge badge-teal">See my circle</span></div>
+    </div>
+
+    <div class="notif notif-teal">
+      <div class="notif-trigger" style="color: var(--accent-teal);">TRIGGER: HRV + sleep both below threshold for 4+ days</div>
+      <div class="notif-title">Your body is telling you something</div>
+      <div class="notif-body">Your HRV has been lower than usual, and your sleep has been choppy. A 2-minute reset might help.</div>
+      <div class="notif-action"><span class="badge badge-teal">Try a breathing reset</span></div>
+    </div>
+
+    <div class="notif notif-amber">
+      <div class="notif-trigger" style="color: var(--accent-amber);">TRIGGER: 7 days since last peer connection (if score elevated)</div>
+      <div class="notif-title">It's been a while since you talked to anyone</div>
+      <div class="notif-body">Dr. Chen is available this afternoon. Sometimes 10 minutes with the right person makes a week better.</div>
+      <div class="notif-action"><span class="badge badge-amber">Reach out</span> <span class="badge badge-blue">Maybe later</span></div>
+    </div>
+
+    <div class="notif notif-purple">
+      <div class="notif-trigger" style="color: var(--accent-purple);">TRIGGER: Someone on circle "flagged" this physician (third-party flag)</div>
+      <div class="notif-title">A colleague is thinking of you</div>
+      <div class="notif-body">Someone in your network wanted to check in. No obligation — just a reminder that you're not alone.</div>
+      <div class="notif-action"><span class="badge badge-purple">See my circle</span> <span class="badge badge-blue">I'm good, thanks</span></div>
+    </div>
+
+    <div class="notif notif-green">
+      <div class="notif-trigger" style="color: var(--accent-green);">TRIGGER: Score drops significantly (recovery signal)</div>
+      <div class="notif-title">You seem to be doing better</div>
+      <div class="notif-body">The last few days look lighter than last week. Keep it up.</div>
+      <div class="notif-action"><span class="badge badge-green">See my trend</span></div>
+    </div>
+
+    <h3 style="color:#fff; font-size:1.1rem; margin: 2rem 0 1rem; font-weight:600;">Circle Member Notifications (Received by Peer)</h3>
+
+    <div class="notif notif-blue">
+      <div class="notif-trigger" style="color: var(--accent);">RECEIVED BY: Circle member, when physician initiates outreach</div>
+      <div class="notif-title">Dr. Patel reached out</div>
+      <div class="notif-body">"I had a rough one. Could use a quick chat when you're free."</div>
+      <div class="notif-action"><span class="badge badge-blue">Respond</span> <span class="badge badge-teal">Schedule a call</span></div>
+    </div>
+
+    <div class="notif notif-teal">
+      <div class="notif-trigger" style="color: var(--accent-teal);">RECEIVED BY: Circle member, when physician had hard trigger but did NOT initiate outreach (only if physician opted in)</div>
+      <div class="notif-title">Check in with Dr. Patel when you can</div>
+      <div class="notif-body">They've had a hard few days. No pressure — even a quick "hey" goes a long way.</div>
+      <div class="notif-action"><span class="badge badge-teal">Send a note</span></div>
+    </div>
+  </section>
+
+  <!-- SECTION 07: WEARABLES -->
+  <section id="wearables">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <div>
+        <h2>Wearable Integration</h2>
+        <div class="section-desc">Apple Watch, Garmin, and Android Wear integration. Opt-in only. Biometric data stays private.</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span class="dot dot-blue"></span>Supported Devices</div>
+        <table style="margin-top:0.75rem;">
+          <tr><th>Device</th><th>HRV</th><th>Sleep</th><th>HR</th><th>Steps</th></tr>
+          <tr><td>Apple Watch (Series 6+)</td><td><span class="badge badge-green">✓</span></td><td><span class="badge badge-green">✓</span></td><td><span class="badge badge-green">✓</span></td><td><span class="badge badge-green">✓</span></td></tr>
+          <tr><td>Garmin (Vivosmart 5+)</td><td><span class="badge badge-green">✓</span></td><td><span class="badge badge-green">✓</span></td><td><span class="badge badge-green">✓</span></td><td><span class="badge badge-green">✓</span></td></tr>
+          <tr><td>Fitbit (Sense 2+)</td><td><span class="badge badge-amber">Partial</span></td><td><span class="badge badge-green">✓</span></td><td><span class="badge badge-green">✓</span></td><td><span class="badge badge-green">✓</span></td></tr>
+          <tr><td>WHOOP 4.0</td><td><span class="badge badge-green">✓</span></td><td><span class="badge badge-green">✓</span></td><td><span class="badge badge-green">✓</span></td><td><span class="badge badge-blue">Via HK</span></td></tr>
+          <tr><td>Oura Ring (Gen3+)</td><td><span class="badge badge-green">✓</span></td><td><span class="badge badge-green">✓</span></td><td><span class="badge badge-green">✓</span></td><td><span class="badge badge-green">✓</span></td></tr>
+          <tr><td>Samsung Galaxy Watch</td><td><span class="badge badge-amber">Android</span></td><td><span class="badge badge-green">✓</span></td><td><span class="badge badge-green">✓</span></td><td><span class="badge badge-green">✓</span></td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="dot dot-teal"></span>Privacy Architecture for Wearable Data</div>
+        <ul class="spec-list">
+          <li>iOS: data sourced from HealthKit. Android: Health Connect API.</li>
+          <li>Raw biometric values never leave the device</li>
+          <li>Only derived signals (normalized score deltas) are sent to Bridge backend — never raw HRV numbers</li>
+          <li>Physician can revoke wearable access at any time without affecting Circle of Trust</li>
+          <li>If hospital purchased Bridge: hospital can see only "X% of physicians have wearables connected" — no individual data</li>
+          <li>Wearable data is never used for insurance, credentialing, or performance review — enforced contractually in all hospital agreements</li>
+        </ul>
+        <div class="callout callout-green" style="margin-top:1rem;">
+          <div class="callout-title">Apple Watch Haptic Integration</div>
+          <p>For physicians wearing Apple Watch: breathing exercises deliver synchronized haptic taps (tap on inhale start, double-tap on exhale start). End of breathing session: gentle "success" haptic. RISE peer responder requests: single pulse to wrist (no sound, no visual disruption during patient care).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 08: HOSPITAL DASHBOARD -->
+  <section id="dashboard">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <div>
+        <h2>Hospital Administration Dashboard</h2>
+        <div class="section-desc">Anonymized, aggregate-only. Hospital leadership sees trends, never individuals.</div>
+      </div>
+    </div>
+
+    <div class="callout callout-red">
+      <div class="callout-title">Hard Privacy Rules (Contractual)</div>
+      <p>These are enforced in the hospital contract and technically enforced in the data model: (1) No individual physician data visible to HR, CMO, or department heads. (2) No department-level breakdown unless that department has 10+ active physicians. (3) No correlation between distress scores and performance reviews — any such request is rejected at the API level. (4) Audit logs available to privacy officer showing all dashboard queries — physicians have right to request these logs.</p>
+    </div>
+
+    <h3 style="color:#fff; font-size:1.05rem; margin: 1.5rem 0 1rem; font-weight:600;">Dashboard Panels</h3>
+
+    <div class="grid-2">
+      <div class="screen">
+        <div class="screen-header">
+          <div class="screen-title">Overall Wellbeing Index</div>
+          <div class="screen-route">admin/dashboard/overview</div>
+        </div>
+        <div class="screen-body">
+          <h5>Shown to: CMO, Chief Wellness Officer</h5>
+          <div class="component"><strong>Metric:</strong> % of active physicians in "elevated distress" zone this week vs. 30-day rolling avg. Trend line only — no absolute number if &lt;10 total active.</div>
+          <div class="component"><strong>Peer support utilization rate:</strong> % who initiated a peer support session this month. Compares vs. national benchmark.</div>
+          <div class="component"><strong>Micro-reset usage:</strong> Total breathing/meditation sessions (not by who, just total count institution-wide).</div>
+        </div>
+      </div>
+
+      <div class="screen">
+        <div class="screen-header">
+          <div class="screen-title">Temporal Pattern View</div>
+          <div class="screen-route">admin/dashboard/patterns</div>
+        </div>
+        <div class="screen-body">
+          <h5>Shown to: Chief Wellness Officer, Department leadership (aggregate only)</h5>
+          <div class="component"><strong>Distress by shift type:</strong> Aggregate score indexed by day shift / night shift / weekend shift. Helps staffing decisions. No names.</div>
+          <div class="component"><strong>High-load period detector:</strong> Automatically flags weeks where distress index was &gt;20% above baseline. Helps identify systemic drivers (surge, short staffing).</div>
+          <div class="component"><strong>Recovery curve:</strong> How long does the aggregate score take to return to baseline after a high-demand week?</div>
+        </div>
+      </div>
+
+      <div class="screen">
+        <div class="screen-header">
+          <div class="screen-title">Program ROI Report</div>
+          <div class="screen-route">admin/dashboard/roi</div>
+        </div>
+        <div class="screen-body">
+          <h5>Shown to: CFO, Chief HR Officer</h5>
+          <div class="component"><strong>Estimated turnover reduction:</strong> Based on peer-reviewed formula ($500K–$2M per physician replacement × estimated retention improvement from peer support engagement rate).</div>
+          <div class="component"><strong>Peer support cost per physician per year:</strong> Bridge license cost vs. EAP usage rate (bridges are 14× more likely to be used than traditional EAP).</div>
+          <div class="component"><strong>Medical error correlation:</strong> Available only as institutional trend after 180-day baseline. Never individual-level. Optional — must be enabled by physician council vote.</div>
+        </div>
+      </div>
+
+      <div class="screen">
+        <div class="screen-header">
+          <div class="screen-title">Program Health</div>
+          <div class="screen-route">admin/dashboard/program</div>
+        </div>
+        <div class="screen-body">
+          <h5>Shown to: Chief Wellness Officer, Bridge Customer Success</h5>
+          <div class="component"><strong>Active user rate:</strong> % of licensed physicians who opened Bridge in last 30 days (not what they did — just that they opened it).</div>
+          <div class="component"><strong>Circle of Trust completion rate:</strong> % who completed onboarding (built a circle). Leading indicator of engagement.</div>
+          <div class="component"><strong>Feature adoption breakdown:</strong> Breathing sessions vs. peer outreach vs. meditations vs. check-ins. Category-level only.</div>
+          <div class="component"><strong>Net Promoter Score:</strong> Monthly in-app pulse survey (2 questions). Aggregate NPS score displayed.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 09: FRONTEND SCREENS (LOVABLE) -->
+  <section id="frontend">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <div>
+        <h2>Frontend Specification — Lovable</h2>
+        <div class="section-desc">Screen-by-screen UI spec with components, states, and interaction notes. Build in React Native / Expo.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">Tech Stack for Frontend</div>
+      <p>React Native (Expo SDK 51+) with TypeScript. Navigation: Expo Router (file-based). State: Zustand + React Query. Animations: Reanimated 3 + Moti. Design system: custom (no generic UI library — build primitives from scratch for the right tone). Fonts: SF Pro Display (iOS) / Inter (Android fallback). Colors: navy palette (#04091a, #0c1a2e) with electric teal (#06b6d4) accent.</p>
+    </div>
+
+    <h3 style="color:#fff; font-size:1.05rem; margin: 1.5rem 0 1rem; font-weight:600;">Screen Inventory</h3>
+
+    <!-- ONBOARDING -->
+    <div class="screen">
+      <div class="screen-header">
+        <div class="screen-title">S01 — Onboarding: Welcome</div>
+        <div class="screen-route">/onboarding/welcome</div>
+      </div>
+      <div class="screen-body">
+        <h5>Purpose</h5>
+        <p>First impression. Establish trust and tone immediately. Not clinical. Not alarming.</p>
+        <h5 style="margin-top:1rem;">Components</h5>
+        <div class="component"><strong>Background:</strong> Full-screen animated dark navy gradient. Subtle particle field (slow drift, 12px white dots at 4% opacity). NOT a hospital setting image.</div>
+        <div class="component"><strong>Logo:</strong> "Bridge" wordmark, center, white. Syne 900. Tagline below: "Built for physicians, by physicians." DM Sans 400.</div>
+        <div class="component"><strong>CTA:</strong> Single rounded button "Get Started" — electric teal background. Below: "Already have an account? Sign in" in muted text.</div>
+        <h5 style="margin-top:1rem;">States</h5>
+        <ul class="spec-list">
+          <li>Logo fades in over 800ms. Tagline slides up with 300ms delay. CTA fades in last (1200ms).</li>
+          <li>Haptic feedback on CTA tap.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="screen">
+      <div class="screen-header">
+        <div class="screen-title">S02 — Onboarding: Hospital Verification</div>
+        <div class="screen-route">/onboarding/verify</div>
+      </div>
+      <div class="screen-body">
+        <h5>Components</h5>
+        <div class="component"><strong>Header:</strong> "Connect to your hospital" — no org chart imagery. Simple abstract shape.</div>
+        <div class="component"><strong>SSO Button:</strong> "Sign in with [Hospital Name] SSO" — pulls from hospital config. Preferred path. Handles Epic MyChart OAuth if hospital Epic is configured.</div>
+        <div class="component"><strong>Alternative:</strong> "Use work email" input + NPI number input (for independent physicians). Auto-verifies NPI via NPI Registry API.</div>
+        <div class="component"><strong>Security note:</strong> "Bridge never sees your EHR patient data. We only request read access to workflow metadata like login times and note counts." — small text, tappable to expand full permissions explanation.</div>
+        <h5 style="margin-top:1rem;">Error States</h5>
+        <ul class="spec-list">
+          <li>SSO failure: "Couldn't connect to your hospital's system. Try your work email instead." — no technical jargon.</li>
+          <li>NPI not found: "We couldn't verify that NPI. Double-check the number or contact support."</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="screen">
+      <div class="screen-header">
+        <div class="screen-title">S03 — Onboarding: Build Your Circle</div>
+        <div class="screen-route">/onboarding/circle</div>
+      </div>
+      <div class="screen-body">
+        <h5>Purpose</h5>
+        <p>This is the highest-stakes onboarding screen. If a physician builds a circle, they are 3× more likely to use Bridge during a hard moment. Make this feel personal and safe, not bureaucratic.</p>
+        <h5 style="margin-top:1rem;">Components</h5>
+        <div class="component"><strong>Header copy:</strong> "Who do you trust when things get hard?" — Not "Select peer contacts." Not "Configure notification recipients."</div>
+        <div class="component"><strong>Search bar:</strong> Search colleagues by name. Shows Bridge users from same institution only. Cards show: photo, name, specialty, "Accepted invitation" badge if they're already on Bridge.</div>
+        <div class="component"><strong>Circle visualization:</strong> As physicians are added, they appear as avatar circles arranged around a central "You" node. Max 6 slots visible. Animated — new additions pulse into position.</div>
+        <div class="component"><strong>Role assignment (inline):</strong> Tap a circle member → bottom sheet → "First Reach / Backup / Check-In Buddy" toggle.</div>
+        <div class="component"><strong>Skip option:</strong> "Set this up later" in small text below the circle. Does NOT guilt-trip. "You can always build your circle from the app."</div>
+        <h5 style="margin-top:1rem;">UX Notes for Lovable</h5>
+        <ul class="spec-list">
+          <li>Empty state animation: placeholder avatar circles pulse softly with a "+" icon.</li>
+          <li>After adding 2+ members: a warm confirmation card slides in at the bottom: "Your circle is taking shape. They'll be here when you need them."</li>
+          <li>Invites sent in real-time — invited colleague receives in-app notification immediately.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="screen">
+      <div class="screen-header">
+        <div class="screen-title">S04 — Onboarding: Wearable Connect</div>
+        <div class="screen-route">/onboarding/wearables</div>
+      </div>
+      <div class="screen-body">
+        <h5>Components</h5>
+        <div class="component"><strong>Header:</strong> "Optional: connect your wearable" with a small "Why?" tooltip that explains HRV-based early detection.</div>
+        <div class="component"><strong>Device tiles:</strong> Apple Watch (with HealthKit icon), Garmin, WHOOP, Oura, Fitbit — each as a card. Tap to initiate OAuth / HealthKit permission sheet.</div>
+        <div class="component"><strong>Privacy promise (prominent):</strong> "Your biometric numbers never leave your device. We only use anonymized trend patterns." — backed by tappable privacy policy section.</div>
+        <div class="component"><strong>Skip:</strong> "Skip for now — add later in Settings."</div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <div class="screen-header">
+        <div class="screen-title">S05 — Home Screen</div>
+        <div class="screen-route">/home</div>
+      </div>
+      <div class="screen-body">
+        <h5>Purpose</h5>
+        <p>Default screen. Should feel calm, not data-heavy. Show only what matters right now.</p>
+        <h5 style="margin-top:1rem;">Components (top to bottom)</h5>
+        <div class="component"><strong>Top bar:</strong> Hospital logo (left) + notification bell (right, subtle blue dot if unread). No score displayed on home — reduces anxiety about "checking your score."</div>
+        <div class="component"><strong>Time-aware greeting:</strong> "Good morning, Dr. Patel" / "Good evening" — uses first name, time of day. Below greeting: one-line insight card that rotates daily. Examples: "Your HRV has been stable this week." / "You've used peer support 3× this month." / "You're on a 5-day breathing streak."</div>
+        <div class="component"><strong>Quick Actions row:</strong> Three icon buttons — Breathe / My Circle / Journal. 60px diameter circles with subtle navy background. Most-used actions within one tap from home.</div>
+        <div class="component"><strong>Today card:</strong> If a trigger is active, the Today card shows the three-option interface (see S06). If no trigger: shows a "Daily Check-In" prompt — one-question mood tap (5 emoji options, fully optional).</div>
+        <div class="component"><strong>Recent Activity feed:</strong> Last 3 events — "You did a breathing session yesterday," "Dr. Chen responded to your message," "Your sleep was better than average last night." Tappable cards.</div>
+        <div class="component"><strong>Bottom tab bar:</strong> Home / Circle / Wellness / Team / Settings. 5 tabs. Current tab indicator: electric teal underline.</div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <div class="screen-header">
+        <div class="screen-title">S06 — Three-Option Interface (Trigger View)</div>
+        <div class="screen-route">/home (trigger state)</div>
+      </div>
+      <div class="screen-body">
+        <h5>Purpose</h5>
+        <p>This is the most critical interaction in the product. Appears on the Home screen when a distress trigger fires. Must feel like a kind check-in from a colleague, not a medical alert.</p>
+        <h5 style="margin-top:1rem;">Header</h5>
+        <div class="component"><strong>Trigger copy examples:</strong> "You've had a tough stretch." / "This was a hard shift." / "That was a lot to carry." — Pull from a copy library of ~20 variations, matched to trigger type. Never: "Your distress score is high." Never: "You may be experiencing burnout."</div>
+        <h5 style="margin-top:1rem;">Three Option Cards</h5>
+        <div class="component">
+          <strong>Card 1 — Reset Now</strong> (teal border)<br>
+          Icon: leaf or wave (not a heart or cross). Title: "Take a breath." Subtitle: "90-second reset, right here." → taps into S07 (Breathing).
+        </div>
+        <div class="component">
+          <strong>Card 2 — Talk to Someone</strong> (blue border)<br>
+          Icon: two abstract shapes (not a speech bubble cliché). Title: "Reach out." Subtitle: "Your circle is here." → taps into S08 (Circle launch).
+        </div>
+        <div class="component">
+          <strong>Card 3 — Handle Admin</strong> (muted border)<br>
+          Icon: calendar dot. Title: "I've got this." Subtitle: "Dismiss for now or schedule a check-in." → confirms dismiss + optionally schedules a 1-day or 3-day snooze.
+        </div>
+        <h5 style="margin-top:1rem;">Layout Rules for Lovable</h5>
+        <ul class="spec-list">
+          <li>All three cards are the same size — equal visual weight. No card is "more important."</li>
+          <li>No red anywhere on this screen. Use teal, blue, and muted navy.</li>
+          <li>Cards animate in with a staggered slide-up (100ms delay between each).</li>
+          <li>Swipe-to-dismiss is NOT allowed on this screen — physician must tap a card or the "x" to dismiss.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="screen">
+      <div class="screen-header">
+        <div class="screen-title">S07 — Breathing / Micro-Reset</div>
+        <div class="screen-route">/wellness/breathe</div>
+      </div>
+      <div class="screen-body">
+        <h5>Components</h5>
+        <div class="component"><strong>Full-screen animation:</strong> A soft orb (300px diameter on iPhone 14) that expands on inhale, contracts on exhale. Color: deep teal-to-navy gradient during inhale, inverts during exhale. Smooth cubic-bezier easing (not linear).</div>
+        <div class="component"><strong>Instruction text:</strong> Large, centered. "Breathe in" / "Hold" / "Breathe out" — Syne font, white, 28px. Fades between states with 200ms crossfade.</div>
+        <div class="component"><strong>Pattern selector (bottom sheet, pre-session):</strong> Box Breathing / 4-7-8 / Extended Exhale. Shows estimated time for each. Default to Box Breathing.</div>
+        <div class="component"><strong>Progress ring:</strong> Thin arc around the orb that fills over the session duration.</div>
+        <div class="component"><strong>End screen:</strong> "Nice work." (not "Session complete" — keep it human). Optional: "How do you feel?" 1–5 scale emoji. Optional: "Share this moment with your circle" (sends: "I just took a breath. Feeling a bit better."). Skip is the default.</div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <div class="screen-header">
+        <div class="screen-title">S08 — Circle of Trust Launch</div>
+        <div class="screen-route">/circle/launch</div>
+      </div>
+      <div class="screen-body">
+        <h5>Components</h5>
+        <div class="component"><strong>Header:</strong> "Who do you want to reach?" — member cards displayed as a scrollable horizontal list (avatars + names + availability status badges).</div>
+        <div class="component"><strong>Availability badge:</strong> Green dot = off shift. Gray dot = on shift (Epic-verified). Red X = do not disturb (self-set). Never shows exact location.</div>
+        <div class="component"><strong>Preset message:</strong> Pre-filled in a text field: "I had a rough one. Could use a quick chat when you're free." — fully editable. Character limit: 280. No emojis in default — physician can add.</div>
+        <div class="component"><strong>Message preview card:</strong> Shows exactly what the recipient will see before sending. Full-screen review. Prominent "Cancel" and "Send" buttons — equal visual weight, but "Send" is teal.</div>
+        <div class="component"><strong>Additional options (bottom of preview):</strong> "Request a walk together" / "Schedule 15 minutes to talk" — adds a structured CTA to the message.</div>
+        <div class="component"><strong>Confirmation:</strong> After send — "Your message is on its way. Dr. Chen typically responds within 2 hours." (based on historical response pattern, not a promise).</div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <div class="screen-header">
+        <div class="screen-title">S09 — Wellness Tab (Meditation Library)</div>
+        <div class="screen-route">/wellness</div>
+      </div>
+      <div class="screen-body">
+        <h5>Components</h5>
+        <div class="component"><strong>Tabs within Wellness:</strong> Breathing / Meditations / Debrief / My Trends.</div>
+        <div class="component"><strong>Meditation cards:</strong> Title, duration, description in 12 words or fewer. Cover art: abstract dark imagery (no stock hospital photos). Tag: "Post-shift" / "Night shift" / "After loss" / "High-volume day."</div>
+        <div class="component"><strong>Player:</strong> Full-screen dark mode audio player. Waveform animation (not a progress bar — waveform feels more alive). Large artwork. Back 10s / Play / Forward 10s controls.</div>
+        <div class="component"><strong>Offline mode:</strong> All 10 meditation tracks pre-downloaded on first WiFi connection. No streaming required in the ICU.</div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <div class="screen-header">
+        <div class="screen-title">S10 — My Trends (Private)</div>
+        <div class="screen-route">/wellness/trends</div>
+      </div>
+      <div class="screen-body">
+        <h5>Components</h5>
+        <div class="component"><strong>Wellbeing chart:</strong> 90-day smooth line chart. Y-axis: 0–100 (labeled "Wellbeing" not "Distress Score"). Higher = better. Teal color. Events overlaid as dots (tap to expand).</div>
+        <div class="component"><strong>Insight cards:</strong> AI-generated, plain English. "Your score dips on weeks with more than 2 night shifts." / "Peer support sessions correlate with faster score recovery for you." Max 3 insights shown.</div>
+        <div class="component"><strong>Data controls:</strong> "What does this include?" expander — shows exact data sources (EHR signals, wearable, self-report) with toggles to remove each source. Physician can opt out of any layer at any time.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 10: BACKEND ARCHITECTURE (CURSOR) -->
+  <section id="backend">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <div>
+        <h2>Backend Architecture — Cursor</h2>
+        <div class="section-desc">Data models, API routes, services, and infrastructure. Build with Node.js + PostgreSQL + Redis.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">Tech Stack for Backend</div>
+      <p>Node.js (v22) + TypeScript + Fastify. Database: PostgreSQL 16 (primary) + Redis 7 (cache + queues). ORM: Prisma. Auth: Auth0 + SAML 2.0 (hospital SSO). FHIR: Epic FHIR R4 via Intersystems IRIS SDK. Queue: BullMQ on Redis. Hosting: AWS (EKS for services, RDS for Postgres, ElastiCache for Redis). HIPAA-compliant deployment (Business Associate Agreement required with AWS).</p>
+    </div>
+
+    <h3 style="color:#fff; font-size:1.05rem; margin: 1.5rem 0 1rem; font-weight:600;">Core Data Models</h3>
+
+    <pre><span class="comment">// physicians table — PII is minimal by design</span>
+<span class="key">table</span> <span class="type">physicians</span> {
+  <span class="key">id</span>              <span class="type">uuid</span>        PRIMARY KEY DEFAULT gen_random_uuid()
+  <span class="key">npi</span>             <span class="type">varchar(10)</span> UNIQUE NOT NULL        <span class="comment">-- NPI registry verified</span>
+  <span class="key">hospital_id</span>     <span class="type">uuid</span>        REFERENCES hospitals(id)
+  <span class="key">specialty</span>       <span class="type">varchar(50)</span>
+  <span class="key">career_stage</span>    <span class="type">varchar(20)</span>  <span class="comment">-- resident | attending | fellow | senior</span>
+  <span class="key">onboarding_done</span> <span class="type">boolean</span>     DEFAULT false
+  <span class="key">wearable_type</span>   <span class="type">varchar(20)</span>  <span class="comment">-- apple_watch | garmin | whoop | null</span>
+  <span class="key">threshold_config</span> <span class="type">jsonb</span>       <span class="comment">-- {sustained_days: 3, sustained_score: 70, acute: 90}</span>
+  <span class="key">notification_prefs</span> <span class="type">jsonb</span>     <span class="comment">-- {silent_start: "07:00", silent_end: "19:00", max_per_day: 1}</span>
+  <span class="key">created_at</span>      <span class="type">timestamptz</span> DEFAULT now()
+  <span class="key">deleted_at</span>      <span class="type">timestamptz</span>  <span class="comment">-- soft delete only, never hard delete</span>
+}
+
+<span class="comment">// circle_members — the trust graph</span>
+<span class="key">table</span> <span class="type">circle_members</span> {
+  <span class="key">id</span>              <span class="type">uuid</span>        PRIMARY KEY
+  <span class="key">owner_id</span>        <span class="type">uuid</span>        REFERENCES physicians(id)   <span class="comment">-- whose circle</span>
+  <span class="key">member_id</span>       <span class="type">uuid</span>        REFERENCES physicians(id)   <span class="comment">-- who is in it</span>
+  <span class="key">role</span>            <span class="type">varchar(20)</span> <span class="comment">-- first_reach | backup | checkin_buddy</span>
+  <span class="key">notify_rule</span>     <span class="type">varchar(30)</span> <span class="comment">-- always | delayed_4h | manual_only</span>
+  <span class="key">status</span>          <span class="type">varchar(20)</span> <span class="comment">-- pending | accepted | declined | limited</span>
+  <span class="key">invited_at</span>      <span class="type">timestamptz</span>
+  <span class="key">accepted_at</span>     <span class="type">timestamptz</span>
+  UNIQUE (owner_id, member_id)
+}
+
+<span class="comment">// distress_scores — computed, never raw biometrics</span>
+<span class="key">table</span> <span class="type">distress_scores</span> {
+  <span class="key">id</span>              <span class="type">uuid</span>        PRIMARY KEY
+  <span class="key">physician_id</span>    <span class="type">uuid</span>        REFERENCES physicians(id)
+  <span class="key">date</span>            <span class="type">date</span>        NOT NULL
+  <span class="key">composite_score</span> <span class="type">smallint</span>   <span class="comment">-- 0–100, higher = more distress</span>
+  <span class="key">ehr_sub_score</span>   <span class="type">smallint</span>
+  <span class="key">wearable_sub_score</span> <span class="type">smallint</span> <span class="comment">-- NULL if no wearable connected</span>
+  <span class="key">self_report_sub_score</span> <span class="type">smallint</span>
+  <span class="key">signal_flags</span>    <span class="type">jsonb</span>       <span class="comment">-- {ehr_afterhours: true, hrv_low: true, ...}</span>
+  <span class="key">trigger_fired</span>   <span class="type">boolean</span>    DEFAULT false
+  <span class="key">trigger_type</span>    <span class="type">varchar(20)</span> <span class="comment">-- sustained | acute | hard_event | null</span>
+  UNIQUE (physician_id, date)
+}
+
+<span class="comment">-- RAW biometrics from wearable NEVER stored server-side --
+-- Computed only on-device via HealthKit / Health Connect --
+-- Only the sub_score integer lands in the database --</span>
+
+<span class="comment">// peer_messages — encrypted in transit and at rest</span>
+<span class="key">table</span> <span class="type">peer_messages</span> {
+  <span class="key">id</span>              <span class="type">uuid</span>        PRIMARY KEY
+  <span class="key">sender_id</span>       <span class="type">uuid</span>        REFERENCES physicians(id)
+  <span class="key">recipient_id</span>    <span class="type">uuid</span>        REFERENCES physicians(id)
+  <span class="key">message_body</span>    <span class="type">text</span>        <span class="comment">-- AES-256 encrypted, key in physician vault</span>
+  <span class="key">message_type</span>    <span class="type">varchar(20)</span> <span class="comment">-- outreach | response | schedule | flag</span>
+  <span class="key">status</span>          <span class="type">varchar(20)</span> <span class="comment">-- sent | delivered | read | responded</span>
+  <span class="key">scheduled_at</span>   <span class="type">timestamptz</span> <span class="comment">-- for social recovery scheduling</span>
+  <span class="key">created_at</span>      <span class="type">timestamptz</span>
+  <span class="key">expires_at</span>      <span class="type">timestamptz</span> DEFAULT now() + interval '30 days'
+  <span class="comment">-- Auto-purged after 30 days. No message retention beyond this. --</span>
+}
+
+<span class="comment">// hospital_aggregate_snapshots — pre-computed, never queryable at individual level</span>
+<span class="key">table</span> <span class="type">hospital_aggregate_snapshots</span> {
+  <span class="key">id</span>              <span class="type">uuid</span>        PRIMARY KEY
+  <span class="key">hospital_id</span>     <span class="type">uuid</span>        REFERENCES hospitals(id)
+  <span class="key">week_start</span>      <span class="type">date</span>
+  <span class="key">active_physicians</span> <span class="type">int</span>
+  <span class="key">pct_elevated</span>    <span class="type">numeric(5,2)</span> <span class="comment">-- % above threshold. NULL if active_physicians &lt; 10</span>
+  <span class="key">peer_support_utilization</span> <span class="type">numeric(5,2)</span>
+  <span class="key">total_wellness_sessions</span> <span class="type">int</span>
+  <span class="key">median_recovery_days</span> <span class="type">numeric(5,2)</span>
+  <span class="key">created_at</span>      <span class="type">timestamptz</span>
+  UNIQUE (hospital_id, week_start)
+}</pre>
+
+    <h3 style="color:#fff; font-size:1.05rem; margin: 2rem 0 1rem; font-weight:600;">API Routes</h3>
+
+    <table>
+      <thead>
+        <tr><th>Method</th><th>Route</th><th>Auth</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/v1/physician/me</code></td><td>physician JWT</td><td>Return own profile, thresholds, onboarding status</td></tr>
+        <tr><td><span class="badge badge-blue">POST</span></td><td><code>/api/v1/physician/me/score</code></td><td>physician JWT</td><td>Upsert daily score from on-device computation. Body: {composite, ehr, wearable, self_report, signal_flags}</td></tr>
+        <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/v1/physician/me/scores?days=90</code></td><td>physician JWT</td><td>Return own score history (never accessible to hospital)</td></tr>
+        <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/v1/physician/me/circle</code></td><td>physician JWT</td><td>Return own Circle of Trust with member availability</td></tr>
+        <tr><td><span class="badge badge-blue">POST</span></td><td><code>/api/v1/physician/me/circle/invite</code></td><td>physician JWT</td><td>Invite a colleague to circle. Body: {target_physician_id, role, notify_rule}</td></tr>
+        <tr><td><span class="badge badge-amber">PATCH</span></td><td><code>/api/v1/circle-invites/:id/respond</code></td><td>physician JWT</td><td>Accept/decline a circle invite. Body: {status: "accepted"|"declined"|"limited"}</td></tr>
+        <tr><td><span class="badge badge-blue">POST</span></td><td><code>/api/v1/messages</code></td><td>physician JWT</td><td>Send a peer message. Body: {recipient_id, body, message_type, include_schedule_cta}</td></tr>
+        <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/v1/messages?unread=true</code></td><td>physician JWT</td><td>Fetch inbox messages</td></tr>
+        <tr><td><span class="badge badge-blue">POST</span></td><td><code>/api/v1/self-report</code></td><td>physician JWT</td><td>Submit emotional tag. Body: {tag: "rough_shift"|"lost_patient"|...}. Feeds signal engine.</td></tr>
+        <tr><td><span class="badge badge-blue">POST</span></td><td><code>/api/v1/concern-flags</code></td><td>physician JWT</td><td>Flag concern about a colleague. Body: {target_id, private_note?}. Anonymous to target.</td></tr>
+        <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/v1/peers/search?q=name&specialty=cardiology</code></td><td>physician JWT</td><td>Search Bridge users at same institution. Returns: name, specialty, career_stage only.</td></tr>
+        <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/v1/wellness/meditations</code></td><td>physician JWT</td><td>Fetch meditation track metadata (CDN URLs served from S3, pre-signed)</td></tr>
+        <tr><td><span class="badge badge-blue">POST</span></td><td><code>/api/v1/wellness/sessions</code></td><td>physician JWT</td><td>Log a wellness session (type, duration). No content — metadata only.</td></tr>
+        <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/v1/fhir/ehr-signals</code></td><td>physician JWT + Epic OAuth</td><td>Fetch EHR workflow signals for scoring. Returns only metadata (no PHI, no patient IDs).</td></tr>
+        <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/v1/admin/dashboard</code></td><td>admin JWT (hospital role)</td><td>Return pre-computed aggregate snapshot for requesting hospital. Individual data access = 403.</td></tr>
+        <tr><td><span class="badge badge-red">DELETE</span></td><td><code>/api/v1/physician/me</code></td><td>physician JWT</td><td>Soft-delete account. Anonymizes all personal data within 24h. Messages purged immediately.</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="color:#fff; font-size:1.05rem; margin: 2rem 0 1rem; font-weight:600;">Background Services</h3>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span class="dot dot-blue"></span>Score Computation Service</div>
+        <p>Runs nightly (2am local hospital time). For each active physician: fetches yesterday's EHR signals from Epic, retrieves on-device-computed wearable sub-score (from last POST), applies weighting formula, writes composite score to <code>distress_scores</code>. Checks against sustained and acute thresholds. If trigger conditions met: enqueues notification job (BullMQ).</p>
+        <pre><span class="comment">// BullMQ job schema</span>
+{
+  <span class="key">jobName</span>: <span class="str">"score.trigger.notify"</span>,
+  <span class="key">data</span>: {
+    <span class="key">physician_id</span>: <span class="str">"uuid"</span>,
+    <span class="key">trigger_type</span>: <span class="str">"sustained|acute|hard_event"</span>,
+    <span class="key">score</span>: <span class="val">78</span>,
+    <span class="key">copy_variant</span>: <span class="val">3</span>   <span class="comment">// selects from copy library</span>
+  },
+  <span class="key">opts</span>: { <span class="key">delay</span>: <span class="val">0</span>, <span class="key">attempts</span>: <span class="val">3</span> }
+}</pre>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="dot dot-teal"></span>Epic FHIR Sync Service</div>
+        <p>Runs per-hospital on staggered schedule. Uses Epic's bulk FHIR export (Group/$export) scoped to physician login events and note timing metadata only. Parses out: login timestamps, note creation times, encounter open/close times. No patient data is stored or transmitted — only physician workflow timing.</p>
+        <p>Requires: Epic App Orchard registration, SMART on FHIR backend authorization, hospital IT approval. Scopes requested: <code>system/AuditEvent.read</code>, <code>system/Practitioner.read</code>, <code>system/Encounter.read</code> (metadata only).</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="dot dot-green"></span>Aggregate Snapshot Generator</div>
+        <p>Runs every Sunday 3am. Reads the past week's <code>distress_scores</code> for each hospital. Computes aggregate metrics. If active physician count &lt; 10 for any sub-group, suppresses that metric (writes NULL). Writes to <code>hospital_aggregate_snapshots</code>. Individual-level query access to <code>distress_scores</code> table is blocked at the Postgres RLS (Row Level Security) policy level — only the physician's own JWT can read their own rows.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="dot dot-amber"></span>Notification Delivery Service</div>
+        <p>Consumes from BullMQ. Respects physician notification preferences (silent hours, max 1/day). Deduplicates — if physician already received a notification today, job is dropped. Delivery targets: push notification via Expo Push API (APNs + FCM). Falls back to in-app inbox if push is disabled. Tracks delivery and read status per notification.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="dot dot-purple"></span>Message Expiry Service</div>
+        <p>Runs hourly. Deletes peer messages where <code>expires_at &lt; now()</code>. Messages expire 30 days after creation. Runs a VACUUM ANALYZE after deletion batch. This is a hard data retention policy — no exceptions, no recovery. The hospital cannot request message archives.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="dot dot-red"></span>Concern Flag Resolver</div>
+        <p>Runs daily. For each active concern flag: checks if the flagged physician's own score is elevated. If yes, increases the weight of peer support suggestions in their next trigger notification. Auto-expires flags after 14 days. Tracks "flag + elevated score" convergence for reporting to Chief Wellness Officer (count only, no names).</p>
+      </div>
+    </div>
+
+    <h3 style="color:#fff; font-size:1.05rem; margin: 2rem 0 1rem; font-weight:600;">Security & Compliance</h3>
+
+    <div class="card">
+      <div class="grid-2">
+        <div>
+          <div class="card-title"><span class="dot dot-red"></span>HIPAA Technical Safeguards</div>
+          <ul class="spec-list">
+            <li>All data at rest: AES-256 encryption (AWS KMS managed keys)</li>
+            <li>All data in transit: TLS 1.3 minimum</li>
+            <li>Peer messages: end-to-end encrypted (AES-256, key in physician HealthKit Keychain)</li>
+            <li>Database: PostgreSQL RLS — physicians can only read their own rows in <code>distress_scores</code>, <code>circle_members</code>, <code>peer_messages</code></li>
+            <li>Admin JWT cannot query individual-level data tables — blocked at API middleware layer</li>
+            <li>BAA required with AWS, Expo, any third-party service with data access</li>
+            <li>Audit log for all API calls: stored 6 years (HIPAA requirement)</li>
+          </ul>
+        </div>
+        <div>
+          <div class="card-title"><span class="dot dot-blue"></span>Auth Architecture</div>
+          <ul class="spec-list">
+            <li>Hospital SSO: SAML 2.0 via Auth0 SAML adapter. Hospital IDP maintains identity.</li>
+            <li>Mobile JWT: short-lived (1h) access tokens + 30-day refresh tokens. Stored in device secure enclave (Keychain / Android Keystore).</li>
+            <li>Epic OAuth: physician-level SMART on FHIR. Scope limited to practitioner's own audit data.</li>
+            <li>Admin JWT: separate token type, role=hospital_admin. Cannot be elevated to physician permissions even with exploit — separate Postgres role.</li>
+            <li>MFA: required for admin accounts. Recommended (not required) for physician accounts to reduce friction.</li>
+            <li>Rate limiting: 100 req/min per physician JWT. 20 req/min for score submission.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="color:#fff; font-size:1.05rem; margin: 2rem 0 1rem; font-weight:600;">Infrastructure Diagram (Text)</h3>
+
+    <pre><span class="comment">
+Mobile App (React Native / Expo)
+    │
+    ├── HealthKit / Health Connect (on-device only)
+    │       └── Computes wearable sub-score → POST to API
+    │
+    ├── Expo Push Notification Service
+    │
+    └── HTTPS → AWS ALB (Application Load Balancer)
+            │
+            ├── API Service (Fastify, EKS pods, 3× replicas)
+            │       ├── Auth0 JWT validation middleware
+            │       ├── Epic FHIR Sync (cron, separate pod)
+            │       ├── Score Computation Service (cron, separate pod)
+            │       ├── Notification Delivery (BullMQ consumer)
+            │       └── Aggregate Snapshot Generator (cron)
+            │
+            ├── PostgreSQL 16 (AWS RDS, Multi-AZ, encrypted)
+            │       └── Row Level Security enforced
+            │
+            ├── Redis 7 (AWS ElastiCache, BullMQ queues + API cache)
+            │
+            └── S3 (meditation audio, CDN via CloudFront)
+
+Hospital Admin Dashboard (React web app)
+    └── HTTPS → same ALB → API /admin/* routes (hospital_admin role)
+</span></pre>
+
+    <div class="callout callout-green">
+      <div class="callout-title">Day-One MVP Scope</div>
+      <p>For the initial Lovable + Cursor build, prioritize in this order: (1) Onboarding flow through Circle setup, (2) Score computation and trigger notification, (3) Three-option interface + breathing module, (4) Circle message send + receive, (5) Hospital aggregate dashboard. Wearable integration, RISE peer matching, and the POST coach feature are Phase 2 after first hospital pilot live.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  Healthcare Worker Mental Health Companion — Product Specification v1.0 &nbsp;·&nbsp; The Bridge &nbsp;·&nbsp; May 2026
+</footer>
+
+<script>
+  // Scroll progress bar
+  const progressBar = document.getElementById('progress-bar');
+  window.addEventListener('scroll', () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const pct = (scrollTop / docHeight) * 100;
+    progressBar.style.width = pct + '%';
+  });
+
+  // Smooth active nav highlighting
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.style.color = link.getAttribute('href') === '#' + entry.target.id
+            ? 'var(--text)' : '';
+          link.style.background = link.getAttribute('href') === '#' + entry.target.id
+            ? 'var(--surface)' : '';
+        });
+      }
+    });
+  }, { threshold: 0.2 });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
