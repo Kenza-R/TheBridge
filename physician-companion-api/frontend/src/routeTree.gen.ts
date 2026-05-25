@@ -18,6 +18,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as WellnessIndexRouteImport } from './routes/wellness/index'
 import { Route as CircleIndexRouteImport } from './routes/circle/index'
 import { Route as WellnessTrendsRouteImport } from './routes/wellness/trends'
+import { Route as WellnessSupportRouteImport } from './routes/wellness/support'
+import { Route as WellnessJournalRouteImport } from './routes/wellness/journal'
 import { Route as WellnessBreatheRouteImport } from './routes/wellness/breathe'
 import { Route as SettingsThresholdsRouteImport } from './routes/settings/thresholds'
 import { Route as SettingsPrivacyRouteImport } from './routes/settings/privacy'
@@ -73,6 +75,16 @@ const CircleIndexRoute = CircleIndexRouteImport.update({
 const WellnessTrendsRoute = WellnessTrendsRouteImport.update({
   id: '/wellness/trends',
   path: '/wellness/trends',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WellnessSupportRoute = WellnessSupportRouteImport.update({
+  id: '/wellness/support',
+  path: '/wellness/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WellnessJournalRoute = WellnessJournalRouteImport.update({
+  id: '/wellness/journal',
+  path: '/wellness/journal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WellnessBreatheRoute = WellnessBreatheRouteImport.update({
@@ -149,6 +161,8 @@ export interface FileRoutesByFullPath {
   '/settings/privacy': typeof SettingsPrivacyRoute
   '/settings/thresholds': typeof SettingsThresholdsRoute
   '/wellness/breathe': typeof WellnessBreatheRoute
+  '/wellness/journal': typeof WellnessJournalRoute
+  '/wellness/support': typeof WellnessSupportRoute
   '/wellness/trends': typeof WellnessTrendsRoute
   '/circle/': typeof CircleIndexRoute
   '/wellness/': typeof WellnessIndexRoute
@@ -171,6 +185,8 @@ export interface FileRoutesByTo {
   '/settings/privacy': typeof SettingsPrivacyRoute
   '/settings/thresholds': typeof SettingsThresholdsRoute
   '/wellness/breathe': typeof WellnessBreatheRoute
+  '/wellness/journal': typeof WellnessJournalRoute
+  '/wellness/support': typeof WellnessSupportRoute
   '/wellness/trends': typeof WellnessTrendsRoute
   '/circle': typeof CircleIndexRoute
   '/wellness': typeof WellnessIndexRoute
@@ -194,6 +210,8 @@ export interface FileRoutesById {
   '/settings/privacy': typeof SettingsPrivacyRoute
   '/settings/thresholds': typeof SettingsThresholdsRoute
   '/wellness/breathe': typeof WellnessBreatheRoute
+  '/wellness/journal': typeof WellnessJournalRoute
+  '/wellness/support': typeof WellnessSupportRoute
   '/wellness/trends': typeof WellnessTrendsRoute
   '/circle/': typeof CircleIndexRoute
   '/wellness/': typeof WellnessIndexRoute
@@ -218,6 +236,8 @@ export interface FileRouteTypes {
     | '/settings/privacy'
     | '/settings/thresholds'
     | '/wellness/breathe'
+    | '/wellness/journal'
+    | '/wellness/support'
     | '/wellness/trends'
     | '/circle/'
     | '/wellness/'
@@ -240,6 +260,8 @@ export interface FileRouteTypes {
     | '/settings/privacy'
     | '/settings/thresholds'
     | '/wellness/breathe'
+    | '/wellness/journal'
+    | '/wellness/support'
     | '/wellness/trends'
     | '/circle'
     | '/wellness'
@@ -262,6 +284,8 @@ export interface FileRouteTypes {
     | '/settings/privacy'
     | '/settings/thresholds'
     | '/wellness/breathe'
+    | '/wellness/journal'
+    | '/wellness/support'
     | '/wellness/trends'
     | '/circle/'
     | '/wellness/'
@@ -280,6 +304,8 @@ export interface RootRouteChildren {
   OnboardingVerifyRoute: typeof OnboardingVerifyRoute
   OnboardingWearablesRoute: typeof OnboardingWearablesRoute
   WellnessBreatheRoute: typeof WellnessBreatheRoute
+  WellnessJournalRoute: typeof WellnessJournalRoute
+  WellnessSupportRoute: typeof WellnessSupportRoute
   WellnessTrendsRoute: typeof WellnessTrendsRoute
   CircleIndexRoute: typeof CircleIndexRoute
   WellnessIndexRoute: typeof WellnessIndexRoute
@@ -348,6 +374,20 @@ declare module '@tanstack/react-router' {
       path: '/wellness/trends'
       fullPath: '/wellness/trends'
       preLoaderRoute: typeof WellnessTrendsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/wellness/support': {
+      id: '/wellness/support'
+      path: '/wellness/support'
+      fullPath: '/wellness/support'
+      preLoaderRoute: typeof WellnessSupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/wellness/journal': {
+      id: '/wellness/journal'
+      path: '/wellness/journal'
+      fullPath: '/wellness/journal'
+      preLoaderRoute: typeof WellnessJournalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/wellness/breathe': {
@@ -463,6 +503,8 @@ const rootRouteChildren: RootRouteChildren = {
   OnboardingVerifyRoute: OnboardingVerifyRoute,
   OnboardingWearablesRoute: OnboardingWearablesRoute,
   WellnessBreatheRoute: WellnessBreatheRoute,
+  WellnessJournalRoute: WellnessJournalRoute,
+  WellnessSupportRoute: WellnessSupportRoute,
   WellnessTrendsRoute: WellnessTrendsRoute,
   CircleIndexRoute: CircleIndexRoute,
   WellnessIndexRoute: WellnessIndexRoute,

@@ -68,7 +68,29 @@
         display: grid;
         place-items: center;
         font-size: 0.9rem;
+        flex-shrink: 0;
       }
+      .ico svg.lucide {
+        width: 1.125rem;
+        height: 1.125rem;
+        stroke: var(--gold);
+        fill: none;
+        stroke-width: 1.75;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .ico.lg svg.lucide { width: 1.35rem; height: 1.35rem; }
+      .ico.gold svg.lucide { stroke: var(--gold); }
+      .card-icon svg.lucide {
+        width: 1.75rem;
+        height: 1.75rem;
+        stroke: var(--mint);
+        fill: none;
+        stroke-width: 1.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .card-icon.gold svg.lucide { stroke: var(--gold); }
       .row .val { margin-left: auto; font-size: 1.1rem; font-weight: 600; }
       .ring-wrap {
         display: flex;
@@ -108,15 +130,31 @@
       .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 1.25rem; }
       .grid2 .card { padding: 1rem; }
       .emoji-row { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
-      .emoji-row button {
+      .emoji-row button,
+      .mood-btn {
         flex: 1;
         aspect-ratio: 1;
         max-height: 3.25rem;
         border: none;
         border-radius: 1rem;
         background: var(--surface);
-        font-size: 1.5rem;
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .mood-btn.on { background: rgba(212, 184, 150, 0.12); box-shadow: inset 0 0 0 1px rgba(212, 184, 150, 0.35); }
+      .mini-ring {
+        width: 2.75rem;
+        height: 2.75rem;
+        border-radius: 50%;
+        border: 3px solid var(--mint);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        font-weight: 600;
+        flex-shrink: 0;
       }
       .chips { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.25rem; margin-top: 0.75rem; }
       .chip {
@@ -253,7 +291,9 @@
             <p class="label">Today</p>
             <h1>Good evening, Patel</h1>
           </div>
-          <div class="ico" style="width: 2.5rem; height: 2.5rem; border-radius: 50%; background: var(--raised); border: 1px solid var(--border)">🔔</div>
+          <div class="ico lg" style="width: 2.5rem; height: 2.5rem; border-radius: 50%; background: var(--raised); border: 1px solid var(--border)">
+            <svg class="lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg>
+          </div>
         </header>
         <div class="ring-wrap">
           <div class="ring-glow"></div>
@@ -280,19 +320,23 @@
           <span class="label">Contributors</span>
           <span style="font-size: 0.75rem; color: var(--muted)">Trends →</span>
         </div>
-        <div class="row"><span class="ico">🩺</span><div><div style="font-size: 0.875rem; font-weight: 500">Clinical load</div><div class="sub" style="margin: 0">EHR timing patterns</div></div><span class="val">62</span></div>
-        <div class="row"><span class="ico">🌙</span><div><div style="font-size: 0.875rem; font-weight: 500">Recovery</div><div class="sub" style="margin: 0">Wearable trends</div></div><span class="val">71</span></div>
-        <div class="row"><span class="ico">💨</span><div><div style="font-size: 0.875rem; font-weight: 500">How you feel</div><div class="sub" style="margin: 0">Private check-ins</div></div><span class="val">55</span></div>
+        <div class="row"><span class="ico"><svg class="lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 2v2"/><path d="M5 2v2"/><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 6 6 0 0 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2h-1"/><path d="M8 15v6"/><path d="M16 15v6"/></svg></span><div><div style="font-size: 0.875rem; font-weight: 500">Clinical load</div><div class="sub" style="margin: 0">EHR timing patterns</div></div><span class="val">62</span></div>
+        <div class="row"><span class="ico"><svg class="lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></span><div><div style="font-size: 0.875rem; font-weight: 500">Recovery</div><div class="sub" style="margin: 0">Wearable trends</div></div><span class="val">71</span></div>
+        <div class="row"><span class="ico"><svg class="lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg></span><div><div style="font-size: 0.875rem; font-weight: 500">How you feel</div><div class="sub" style="margin: 0">Private check-ins</div></div><span class="val">55</span></div>
         <div class="card" style="margin-top: 1rem">
           <p class="label" style="margin-bottom: 0.5rem">Daily reflection</p>
           <p class="sub">How is today landing?</p>
-          <div class="emoji-row">
-            <button>😞</button><button>😕</button><button>😐</button><button>🙂</button><button>😄</button>
+          <div class="emoji-row mood-row">
+            <button class="mood-btn" title="Rough"><svg width="32" height="32" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)"/><path d="M8 10 h2 M14 10 h2 M8 17 Q12 14 16 17" fill="none" stroke="#a1a1a6" stroke-width="1.5"/></svg></button>
+            <button class="mood-btn"><svg width="32" height="32" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)"/><path d="M8 10 h2 M14 10 h2 M8 16 Q12 15 16 16" fill="none" stroke="#a1a1a6" stroke-width="1.5"/></svg></button>
+            <button class="mood-btn on"><svg width="32" height="32" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="rgba(212,184,150,0.15)" stroke="rgba(212,184,150,0.5)"/><path d="M8 10 h2 M14 10 h2 M8 16 h8" fill="none" stroke="#d4b896" stroke-width="1.5"/></svg></button>
+            <button class="mood-btn"><svg width="32" height="32" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)"/><path d="M8 10 h2 M14 10 h2 M8 15 Q12 18 16 15" fill="none" stroke="#a1a1a6" stroke-width="1.5"/></svg></button>
+            <button class="mood-btn"><svg width="32" height="32" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)"/><path d="M7 9 Q9 7 11 9 M13 9 Q15 7 17 9 M8 14 Q12 19 16 14" fill="none" stroke="#a1a1a6" stroke-width="1.5"/></svg></button>
           </div>
         </div>
         <div class="grid2">
-          <div class="card"><div style="font-size: 1.25rem; margin-bottom: 0.5rem">💨</div><strong style="font-size: 0.875rem">Breathe</strong><div class="sub">90 sec reset</div></div>
-          <div class="card"><div style="font-size: 1.25rem; margin-bottom: 0.5rem">✦</div><strong style="font-size: 0.875rem">Reach out</strong><div class="sub">Your circle</div></div>
+          <div class="card"><div class="card-icon" style="margin-bottom: 0.5rem"><svg class="lucide" viewBox="0 0 24 24"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg></div><strong style="font-size: 0.875rem">Breathe</strong><div class="sub">90 sec reset</div></div>
+          <div class="card"><div class="card-icon gold" style="margin-bottom: 0.5rem"><svg class="lucide" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></div><strong style="font-size: 0.875rem">Get support</strong><div class="sub">Peer → professional</div></div>
         </div>
         <div class="chips">
           <span class="chip">Rough shift</span>
@@ -305,13 +349,14 @@
         <p class="label">Vitals</p>
         <h1>Wellness</h1>
         <p class="sub" style="margin-bottom: 1.25rem">Short, private, on your terms.</p>
-        <div class="segmented">
-          <button class="on">Restore</button>
-          <button>Listen</button>
-          <button>Trends</button>
+        <div class="segmented" style="font-size: 0.7rem">
+          <button class="on">Breathe</button>
+          <button>Meditate</button>
+          <button>Journal</button>
+          <button>Support</button>
         </div>
         <div class="card" style="padding: 1.5rem">
-          <div style="font-size: 1.75rem; margin-bottom: 0.75rem">💨</div>
+          <div class="card-icon" style="margin-bottom: 0.75rem"><svg class="lucide" viewBox="0 0 24 24"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg></div>
           <div style="font-size: 1.15rem; font-weight: 600">90-second reset</div>
           <div class="sub">Box · 4-7-8 · extended exhale</div>
           <div style="margin-top: 1rem; color: var(--gold); font-size: 0.875rem">Start →</div>
@@ -321,14 +366,24 @@
       <section id="circle" class="screen">
         <p class="label">Circle</p>
         <h1>Your people</h1>
-        <p class="sub" style="margin-bottom: 1rem">3 trusted colleagues</p>
+        <p class="sub" style="margin-bottom: 1rem">3 colleagues · shared resilience</p>
+        <div class="card" style="margin-bottom: 0.75rem; border: 1px solid rgba(125,211,168,0.25)">
+          <div style="font-weight: 500">Coffee break?</div>
+          <div class="sub">Take a coffee with Dr. Maya Chen in 2h · Café near South Wing</div>
+          <div style="display:flex;gap:0.5rem;margin-top:0.75rem"><button style="flex:1;padding:0.5rem;border-radius:999px;background:var(--gold);color:#0a0a0b;border:none;font-weight:600">Yes, I'm in</button><button style="flex:1;padding:0.5rem;border-radius:999px;background:var(--raised);color:var(--fg);border:1px solid var(--border)">Not now</button></div>
+        </div>
+        <p class="label" style="margin: 0.75rem 0 0.5rem">Upcoming with your circle</p>
+        <div class="card" style="margin-bottom: 0.5rem"><div style="font-weight:500">Post-shift dinner</div><div class="sub">Thu · 7:00 PM · with Dr. Chen, Dr. Reyes</div></div>
         <div class="card" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem">
-          <div class="ico" style="width: 3rem; height: 3rem; font-size: 1.25rem">✦</div>
+          <div class="ico lg gold" style="width: 3rem; height: 3rem">
+            <svg class="lucide" viewBox="0 0 24 24"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+          </div>
           <div style="flex: 1"><div style="font-weight: 500">Reach out</div><div class="sub">Private note · 30 days</div></div>
           <span style="color: var(--muted)">›</span>
         </div>
-        <div class="row"><span class="ico">MC</span><div><div style="font-weight: 500">Dr. Maya Chen</div><div class="sub" style="margin:0">Internal Medicine</div></div><span style="font-size:0.65rem;color:var(--gold);text-transform:uppercase">First Reach</span></div>
-        <div class="row"><span class="ico">JR</span><div><div style="font-weight: 500">Dr. Jamie Reyes</div><div class="sub" style="margin:0">Pediatrics</div></div><span style="font-size:0.65rem;color:var(--gold);text-transform:uppercase">Buddy</span></div>
+        <p class="label" style="margin-bottom: 0.5rem">Resilience in your circle</p>
+        <div class="row"><span class="mini-ring">74</span><span class="ico">MC</span><div><div style="font-weight: 500">Dr. Maya Chen</div><div class="sub" style="margin:0">Internal Medicine</div></div><span style="font-size:0.65rem;color:var(--gold);text-transform:uppercase">First Reach</span></div>
+        <div class="row"><span class="mini-ring">61</span><span class="ico">JR</span><div><div style="font-weight: 500">Dr. Jamie Reyes</div><div class="sub" style="margin:0">Pediatrics</div></div><span style="font-size:0.65rem;color:var(--gold);text-transform:uppercase">Buddy</span></div>
       </section>
 
       <section id="you" class="screen">
@@ -336,9 +391,9 @@
         <h1>Dr. Anika Patel</h1>
         <p class="sub" style="margin-bottom: 1.5rem">Mercy General · Demo mode</p>
         <div class="card" style="padding: 0 0.5rem">
-          <div class="row" style="border: none; margin: 0; background: transparent"><span class="ico">◎</span><div><div style="font-weight:500">API connection</div><div class="sub" style="margin:0">Configure dev token</div></div><span>›</span></div>
-          <div class="row" style="border: none; margin: 0; background: transparent"><span class="ico">👥</span><div><div style="font-weight:500">Manage circle</div><div class="sub" style="margin:0">3 active</div></div><span>›</span></div>
-          <div class="row" style="border: none; margin: 0; background: transparent"><span class="ico">🔔</span><div><div style="font-weight:500">Notifications</div><div class="sub" style="margin:0">Silent 07:00–19:00</div></div><span>›</span></div>
+          <div class="row" style="border: none; margin: 0; background: transparent"><span class="ico"><svg class="lucide" viewBox="0 0 24 24"><path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/></svg></span><div><div style="font-weight:500">API connection</div><div class="sub" style="margin:0">Configure dev token</div></div><span>›</span></div>
+          <div class="row" style="border: none; margin: 0; background: transparent"><span class="ico"><svg class="lucide" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><div><div style="font-weight:500">Manage circle</div><div class="sub" style="margin:0">3 active</div></div><span>›</span></div>
+          <div class="row" style="border: none; margin: 0; background: transparent"><span class="ico"><svg class="lucide" viewBox="0 0 24 24"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg></span><div><div style="font-weight:500">Notifications</div><div class="sub" style="margin:0">Silent 07:00–19:00</div></div><span>›</span></div>
         </div>
       </section>
     </div>

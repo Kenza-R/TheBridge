@@ -1,15 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import {
-  Bell,
-  ChevronRight,
-  MessageCircle,
-  Moon,
-  Stethoscope,
-  Wind,
-  X,
-} from "lucide-react";
+import { useState } from "react";
+import { Bell, ChevronRight, MessageCircle, Wind, X } from "lucide-react";
 import { AppShell } from "@/components/bridge/AppShell";
+import { MetricIcon } from "@/components/bridge/MetricIcon";
+import { MoodScale, MOOD_SCORES, type MoodLevel } from "@/components/bridge/MoodIcon";
 import { ScoreRing } from "@/components/bridge/ScoreRing";
 import { useBridge } from "@/lib/bridge-store";
 import { api } from "@/lib/api";
@@ -56,19 +51,19 @@ function Home() {
 
   const contributors = [
     {
-      icon: Stethoscope,
+      icon: "clinical" as const,
       name: "Clinical load",
       value: latest?.ehrSubScore != null ? `${Math.round(latest.ehrSubScore)}` : "—",
       hint: "EHR timing patterns",
     },
     {
-      icon: Moon,
+      icon: "recovery" as const,
       name: "Recovery",
       value: latest?.wearableSubScore != null ? `${Math.round(latest.wearableSubScore)}` : "—",
       hint: profile?.wearableType ? "Wearable trends" : "Not linked",
     },
     {
-      icon: Wind,
+      icon: "feel" as const,
       name: "How you feel",
       value: latest?.selfReportSubScore != null ? `${Math.round(latest.selfReportSubScore)}` : "—",
       hint: "Private check-ins",
@@ -112,10 +107,10 @@ function Home() {
             Trends <ChevronRight size={14} />
           </Link>
         </div>
-        {contributors.map(({ icon: Icon, name, value, hint }) => (
+        {contributors.map(({ icon, name, value, hint }) => (
           <div key={name} className="oura-metric-row">
             <div className="flex h-9 w-9 items-center justify-center rounded-full bg-surface">
-              <Icon size={16} className="text-gold" strokeWidth={1.75} />
+              <MetricIcon kind={icon} />
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium">{name}</p>
@@ -161,10 +156,10 @@ function QuickActions() {
         <p className="text-sm font-medium">Breathe</p>
         <p className="text-xs text-muted-foreground mt-0.5">90 sec reset</p>
       </Link>
-      <Link to="/circle/launch" className="oura-card p-4 active:scale-[0.98] transition">
+      <Link to="/wellness/support" className="oura-card p-4 active:scale-[0.98] transition">
         <MessageCircle size={20} className="text-gold mb-3" strokeWidth={1.75} />
-        <p className="text-sm font-medium">Reach out</p>
-        <p className="text-xs text-muted-foreground mt-0.5">Your circle</p>
+        <p className="text-sm font-medium">Get support</p>
+        <p className="text-xs text-muted-foreground mt-0.5">Peer → professional</p>
       </Link>
     </section>
   );
@@ -195,13 +190,12 @@ function TriggerInterface({ onDismiss }: { onDismiss: () => void }) {
   );
 }
 
-const MOOD_SCORES = [85, 70, 55, 40, 25] as const;
-
 function DailyCheckIn({ onHighDistress }: { onHighDistress: () => void }) {
   const { isApiConnected } = useBridgeApi();
+  const [selected, setSelected] = useState<MoodLevel | undefined>();
   const checkIn = useMutation({
-    mutationFn: async (index: number) => {
-      const score = MOOD_SCORES[index];
+    mutationFn: async (level: MoodLevel) => {
+      const score = MOOD_SCORES[level];
       await api.submitScore({ self_report: score });
       if (score >= 70) {
         await api.submitSelfReport("rough_shift");
@@ -214,19 +208,14 @@ function DailyCheckIn({ onHighDistress }: { onHighDistress: () => void }) {
     <section className="oura-card p-5 animate-fade-up">
       <p className="oura-label mb-3">Daily reflection</p>
       <p className="text-sm text-muted-foreground mb-4">How is today landing?</p>
-      <div className="flex justify-between gap-2">
-        {["😞", "😕", "😐", "🙂", "😄"].map((e, i) => (
-          <button
-            key={e}
-            type="button"
-            disabled={!isApiConnected || checkIn.isPending}
-            onClick={() => isApiConnected && checkIn.mutate(i)}
-            className="flex-1 aspect-square max-h-14 rounded-2xl bg-surface text-2xl active:scale-95 transition disabled:opacity-40"
-          >
-            {e}
-          </button>
-        ))}
-      </div>
+      <MoodScale
+        value={selected}
+        disabled={!isApiConnected || checkIn.isPending}
+        onChange={(level) => {
+          setSelected(level);
+          if (isApiConnected) checkIn.mutate(level);
+        }}
+      />
       {checkIn.isSuccess && (
         <p className="text-xs text-mint mt-3">Saved privately.</p>
       )}

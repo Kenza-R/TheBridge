@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { ChevronLeft, X } from "lucide-react";
+import { MoodScale, type MoodLevel } from "@/components/bridge/MoodIcon";
 import { api } from "@/lib/api";
 import { useBridgeApi } from "@/providers/bridge-api";
 
@@ -141,6 +142,7 @@ function Breathe() {
 
 function End({ durationSec, onReset }: { durationSec: number; onReset: () => void }) {
   const { isApiConnected } = useBridgeApi();
+  const [afterMood, setAfterMood] = useState<MoodLevel | undefined>();
   const log = useMutation({
     mutationFn: () => api.logWellnessSession("breathing", durationSec),
   });
@@ -150,22 +152,21 @@ function End({ durationSec, onReset }: { durationSec: number; onReset: () => voi
   }, [isApiConnected]);
 
   return (
-    <div className="fixed inset-0 flex flex-col items-center justify-center px-8 bg-background max-w-md mx-auto text-center">
+    <div className="fixed inset-0 flex flex-col items-center justify-center px-6 bg-background max-w-md mx-auto text-center">
       <p className="oura-label mb-2">Complete</p>
       <h2 className="text-3xl font-semibold mb-2">Nice work.</h2>
-      <p className="text-sm text-muted-foreground mb-10">How do you feel now?</p>
-      <div className="flex gap-3 mb-10">
-        {["😞", "😕", "😐", "🙂", "😄"].map((e) => (
-          <button key={e} type="button" className="h-12 w-12 rounded-2xl bg-surface-raised text-2xl border border-border">
-            {e}
-          </button>
-        ))}
+      <p className="text-sm text-muted-foreground mb-6">How do you feel now?</p>
+      <div className="w-full max-w-sm mb-8">
+        <MoodScale value={afterMood} onChange={setAfterMood} />
       </div>
-      <Link to="/home" onClick={onReset} className="oura-btn oura-btn-primary max-w-xs">
+      <Link to="/home" onClick={onReset} className="oura-btn oura-btn-primary max-w-xs w-full">
         Done
       </Link>
-      <Link to="/circle/launch" className="mt-4 text-xs text-muted-foreground">
-        Share with your circle
+      <Link to="/wellness/journal" className="mt-3 text-xs text-muted-foreground block">
+        Journal this moment
+      </Link>
+      <Link to="/circle/launch" className="mt-2 text-xs text-gold block">
+        Reach out to your circle
       </Link>
       {log.isSuccess && <p className="text-[10px] text-mint mt-4">Logged privately.</p>}
     </div>
