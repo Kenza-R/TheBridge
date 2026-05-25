@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Healthcare Worker Mental Health Companion — Pitch Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+
+/* === THEME VARIABLES === */
+:root {
+  --bg:        #04091a;
+  --bg2:       #080f24;
+  --blue:      #3b82f6;
+  --blue-dim:  rgba(59,130,246,0.12);
+  --blue-glow: rgba(59,130,246,0.35);
+  --teal:      #06b6d4;
+  --white:     #ffffff;
+  --muted:     #94a3b8;
+  --dimmer:    #4b5563;
+  --line:      rgba(255,255,255,0.07);
+  --font-d:    'Syne', sans-serif;
+  --font-b:    'DM Sans', sans-serif;
+  --font-m:    'DM Mono', monospace;
+  --ease:      cubic-bezier(0.16, 1, 0.3, 1);
+  --dur:       0.65s;
+
+  /* viewport-base.css vars */
+  --title-size:    clamp(1.5rem, 5vw, 4rem);
+  --h2-size:       clamp(1.25rem, 3.5vw, 2.5rem);
+  --h3-size:       clamp(1rem, 2.5vw, 1.75rem);
+  --body-size:     clamp(0.75rem, 1.3vw, 1.05rem);
+  --small-size:    clamp(0.65rem, 1vw, 0.875rem);
+  --slide-padding: clamp(1.5rem, 5vw, 5rem);
+  --content-gap:   clamp(0.5rem, 2vw, 2rem);
+  --element-gap:   clamp(0.25rem, 1vw, 1rem);
+}
+
+/* === VIEWPORT BASE (mandatory) === */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; overflow-x:hidden; }
+html { scroll-snap-type:y mandatory; scroll-behavior:smooth; }
+body { font-family:var(--font-b); background:var(--bg); color:var(--white); }
+
+.slide {
+  width:100vw; height:100vh; height:100dvh;
+  overflow:hidden; scroll-snap-align:start;
+  display:flex; flex-direction:column; position:relative;
+}
+.slide-content {
+  flex:1; display:flex; flex-direction:column;
+  justify-content:center; max-height:100%; overflow:hidden;
+  padding:var(--slide-padding);
+}
+
+@media (max-height:700px) {
+  :root { --slide-padding:clamp(0.75rem,3vw,2rem); --content-gap:clamp(0.4rem,1.5vw,1rem); --title-size:clamp(1.25rem,4.5vw,2.5rem); }
+}
+@media (max-height:600px) {
+  :root { --slide-padding:clamp(0.5rem,2.5vw,1.5rem); --content-gap:clamp(0.3rem,1vw,0.75rem); --title-size:clamp(1.1rem,4vw,2rem); --body-size:clamp(0.7rem,1.2vw,0.95rem); }
+  .nav-dots, .keyboard-hint, .decorative { display:none; }
+}
+@media (max-height:500px) {
+  :root { --slide-padding:clamp(0.4rem,2vw,1rem); --title-size:clamp(1rem,3.5vw,1.5rem); --h2-size:clamp(0.9rem,2.5vw,1.25rem); --body-size:clamp(0.65rem,1vw,0.85rem); }
+}
+@media (max-width:600px) {
+  :root { --title-size:clamp(1.25rem,7vw,2.5rem); }
+}
+@media (prefers-reduced-motion:reduce) {
+  *, *::before, *::after { animation-duration:0.01ms !important; transition-duration:0.2s !important; }
+  html { scroll-behavior:auto; }
+}
+
+/* === BACKGROUND GRID PATTERN === */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
+  background-size:60px 60px;
+}
+
+/* === PROGRESS BAR === */
+.progress-bar {
+  position:fixed; top:0; left:0; height:2px; width:0%;
+  background:linear-gradient(90deg, var(--blue), var(--teal));
+  z-index:1000; transition:width 0.3s var(--ease);
+  box-shadow:0 0 12px var(--blue-glow);
+}
+
+/* === NAV DOTS === */
+.nav-dots {
+  position:fixed; right:clamp(12px,2vw,24px); top:50%;
+  transform:translateY(-50%); display:flex; flex-direction:column;
+  gap:8px; z-index:999;
+}
+.nav-dot {
+  width:6px; height:6px; border-radius:50%;
+  background:var(--dimmer); cursor:pointer;
+  transition:all 0.3s var(--ease); border:none;
+}
+.nav-dot.active { background:var(--blue); box-shadow:0 0 8px var(--blue-glow); transform:scale(1.4); }
+
+/* === SLIDE NUMBER === */
+.slide-num {
+  position:absolute; top:clamp(16px,2.5vw,32px); right:clamp(16px,2.5vw,32px);
+  font-family:var(--font-m); font-size:var(--small-size);
+  color:var(--dimmer); letter-spacing:0.08em;
+}
+
+/* === ANIMATIONS === */
+.reveal {
+  opacity:0; transform:translateY(28px);
+  transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.reveal-left {
+  opacity:0; transform:translateX(-40px);
+  transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.reveal-scale {
+  opacity:0; transform:scale(0.88);
+  transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.slide.visible .reveal    { opacity:1; transform:translateY(0); }
+.slide.visible .reveal-left  { opacity:1; transform:translateX(0); }
+.slide.visible .reveal-scale { opacity:1; transform:scale(1); }
+.slide.visible .reveal:nth-child(1) { transition-delay:0.05s; }
+.slide.visible .reveal:nth-child(2) { transition-delay:0.15s; }
+.slide.visible .reveal:nth-child(3) { transition-delay:0.25s; }
+.slide.visible .reveal:nth-child(4) { transition-delay:0.35s; }
+.slide.visible .reveal:nth-child(5) { transition-delay:0.42s; }
+.slide.visible .reveal:nth-child(6) { transition-delay:0.49s; }
+
+/* === SHARED COMPONENTS === */
+.label {
+  font-family:var(--font-m); font-size:var(--small-size);
+  color:var(--blue); letter-spacing:0.1em; text-transform:uppercase;
+  margin-bottom:clamp(6px,1vw,12px);
+}
+.label-teal { color:var(--teal); }
+.accent-line {
+  width:clamp(32px,5vw,56px); height:3px;
+  background:linear-gradient(90deg,var(--blue),var(--teal));
+  border-radius:2px; margin-bottom:clamp(10px,1.5vw,20px);
+}
+
+/* === SLIDE 1: COVER === */
+.cover {
+  background:var(--bg);
+  background-image:
+    radial-gradient(ellipse at 70% 20%, rgba(59,130,246,0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 20% 80%, rgba(6,182,212,0.12) 0%, transparent 50%),
+    linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
+  background-size:auto, auto, 60px 60px, 60px 60px;
+}
+.cover-inner {
+  display:flex; flex-direction:column;
+  justify-content:center; height:100%;
+  padding:var(--slide-padding);
+  max-width:min(90vw, 900px);
+}
+.cover-eyebrow {
+  font-family:var(--font-m); font-size:var(--small-size);
+  color:var(--blue); letter-spacing:0.12em; text-transform:uppercase;
+  margin-bottom:clamp(8px,1.2vw,16px);
+  display:flex; align-items:center; gap:10px;
+}
+.cover-eyebrow::before {
+  content:''; display:inline-block;
+  width:28px; height:2px;
+  background:linear-gradient(90deg,var(--blue),var(--teal));
+}
+.cover-title {
+  font-family:var(--font-d); font-weight:900;
+  font-size:clamp(2rem,6.5vw,5.5rem);
+  line-height:1.05; letter-spacing:-0.03em;
+  color:var(--white); margin-bottom:clamp(12px,2vw,24px);
+}
+.cover-title span { color:var(--blue); }
+.cover-sub {
+  font-size:clamp(0.85rem,1.6vw,1.2rem);
+  color:var(--muted); max-width:520px;
+  line-height:1.65; margin-bottom:clamp(20px,3vw,44px);
+}
+.cover-tags {
+  display:flex; flex-wrap:wrap; gap:8px;
+}
+.tag {
+  font-family:var(--font-m); font-size:clamp(0.6rem,0.9vw,0.75rem);
+  letter-spacing:0.08em; text-transform:uppercase;
+  padding:6px 14px; border-radius:4px;
+  border:1px solid rgba(59,130,246,0.3);
+  color:var(--muted);
+}
+.tag-blue { border-color:rgba(59,130,246,0.5); color:var(--blue); background:var(--blue-dim); }
+.cover-bottom {
+  position:absolute; bottom:clamp(16px,3vw,36px);
+  left:var(--slide-padding); right:var(--slide-padding);
+  display:flex; align-items:flex-end; justify-content:space-between;
+}
+.cover-stat-row {
+  display:flex; gap:clamp(20px,4vw,48px);
+}
+.cover-stat .num {
+  font-family:var(--font-d); font-weight:900;
+  font-size:clamp(1.2rem,2.5vw,2rem);
+  color:var(--white); letter-spacing:-0.02em;
+}
+.cover-stat .num span { color:var(--blue); }
+.cover-stat .lbl {
+  font-size:clamp(0.6rem,0.9vw,0.72rem);
+  color:var(--muted); letter-spacing:0.06em; text-transform:uppercase;
+  margin-top:2px;
+}
+.cover-date {
+  font-family:var(--font-m); font-size:var(--small-size);
+  color:var(--dimmer);
+}
+
+/* === STAT SLIDES === */
+.stat-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(min(100%,200px),1fr));
+  gap:clamp(10px,2vw,20px);
+  margin-top:clamp(14px,2vw,28px);
+}
+.stat-card {
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--line);
+  border-radius:12px; padding:clamp(16px,2.5vw,28px);
+}
+.stat-card .num {
+  font-family:var(--font-d); font-weight:900;
+  font-size:clamp(1.6rem,4vw,3.2rem);
+  letter-spacing:-0.03em; line-height:1;
+  color:var(--blue); margin-bottom:6px;
+}
+.stat-card .num.red  { color:#f87171; }
+.stat-card .num.teal { color:var(--teal); }
+.stat-card .desc {
+  font-size:var(--body-size); color:var(--muted);
+  line-height:1.5;
+}
+.stat-card .source {
+  font-family:var(--font-m); font-size:clamp(0.55rem,0.8vw,0.65rem);
+  color:var(--dimmer); margin-top:8px;
+}
+
+/* === TWO COL LAYOUT === */
+.two-col {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:clamp(16px,3vw,40px); align-items:center;
+  height:100%; padding:var(--slide-padding);
+}
+.two-col.left-wider { grid-template-columns:1.3fr 1fr; }
+@media(max-width:700px) { .two-col { grid-template-columns:1fr; } }
+
+/* === SLIDE HEADERS === */
+.slide-header {
+  margin-bottom:clamp(14px,2vw,28px);
+}
+.slide-h2 {
+  font-family:var(--font-d); font-weight:800;
+  font-size:var(--h2-size); letter-spacing:-0.02em;
+  line-height:1.15; color:var(--white);
+}
+.slide-h2 span { color:var(--blue); }
+
+/* === BULLET LIST === */
+.deck-list { list-style:none; display:flex; flex-direction:column; gap:clamp(8px,1.2vw,14px); }
+.deck-list li {
+  display:flex; gap:10px; align-items:flex-start;
+  font-size:var(--body-size); color:var(--muted); line-height:1.55;
+}
+.deck-list li::before {
+  content:''; flex-shrink:0;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--blue); margin-top:0.45em;
+}
+.deck-list li strong { color:var(--white); }
+
+/* === PROCESS STEPS === */
+.steps { display:flex; flex-direction:column; gap:clamp(8px,1.5vw,16px); }
+.step {
+  display:flex; gap:clamp(12px,2vw,20px); align-items:flex-start;
+  background:rgba(255,255,255,0.03); border:1px solid var(--line);
+  border-radius:10px; padding:clamp(12px,2vw,20px);
+}
+.step-num {
+  flex-shrink:0; width:clamp(28px,3.5vw,40px); height:clamp(28px,3.5vw,40px);
+  border-radius:8px; background:var(--blue-dim); border:1px solid rgba(59,130,246,0.3);
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-m); font-size:clamp(0.65rem,1vw,0.85rem);
+  color:var(--blue); font-weight:700;
+}
+.step-body strong {
+  display:block; font-size:var(--body-size); color:var(--white);
+  margin-bottom:3px; font-family:var(--font-d); font-weight:700;
+}
+.step-body span { font-size:var(--small-size); color:var(--muted); line-height:1.5; }
+
+/* === MARKET TIERS === */
+.market-table { width:100%; border-collapse:collapse; margin-top:clamp(10px,1.5vw,20px); }
+.market-table th {
+  font-family:var(--font-m); font-size:clamp(0.58rem,0.85vw,0.7rem);
+  color:var(--dimmer); text-transform:uppercase; letter-spacing:0.08em;
+  text-align:left; padding:8px 12px; border-bottom:1px solid var(--line);
+}
+.market-table td {
+  padding:clamp(8px,1.2vw,14px) 12px;
+  border-bottom:1px solid var(--line);
+  font-size:var(--body-size); color:var(--muted); vertical-align:middle;
+}
+.market-table td:first-child { font-family:var(--font-m); color:var(--blue); font-weight:600; }
+.market-table td.big {
+  font-family:var(--font-d); font-weight:800;
+  font-size:clamp(0.9rem,1.8vw,1.4rem); color:var(--white);
+}
+
+/* === MOAT CARDS === */
+.moat-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:clamp(8px,1.5vw,16px); margin-top:clamp(10px,1.5vw,20px);
+}
+@media(max-width:700px) { .moat-grid { grid-template-columns:1fr; } }
+.moat-card {
+  background:rgba(59,130,246,0.06); border:1px solid rgba(59,130,246,0.2);
+  border-radius:12px; padding:clamp(14px,2vw,22px);
+}
+.moat-card .icon {
+  font-size:clamp(18px,2.5vw,26px); margin-bottom:8px;
+}
+.moat-card strong {
+  display:block; font-size:var(--body-size); color:var(--white);
+  font-family:var(--font-d); margin-bottom:6px;
+}
+.moat-card p { font-size:var(--small-size); color:var(--muted); line-height:1.5; }
+
+/* === COMPS TABLE === */
+.comp-row {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:clamp(10px,1.5vw,16px) 0;
+  border-bottom:1px solid var(--line);
+}
+.comp-row:last-child { border-bottom:none; }
+.comp-name { font-size:var(--body-size); color:var(--white); font-family:var(--font-d); font-weight:700; }
+.comp-desc { font-size:var(--small-size); color:var(--muted); margin-top:2px; }
+.comp-val {
+  font-family:var(--font-d); font-weight:900;
+  font-size:clamp(1rem,2vw,1.5rem); color:var(--blue);
+  text-align:right; white-space:nowrap;
+}
+.comp-val.us { color:var(--teal); }
+
+/* === ASK SLIDE === */
+.ask-box {
+  background:rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.3);
+  border-radius:16px; padding:clamp(20px,3vw,36px);
+  text-align:center; margin-bottom:clamp(16px,2vw,24px);
+}
+.ask-box .ask-amount {
+  font-family:var(--font-d); font-weight:900;
+  font-size:clamp(2.5rem,7vw,6rem); color:var(--white);
+  letter-spacing:-0.04em; line-height:1;
+}
+.ask-box .ask-label {
+  font-family:var(--font-m); font-size:var(--small-size);
+  color:var(--blue); letter-spacing:0.1em; text-transform:uppercase;
+  margin-top:6px;
+}
+.use-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:clamp(8px,1.5vw,14px);
+}
+.use-item {
+  background:rgba(255,255,255,0.03); border:1px solid var(--line);
+  border-radius:8px; padding:clamp(10px,1.5vw,16px); text-align:center;
+}
+.use-item .pct {
+  font-family:var(--font-d); font-weight:900;
+  font-size:clamp(1.1rem,2.5vw,1.8rem); color:var(--teal);
+}
+.use-item .use-label { font-size:var(--small-size); color:var(--muted); margin-top:4px; }
+
+/* === VALUATION PATH === */
+.val-path {
+  display:flex; gap:0; margin-top:clamp(10px,1.5vw,20px);
+  position:relative;
+}
+.val-path::before {
+  content:''; position:absolute; top:clamp(16px,2vw,24px);
+  left:10%; right:10%; height:2px;
+  background:linear-gradient(90deg,var(--blue),var(--teal),var(--blue));
+  opacity:0.3;
+}
+.val-step {
+  flex:1; text-align:center; padding:clamp(10px,1.5vw,16px) clamp(4px,0.8vw,10px);
+  position:relative;
+}
+.val-step::before {
+  content:''; display:block; width:clamp(10px,1.5vw,16px); height:clamp(10px,1.5vw,16px);
+  border-radius:50%; background:var(--blue);
+  margin:0 auto clamp(6px,1vw,10px);
+  box-shadow:0 0 12px var(--blue-glow);
+}
+.val-step .range {
+  font-family:var(--font-d); font-weight:900;
+  font-size:clamp(0.75rem,1.4vw,1.1rem); color:var(--blue);
+  letter-spacing:-0.01em;
+}
+.val-step .stg { font-size:var(--small-size); color:var(--muted); margin-top:3px; line-height:1.3; }
+
+/* === CLOSING === */
+.closing {
+  background:var(--bg);
+  background-image:
+    radial-gradient(ellipse at 30% 60%, rgba(59,130,246,0.2) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 20%, rgba(6,182,212,0.12) 0%, transparent 50%);
+  display:flex; align-items:center; justify-content:center;
+  text-align:center;
+}
+.closing-inner { padding:var(--slide-padding); max-width:min(90vw,700px); }
+.closing-title {
+  font-family:var(--font-d); font-weight:900;
+  font-size:clamp(1.8rem,5.5vw,4.5rem);
+  color:var(--white); letter-spacing:-0.03em; line-height:1.1;
+  margin-bottom:clamp(10px,1.5vw,20px);
+}
+.closing-title span { color:var(--blue); }
+.closing-sub { font-size:var(--body-size); color:var(--muted); max-width:460px; margin:0 auto clamp(20px,3vw,36px); line-height:1.65; }
+.cta-btn {
+  display:inline-block; padding:clamp(12px,1.5vw,16px) clamp(24px,3vw,40px);
+  background:var(--blue); border-radius:8px;
+  font-family:var(--font-d); font-weight:800;
+  font-size:var(--body-size); color:#fff; letter-spacing:0.02em;
+  box-shadow:0 0 32px rgba(59,130,246,0.4);
+}
+
+/* === INLINE EDITING === */
+.edit-hotzone {
+  position:fixed; top:0; left:0; width:80px; height:80px;
+  z-index:10000; cursor:pointer;
+}
+.edit-toggle {
+  position:fixed; top:16px; left:16px; z-index:10001;
+  width:36px; height:36px; border-radius:8px;
+  background:rgba(59,130,246,0.9); border:none; cursor:pointer;
+  font-size:15px; color:#fff; opacity:0; pointer-events:none;
+  transition:opacity 0.3s; display:flex; align-items:center; justify-content:center;
+}
+.edit-toggle.show, .edit-toggle.active { opacity:1; pointer-events:auto; }
+.edit-banner {
+  position:fixed; bottom:0; left:0; right:0; z-index:10000;
+  background:rgba(59,130,246,0.95); color:#fff;
+  font-family:var(--font-m); font-size:clamp(0.6rem,0.9vw,0.75rem);
+  text-align:center; padding:8px; letter-spacing:0.05em;
+  opacity:0; pointer-events:none; transition:opacity 0.3s;
+}
+.edit-banner.active { opacity:1; pointer-events:auto; }
+body.edit-active [contenteditable] {
+  outline:1px dashed rgba(59,130,246,0.5); border-radius:3px;
+}
+
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Nav Dots -->
+<nav class="nav-dots" id="navDots" aria-label="Slide navigation"></nav>
+
+<!-- Inline Edit UI -->
+<div class="edit-hotzone" id="editHotzone"></div>
+<button class="edit-toggle" id="editToggle" title="Edit mode (E)">✏️</button>
+<div class="edit-banner" id="editBanner">EDIT MODE — click any text to edit &nbsp;|&nbsp; Ctrl+S to save &nbsp;|&nbsp; E to exit</div>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 1: COVER
+═══════════════════════════════════════════ -->
+<section class="slide cover" id="slide-1">
+  <div class="slide-num">01 / 12</div>
+  <div class="cover-inner">
+    <div class="cover-eyebrow reveal">Venture Pitch · 2025</div>
+    <h1 class="cover-title reveal">Healthcare Worker<br><span>Mental Health</span><br>Companion</h1>
+    <p class="cover-sub reveal">The first EHR-native platform that detects physician burnout in real time and routes clinicians to peer support through a privacy-first Circle of Trust.</p>
+    <div class="cover-tags reveal">
+      <span class="tag tag-blue">B2B SaaS</span>
+      <span class="tag">Epic Integration</span>
+      <span class="tag">HIPAA</span>
+      <span class="tag">GME-Ready</span>
+    </div>
+  </div>
+  <div class="cover-bottom reveal">
+    <div class="cover-stat-row">
+      <div class="cover-stat">
+        <div class="num"><span>43.2%</span></div>
+        <div class="lbl">Physician burnout rate</div>
+      </div>
+      <div class="cover-stat">
+        <div class="num"><span>$4.6B</span></div>
+        <div class="lbl">Annual system cost</div>
+      </div>
+      <div class="cover-stat">
+        <div class="num"><span>2×</span></div>
+        <div class="lbl">Suicide risk vs. general pop.</div>
+      </div>
+    </div>
+    <div class="cover-date">Confidential · TheBridge Research</div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 2: PROBLEM — THE EPIDEMIC
+═══════════════════════════════════════════ -->
+<section class="slide grid-bg" id="slide-2">
+  <div class="slide-num">02 / 12</div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="label reveal">The Problem</div>
+      <h2 class="slide-h2 reveal">American medicine is<br>burning out its <span>own doctors</span></h2>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-card reveal">
+        <div class="num">43.2%</div>
+        <div class="desc">of U.S. physicians report burnout — near-majority, every year, since before COVID-19</div>
+        <div class="source">Source: AMA National Burnout Survey, 2024</div>
+      </div>
+      <div class="stat-card reveal">
+        <div class="num red">2×</div>
+        <div class="desc">elevated suicide risk among physicians vs. the general population — highest of any profession</div>
+        <div class="source">Source: Medscape / JAMA Psychiatry</div>
+      </div>
+      <div class="stat-card reveal">
+        <div class="num red">2×</div>
+        <div class="desc">higher self-reported medical error rate when physicians are burned out — patients pay the price</div>
+        <div class="source">Source: Health Affairs / BMJ Quality</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 3: PROBLEM — THE COST
+═══════════════════════════════════════════ -->
+<section class="slide grid-bg" id="slide-3">
+  <div class="slide-num">03 / 12</div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="label reveal">Financial Impact</div>
+      <h2 class="slide-h2 reveal">The cost no hospital CFO<br>has fully <span>quantified</span></h2>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-card reveal">
+        <div class="num">$4.6B</div>
+        <div class="desc">conservative annual cost of physician burnout to the U.S. healthcare system — true cost $10–15B+</div>
+        <div class="source">Source: JAMA, Shanafelt et al.</div>
+      </div>
+      <div class="stat-card reveal">
+        <div class="num teal">$7,600</div>
+        <div class="desc">cost per physician per year — in reduced productivity, absenteeism, and early departure risk</div>
+        <div class="source">Source: American Journal of Preventive Medicine</div>
+      </div>
+      <div class="stat-card reveal">
+        <div class="num">$2M</div>
+        <div class="desc">average cost to replace one physician — search, onboarding, locum coverage, lost revenue</div>
+        <div class="source">Source: NEJM Catalyst, Merritt Hawkins</div>
+      </div>
+    </div>
+    <p class="reveal" style="margin-top:clamp(10px,1.5vw,18px);font-size:var(--small-size);color:var(--dimmer);">
+      A health system with 3,000 physicians faces up to <strong style="color:var(--white);">$22.8M/year</strong> in preventable burnout costs — before malpractice, patient safety incidents, or ACGME compliance penalties.
+    </p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 4: WHY EXISTING TOOLS FAIL
+═══════════════════════════════════════════ -->
+<section class="slide grid-bg" id="slide-4">
+  <div class="slide-num">04 / 12</div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="label reveal">The Gap</div>
+      <h2 class="slide-h2 reveal">Every existing solution<br>has a <span>fatal flaw</span></h2>
+    </div>
+    <ul class="deck-list">
+      <li class="reveal"><strong>EAPs go unused.</strong> Utilization rates below 5% among physicians — stigma, friction, and fear of employer visibility prevent access.</li>
+      <li class="reveal"><strong>Generic wellness apps are forgotten.</strong> Push notifications ignored, daily check-ins abandoned — no connection to clinical workflow or real events.</li>
+      <li class="reveal"><strong>Peer programs lack infrastructure.</strong> POST and RISE models are proven but manual, unscalable, and dependent on volunteer coordinators.</li>
+      <li class="reveal"><strong>Surveillance fear kills trust.</strong> Physicians will not use any tool they believe reports back to administration. One data breach ends the product.</li>
+      <li class="reveal"><strong>No event trigger.</strong> Every tool waits for the physician to self-identify distress. Burnout doesn't announce itself — it accumulates invisibly in the EHR.</li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 5: SOLUTION
+═══════════════════════════════════════════ -->
+<section class="slide" id="slide-5" style="background:var(--bg2);">
+  <div class="slide-num">05 / 12</div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="label reveal">The Solution</div>
+      <h2 class="slide-h2 reveal">EHR-native. Peer-powered.<br><span>Privacy-by-design.</span></h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <strong>Detect — EHR Workflow Signal</strong>
+          <span>Monitors in-basket volume, after-hours EHR time, documentation burden, and adverse event flags within Epic. Detects burnout risk without any self-report.</span>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <strong>Route — Circle of Trust</strong>
+          <span>Physician pre-selects 3–5 trusted peers. All routing decisions require live physician approval. Zero employer visibility. No alerts sent without explicit consent.</span>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <strong>Support — Specialty Playbooks</strong>
+          <span>Post-operative complication debriefs for surgeons. ICU patient loss protocols. OB adverse event support. ED high-volume periods. Every specialty has its own workflow.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 6: MARKET OPPORTUNITY
+═══════════════════════════════════════════ -->
+<section class="slide grid-bg" id="slide-6">
+  <div class="slide-num">06 / 12</div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="label reveal">Market Opportunity</div>
+      <h2 class="slide-h2 reveal">$12B TAM. Concentrated<br>buyer. <span>Fast cycle.</span></h2>
+    </div>
+    <table class="market-table reveal">
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Definition</th>
+          <th>Size</th>
+          <th>Entry Path</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>TAM</td>
+          <td>EAP + corporate wellness + occupational mental health, 15–18M healthcare workers</td>
+          <td class="big">$12B–$22B</td>
+          <td>Full U.S. clinical workforce</td>
+        </tr>
+        <tr>
+          <td>SAM</td>
+          <td>Physicians + residents + APPs at IDNs and academic medical centers</td>
+          <td class="big">$3.6B–$10B</td>
+          <td>1.2M physicians × $25–$60 PMPM</td>
+        </tr>
+        <tr>
+          <td>SOM</td>
+          <td>Realistic 5–7yr capture: 50 health systems × 3,000 clinicians</td>
+          <td class="big">$50M–$300M</td>
+          <td>GME wedge → IDN expansion</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="reveal" style="margin-top:clamp(8px,1.2vw,14px);font-size:var(--small-size);color:var(--dimmer);">
+      ACGME well-being mandate creates <strong style="color:var(--white);">compliance-driven demand</strong> at all 167K U.S. residency positions — a concentrated, fast-moving buyer with a budget already allocated.
+    </p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 7: BUSINESS MODEL
+═══════════════════════════════════════════ -->
+<section class="slide" id="slide-7" style="background:var(--bg2);">
+  <div class="slide-num">07 / 12</div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="label reveal">Business Model</div>
+      <h2 class="slide-h2 reveal">$25–$60 PMPM. Sticky<br><span>institutional ARR.</span></h2>
+    </div>
+    <div class="two-col" style="padding:0;height:auto;gap:clamp(16px,3vw,32px);margin-top:clamp(10px,1.5vw,20px);">
+      <div>
+        <table class="market-table reveal">
+          <thead><tr><th>Segment</th><th>Pricing</th><th>Example ARR</th></tr></thead>
+          <tbody>
+            <tr><td>GME / Residents</td><td>$15–$30 PMPM</td><td class="big" style="font-size:clamp(0.8rem,1.4vw,1.1rem);">$30–$60M SAM</td></tr>
+            <tr><td>Physicians</td><td>$25–$60 PMPM</td><td class="big" style="font-size:clamp(0.8rem,1.4vw,1.1rem);">$300M–$860M SAM</td></tr>
+            <tr><td>Nurses / APPs</td><td>$10–$25 PMPM</td><td class="big" style="font-size:clamp(0.8rem,1.4vw,1.1rem);">$480M–$1.2B SAM</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="reveal">
+        <div class="stat-card" style="margin-bottom:clamp(8px,1.2vw,14px);">
+          <div class="num" style="font-size:clamp(1rem,2.5vw,1.8rem);">$900K ARR</div>
+          <div class="desc">per health system at 3,000 clinicians × $25 PMPM</div>
+        </div>
+        <div class="stat-card">
+          <div class="num teal" style="font-size:clamp(1rem,2.5vw,1.8rem);">5–15×</div>
+          <div class="desc">ROI for buyer — prevent 2 physician departures/yr = $2M saved vs. $360K platform cost</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 8: GO-TO-MARKET
+═══════════════════════════════════════════ -->
+<section class="slide grid-bg" id="slide-8">
+  <div class="slide-num">08 / 12</div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="label reveal">Go-to-Market</div>
+      <h2 class="slide-h2 reveal">Three-phase expansion.<br>GME first. <span>IDN always.</span></h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">Ph1</div>
+        <div class="step-body">
+          <strong>GME Residency Programs — Compliance Demand</strong>
+          <span>ACGME well-being mandate = budget already allocated. 167K residents across concentrated academic medical centers. 3–6 month pilot cycle. Target: 10 programs in Year 1.</span>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">Ph2</div>
+        <div class="step-body">
+          <strong>High-Acuity Specialty Departments</strong>
+          <span>Surgery, OB-GYN, ICU, Emergency Medicine — highest burnout, clearest ROI, existing peer support appetite. Upsell from GME contract to full department. Target: 5 IDNs by Year 2.</span>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">Ph3</div>
+        <div class="step-body">
+          <strong>Full IDN — Workforce OS</strong>
+          <span>Enterprise contract covering all clinical staff. Analytics module for CMO. Malpractice insurer co-buy opportunity. Epic App Orchard distribution. Target: 50 systems by Year 5.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 9: COMPETITIVE MOAT
+═══════════════════════════════════════════ -->
+<section class="slide" id="slide-9" style="background:var(--bg2);">
+  <div class="slide-num">09 / 12</div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="label reveal">Competitive Moat</div>
+      <h2 class="slide-h2 reveal">Three moats <span>Epic cannot buy.</span></h2>
+    </div>
+    <div class="moat-grid">
+      <div class="moat-card reveal">
+        <div class="icon">🔒</div>
+        <strong>Circle of Trust Architecture</strong>
+        <p>Privacy is built into the data model, not a feature. Epic's buyer is the hospital administrator — they will never build a product physicians can trust more than administration.</p>
+      </div>
+      <div class="moat-card reveal">
+        <div class="icon">⚡</div>
+        <strong>EHR-Native Event Trigger</strong>
+        <p>Launches from within Epic directly after adverse events. No separate app. No push notification. Daily passive exposure through the EHR workflow physicians already live in.</p>
+      </div>
+      <div class="moat-card reveal">
+        <div class="icon">🩺</div>
+        <strong>Peer Network Density</strong>
+        <p>Specialty-matched peer supporters (POST/RISE equivalents). Network effects compound: every physician who joins strengthens routing quality for every other physician on the platform.</p>
+      </div>
+    </div>
+    <p class="reveal" style="margin-top:clamp(10px,1.5vw,18px);font-size:var(--small-size);color:var(--dimmer);">
+      Competitors: <strong style="color:var(--muted);">Marvin, VITAL WorkLife, Cress Health</strong> — none have EHR integration + privacy architecture + peer network simultaneously.
+      <strong style="color:var(--white);">Lyra / Spring Health</strong> serve employer wellness budgets with zero clinical specificity.
+    </p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 10: COMPARABLES & VALUATION
+═══════════════════════════════════════════ -->
+<section class="slide grid-bg" id="slide-10">
+  <div class="slide-num">10 / 12</div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="label reveal">Valuation Context</div>
+      <h2 class="slide-h2 reveal">A proven category.<br>A <span>clear ceiling.</span></h2>
+    </div>
+    <div class="two-col" style="padding:0;height:auto;gap:clamp(16px,3vw,32px);margin-top:clamp(10px,1.5vw,20px);">
+      <div class="reveal">
+        <div class="comp-row">
+          <div><div class="comp-name">Doximity</div><div class="comp-desc">Physician network + workflow tools · IPO 2021</div></div>
+          <div class="comp-val">$7B+</div>
+        </div>
+        <div class="comp-row">
+          <div><div class="comp-name">Spring Health</div><div class="comp-desc">Employer mental health platform</div></div>
+          <div class="comp-val">$3.3B</div>
+        </div>
+        <div class="comp-row">
+          <div><div class="comp-name">Lyra Health</div><div class="comp-desc">Enterprise mental health benefits</div></div>
+          <div class="comp-val">$5.85B</div>
+        </div>
+      </div>
+      <div>
+        <div class="val-path reveal">
+          <div class="val-step">
+            <div class="range">$300M–$1.2B</div>
+            <div class="stg">Physician-only<br>Series A/B</div>
+          </div>
+          <div class="val-step">
+            <div class="range">$1.2B–$4B</div>
+            <div class="stg">Workforce<br>platform</div>
+          </div>
+          <div class="val-step">
+            <div class="range">$5B–$15B</div>
+            <div class="stg">Workforce OS<br>+ analytics</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 11: ROADMAP
+═══════════════════════════════════════════ -->
+<section class="slide" id="slide-11" style="background:var(--bg2);">
+  <div class="slide-num">11 / 12</div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="label reveal">Roadmap</div>
+      <h2 class="slide-h2 reveal">Milestones to <span>Series B</span></h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num" style="font-size:clamp(0.55rem,0.85vw,0.7rem);">Y1</div>
+        <div class="step-body">
+          <strong>Seed → Product-Market Fit</strong>
+          <span>Launch with 3 academic medical centers + 10 GME programs. Prove 30-day retention, peer-support SLA compliance, and zero privacy incidents. Instrument physician retention metrics baseline.</span>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num" style="font-size:clamp(0.55rem,0.85vw,0.7rem);">Y2</div>
+        <div class="step-body">
+          <strong>Series A → Channel Expansion</strong>
+          <span>5 IDN enterprise contracts. Specialty playbook library complete. Epic App Orchard listing. Malpractice insurer pilot (risk reduction co-buy). $5M ARR target.</span>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num" style="font-size:clamp(0.55rem,0.85vw,0.7rem);">Y3–5</div>
+        <div class="step-body">
+          <strong>Series B → Workforce OS</strong>
+          <span>50 health systems. Analytics module for CMOs. Nurse/APP expansion. Longitudinal burnout data asset for research licensing. $45M+ ARR. IPO comparable: Doximity ($7B+).</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 12: THE ASK
+═══════════════════════════════════════════ -->
+<section class="slide closing" id="slide-12">
+  <div class="slide-num" style="color:var(--dimmer);">12 / 12</div>
+  <div class="closing-inner">
+    <div class="label label-teal reveal">The Ask</div>
+    <div class="ask-box reveal">
+      <div class="ask-amount">$8M</div>
+      <div class="ask-label">Seed Round · 18-Month Runway</div>
+    </div>
+    <div class="use-grid reveal">
+      <div class="use-item">
+        <div class="pct">40%</div>
+        <div class="use-label">Product & Engineering</div>
+      </div>
+      <div class="use-item">
+        <div class="pct">30%</div>
+        <div class="use-label">Clinical Sales & GTM</div>
+      </div>
+      <div class="use-item">
+        <div class="pct">20%</div>
+        <div class="use-label">Clinical Ops & Privacy</div>
+      </div>
+      <div class="use-item">
+        <div class="pct">10%</div>
+        <div class="use-label">Research & Evidence</div>
+      </div>
+    </div>
+    <p class="closing-sub reveal" style="margin-top:clamp(14px,2vw,24px);">When the caregiver can't be cared for, everyone suffers. We're fixing the infrastructure gap — before it costs us another generation of physicians.</p>
+    <div class="reveal"><span class="cta-btn">Let's Talk</span></div>
+  </div>
+</section>
+
+
+<script>
+/* === SLIDE PRESENTATION CONTROLLER === */
+class SlidePresentation {
+  constructor() {
+    this.slides     = Array.from(document.querySelectorAll('.slide'));
+    this.total      = this.slides.length;
+    this.current    = 0;
+    this.progressEl = document.getElementById('progressBar');
+    this.navEl      = document.getElementById('navDots');
+    this.dots       = [];
+
+    this.setupIntersectionObserver();
+    this.setupNavDots();
+    this.setupKeyboardNav();
+    this.setupWheelNav();
+    this.setupTouchNav();
+    this.updateProgress(0);
+  }
+
+  setupIntersectionObserver() {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          const idx = this.slides.indexOf(e.target);
+          if (idx !== -1) {
+            this.current = idx;
+            this.updateProgress(idx);
+            this.updateDots(idx);
+          }
+        }
+      });
+    }, { threshold: 0.5 });
+    this.slides.forEach(s => obs.observe(s));
+  }
+
+  setupNavDots() {
+    this.navEl.innerHTML = '';
+    this.dots = [];
+    this.slides.forEach((_, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'nav-dot' + (i === 0 ? ' active' : '');
+      btn.setAttribute('aria-label', `Go to slide ${i + 1}`);
+      btn.addEventListener('click', () => this.goTo(i));
+      this.navEl.appendChild(btn);
+      this.dots.push(btn);
+    });
+  }
+
+  updateDots(idx) {
+    this.dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  }
+
+  updateProgress(idx) {
+    const pct = this.total > 1 ? (idx / (this.total - 1)) * 100 : 100;
+    this.progressEl.style.width = pct + '%';
+  }
+
+  goTo(idx) {
+    this.slides[idx]?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  setupKeyboardNav() {
+    document.addEventListener('keydown', e => {
+      if (e.target.getAttribute('contenteditable')) return;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault(); this.goTo(Math.min(this.current + 1, this.total - 1));
+      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault(); this.goTo(Math.max(this.current - 1, 0));
+      } else if (e.key === 'Home') { e.preventDefault(); this.goTo(0); }
+      else if (e.key === 'End')   { e.preventDefault(); this.goTo(this.total - 1); }
+    });
+  }
+
+  setupWheelNav() {
+    let lastWheel = 0;
+    document.addEventListener('wheel', e => {
+      const now = Date.now();
+      if (now - lastWheel < 800) return;
+      lastWheel = now;
+      if (e.deltaY > 0) this.goTo(Math.min(this.current + 1, this.total - 1));
+      else this.goTo(Math.max(this.current - 1, 0));
+    }, { passive: true });
+  }
+
+  setupTouchNav() {
+    let startY = 0;
+    document.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, { passive: true });
+    document.addEventListener('touchend', e => {
+      const diff = startY - e.changedTouches[0].clientY;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) this.goTo(Math.min(this.current + 1, this.total - 1));
+        else this.goTo(Math.max(this.current - 1, 0));
+      }
+    }, { passive: true });
+  }
+}
+
+/* === INLINE EDITOR === */
+class InlineEditor {
+  constructor() {
+    this.isActive   = false;
+    this.toggle     = document.getElementById('editToggle');
+    this.banner     = document.getElementById('editBanner');
+    this.hotzone    = document.getElementById('editHotzone');
+    this.hideTimeout = null;
+
+    this.hotzone.addEventListener('mouseenter', () => {
+      clearTimeout(this.hideTimeout);
+      this.toggle.classList.add('show');
+    });
+    this.hotzone.addEventListener('mouseleave', () => {
+      this.hideTimeout = setTimeout(() => {
+        if (!this.isActive) this.toggle.classList.remove('show');
+      }, 400);
+    });
+    this.toggle.addEventListener('mouseenter', () => clearTimeout(this.hideTimeout));
+    this.toggle.addEventListener('mouseleave', () => {
+      this.hideTimeout = setTimeout(() => {
+        if (!this.isActive) this.toggle.classList.remove('show');
+      }, 400);
+    });
+    this.hotzone.addEventListener('click', () => this.toggleEditMode());
+    this.toggle.addEventListener('click', () => this.toggleEditMode());
+
+    document.addEventListener('keydown', e => {
+      if ((e.key === 'e' || e.key === 'E') && !e.target.getAttribute('contenteditable')) this.toggleEditMode();
+      if (e.ctrlKey && e.key === 's' && this.isActive) { e.preventDefault(); this.exportFile(); }
+    });
+  }
+
+  toggleEditMode() {
+    this.isActive = !this.isActive;
+    document.body.classList.toggle('edit-active', this.isActive);
+    this.toggle.textContent = this.isActive ? '✅' : '✏️';
+    this.toggle.classList.toggle('active', this.isActive);
+    this.banner.classList.toggle('active', this.isActive);
+
+    document.querySelectorAll('h1,h2,h3,h4,p,li,span:not(.nav-dot),div.label,div.cover-eyebrow,div.cover-date,div.desc,div.source,strong,div.ask-amount,div.ask-label,div.use-label,div.pct,div.comp-name,div.comp-desc,div.comp-val,div.range,div.stg,div.num,div.lbl,td').forEach(el => {
+      if (this.isActive) el.setAttribute('contenteditable','true');
+      else el.removeAttribute('contenteditable');
+    });
+
+    if (this.isActive) {
+      const saved = localStorage.getItem('deck-hcw');
+      if (saved) document.body.innerHTML = saved;
+    }
+  }
+
+  exportFile() {
+    const editables = Array.from(document.querySelectorAll('[contenteditable]'));
+    editables.forEach(el => el.removeAttribute('contenteditable'));
+    document.body.classList.remove('edit-active');
+    this.toggle?.classList.remove('active','show');
+    this.banner?.classList.remove('active');
+
+    const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    localStorage.setItem('deck-hcw', document.body.innerHTML);
+
+    document.body.classList.add('edit-active');
+    editables.forEach(el => el.setAttribute('contenteditable','true'));
+    this.toggle?.classList.add('active');
+    this.banner?.classList.add('active');
+
+    const blob = new Blob([html], { type:'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'pitchdeck-healthcare-worker.html';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+}
+
+const pres = new SlidePresentation();
+const editor = new InlineEditor();
+</script>
+</body>
+</html>

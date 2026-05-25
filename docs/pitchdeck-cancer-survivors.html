@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Cancer Survivor Mental Health — Pitch Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+
+/* === THEME VARIABLES === */
+:root {
+  --bg:        #080605;
+  --bg2:       #0e0b09;
+  --amber:     #d97706;
+  --amber-dim: rgba(217,119,6,0.12);
+  --amber-glow:rgba(217,119,6,0.3);
+  --rose:      #e879a0;
+  --rose-dim:  rgba(232,121,160,0.12);
+  --cream:     #f5ede0;
+  --white:     #faf7f4;
+  --muted:     #9e8f82;
+  --dimmer:    #5a4e46;
+  --line:      rgba(245,237,224,0.07);
+  --font-d:    'Cormorant Garamond', serif;
+  --font-b:    'IBM Plex Sans', sans-serif;
+  --font-m:    'IBM Plex Mono', monospace;
+  --ease:      cubic-bezier(0.16, 1, 0.3, 1);
+  --dur:       0.8s;
+
+  --title-size:    clamp(1.5rem, 5vw, 4rem);
+  --h2-size:       clamp(1.25rem, 3.5vw, 2.8rem);
+  --h3-size:       clamp(1rem, 2.5vw, 1.75rem);
+  --body-size:     clamp(0.75rem, 1.3vw, 1.05rem);
+  --small-size:    clamp(0.65rem, 1vw, 0.875rem);
+  --slide-padding: clamp(1.5rem, 5vw, 5rem);
+  --content-gap:   clamp(0.5rem, 2vw, 2rem);
+  --element-gap:   clamp(0.25rem, 1vw, 1rem);
+}
+
+/* === VIEWPORT BASE === */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; overflow-x:hidden; }
+html { scroll-snap-type:y mandatory; scroll-behavior:smooth; }
+body { font-family:var(--font-b); background:var(--bg); color:var(--white); }
+
+.slide {
+  width:100vw; height:100vh; height:100dvh;
+  overflow:hidden; scroll-snap-align:start;
+  display:flex; flex-direction:column; position:relative;
+}
+.slide-content {
+  flex:1; display:flex; flex-direction:column;
+  justify-content:center; max-height:100%; overflow:hidden;
+  padding:var(--slide-padding);
+}
+
+@media (max-height:700px) {
+  :root { --slide-padding:clamp(0.75rem,3vw,2rem); --content-gap:clamp(0.4rem,1.5vw,1rem); --title-size:clamp(1.25rem,4.5vw,2.5rem); }
+}
+@media (max-height:600px) {
+  :root { --slide-padding:clamp(0.5rem,2.5vw,1.5rem); --content-gap:clamp(0.3rem,1vw,0.75rem); --title-size:clamp(1.1rem,4vw,2rem); --body-size:clamp(0.7rem,1.2vw,0.95rem); }
+  .nav-dots, .keyboard-hint, .decorative { display:none; }
+}
+@media (max-height:500px) {
+  :root { --slide-padding:clamp(0.4rem,2vw,1rem); --title-size:clamp(1rem,3.5vw,1.5rem); --h2-size:clamp(0.9rem,2.5vw,1.25rem); --body-size:clamp(0.65rem,1vw,0.85rem); }
+}
+@media (max-width:600px) {
+  :root { --title-size:clamp(1.25rem,7vw,2.5rem); }
+}
+@media (prefers-reduced-motion:reduce) {
+  *, *::before, *::after { animation-duration:0.01ms !important; transition-duration:0.2s !important; }
+  html { scroll-behavior:auto; }
+}
+
+/* === AMBIENT ORBS === */
+.orb {
+  position:absolute; border-radius:50%;
+  filter:blur(80px); pointer-events:none; z-index:0;
+}
+.orb-a {
+  width:clamp(200px,40vw,500px); height:clamp(200px,40vw,500px);
+  background:radial-gradient(circle, rgba(217,119,6,0.15), transparent 70%);
+  top:-10%; right:-5%;
+}
+.orb-b {
+  width:clamp(150px,30vw,380px); height:clamp(150px,30vw,380px);
+  background:radial-gradient(circle, rgba(232,121,160,0.1), transparent 70%);
+  bottom:-10%; left:-5%;
+}
+
+/* === PROGRESS BAR === */
+.progress-bar {
+  position:fixed; top:0; left:0; height:2px; width:0%;
+  background:linear-gradient(90deg, var(--amber), var(--rose));
+  z-index:1000; transition:width 0.3s var(--ease);
+  box-shadow:0 0 12px var(--amber-glow);
+}
+
+/* === NAV DOTS === */
+.nav-dots {
+  position:fixed; right:clamp(12px,2vw,24px); top:50%;
+  transform:translateY(-50%); display:flex; flex-direction:column;
+  gap:8px; z-index:999;
+}
+.nav-dot {
+  width:5px; height:5px; border-radius:50%;
+  background:var(--dimmer); cursor:pointer;
+  transition:all 0.4s var(--ease); border:none;
+}
+.nav-dot.active { background:var(--amber); box-shadow:0 0 8px var(--amber-glow); transform:scale(1.5); }
+
+/* === SLIDE NUMBER === */
+.slide-num {
+  position:absolute; top:clamp(16px,2.5vw,32px); right:clamp(16px,2.5vw,32px);
+  font-family:var(--font-m); font-size:var(--small-size);
+  color:var(--dimmer); letter-spacing:0.08em; z-index:1;
+}
+
+/* === ANIMATIONS — slow, elegant === */
+.reveal {
+  opacity:0; transform:translateY(24px);
+  transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.reveal-left {
+  opacity:0; transform:translateX(-32px);
+  transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.reveal-blur {
+  opacity:0; filter:blur(8px);
+  transition:opacity var(--dur) var(--ease), filter var(--dur) var(--ease);
+}
+.slide.visible .reveal      { opacity:1; transform:translateY(0); }
+.slide.visible .reveal-left { opacity:1; transform:translateX(0); }
+.slide.visible .reveal-blur { opacity:1; filter:blur(0); }
+.slide.visible .reveal:nth-child(1) { transition-delay:0.05s; }
+.slide.visible .reveal:nth-child(2) { transition-delay:0.18s; }
+.slide.visible .reveal:nth-child(3) { transition-delay:0.31s; }
+.slide.visible .reveal:nth-child(4) { transition-delay:0.42s; }
+.slide.visible .reveal:nth-child(5) { transition-delay:0.52s; }
+.slide.visible .reveal:nth-child(6) { transition-delay:0.60s; }
+
+/* === SHARED COMPONENTS === */
+.label {
+  font-family:var(--font-m); font-size:var(--small-size);
+  color:var(--amber); letter-spacing:0.1em; text-transform:uppercase;
+  margin-bottom:clamp(6px,1vw,12px);
+}
+.label-rose { color:var(--rose); }
+.thin-rule {
+  width:clamp(40px,6vw,64px); height:1px;
+  background:linear-gradient(90deg,var(--amber),transparent);
+  margin-bottom:clamp(10px,1.5vw,18px);
+}
+.slide-content { position:relative; z-index:1; }
+
+/* === SLIDE 1: COVER === */
+.cover {
+  background:var(--bg);
+  background-image:
+    radial-gradient(ellipse at 75% 25%, rgba(217,119,6,0.14) 0%, transparent 55%),
+    radial-gradient(ellipse at 15% 75%, rgba(232,121,160,0.09) 0%, transparent 50%);
+  display:flex; flex-direction:column; justify-content:center;
+}
+.cover-wrap {
+  padding:var(--slide-padding);
+  max-width:min(90vw,920px);
+  position:relative; z-index:1;
+}
+.cover-eyebrow {
+  font-family:var(--font-m); font-size:var(--small-size);
+  color:var(--amber); letter-spacing:0.12em; text-transform:uppercase;
+  display:flex; align-items:center; gap:10px;
+  margin-bottom:clamp(10px,1.5vw,20px);
+}
+.cover-eyebrow::before {
+  content:''; display:inline-block;
+  width:24px; height:1px;
+  background:var(--amber);
+}
+.cover-title {
+  font-family:var(--font-d); font-weight:700;
+  font-size:clamp(2.2rem,7vw,6rem);
+  line-height:1.05; letter-spacing:-0.02em;
+  color:var(--cream); margin-bottom:clamp(6px,1vw,12px);
+}
+.cover-title em { color:var(--amber); font-style:italic; }
+.cover-tagline {
+  font-family:var(--font-d); font-style:italic;
+  font-size:clamp(1rem,2.2vw,1.6rem);
+  color:var(--muted); margin-bottom:clamp(20px,3vw,40px);
+  line-height:1.5;
+}
+.cover-tags { display:flex; flex-wrap:wrap; gap:8px; }
+.tag {
+  font-family:var(--font-m); font-size:clamp(0.58rem,0.85vw,0.7rem);
+  letter-spacing:0.08em; text-transform:uppercase;
+  padding:5px 12px; border-radius:3px;
+  border:1px solid rgba(217,119,6,0.25); color:var(--muted);
+}
+.tag-a { border-color:rgba(217,119,6,0.5); color:var(--amber); background:var(--amber-dim); }
+.cover-bottom {
+  position:absolute; bottom:clamp(16px,3vw,36px);
+  left:var(--slide-padding); right:var(--slide-padding);
+  display:flex; justify-content:space-between; align-items:flex-end;
+  z-index:1;
+}
+.cover-stats { display:flex; gap:clamp(24px,5vw,56px); }
+.cs {
+  display:flex; flex-direction:column;
+}
+.cs .num {
+  font-family:var(--font-d); font-weight:700;
+  font-size:clamp(1.3rem,2.8vw,2.2rem); color:var(--cream);
+}
+.cs .num em { color:var(--amber); font-style:normal; }
+.cs .lbl { font-family:var(--font-m); font-size:clamp(0.58rem,0.85vw,0.68rem); color:var(--muted); letter-spacing:0.06em; text-transform:uppercase; margin-top:2px; }
+
+/* === STAT CARDS === */
+.stat-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));
+  gap:clamp(10px,1.8vw,18px);
+  margin-top:clamp(12px,2vw,24px);
+}
+.stat-card {
+  background:rgba(245,237,224,0.03);
+  border:1px solid var(--line);
+  border-radius:10px; padding:clamp(16px,2.5vw,26px);
+}
+.stat-card .num {
+  font-family:var(--font-d); font-weight:700;
+  font-size:clamp(1.8rem,4.5vw,3.5rem);
+  letter-spacing:-0.02em; line-height:1;
+  color:var(--amber); margin-bottom:6px;
+}
+.stat-card .num.rose  { color:var(--rose); }
+.stat-card .num.cream { color:var(--cream); }
+.stat-card .desc { font-size:var(--body-size); color:var(--muted); line-height:1.55; }
+.stat-card .src  { font-family:var(--font-m); font-size:clamp(0.55rem,0.78vw,0.63rem); color:var(--dimmer); margin-top:8px; }
+
+/* === SLIDE HEADER === */
+.slide-header { margin-bottom:clamp(12px,2vw,24px); }
+.slide-h2 {
+  font-family:var(--font-d); font-weight:700;
+  font-size:clamp(1.6rem,4vw,3rem); letter-spacing:-0.01em;
+  line-height:1.15; color:var(--cream);
+}
+.slide-h2 em { color:var(--amber); font-style:italic; }
+
+/* === BULLET LIST === */
+.deck-list { list-style:none; display:flex; flex-direction:column; gap:clamp(8px,1.2vw,14px); }
+.deck-list li {
+  display:flex; gap:12px; align-items:flex-start;
+  font-size:var(--body-size); color:var(--muted); line-height:1.6;
+  padding-bottom:clamp(6px,1vw,10px);
+  border-bottom:1px solid var(--line);
+}
+.deck-list li:last-child { border-bottom:none; }
+.deck-list li::before {
+  content:''; flex-shrink:0;
+  width:5px; height:5px; border-radius:50%;
+  background:var(--amber); margin-top:0.55em;
+}
+.deck-list li strong { color:var(--cream); }
+
+/* === STEPS / PILLARS === */
+.pillars { display:flex; flex-direction:column; gap:clamp(8px,1.3vw,14px); }
+.pillar {
+  display:flex; gap:clamp(12px,2vw,20px); align-items:flex-start;
+  background:rgba(245,237,224,0.03); border:1px solid var(--line);
+  border-left:2px solid var(--amber);
+  border-radius:0 8px 8px 0; padding:clamp(12px,1.8vw,18px);
+}
+.pillar-num {
+  flex-shrink:0;
+  font-family:var(--font-d); font-weight:700;
+  font-size:clamp(1.2rem,2.5vw,2rem); color:var(--amber); line-height:1;
+}
+.pillar-body strong {
+  display:block; font-size:var(--body-size); color:var(--cream);
+  font-family:var(--font-b); font-weight:600; margin-bottom:3px;
+}
+.pillar-body span { font-size:var(--small-size); color:var(--muted); line-height:1.5; }
+
+/* === MARKET TABLE === */
+.market-table { width:100%; border-collapse:collapse; margin-top:clamp(10px,1.5vw,18px); }
+.market-table th {
+  font-family:var(--font-m); font-size:clamp(0.55rem,0.82vw,0.68rem);
+  color:var(--dimmer); text-transform:uppercase; letter-spacing:0.08em;
+  text-align:left; padding:8px 12px; border-bottom:1px solid var(--line);
+}
+.market-table td {
+  padding:clamp(8px,1.2vw,14px) 12px;
+  border-bottom:1px solid var(--line);
+  font-size:var(--body-size); color:var(--muted); vertical-align:middle;
+}
+.market-table td:first-child { font-family:var(--font-m); color:var(--amber); font-weight:500; }
+.market-table td.big {
+  font-family:var(--font-d); font-weight:700;
+  font-size:clamp(0.9rem,1.8vw,1.4rem); color:var(--cream);
+}
+
+/* === TWO COL === */
+.two-col {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:clamp(16px,3vw,40px);
+}
+@media(max-width:700px) { .two-col { grid-template-columns:1fr; } }
+
+/* === MOAT CARDS === */
+.moat-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:clamp(8px,1.5vw,14px); margin-top:clamp(10px,1.5vw,18px);
+}
+@media(max-width:700px) { .moat-grid { grid-template-columns:1fr; } }
+.moat-card {
+  background:rgba(217,119,6,0.05); border:1px solid rgba(217,119,6,0.18);
+  border-radius:10px; padding:clamp(14px,2vw,20px);
+}
+.moat-card .icon { font-size:clamp(16px,2.2vw,24px); margin-bottom:8px; }
+.moat-card strong {
+  display:block; font-size:var(--body-size); color:var(--cream);
+  font-family:var(--font-b); font-weight:600; margin-bottom:6px;
+}
+.moat-card p { font-size:var(--small-size); color:var(--muted); line-height:1.5; }
+
+/* === COMP ROWS === */
+.comp-row {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:clamp(10px,1.5vw,16px) 0; border-bottom:1px solid var(--line);
+}
+.comp-row:last-child { border-bottom:none; }
+.comp-name { font-size:var(--body-size); color:var(--cream); font-family:var(--font-b); font-weight:600; }
+.comp-desc { font-size:var(--small-size); color:var(--muted); margin-top:2px; }
+.comp-val { font-family:var(--font-d); font-weight:700; font-size:clamp(1rem,2vw,1.6rem); color:var(--amber); text-align:right; white-space:nowrap; }
+.comp-val.us { color:var(--rose); }
+
+/* === VAL PATH === */
+.val-path { display:flex; gap:0; margin-top:clamp(10px,1.5vw,18px); position:relative; }
+.val-path::before {
+  content:''; position:absolute; top:clamp(14px,1.8vw,22px);
+  left:8%; right:8%; height:1px;
+  background:linear-gradient(90deg,var(--amber),var(--rose),var(--amber));
+  opacity:0.25;
+}
+.val-step { flex:1; text-align:center; padding:clamp(8px,1.2vw,14px) clamp(4px,0.8vw,8px); position:relative; }
+.val-step::before {
+  content:''; display:block;
+  width:clamp(8px,1.2vw,14px); height:clamp(8px,1.2vw,14px);
+  border-radius:50%; background:var(--amber);
+  margin:0 auto clamp(6px,1vw,10px);
+  box-shadow:0 0 10px var(--amber-glow);
+}
+.val-step .range { font-family:var(--font-d); font-weight:700; font-size:clamp(0.7rem,1.3vw,1rem); color:var(--amber); }
+.val-step .stg { font-size:var(--small-size); color:var(--muted); margin-top:3px; line-height:1.3; }
+
+/* === ASK SLIDE === */
+.ask-box {
+  background:rgba(217,119,6,0.07); border:1px solid rgba(217,119,6,0.25);
+  border-radius:14px; padding:clamp(18px,3vw,32px);
+  text-align:center; margin-bottom:clamp(14px,2vw,22px);
+}
+.ask-box .ask-amount {
+  font-family:var(--font-d); font-weight:700;
+  font-size:clamp(2.5rem,7vw,6rem); color:var(--cream);
+  letter-spacing:-0.03em; line-height:1;
+}
+.ask-box .ask-label {
+  font-family:var(--font-m); font-size:var(--small-size);
+  color:var(--amber); letter-spacing:0.1em; text-transform:uppercase; margin-top:6px;
+}
+.use-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+  gap:clamp(8px,1.5vw,12px);
+}
+.use-item {
+  background:rgba(245,237,224,0.03); border:1px solid var(--line);
+  border-radius:7px; padding:clamp(10px,1.5vw,14px); text-align:center;
+}
+.use-item .pct { font-family:var(--font-d); font-weight:700; font-size:clamp(1.1rem,2.5vw,1.8rem); color:var(--rose); }
+.use-item .use-label { font-size:var(--small-size); color:var(--muted); margin-top:4px; }
+
+/* === CLOSING === */
+.closing {
+  background:var(--bg);
+  background-image:
+    radial-gradient(ellipse at 60% 40%, rgba(217,119,6,0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 20% 70%, rgba(232,121,160,0.12) 0%, transparent 50%);
+  display:flex; align-items:center; justify-content:center; text-align:center;
+}
+.closing-inner { padding:var(--slide-padding); max-width:min(90vw,680px); }
+.closing-title {
+  font-family:var(--font-d); font-weight:700;
+  font-size:clamp(1.8rem,5.5vw,4.8rem);
+  color:var(--cream); letter-spacing:-0.02em; line-height:1.1;
+  margin-bottom:clamp(10px,1.5vw,18px);
+}
+.closing-title em { color:var(--amber); font-style:italic; }
+.closing-sub {
+  font-size:var(--body-size); color:var(--muted);
+  max-width:460px; margin:0 auto clamp(18px,3vw,34px); line-height:1.7;
+}
+.cta-btn {
+  display:inline-block; padding:clamp(12px,1.5vw,16px) clamp(24px,3vw,40px);
+  border:1px solid rgba(217,119,6,0.6); border-radius:6px;
+  font-family:var(--font-b); font-weight:600;
+  font-size:var(--body-size); color:var(--amber);
+  letter-spacing:0.04em;
+  transition:background 0.3s, color 0.3s;
+}
+.cta-btn:hover { background:var(--amber); color:var(--bg); }
+
+/* === INLINE EDITING === */
+.edit-hotzone { position:fixed; top:0; left:0; width:80px; height:80px; z-index:10000; cursor:pointer; }
+.edit-toggle {
+  position:fixed; top:16px; left:16px; z-index:10001;
+  width:36px; height:36px; border-radius:7px;
+  background:rgba(217,119,6,0.9); border:none; cursor:pointer;
+  font-size:15px; color:#fff; opacity:0; pointer-events:none;
+  transition:opacity 0.3s; display:flex; align-items:center; justify-content:center;
+}
+.edit-toggle.show, .edit-toggle.active { opacity:1; pointer-events:auto; }
+.edit-banner {
+  position:fixed; bottom:0; left:0; right:0; z-index:10000;
+  background:rgba(217,119,6,0.93); color:#fff;
+  font-family:var(--font-m); font-size:clamp(0.6rem,0.9vw,0.72rem);
+  text-align:center; padding:8px; letter-spacing:0.05em;
+  opacity:0; pointer-events:none; transition:opacity 0.3s;
+}
+.edit-banner.active { opacity:1; pointer-events:auto; }
+body.edit-active [contenteditable] {
+  outline:1px dashed rgba(217,119,6,0.45); border-radius:2px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots" aria-label="Slide navigation"></nav>
+<div class="edit-hotzone" id="editHotzone"></div>
+<button class="edit-toggle" id="editToggle" title="Edit mode (E)">✏️</button>
+<div class="edit-banner" id="editBanner">EDIT MODE — click any text to edit &nbsp;|&nbsp; Ctrl+S to save &nbsp;|&nbsp; E to exit</div>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 1: COVER
+═══════════════════════════════════════════ -->
+<section class="slide cover" id="slide-1">
+  <div class="orb orb-a"></div>
+  <div class="orb orb-b"></div>
+  <div class="slide-num">01 / 11</div>
+  <div class="cover-wrap">
+    <div class="cover-eyebrow reveal">Venture Pitch · 2025</div>
+    <h1 class="cover-title reveal">Cancer Survivor<br><em>Mental Health</em></h1>
+    <p class="cover-tagline reveal">18 million survivors. Zero mental health infrastructure.</p>
+    <div class="cover-tags reveal">
+      <span class="tag tag-a">B2B + Payer</span>
+      <span class="tag">CoC Compliant</span>
+      <span class="tag">HIPAA</span>
+      <span class="tag">ASCO-Aligned</span>
+    </div>
+  </div>
+  <div class="cover-bottom reveal">
+    <div class="cover-stats">
+      <div class="cs">
+        <div class="num"><em>18.1M</em></div>
+        <div class="lbl">U.S. survivors today</div>
+      </div>
+      <div class="cs">
+        <div class="num"><em>70%</em></div>
+        <div class="lbl">Fear recurrence</div>
+      </div>
+      <div class="cs">
+        <div class="num"><em>50%</em></div>
+        <div class="lbl">Quit meds by year 5</div>
+      </div>
+    </div>
+    <div style="font-family:var(--font-m);font-size:var(--small-size);color:var(--dimmer);">Confidential · TheBridge Research</div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 2: PROBLEM — THE INVISIBLE CRISIS
+═══════════════════════════════════════════ -->
+<section class="slide" id="slide-2" style="background:var(--bg2);">
+  <div class="orb orb-a" style="opacity:0.5;"></div>
+  <div class="slide-num">02 / 11</div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="label reveal">The Problem</div>
+      <h2 class="slide-h2 reveal">Cancer treatment ends.<br>The <em>suffering doesn't.</em></h2>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-card reveal">
+        <div class="num">70%</div>
+        <div class="desc">of survivors report fear of recurrence — 33% at clinically significant levels requiring intervention</div>
+        <div class="src">Source: Journal of Clinical Oncology</div>
+      </div>
+      <div class="stat-card reveal">
+        <div class="num cream">75%</div>
+        <div class="desc">experience cancer-related fatigue 1+ year post-treatment — the most under-treated survivorship symptom</div>
+        <div class="src">Source: NCI SEER / Oncology Nursing Society</div>
+      </div>
+      <div class="stat-card reveal">
+        <div class="num rose">42%</div>
+        <div class="desc">deplete their life savings within 2 years of diagnosis — financial toxicity is a validated clinical construct</div>
+        <div class="src">Source: JAMA Oncology / COST tool</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 3: PROBLEM — THE ADHERENCE CRISIS
+═══════════════════════════════════════════ -->
+<section class="slide" id="slide-3" style="background:var(--bg);">
+  <div class="slide-num">03 / 11</div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="label reveal">The Adherence Crisis</div>
+      <h2 class="slide-h2 reveal">Half of patients stop<br>their medication. <em>Nobody notices.</em></h2>
+    </div>
+    <ul class="deck-list">
+      <li class="reveal"><strong>50% discontinue endocrine therapy within 5 years.</strong> For breast cancer survivors, this is the difference between remission and recurrence. Side effects and psychological distress are the primary drivers.</li>
+      <li class="reveal"><strong>60% of survivors never receive a Survivorship Care Plan.</strong> Commission on Cancer (CoC) mandates it. 1,600 accredited programs are out of compliance. No scalable tool exists.</li>
+      <li class="reveal"><strong>2–3× higher ED utilization</strong> among survivors with unmanaged distress — $3,000–$8,000/survivor/year in excess acute care that payers are paying today.</li>
+      <li class="reveal"><strong>Zero condition-specific mental health infrastructure.</strong> Generic platforms (Lyra, Spring) have no oncology specificity. EHRs have no survivorship engagement layer. No peer network exists at scale.</li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 4: SOLUTION
+═══════════════════════════════════════════ -->
+<section class="slide" id="slide-4" style="background:var(--bg2);">
+  <div class="orb orb-b" style="opacity:0.6;"></div>
+  <div class="slide-num">04 / 11</div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="label reveal">The Solution</div>
+      <h2 class="slide-h2 reveal">A living platform for the<br>cancer journey <em>after treatment.</em></h2>
+    </div>
+    <div class="pillars">
+      <div class="pillar reveal">
+        <div class="pillar-num">01</div>
+        <div class="pillar-body">
+          <strong>Living Survivorship Care Plan (SCP)</strong>
+          <span>Solves CoC compliance instantly. Dynamic document updated at each follow-up. Contains treatment history, symptom monitoring, adherence tracking, and escalation routes — all accessible to survivor and oncology team.</span>
+        </div>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-num">02</div>
+        <div class="pillar-body">
+          <strong>Peer Network — Cancer-Type Matched</strong>
+          <span>Breast cancer survivors connect with someone 18 months ahead of them. Fear of recurrence, scanxiety, chemo brain, sexual health — matched by cancer type, treatment, and stage. No generic support groups.</span>
+        </div>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-num">03</div>
+        <div class="pillar-body">
+          <strong>Adherence & Distress Monitoring</strong>
+          <span>Validated PRO collection (PROMIS, COST tool). Endocrine therapy adherence tracking. Event-triggered outreach on scan days. Escalation pathways to oncology team and licensed therapists.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 5: MARKET
+═══════════════════════════════════════════ -->
+<section class="slide" id="slide-5" style="background:var(--bg);">
+  <div class="slide-num">05 / 11</div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="label reveal">Market Opportunity</div>
+      <h2 class="slide-h2 reveal">$8–17B TAM. Growing<br><em>structurally</em> to 2040.</h2>
+    </div>
+    <table class="market-table reveal">
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Definition</th>
+          <th>Size</th>
+          <th>Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>TAM</td>
+          <td>Mental health, survivorship navigation, adherence support — 18.1M survivors × $10–$50 PMPM. Pharma and clinical care excluded.</td>
+          <td class="big">$8B–$17B</td>
+          <td>Growing 5–7%/yr to 26.1M survivors by 2040</td>
+        </tr>
+        <tr>
+          <td>SAM</td>
+          <td>Breast cancer beachhead + all-cancer institutional + payer channels</td>
+          <td class="big">$3B–$8B</td>
+          <td>CoC programs + payer PMPM contracts</td>
+        </tr>
+        <tr>
+          <td>SOM</td>
+          <td>Realistic 5–7yr capture across institutional + payer channels</td>
+          <td class="big">$100M–$500M</td>
+          <td>200 CoC programs + 200K payer-covered survivors</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="reveal" style="margin-top:clamp(8px,1.2vw,14px);font-size:var(--small-size);color:var(--dimmer);">
+      1,600 CoC-accredited programs are mandated to provide Survivorship Care Plans and currently <strong style="color:var(--cream);">out of compliance at scale</strong>. One enterprise contract covers hundreds of survivors — concentrated, compliance-driven demand.
+    </p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 6: BUSINESS MODEL
+═══════════════════════════════════════════ -->
+<section class="slide" id="slide-6" style="background:var(--bg2);">
+  <div class="slide-num">06 / 11</div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="label reveal">Business Model</div>
+      <h2 class="slide-h2 reveal">Two primary channels.<br><em>Independent</em> revenue streams.</h2>
+    </div>
+    <div class="two-col" style="margin-top:clamp(10px,1.5vw,20px);align-items:start;">
+      <div>
+        <div class="stat-card reveal" style="margin-bottom:clamp(8px,1.2vw,14px);">
+          <div style="font-family:var(--font-m);font-size:var(--small-size);color:var(--amber);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">Institutional Channel</div>
+          <div class="num" style="font-size:clamp(1rem,2.2vw,1.6rem);">$50K–$300K/yr</div>
+          <div class="desc">per CoC-accredited cancer center. Solves compliance mandate. High switching cost once SCP history lives in platform.</div>
+        </div>
+        <div class="stat-card reveal">
+          <div style="font-family:var(--font-m);font-size:var(--small-size);color:var(--rose);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">Payer Channel</div>
+          <div class="num rose" style="font-size:clamp(1rem,2.2vw,1.6rem);">$15–$50 PMPM</div>
+          <div class="desc">value-based contract with payers. ED avoidance alone worth $50–100 PMPM savings. 200K survivors = $48M ARR.</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="stat-card" style="margin-bottom:clamp(8px,1.2vw,14px);">
+          <div style="font-family:var(--font-m);font-size:var(--small-size);color:var(--amber);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">Unit Economics</div>
+          <div class="num" style="font-size:clamp(1rem,2.2vw,1.6rem);">$100K ARR</div>
+          <div class="desc">per cancer center (mid-tier). 50 centers = $5M ARR. 200 centers = $20M ARR.</div>
+        </div>
+        <div class="stat-card">
+          <div style="font-family:var(--font-m);font-size:var(--small-size);color:var(--rose);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">Buyer ROI</div>
+          <div class="num rose" style="font-size:clamp(1rem,2.2vw,1.6rem);">3–5×</div>
+          <div class="desc">ROI for payer on ED avoidance + adherence improvement. CoC compliance value-add for institutions is immediate.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 7: GO-TO-MARKET
+═══════════════════════════════════════════ -->
+<section class="slide" id="slide-7" style="background:var(--bg);">
+  <div class="slide-num">07 / 11</div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="label reveal">Go-to-Market</div>
+      <h2 class="slide-h2 reveal">One wedge. Three<br><em>expanding rings.</em></h2>
+    </div>
+    <div class="pillars">
+      <div class="pillar reveal">
+        <div class="pillar-num" style="color:var(--amber);">Ph1</div>
+        <div class="pillar-body">
+          <strong>CoC Accredited Programs — Compliance Wedge</strong>
+          <span>1,600 programs mandated to provide SCPs. One contract = one cancer center = hundreds of survivors immediately enrolled. Target: 20 programs in Year 1 via breast oncology practices.</span>
+        </div>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-num" style="color:var(--amber);">Ph2</div>
+        <div class="pillar-body">
+          <strong>Breast Cancer → All Cancers</strong>
+          <span>Breast cancer beachhead (3.8M survivors, organized advocacy ecosystem: LBBC, Young Survival Coalition). Prove peer network effects, PRO data collection, and adherence lift. Expand to all cancer types.</span>
+        </div>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-num" style="color:var(--amber);">Ph3</div>
+        <div class="pillar-body">
+          <strong>Payer Value-Based Contracts</strong>
+          <span>Use Phase 1–2 PRO outcomes data to sign value-based contracts with UnitedHealth, Aetna, Cigna. ED avoidance + adherence metrics are actuarially compelling. MA plan channel.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 8: COMPETITIVE MOAT
+═══════════════════════════════════════════ -->
+<section class="slide" id="slide-8" style="background:var(--bg2);">
+  <div class="orb orb-a" style="opacity:0.4;"></div>
+  <div class="slide-num">08 / 11</div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="label reveal">Competitive Moat</div>
+      <h2 class="slide-h2 reveal">Data assets that compound<br>with every <em>survivor enrolled.</em></h2>
+    </div>
+    <div class="moat-grid">
+      <div class="moat-card reveal">
+        <div class="icon">📋</div>
+        <strong>Living SCP as Lock-In</strong>
+        <p>High switching cost once treatment history, PRO trajectories, and peer relationships live in the platform. CoC compliance dependency makes churn structurally difficult.</p>
+      </div>
+      <div class="moat-card reveal">
+        <div class="icon">🤝</div>
+        <strong>Peer Network Effects</strong>
+        <p>Cancer type × treatment × stage × timeline matching. Network gets better with every survivor enrolled. No generic platform can replicate specificity without the data.</p>
+      </div>
+      <div class="moat-card reveal">
+        <div class="icon">📊</div>
+        <strong>Longitudinal PRO Dataset</strong>
+        <p>5+ years of validated PRO data per survivor. Unparalleled real-world outcomes evidence. Pharma, payers, and health economists will pay for access. Data becomes a revenue line.</p>
+      </div>
+    </div>
+    <p class="reveal" style="margin-top:clamp(10px,1.5vw,16px);font-size:var(--small-size);color:var(--dimmer);">
+      Key competitive risk: <strong style="color:var(--cream);">Epic MyChart SCP module</strong> could attack compliance wedge. Mitigation: survivor-side engagement (peer, community, financial) Epic is structurally unable to match — their buyer is the hospital administrator, not the survivor.
+    </p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 9: COMPARABLES & VALUATION
+═══════════════════════════════════════════ -->
+<section class="slide" id="slide-9" style="background:var(--bg);">
+  <div class="slide-num">09 / 11</div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="label reveal">Valuation Context</div>
+      <h2 class="slide-h2 reveal">Proven comps in<br><em>condition-specific care.</em></h2>
+    </div>
+    <div class="two-col" style="margin-top:clamp(10px,1.5vw,18px);align-items:start;">
+      <div class="reveal">
+        <div class="comp-row">
+          <div><div class="comp-name">Progyny</div><div class="comp-desc">Fertility benefits platform · condition-specific, employer-sold</div></div>
+          <div class="comp-val">$3B IPO</div>
+        </div>
+        <div class="comp-row">
+          <div><div class="comp-name">Hinge Health</div><div class="comp-desc">MSK condition-specific · payer + employer · large TAM</div></div>
+          <div class="comp-val">$6B IPO</div>
+        </div>
+        <div class="comp-row">
+          <div><div class="comp-name">Veeva Systems</div><div class="comp-desc">Life sciences vertical SaaS · deep clinical data moat</div></div>
+          <div class="comp-val">$30B+</div>
+        </div>
+      </div>
+      <div>
+        <div class="val-path reveal">
+          <div class="val-step">
+            <div class="range">$200M–$900M</div>
+            <div class="stg">Breast cancer<br>Series A/B</div>
+          </div>
+          <div class="val-step">
+            <div class="range">$1B–$4B</div>
+            <div class="stg">All-cancer<br>platform</div>
+          </div>
+          <div class="val-step">
+            <div class="range">$4.5B–$15B</div>
+            <div class="stg">Survivor OS<br>+ payer data</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 10: ROADMAP
+═══════════════════════════════════════════ -->
+<section class="slide" id="slide-10" style="background:var(--bg2);">
+  <div class="slide-num">10 / 11</div>
+  <div class="slide-content">
+    <div class="slide-header">
+      <div class="label reveal">Roadmap</div>
+      <h2 class="slide-h2 reveal">Milestones to <em>Series B</em></h2>
+    </div>
+    <div class="pillars">
+      <div class="pillar reveal">
+        <div class="pillar-num" style="font-size:clamp(0.9rem,1.8vw,1.4rem);">Y1</div>
+        <div class="pillar-body">
+          <strong>Seed → Clinical Validation</strong>
+          <span>Launch with 20 CoC-accredited breast cancer programs. Enroll 2,000+ survivors. Prove 90-day engagement retention, SCP compliance rate, and PRO data collection. First institutional contracts signed.</span>
+        </div>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-num" style="font-size:clamp(0.9rem,1.8vw,1.4rem);">Y2</div>
+        <div class="pillar-body">
+          <strong>Series A → All-Cancer Expansion</strong>
+          <span>Expand from breast to colorectal, lung, and prostate cancer survivor cohorts. 100 cancer centers. Advocacy partnerships live (LBBC, Young Survival Coalition). $8M+ ARR. First payer pilot data.</span>
+        </div>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-num" style="font-size:clamp(0.9rem,1.8vw,1.4rem);">Y3–5</div>
+        <div class="pillar-body">
+          <strong>Series B → Payer Contracts + Data Asset</strong>
+          <span>200+ cancer centers. 3+ payer value-based contracts. PRO longitudinal dataset established as research asset. $100M+ ARR target. IPO comparable: Hinge Health ($6B).</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SLIDE 11: THE ASK
+═══════════════════════════════════════════ -->
+<section class="slide closing" id="slide-11">
+  <div class="slide-num" style="color:var(--dimmer);">11 / 11</div>
+  <div class="closing-inner">
+    <div class="label label-rose reveal">The Ask</div>
+    <div class="ask-box reveal">
+      <div class="ask-amount">$10M</div>
+      <div class="ask-label">Seed Round · 24-Month Runway</div>
+    </div>
+    <div class="use-grid reveal">
+      <div class="use-item">
+        <div class="pct">35%</div>
+        <div class="use-label">Product & Clinical Engineering</div>
+      </div>
+      <div class="use-item">
+        <div class="pct">30%</div>
+        <div class="use-label">Clinical Sales & CoC GTM</div>
+      </div>
+      <div class="use-item">
+        <div class="pct">20%</div>
+        <div class="use-label">Clinical Content & Ops</div>
+      </div>
+      <div class="use-item">
+        <div class="pct">15%</div>
+        <div class="use-label">Evidence & Research</div>
+      </div>
+    </div>
+    <p class="closing-sub reveal" style="margin-top:clamp(14px,2vw,22px);">18 million survivors have beaten cancer. We're building the infrastructure that helps them live well after it.</p>
+    <div class="reveal"><span class="cta-btn">Let's Talk</span></div>
+  </div>
+</section>
+
+
+<script>
+/* === SLIDE PRESENTATION CONTROLLER === */
+class SlidePresentation {
+  constructor() {
+    this.slides     = Array.from(document.querySelectorAll('.slide'));
+    this.total      = this.slides.length;
+    this.current    = 0;
+    this.progressEl = document.getElementById('progressBar');
+    this.navEl      = document.getElementById('navDots');
+    this.dots       = [];
+
+    this.setupIntersectionObserver();
+    this.setupNavDots();
+    this.setupKeyboardNav();
+    this.setupWheelNav();
+    this.setupTouchNav();
+    this.updateProgress(0);
+  }
+
+  setupIntersectionObserver() {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          const idx = this.slides.indexOf(e.target);
+          if (idx !== -1) { this.current = idx; this.updateProgress(idx); this.updateDots(idx); }
+        }
+      });
+    }, { threshold: 0.5 });
+    this.slides.forEach(s => obs.observe(s));
+  }
+
+  setupNavDots() {
+    this.navEl.innerHTML = '';
+    this.dots = [];
+    this.slides.forEach((_, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'nav-dot' + (i === 0 ? ' active' : '');
+      btn.setAttribute('aria-label', `Go to slide ${i + 1}`);
+      btn.addEventListener('click', () => this.goTo(i));
+      this.navEl.appendChild(btn);
+      this.dots.push(btn);
+    });
+  }
+
+  updateDots(idx) { this.dots.forEach((d, i) => d.classList.toggle('active', i === idx)); }
+  updateProgress(idx) {
+    const pct = this.total > 1 ? (idx / (this.total - 1)) * 100 : 100;
+    this.progressEl.style.width = pct + '%';
+  }
+  goTo(idx) { this.slides[idx]?.scrollIntoView({ behavior: 'smooth' }); }
+
+  setupKeyboardNav() {
+    document.addEventListener('keydown', e => {
+      if (e.target.getAttribute('contenteditable')) return;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault(); this.goTo(Math.min(this.current + 1, this.total - 1));
+      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault(); this.goTo(Math.max(this.current - 1, 0));
+      } else if (e.key === 'Home') { e.preventDefault(); this.goTo(0); }
+        else if (e.key === 'End') { e.preventDefault(); this.goTo(this.total - 1); }
+    });
+  }
+
+  setupWheelNav() {
+    let lastWheel = 0;
+    document.addEventListener('wheel', e => {
+      const now = Date.now();
+      if (now - lastWheel < 800) return;
+      lastWheel = now;
+      if (e.deltaY > 0) this.goTo(Math.min(this.current + 1, this.total - 1));
+      else this.goTo(Math.max(this.current - 1, 0));
+    }, { passive: true });
+  }
+
+  setupTouchNav() {
+    let startY = 0;
+    document.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, { passive: true });
+    document.addEventListener('touchend', e => {
+      const diff = startY - e.changedTouches[0].clientY;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) this.goTo(Math.min(this.current + 1, this.total - 1));
+        else this.goTo(Math.max(this.current - 1, 0));
+      }
+    }, { passive: true });
+  }
+}
+
+/* === INLINE EDITOR === */
+class InlineEditor {
+  constructor() {
+    this.isActive    = false;
+    this.toggle      = document.getElementById('editToggle');
+    this.banner      = document.getElementById('editBanner');
+    this.hotzone     = document.getElementById('editHotzone');
+    this.hideTimeout = null;
+
+    this.hotzone.addEventListener('mouseenter', () => { clearTimeout(this.hideTimeout); this.toggle.classList.add('show'); });
+    this.hotzone.addEventListener('mouseleave', () => { this.hideTimeout = setTimeout(() => { if (!this.isActive) this.toggle.classList.remove('show'); }, 400); });
+    this.toggle.addEventListener('mouseenter', () => clearTimeout(this.hideTimeout));
+    this.toggle.addEventListener('mouseleave', () => { this.hideTimeout = setTimeout(() => { if (!this.isActive) this.toggle.classList.remove('show'); }, 400); });
+    this.hotzone.addEventListener('click', () => this.toggleEditMode());
+    this.toggle.addEventListener('click', () => this.toggleEditMode());
+
+    document.addEventListener('keydown', e => {
+      if ((e.key === 'e' || e.key === 'E') && !e.target.getAttribute('contenteditable')) this.toggleEditMode();
+      if (e.ctrlKey && e.key === 's' && this.isActive) { e.preventDefault(); this.exportFile(); }
+    });
+  }
+
+  toggleEditMode() {
+    this.isActive = !this.isActive;
+    document.body.classList.toggle('edit-active', this.isActive);
+    this.toggle.textContent = this.isActive ? '✅' : '✏️';
+    this.toggle.classList.toggle('active', this.isActive);
+    this.banner.classList.toggle('active', this.isActive);
+
+    document.querySelectorAll('h1,h2,h3,p,li,strong,em,div.label,div.cover-eyebrow,div.num,div.lbl,div.desc,div.src,div.ask-amount,div.ask-label,div.use-label,div.pct,div.comp-name,div.comp-desc,div.comp-val,div.range,div.stg,td').forEach(el => {
+      if (this.isActive) el.setAttribute('contenteditable','true');
+      else el.removeAttribute('contenteditable');
+    });
+  }
+
+  exportFile() {
+    const editables = Array.from(document.querySelectorAll('[contenteditable]'));
+    editables.forEach(el => el.removeAttribute('contenteditable'));
+    document.body.classList.remove('edit-active');
+    this.toggle?.classList.remove('active','show');
+    this.banner?.classList.remove('active');
+
+    const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+    document.body.classList.add('edit-active');
+    editables.forEach(el => el.setAttribute('contenteditable','true'));
+    this.toggle?.classList.add('active');
+    this.banner?.classList.add('active');
+
+    const blob = new Blob([html], { type:'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'pitchdeck-cancer-survivors.html';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+}
+
+const pres = new SlidePresentation();
+const editor = new InlineEditor();
+</script>
+</body>
+</html>
