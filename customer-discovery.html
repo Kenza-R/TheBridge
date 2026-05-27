@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Discovery — The Bridge</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1f1f1f;
+      --border: #2a2a2a;
+      --text: #e4e4e4;
+      --text-muted: #777;
+      --text-dim: #555;
+      --accent: #6366f1;
+      --accent-light: #a5b4fc;
+      --green: #4ade80;
+      --green-bg: #0f1f14;
+      --green-border: #1e3a24;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: 260px;
+      min-width: 260px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .sidebar-header {
+      padding: 22px 18px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-brand {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 14px;
+    }
+
+    .search-wrap { position: relative; }
+
+    .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      font-size: 13px;
+      pointer-events: none;
+    }
+
+    .search-box {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 8px 10px 8px 30px;
+      color: var(--text);
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .search-box::placeholder { color: var(--text-dim); }
+    .search-box:focus { border-color: var(--accent); }
+
+    .sidebar-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 0 20px;
+    }
+
+    .nav-label {
+      padding: 14px 18px 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .nav-item {
+      padding: 9px 18px;
+      cursor: pointer;
+      border-left: 2px solid transparent;
+      transition: background 0.12s;
+    }
+
+    .nav-item:hover { background: var(--surface2); }
+
+    .nav-item.active {
+      background: var(--surface2);
+      border-left-color: var(--accent);
+    }
+
+    .nav-name {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .nav-sub {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ── Main ── */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 44px 52px;
+    }
+
+    /* ── Home ── */
+    .page-title {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      margin-bottom: 6px;
+    }
+
+    .page-sub {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 42px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 22px;
+      flex: 1;
+    }
+
+    .stat-num {
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--accent-light);
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+
+    .stat-lbl {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .sec-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 14px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 14px;
+      margin-bottom: 44px;
+    }
+
+    .person-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+
+    .person-card:hover { border-color: var(--accent); }
+
+    .card-name { font-size: 15px; font-weight: 600; margin-bottom: 3px; }
+    .card-role { font-size: 12px; color: var(--text-muted); margin-bottom: 14px; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+
+    .tag {
+      background: #1c1c2e;
+      color: var(--accent-light);
+      font-size: 10.5px;
+      font-weight: 500;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .themes-list { display: flex; flex-direction: column; gap: 8px; }
+
+    .theme-row {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 13px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .theme-name { font-size: 13.5px; font-weight: 500; }
+
+    .theme-right { display: flex; align-items: center; gap: 10px; }
+
+    .theme-count {
+      font-size: 11px;
+      color: var(--text-muted);
+      background: var(--surface2);
+      padding: 2px 9px;
+      border-radius: 10px;
+    }
+
+    .theme-chips { display: flex; gap: 5px; }
+
+    .theme-chip {
+      font-size: 11px;
+      background: #1c1c2e;
+      color: var(--accent-light);
+      padding: 2px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+
+    .theme-chip:hover { background: var(--accent); color: #fff; }
+
+    /* ── Interview view ── */
+    .interview-head {
+      padding-bottom: 24px;
+      margin-bottom: 30px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .iview-name { font-size: 26px; font-weight: 700; margin-bottom: 5px; }
+    .iview-meta { font-size: 14px; color: var(--text-muted); margin-bottom: 14px; }
+
+    /* Personal notes */
+    .pnotes {
+      background: var(--green-bg);
+      border: 1px solid var(--green-border);
+      border-radius: 10px;
+      padding: 22px 26px;
+      margin-bottom: 30px;
+    }
+
+    .pnotes-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 16px;
+    }
+
+    .pnotes-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+
+    .pnotes-list li {
+      font-size: 13.5px;
+      line-height: 1.65;
+      color: #c8e6c9;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .pnotes-list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      opacity: 0.5;
+    }
+
+    /* Meeting notes */
+    .mnotes-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 18px;
+    }
+
+    .mblock { margin-bottom: 14px; }
+
+    .mblock-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.12s;
+    }
+
+    .mblock-head:hover { background: var(--surface2); }
+
+    .mblock-head.open { border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom-color: transparent; }
+
+    .chevron { font-size: 10px; color: var(--text-dim); transition: transform 0.2s; flex-shrink: 0; }
+    .mblock-head.open .chevron { transform: rotate(90deg); }
+
+    .mblock-title { font-size: 13.5px; font-weight: 600; }
+
+    .mblock-body {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-bottom-left-radius: 9px;
+      border-bottom-right-radius: 9px;
+      padding: 18px 20px;
+      display: none;
+    }
+
+    .mblock-head.open + .mblock-body { display: block; }
+
+    .prose {
+      font-size: 13.5px;
+      line-height: 1.75;
+      color: var(--text-muted);
+    }
+
+    .blist { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+    .blist li {
+      font-size: 13.5px;
+      line-height: 1.65;
+      color: var(--text-muted);
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .blist li::before { content: '•'; position: absolute; left: 1px; color: var(--accent); }
+
+    .topic-block {
+      padding-bottom: 22px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topic-block:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+
+    .topic-title { font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+
+    .topic-body {
+      font-size: 13px;
+      line-height: 1.75;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      white-space: pre-wrap;
+    }
+
+    .qa-list { display: flex; flex-direction: column; gap: 12px; }
+
+    .qa-q {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--accent-light);
+      margin-bottom: 5px;
+    }
+
+    .qa-a {
+      font-size: 12.5px;
+      line-height: 1.7;
+      color: var(--text-muted);
+      padding-left: 12px;
+      border-left: 2px solid var(--border);
+    }
+
+    /* Search */
+    .sresult {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 13px 16px;
+      margin-bottom: 9px;
+      cursor: pointer;
+      transition: border-color 0.12s;
+    }
+
+    .sresult:hover { border-color: var(--accent); }
+
+    .sresult-who {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent-light);
+      margin-bottom: 4px;
+    }
+
+    .sresult-text {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--text-muted);
+    }
+
+    mark {
+      background: rgba(99,102,241,0.28);
+      color: var(--text);
+      border-radius: 2px;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 80px 0;
+      color: var(--text-muted);
+    }
+
+    .empty-icon { font-size: 36px; margin-bottom: 14px; }
+    .empty-text { font-size: 14px; }
+
+    .tab-bar {
+      display: flex;
+      gap: 3px;
+      margin-top: 12px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 3px;
+    }
+    .tab {
+      flex: 1;
+      background: none;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 4px;
+      font-size: 10.5px;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .tab:hover { color: var(--text); }
+    .tab.active { background: var(--surface); color: var(--text); }
+
+    .pnotes-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .pnotes-head .pnotes-label { margin-bottom: 0; }
+    .edit-btn {
+      background: none;
+      border: 1px solid var(--green-border);
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.12s, background 0.12s;
+    }
+    .edit-btn:hover { opacity: 1; background: rgba(74,222,128,0.07); }
+    .edit-textarea {
+      width: 100%;
+      min-height: 260px;
+      background: rgba(0,0,0,0.25);
+      border: 1px solid var(--green-border);
+      border-radius: 7px;
+      padding: 14px;
+      color: #c8e6c9;
+      font-size: 13.5px;
+      line-height: 1.7;
+      font-family: inherit;
+      resize: vertical;
+      outline: none;
+      margin-bottom: 10px;
+    }
+    .edit-textarea:focus { border-color: var(--green); }
+    .edit-hint { font-size: 11px; color: var(--text-dim); margin-bottom: 10px; }
+    .edit-actions { display: flex; gap: 8px; justify-content: flex-end; }
+    .btn-cancel {
+      background: none; border: 1px solid var(--border); color: var(--text-muted);
+      font-size: 12px; padding: 6px 14px; border-radius: 6px; cursor: pointer;
+      transition: background 0.12s;
+    }
+    .btn-cancel:hover { background: var(--surface2); }
+    .btn-save {
+      background: var(--accent); border: none; color: #fff;
+      font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 6px; cursor: pointer;
+      transition: background 0.12s;
+    }
+    .btn-save:hover { background: #818cf8; }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #444; }
+  </style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-brand">The Bridge · Discovery</div>
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input class="search-box" id="searchInput" type="text" placeholder="Search everything…" oninput="handleSearch(this.value)">
+    </div>
+    <div class="tab-bar">
+      <button class="tab active" id="tab-calls" onclick="switchTab('calls')">Calls</button>
+      <button class="tab" id="tab-speakers" onclick="switchTab('speakers')">Speakers</button>
+      <button class="tab" id="tab-interactions" onclick="switchTab('interactions')">Interactions</button>
+    </div>
+  </div>
+  <div class="sidebar-body" id="sidebar-body"></div>
+</nav>
+
+<main class="main" id="main"></main>
+
+<script>
+// ═══════════════════════════════════════════════
+//  DATA
+// ═══════════════════════════════════════════════
+const interviews = [
+  {
+    id: "lorraine",
+    name: "Lorraine",
+    role: "Breast Pathologist",
+    institution: "Yale Medical School",
+    date: null,
+    tags: ["AI in Pathology", "Physician Burnout", "Patient Communication", "Workflow & Workload", "Sub-specialization", "Institutional Culture"],
+    personalNotes: [
+      "Increased occurrence of colon cancer in younger patients",
+      "Pathology is a 'black hole' — gap in relaying findings between pathologists and clinicians",
+      "Getting a second opinion is harder in borderline cases; analyzing slides can affect clinical care",
+      "AI could be useful for second opinions and creating diagnostic algorithms",
+      "Quantifying hormonal receptors on pathology slides is still done manually — tedious and very subjective",
+      "Same for determining residual disease in breast tissue, which informs outcome prediction",
+      "Gap in patient knowledge: patients don't understand pathologist findings → leads to more stress",
+      "Could be useful to have a way for the pathologist to talk directly to the patient",
+      "Amount of work is high and complex — pressure to get through analysis fast so people can be treated",
+      "Pathologists not supported in case of burnout; not aware (or not reminded) of resources available",
+      "Digital slide scanning exists and allows pathologists to work from anywhere — not yet common",
+      "AI already in some labs — does 4 things: (1) organizes work so most-likely-malignant slides are at top, (2) orders immunostains automatically, (3) generates reports from templates, (4) measures tumor size",
+      "PageAI — does lymph node analysis in breast/other cancers — but they weren't perfect",
+      "Burnout: was a resident in the South (more gentle culture); the North is more cutthroat and high intensity",
+      "Fast food culture — people want results fast; NYC is especially intense and demanding",
+      "Used to work from 3 AM to 8 PM; cannot disconnect from work",
+      "Two personality types under stress: (1) stress → work more, (2) stress → take a break",
+      "Biggest issue: not in control of her schedule → can't maintain her health",
+      "Compensation and effort not aligned, especially in academia",
+      "Pathology is very subspecialized → few experts in niche areas → hiring is a significant issue",
+      "Having more people to divide workload equally (e.g. a third pathologist), capping slides per day — could help alleviate pressure",
+      "ACGME rules are not really enforced; residents go beyond them anyway due to cutthroat culture and people-pleasing",
+      "Leadership needs to see how people under them work",
+      "Was thinking of emailing leadership about better connection within the department — pathologists are very separated",
+      "Considered a digital kudos wall — but realistically not sure people would care when emotionally exhausted",
+      "Even considered gifting heated eye masks, but the number one fix is simply not overworking people",
+      "Useful idea: an app that logs the amount of work done, reminds to eat/drink, shows what is reasonable, and encourages throughout the day",
+      "Adding appointment dates to pathology forms so slides are ready in time for the patient's appointment",
+      "Studying different perspectives across physicians would be valuable"
+    ],
+    meetingNotes: {
+      overview: "Exploratory interview conducted by Kenza and Richard, entrepreneurship program participants and Yale School of Management graduates, with Lorraine, a breast pathologist at Yale. The conversation covered three primary areas: the role and daily challenges of a breast pathologist, the integration of AI into pathology workflows, and physician burnout and emotional well-being. The discussion evolved organically from clinical gaps in breast pathology toward a potential startup solution addressing physician well-being and burnout prevention.",
+      keyConcepts: [
+        "Breast Pathology and Subjectivity: The inherent interpretive variability in pathologic diagnosis and the need for standardization and second opinions",
+        "AI in Pathology: The emerging use of artificial intelligence to automate case prioritization, immunostain ordering, report generation, and tumor quantification",
+        "Physician Burnout: Chronic workplace stress driven by unsustainable caseloads, institutional culture, and lack of structural support",
+        "Sense of Community and Connection: The role of peer relationships and shared experience in mitigating emotional burden among physicians",
+        "Proactive Well-being Monitoring: The concept of a data-driven tool to track workload, mood, and stress indicators before physicians reach a critical breaking point"
+      ],
+      importantQuestions: [
+        "How can pathology be brought to the forefront of patient care, and how can patients better understand their diagnoses?",
+        "Can AI effectively remove subjectivity from pathologic diagnosis, and what barriers exist to its widespread adoption?",
+        "What structural and psychological factors contribute to physician burnout, and why do existing rules and resources fail to address it?",
+        "How can a well-being solution be designed that does not add further burden to already overworked physicians?",
+        "Does burnout manifest differently across medical subspecialties, and should solutions be tailored accordingly?"
+      ],
+      keyTakeaways: [
+        "Breast pathology is a highly sub-specialized field with significant diagnostic subjectivity, making second opinions and AI-assisted tools critically important.",
+        "AI is already beginning to transform pathology workflows through case prioritization, automated immunostain ordering, report templating, and lymph node analysis — though adoption remains uneven.",
+        "Physician burnout in pathology is driven by unsustainable caseloads, institutional culture, lack of leadership awareness, and psychological barriers to self-advocacy.",
+        "Existing regulatory frameworks such as ACGME work-hour rules are frequently circumvented due to people-pleasing culture and perfectionism, particularly in high-prestige academic institutions.",
+        "Peer connection and community are identified as meaningful but insufficient solutions to burnout unless accompanied by structural workload relief.",
+        "A proactive, data-driven well-being monitoring tool — one that tracks slide counts, hours worked, and mood indicators — was identified as a promising and needed intervention.",
+        "Burnout solutions must be tailored to the specific needs and values of different medical subspecialties rather than applied as a one-size-fits-all approach.",
+        "Leadership buy-in is considered essential for any meaningful systemic change in physician well-being."
+      ],
+      topics: [
+        {
+          title: "Topic 1 — The Role of a Breast Pathologist and Gaps in Patient Care",
+          body: "Lorraine is a breast-only pathologist at Yale, having trained at Virginia Commonwealth University and completed her fellowship at Memorial Sloan Kettering. Her role centers on diagnosing breast cancer, describing tumor biology, and informing the clinical team — functioning, as she describes it, as \"the teacher of the doctors.\" Despite this central role, pathology remains largely invisible to patients.\n\nA key gap Lorraine identified is the disconnect between pathology findings and patient understanding. Patients receive diagnoses through oncologists or primary care physicians, but rarely interact with the pathologist who made the diagnosis. She emphasized that no one is better positioned to explain a tumor's biology, behavior, and prognosis than the pathologist who analyzed it. She expressed strong interest in pathologist-to-patient communication tools — including visual explanations of tumor slides and plain-language descriptions of findings — to reduce the psychological burden caused by diagnostic uncertainty.\n\nShe also highlighted diagnostic subjectivity: two pathologists may interpret the same borderline tissue differently, leading to vastly different treatment decisions. This underscores the importance of second opinions and AI's potential to introduce greater objectivity.",
+          qa: [
+            {
+              q: "What are the biggest gaps you see in breast cancer care from your perspective as a pathologist?",
+              a: "Lorraine identified two primary gaps: the lack of direct pathologist-to-patient communication, which leaves patients confused and anxious, and the subjectivity inherent in pathologic interpretation, which can lead to inconsistent treatment decisions. She also noted the potential for AI to address both issues."
+            },
+            {
+              q: "What is the most boring or frustrating part of your day-to-day work?",
+              a: "Lorraine cited the sheer volume of cases as the most significant challenge. The workload is high, complex, and unrelenting — described as an 'open faucet' that never stops. Even during off-service weeks, she continues catching up on prior cases, making true disconnection from work nearly impossible."
+            }
+          ]
+        },
+        {
+          title: "Topic 2 — AI Integration in Pathology Workflows",
+          body: "Pathology is actively transitioning toward digital and AI-assisted workflows, though adoption varies widely across institutions. Lorraine's department at Yale is moving toward fully digital slide scanning, which enables remote sign-out and lays the groundwork for AI integration.\n\nShe described several practical AI applications already in use or under development:\n• Case prioritization: AI sorts cases by urgency, placing likely-malignant cases at the top of the queue\n• Automated immunostain ordering: When AI identifies invasive ductal carcinoma, it can automatically order markers such as ER and HER2\n• Report generation: AI populates standardized report templates for common diagnoses\n• Tumor measurement: AI quantifies tumor size and hormonal expression, tasks currently done by visual estimation\n• Lymph node analysis: Tools such as PageAI are in use at MSK — though imperfect\n\nLorraine views AI adoption as inevitable and beneficial for reducing cognitive load, even if full integration will take time.",
+          qa: [
+            {
+              q: "Do you see pathology following the same AI-assisted path as radiology, and are there barriers to that happening?",
+              a: "Lorraine confirmed that pathology is actively moving in that direction. Digital scanning is already underway in her department, and AI tools for case prioritization, immunostain ordering, and report generation are in use at select labs. The main barriers are uneven adoption across institutions and the time required to validate and integrate these tools into existing workflows."
+            }
+          ]
+        },
+        {
+          title: "Topic 3 — Physician Burnout: Causes, Culture, and Potential Solutions",
+          body: "Burnout emerged as the central theme of the latter half of the conversation. Lorraine described her own experience navigating an unsustainable workload at Yale — regularly working late evenings and weekends before negotiating a reduced clinical schedule, a decision that came with a salary reduction but was necessary for her well-being.\n\nStructural and psychological drivers she identified:\n• Volume and complexity: Large academic labs generate enormous caseloads with no natural endpoint\n• Sub-specialization and staffing shortages: Few trained practitioners willing to enter academia\n• Institutional culture: High-prestige environments foster perfectionism and people-pleasing\n• Generational dynamics: Older leadership tends toward stoicism; younger physicians are more attuned to well-being\n• Misalignment of compensation and effort: Academic pathologists earn less than private practice despite comparable workloads\n\nLorraine emphasized that surface-level interventions (kudos walls, wellness gifts) are meaningful but insufficient if underlying workload is not addressed. She proposed a well-being tracking app where physicians log daily slide count, hours worked, and mood via color-coded indicators (green / yellow / red) to identify burnout patterns and trigger timely interventions.",
+          qa: [
+            {
+              q: "Are there any enforced work-hour limits for attending pathologists, similar to ACGME rules for residents?",
+              a: "Lorraine stated that she has never heard of ACGME-style rules being enforced for faculty. She noted that even during residency, such rules were frequently circumvented due to personal pressure, fear of appearing inadequate, and the culture of overperformance — particularly in high-stakes academic environments."
+            },
+            {
+              q: "How is the sense of community and peer connection nurtured within your department?",
+              a: "Lorraine acknowledged that connection is limited by design — pathologists are physically dispersed across the institution, reducing organic interaction. She has been actively emailing leadership about this and proposed a digital kudos wall and small gestures of recognition. However, she cautioned these measures only work if accompanied by genuine workload relief; otherwise, they feel hollow."
+            },
+            {
+              q: "What do you think would make the biggest difference in your day-to-day well-being beyond reducing workload?",
+              a: "Lorraine highlighted setting clear personal limits — such as a hard stop at 6:30 PM — and building in time for meaningful work like research and mentoring. She emphasized the value of self-awareness: recognizing when overwhelmed and taking even 10 minutes of stillness. She noted that what works varies by individual, and any effective solution must account for this variability."
+            }
+          ]
+        }
+      ],
+      nextSteps: [
+        "Kenza to continue conducting exploratory interviews with physicians across different subspecialties to gather a broader sample of burnout experiences and well-being needs.",
+        "Lorraine offered to connect Kenza with colleagues at Yale who may be interested in participating in a small pilot study or survey on burnout and workload.",
+        "Kenza and Richard to refine their well-being monitoring concept, focusing on low-friction data collection (mood check-ins, slide count logging) that does not add burden to physicians' existing workflows.",
+        "Lorraine expressed interest in designing a research project surveying her department to identify what pathologists value most, which could inform targeted well-being interventions.",
+        "Kenza to consider interviewing surgeons and other subspecialists to understand how burnout manifests differently across medical roles."
+      ]
+    }
+  },
+  {
+    id: "mohamed",
+    name: "Mohamed",
+    role: "Medical Doctor & Venture Capital Professional",
+    institution: "Yale",
+    date: null,
+    tags: ["Hospital Sales Strategy", "Physician Burnout", "Cancer Survivorship", "Femtech", "AI Strategy", "Go-to-Market"],
+    personalNotes: [
+      "Every hospital dealing with data needs a COO (outcomes & efficiency) and CFO (revenue, reduced cost) — frame the pitch for both",
+      "If selling to hospital systems: what would hospitals benefit, and how does it reflect financially for them",
+      "Have to talk to a physician champion inside the institution",
+      "Target hospitals in New York City",
+      "Residents are more approachable and more prone to engage with apps and wearables",
+      "Residents in NYC see other top companies and think deeply about what they're providing and what they're missing",
+      "DTS team — take burden from them, make integration smoother; think about entire journey from identification call through access and translation to hospitals",
+      "Target 5-10 hospitals in New York; talk to the Chief Digital Officer to build a co-development agreement",
+      "Bridge model reference: typically 1-3% equity, mostly at 1.5%",
+      "Target: Lincoln Memorial (Bronx) — high burnout and transfer, had 3 suicides in one year; Mount Sinai; Columbia and Columbia-affiliated hospitals like Harlem Hospital",
+      "Program director for residency: surgery, internal medicine, emergency medicine",
+      "Cancer survivorship: engagement challenge, many solutions addressing the in-between gap, there is a psychological issue",
+      "Strategies for women to do breast checks — target Gen Z and millennials (higher likelihood of engaging)",
+      "Femtech wellness solution vs. patient monitoring and support solution — two very different framings with different market and regulatory implications",
+      "Talk to 10-20 oncologists and breast surgeons, build a strong advisory board",
+      "There is a market — key questions: what will the client journey be? How to keep them engaged? How will the solution not be a burden on them? It should make them feel better",
+      "Most important thing: speed to value for each different population",
+      "Write a white paper — max 40 pages, zero to one approach (reference Peter Thiel's Zero to One)",
+      "Cover: customer understanding and journey, argument for payers, systems thinking analysis, micro and macro integration on tech side, lateral vs. vertical — deeper = harder to get rid of",
+      "Predictive AI, not generative AI — focus on automation",
+      "Check at Yale Medicine who is doing what and set up discovery calls",
+      "Discovery framing: 'I'm trying to understand your pain points, what you're dealing with' — do not lead with a product pitch",
+      "Yale AI Symposium and Creative Destruction Lab website — look at alumni companies and cancer streams for gaps",
+      "Decide early: just a wellness solution, or a unique AI engine with proprietary IP strategy — this shapes valuation and investor interest"
+    ],
+    meetingNotes: {
+      overview: "Strategic advisory session between Kenza and Richard (co-founders in the Entrepreneurs First program in San Francisco) and Mohamed, a medical doctor and venture capital professional at Yale with nearly 8 years of experience in health tech and the startup ecosystem. The primary purpose was to present four startup ideas and gather expert feedback on viability, market positioning, and go-to-market strategy. The discussion focused in depth on two ideas: a mental health companion tool for healthcare workers and a breast cancer survivorship care platform. A brief exploration of a speech therapy innovation concept was also discussed.",
+      keyConcepts: [
+        "Beachhead Market Strategy: Start with the narrowest, most accessible sub-market to demonstrate value before scaling",
+        "Speed to Value: Solutions must deliver immediate, demonstrable value to the end user or buyer",
+        "Peter Thiel's Zero-to-One Approach: Dominate a very specific niche before expanding",
+        "Systems Thinking: Analyze the full ecosystem — patients, physicians, IT teams, CFOs, COOs — when designing and pitching a solution",
+        "Clinical Champion Model: Identify an internal advocate within a healthcare institution to drive adoption",
+        "White Paper as Strategic Foundation: Use a rigorous white paper to sharpen problem definition, competitive differentiation, and market argument before building a pitch deck",
+        "Predictive vs. Generative AI: For clinical applications, predictive AI is preferred for its accuracy and reliability",
+        "Defensible MOAT via Deep Integration: The deeper a solution integrates into existing workflows, the harder it is to remove, creating a competitive advantage"
+      ],
+      importantQuestions: [
+        "What is the beachhead market for the physician mental health tool, and which hospital segment offers the lowest barrier to entry?",
+        "How can the solution address the concerns of hospital CFOs and COOs, not just clinicians?",
+        "What differentiates these solutions from existing competitors, and what are those competitors missing?",
+        "How can a breast cancer survivorship app avoid becoming a burden to an already psychologically exhausted patient population?",
+        "What role can predictive AI and automation play in a speech therapy innovation?",
+        "Should the team build a wellness solution or a scalable, proprietary AI engine?"
+      ],
+      keyTakeaways: [
+        "The EF program gives Kenza and Richard three weeks to finalize a startup idea in exchange for a $250K pre-seed investment and a subsequent three-month seed-raising phase in San Francisco.",
+        "Both ideas — physician mental health support and breast cancer survivorship care — address real, well-documented clinical pain points but require sharp differentiation from existing solutions.",
+        "Hospitals are the primary customer (B2B), not individual physicians or patients; pitches must be tailored to COOs and CFOs with clear cost-reduction and efficiency arguments.",
+        "Data privacy and HIPAA compliance are critical concerns for any health tech solution seeking hospital partnerships.",
+        "A narrow, focused beachhead (e.g., residents in NYC hospitals) is strongly recommended before scaling.",
+        "Building a strong clinical advisory board and identifying a clinical champion within target institutions are essential early steps.",
+        "Writing a white paper before the pitch deck is recommended to rigorously stress-test and sharpen the idea.",
+        "Speed to value — the ability to demonstrate immediate, tangible impact — is a key differentiator for successful health tech startups."
+      ],
+      topics: [
+        {
+          title: "Topic 1 — Mental Health Companion for Healthcare Workers",
+          body: "The first idea centers on a proactive mental health and wellness tool for physicians and healthcare workers. Unlike existing solutions that intervene only when a clinician actively seeks help, this platform would operate upstream — monitoring EHR-connected data (patient outcomes, schedule load) and wearable data to detect early signs of burnout or distress. The tool would facilitate peer-to-peer support by notifying a pre-approved circle of colleagues and scheduling informal check-ins before the situation escalates.\n\nMohamed validated the concept's relevance, noting that physician burnout costs approximately $7,600 per physician per year. He emphasized that the primary customer is the healthcare system, not the individual physician, and that the pitch must resonate with the COO (outcomes and efficiency) and CFO (cost reduction and revenue impact).\n\nHe recommended targeting hospital residents in NYC as the beachhead market, citing higher engagement with apps and wearables, acute burnout levels, and the existence of a physician union in New York as evidence of severity. He also highlighted the importance of data privacy, smooth EHR integration, and identifying a clinical champion — ideally from psychiatry, neurology, or psychology. He referenced the Bridge app (by Shiv at UPMC) as a model for earning hospital trust through years of refinement and a champion-first approach.",
+          qa: [
+            {
+              q: "From your experience, have you seen any startups try to go into this space and what struggles have they encountered?",
+              a: "In the past four years, Mohamed has not encountered a startup specifically addressing physician burnout at this proactive layer. He noted an influx of AI-driven solutions flagging patient risk from EHR data, but none targeting physician mental health in this way. He advised the team to identify the top four competitors and pinpoint what they are missing."
+            },
+            {
+              q: "What made Yale trust Bridge with their data?",
+              a: "Shiv, the CEO of Bridge, is a physician who developed the solution over years at UPMC, focusing on reliable, accurate clinical notes and seamless integration. He approached Yale through the Chief Digital Officer (a neurologist), demonstrated the app live, and built trust incrementally. Yale's model involves a co-development agreement: the startup covers pilot costs and receives access to Yale's data, patients, faculty, and systems in exchange for a small equity stake (typically 1–1.5%), with potential for future investment rounds."
+            },
+            {
+              q: "Do you know of any healthcare systems in New York that would be more open to this type of idea?",
+              a: "He recommended Lincoln Memorial Hospital (Bronx) due to historically high burnout and turnover rates, Mount Sinai, and Columbia-affiliated hospitals. He advised reaching out to residency program directors, particularly in surgery and internal medicine."
+            }
+          ]
+        },
+        {
+          title: "Topic 2 — Breast Cancer Survivorship Care Platform",
+          body: "The second idea focuses on supporting breast cancer survivors during the post-treatment period — a phase characterized by a significant drop in clinical oversight (check-ins only at 3 and 6 months post-remission) despite well-documented challenges in mental health, hormonal health, sexual health, financial well-being, and body image. The proposed solution would be a holistic, personalized companion app monitoring and guiding survivors through the early months of survivorship, addressing the 'black box' gap between clinical visits.\n\nMohamed confirmed the validity of the problem, drawing on personal experience from a breast surgery internship in the UK, where he observed patients in full remission returning to follow-ups in emotional distress due to self-image and identity challenges. He stressed that the core challenge is engagement: the target population is already psychologically exhausted, and the solution must feel empowering and intuitive rather than burdensome.\n\nHe suggested considering whether to position the product as a Femtech wellness solution (targeting a broader Gen Z/millennial population, given that cancers are trending younger) or as a clinical patient monitoring tool, as each framing has different market and regulatory implications. He also recommended building a strong advisory board of 10–20 oncologists and breast surgeons, noting that a strong advisory board alone has historically been sufficient to raise significant early-stage funding.",
+          qa: [
+            {
+              q: "From your experience, what have successful apps done differently from those that failed?",
+              a: "Speed to value is the defining factor. Successful solutions demonstrate immediate, tangible impact — like the anti-fragile glass salesman who simply smashed a cup to prove his product's value. He advised studying competitors (including Uncovery) to understand why they failed to gain traction, whether due to poor UX, lack of engagement, or failure to address the emotional state of the patient population."
+            },
+            {
+              q: "Are you familiar with Uncovery?",
+              a: "He was not familiar enough to provide detailed diligence but encouraged Kenza to reach out to the founder (a Yale alumna) and her team to understand what went wrong."
+            }
+          ]
+        },
+        {
+          title: "Topic 3 — Speech Therapy Innovation",
+          body: "Richard had been exploring the speech therapy space, motivated by the global shortage of speech therapists and growing demand from both pediatric and elderly populations. The concept involves bridging this gap using AI and digital tools in a currently low-tech environment with no holistic solutions available.\n\nMohamed acknowledged the demand but noted limited direct exposure to speech therapy innovation at Yale. He recommended focusing on predictive AI (rather than generative AI) for higher accuracy in clinical settings, and on automation of specific, well-defined steps within the therapy delivery workflow to reduce costs for payers. He advised Kenza to conduct discovery calls with Yale Medicine speech therapy specialists — framing the conversation as a pain point exploration rather than a product pitch.",
+          qa: [
+            {
+              q: "Are you aware of any innovation in speech therapy at Yale or more broadly?",
+              a: "Some research is being conducted at Yale Medicine, but no commercial solutions have come through his pipeline. He emphasized that any solution must clearly outperform what a speech therapist currently does, focus on predictable AI for accuracy, and identify specific automation opportunities within the therapy workflow."
+            },
+            {
+              q: "What exactly are we thinking about with speech therapy?",
+              a: "The goal is to bridge the gap between the shortage of therapists and increasing demand, both on the elder and pediatric sides, using AI in a currently low-tech environment. Still in preliminary exploration."
+            }
+          ]
+        },
+        {
+          title: "Topic 4 — General Strategic Advice and Methodology",
+          body: "Mohamed shared a broader strategic framework for startup ideation. He drew on his own experience developing a white paper over 7–8 months, during which he progressively narrowed a startup concept by consulting physicians across institutions from Harvard to the Mayo Clinic. His core message: finding a startup idea is less like painting (creative expression) and more like sculpting — continuously cutting away until a uniquely differentiated, defensible concept emerges.\n\nHe recommended writing a comprehensive white paper (up to 40 pages) covering market analysis, customer journey, competitive landscape, system thinking (micro and macro), integration strategy (lateral vs. vertical), and the financial argument for the end payer. From this white paper, generate the pitch deck. He also advised the team to be clear about whether they are building a wellness app or a scalable, proprietary AI engine, as this distinction significantly impacts valuation and investor interest.\n\nHe also mentioned the Creative Destruction Lab (CDL) as a resource, the upcoming Health AI Symposium at Yale (12 teams from the Yale/Yale Medicine ecosystem), and the largest innovation conference in New England (Yale, MIT, Harvard, Brown) as valuable sources of inspiration and networking.",
+          qa: [
+            {
+              q: "What is the best approach to reaching out to specialists for discovery calls?",
+              a: "Do not lead with a product pitch. Frame the conversation as a discovery call focused on understanding the specialist's pain points — specifically, what problems they face that they would pay to solve. Prepare by researching publicly available data on their workflows and challenges beforehand."
+            },
+            {
+              q: "What type of company should we be building?",
+              a: "Decide early whether you are building a wellness solution or a scalable AI engine with proprietary IP, as this shapes the entire fundraising and growth strategy. The two paths have very different valuations and investor audiences."
+            }
+          ]
+        }
+      ],
+      nextSteps: [
+        "Identify the top 4 competitors for the physician mental health tool and pinpoint their gaps and weaknesses.",
+        "Conduct 5–10 customer discovery interviews with residency program directors at NYC hospitals — priority targets: Lincoln Memorial (Bronx), Mount Sinai, Columbia-affiliated hospitals including Harlem Hospital — focusing on surgery and internal medicine.",
+        "Reach out to the founder of Uncovery (a Yale alumna) to understand the challenges encountered in the breast cancer survivorship space.",
+        "Kenza to leverage her Yale network to set up discovery calls with Yale Medicine speech therapy specialists, framing conversations as pain point exploration.",
+        "Begin writing a white paper (up to 40 pages) covering market analysis, customer journey, competitive landscape, systems thinking, integration strategy, and financial argument for the end payer.",
+        "Review Creative Destruction Lab (CDL) alumni in the computational health and cancer streams to identify unaddressed gaps.",
+        "Explore Y Combinator's alumni network and mentor network for additional inspiration and competitive intelligence.",
+        "Clarify internally whether the product being built is a wellness solution or a scalable, proprietary AI engine.",
+        "Consider building a strong clinical advisory board of 10–20 oncologists, breast surgeons, or psychiatry/neurology specialists depending on the chosen idea.",
+        "Keep Mohamed updated on the final idea chosen and share materials for review when ready."
+      ],
+      resources: [
+        { name: "Entrepreneurs First (EF)", description: "VC-led program Kenza and Richard are currently participating in, based in San Francisco, London, and Paris. Relevant for understanding the program structure and $250K pre-seed funding pathway." },
+        { name: "Bridge App (by Shiv, UPMC)", description: "Referenced as a model case study for how a clinician-built health tech solution successfully earned hospital trust and secured a co-development agreement with Yale. Useful for understanding the clinical champion and co-development agreement model." },
+        { name: "Creative Destruction Lab (CDL)", description: "Startup program from University of Toronto with streams in computational health and cancer. Mohamed recommended reviewing CDL alumni companies to identify market gaps. (creativedestructionlab.com)" },
+        { name: "Y Combinator", description: "Recommended as a resource to explore alumni companies and mentor networks for inspiration and competitive intelligence. (ycombinator.com)" },
+        { name: "Peter Thiel's Zero to One", description: "Referenced as a strategic framework for dominating a niche market before scaling. Recommended reading for go-to-market strategy." },
+        { name: "Health AI Symposium at Yale", description: "Upcoming internal competition featuring 12 teams from the Yale/Yale Medicine ecosystem presenting health AI solutions. Noted as a valuable source of inspiration for identifying unaddressed problems." },
+        { name: "Largest Innovation Conference in New England (Yale/MIT/Harvard/Brown ecosystem)", description: "Annual event featuring pitch competitions, investor presence, and research commercialization opportunities. Recommended for future attendance." }
+      ]
+    }
+  },
+  {
+    id: "huang",
+    name: "Huang",
+    role: "Researcher / Former Anesthesiologist",
+    institution: "Switzerland (former)",
+    date: null,
+    tags: ["Physician Burnout", "Mental Health", "Diversity & Inclusion", "Risk Stratification", "EAP Programs"],
+    personalNotes: [
+      "Personally suffered from hospital bullying",
+      "Would use a mental health tool for physicians as long as it feels appreciated and personal — not just automatically generated AI responses",
+      "Would prefer something more human — e.g. someone in HR who specializes in physician mental health",
+      "Ideal model: combined hospital + startup employee providing proactive outreach — 'Hey, can you get on a call?'",
+      "Would definitely use such a product",
+      "Had access to an EAP (Employee Assistance Program) offering free therapy called Cossack — but the waitlist was very long and he didn't end up using it",
+      "Proposed idea: risk stratification per physician based on socioeconomic layer and experience level",
+      "More trauma experienced by minority doctors due to gender and ethnic disparity",
+      "He has personally run research on gender and ethnic disparity in burnout in academic settings",
+      "If building a burnout propensity score, it must include two key variables: gender and ethnic background",
+      "Doctors are seen as emotional trash cans — even by people outside of the hospital",
+      "Society expects doctors to be perfect human beings, but they are just as vulnerable as anyone else — that should be taken into account in any solution"
+    ],
+    meetingNotes: null
+  },
+  {
+    id: "mahmoud-ramy",
+    name: "Mohamed Ramy",
+    role: "Medical Student",
+    institution: null,
+    date: null,
+    tags: ["Medical Student Perspective", "Physician Burnout", "Surgical Education", "Cancer Survivorship", "Hospital Sales Strategy", "Go-to-Market"],
+    personalNotes: [
+      "Workload varies as a medical student — experience is not uniform",
+      "Medical students don't get access to the same tools that residents use in the hospital",
+      "Not sure what's going on with cancer survivors, but offered to connect with oncologists",
+      "Mostly surgical background — feels there is a need for surgical education for medical students (e.g. how to scrub before going to the OR) — felt that this kind of resource didn't exist",
+      "Personally felt burnout wasn't an issue for him — says he is pretty good at handling these things",
+      "Suggested it might be better to speak to people in higher-stress environments to get stronger signal on burnout",
+      "Likes the Bridge concept",
+      "— HEALTHCARE WORKER MENTAL HEALTH SOLUTION —",
+      "Core concept: proactive mental health companion connecting to EHR data and wearables to flag physician distress before psychiatric intervention is needed",
+      "Peer support network — physicians prefer talking to other physicians",
+      "Automated scheduling of coffee breaks between designated peer supporters",
+      "Focus on outcomes data (patient deaths, long shifts) + biometric data (sleep, consultation count)",
+      "Market entry: target NYC hospitals first — highest burnout rates, especially among residents",
+      "Start with emergency departments, surgery, internal medicine",
+      "Beachhead: residents over senior faculty (more app-friendly, approachable for pilots)",
+      "Specific target: Lincoln Memorial Hospital in the Bronx (had 3 resident suicides in 2021)",
+      "Sell to hospital systems, not individual physicians",
+      "Need a case for COO (outcomes/efficiency) and CFO (cost reduction)",
+      "$600+ per physician annual cost of burnout already documented",
+      "Require a clinical champion from psychiatry/psychology departments",
+      "Data storage/HIPAA compliance critical — hospitals are extremely protective of data",
+      "— BREAST CANCER SURVIVOR CARE PLATFORM —",
+      "Market opportunity: gap between treatment completion and follow-up visits (3–6 month intervals)",
+      "Holistic support for hormonal, sexual, mental, financial health post-treatment",
+      "Focus on post-mastectomy psychological challenges (self-image, femininity)",
+      "Patient engagement is biggest hurdle — survivors are already 'psychologically bankrupt'",
+      "Solution must feel supportive, not burdensome",
+      "Could position as femtech wellness tool for broader market appeal",
+      "Graveyard for startups — need a clear differentiator",
+      "— STRATEGIC RECOMMENDATIONS —",
+      "Interview 100+ healthcare stakeholders before building (example: successful Stanford founders did this)",
+      "Write a 40-page white paper analyzing the market from all angles",
+      "Build a strong medical advisory board early — critical for credibility and fundraising",
+      "Identify top 4 competitors in each space; find the specific gaps they're not addressing",
+      "Focus on 'speed to value' — immediate demonstrable benefit",
+      "'Think sculpture, not painting: keep cutting until you find something no one has done this way before'",
+      "Narrow focus initially (Peter Thiel zero-to-one approach)",
+      "Predictive AI over generative AI for healthcare applications",
+      "Consider automation opportunities to reduce customer costs",
+      "Plan for vertical integration into workflows for defensibility",
+      "— NEXT STEPS —",
+      "Research Uncovery (breast cancer startup from Yale) — reach out to founder's team",
+      "Target NYC hospital program directors for residency programs (surgery, internal medicine, emergency)",
+      "Connect with Columbia, Mount Sinai, Lincoln Memorial contacts",
+      "Analyze competitors in both spaces to identify differentiation opportunities",
+      "Consider attending Creative Destruction Labs — review computational health alumni",
+      "Mohamed Ramy available for white paper review and material feedback",
+      "Mohamed Ramy can facilitate Yale connections if needed",
+      "Mohamed Ramy offered to connect with Yale Medicine speech therapy researchers if pursuing that direction"
+    ],
+    meetingNotes: null
+  },
+  {
+    id: "ali-kalantari",
+    name: "Ali Kalantari",
+    role: "Stem Cell Researcher",
+    institution: "UCSF",
+    date: null,
+    tags: ["Stem Cell Research", "Regenerative Medicine", "Disease Modeling", "Organoids", "Cancer Prevention"],
+    personalNotes: [
+      "Colleagues/researchers mentioned: Faranak Fattahi; Irena Kayvoy (parabiosis research — transplanting young blood into older mice)",
+      "Key hurdles: delivering cells to actual tissue and what happens after; long-term effects; must prevent cells from turning into teratomas → need a kill switch",
+      "How similar/different are in vitro cells vs in situ cells? In situ cells received all environmental inputs and created a special niche — will translated cells copy that behavior or behave differently?",
+      "Loss of function question: does regeneration of these cells work? Could we engineer them to be specific to a target?",
+      "Cell 3D printing device — interesting direction",
+      "Stem cells must be confined to a place and listen to environmental cues; if cues come from a diseased patient, whatever is missing from that environment must be compensated for",
+      "To avoid cancer: cells listen to the environment — spatial constraints + slow release of signals guide them to become the cell type we want",
+      "Complexity varies by organ: nerve = very tricky; liver = easier. Key question: what are the cells primed towards?",
+      "Rule of thumb: simpler organs further from the nervous system are easier to target",
+      "Focus area: vasculature — build vessels from stem cells, replace part of the bowel",
+      "Cancer risk is a real concern (teratomas). Access to patient samples would be ideal for research",
+      "Scientists and physicians need to work together — siloed expertise is a blocker",
+      "Timeline: interesting headlines in 5-10 years but not right now. Money is moving away from science",
+      "Tissue transplantation is decades away; disease modeling starts much sooner and is the near-term opportunity",
+      "Preventive medicine angle: grow cancer cells in the lab from a patient's sample, develop treatments, test in a body-on-a-chip",
+      "The niche matters: cells are not in isolation but in their environment — can't ignore this",
+      "Organoids: phenotypic consequence of genes in disease risk; CRISPR screens in organoids + small molecule screens are the current frontier"
+    ],
+    meetingNotes: {
+      overview: "One-on-one exploratory conversation between Kenza, a physician-turned-entrepreneur in an 8-week entrepreneurship program in San Francisco, and Ali, a stem cell scientist and PhD researcher at UCSF. Kenza sought expert insight into the stem cell field as she evaluates potential startup ideas around stem cell therapies, organoids, and organs-on-a-chip. The discussion covered the current state of stem cell science, key biological and regulatory hurdles, near-term commercial opportunities, and the broader landscape of healthcare innovation in this space.",
+      keyConcepts: [
+        "Induced Pluripotent Stem Cells (iPSCs): Adult cells reprogrammed to a pluripotent state, capable of differentiating into virtually any cell type; the most promising platform for therapeutics and disease modeling",
+        "Organoids: Miniaturized, simplified organs grown in vitro from stem cells, used for disease modeling and drug screening",
+        "Organs-on-a-chip: Microfluidic devices containing living cells that mimic organ function, used to test drug responses in a patient-specific context",
+        "Parabiosis: Experimental transplantation of young blood or plasma into older organisms to study and potentially reverse aging markers",
+        "Teratomas and off-target differentiation: Key safety concerns when transplanting stem cells — undirected cells may form tumors or differentiate into unintended tissue types",
+        "Kill switch concept: A proposed safety mechanism to eliminate transplanted stem cells if they begin behaving abnormally",
+        "Niche dependency: Stem cell behavior is heavily influenced by the surrounding microenvironment — mechanical, biochemical, and cellular cues",
+        "Epigenetics and chromatin remodeling: The role of chromatin state in determining cell identity and drug response; partially reset during iPSC reprogramming but increasingly mappable via single-cell ATAC-seq",
+        "Gartner Hype Cycle: Referenced to contextualize current expectations in the stem cell field"
+      ],
+      importantQuestions: [
+        "Where does the stem cell field currently stand in terms of delivering therapies to patients, and what is a realistic timeline?",
+        "What are the major biological hurdles preventing stem cell therapies from reaching clinical practice?",
+        "How much of a patient's epigenetic profile is erased during iPSC reprogramming, and does this limit the accuracy of drug screening models?",
+        "What is the lowest-hanging fruit in stem cell applications from both a scientific and commercial standpoint?",
+        "How does the regulatory environment in the US compare to other countries, and how does it affect investment and innovation?",
+        "Is the 3D architecture of organoids or organs-on-a-chip necessary for meaningful drug screening, or can 2D models suffice?",
+        "What differentiates one patient's stem cells from another's, and why does this matter for personalized medicine?"
+      ],
+      keyTakeaways: [
+        "Stem cell science holds enormous promise but faces significant biological, regulatory, and delivery-related hurdles before widespread clinical application becomes feasible.",
+        "The most immediate and commercially viable application of stem cells is disease modeling and drug screening, not therapeutic transplantation.",
+        "Delivering stem cells to the correct tissue location and ensuring proper integration into the existing biological niche remains a major unsolved challenge.",
+        "Safety concerns — teratoma formation, off-target differentiation, and long-term behavior — are the primary reasons for strict FDA regulation.",
+        "iPSCs are the most scalable and patient-compatible stem cell platform, as they avoid immune rejection and can be derived from a patient's own cells.",
+        "The US regulatory environment significantly lags behind Eastern Europe and other regions where stem cell therapies are applied more broadly, albeit with less scientific rigor.",
+        "Disease modeling using organoids and organs-on-a-chip is gaining traction, partly driven by a regulatory push away from animal testing.",
+        "Simpler, more robust tissue types (mesodermal, endodermal) are closer to clinical application than complex neuroectodermal tissues such as neurons.",
+        "Collaboration between clinicians and bench scientists is critical — each holds complementary knowledge needed to advance the field.",
+        "The stem cell startup landscape is dominated by experienced PhDs with decades in the field, making it challenging for newcomers without deep scientific credibility to attract funding independently."
+      ],
+      topics: [
+        {
+          title: "Topic 1 — Current State of Stem Cell Science and Key Biological Hurdles",
+          body: "Stem cell science has advanced considerably over the past two decades, yet significant biological challenges remain before therapies can be routinely delivered to patients. Ali outlined two primary hurdles: uncertainty surrounding what happens to transplanted cells over the long term — whether they integrate properly, migrate to unintended locations, or transform into tumors; and how closely in vitro-derived cells resemble their in vivo counterparts, given that cells in the body are shaped by complex mechanical and biochemical signals from their surrounding niche.\n\nAli drew on his own PhD research to illustrate niche dependency: while vagal neural crest cells differentiated toward the enteric nervous system showed relatively consistent transcriptional profiles regardless of gut region, the surrounding niche cells displayed significant regional variation. This means transplanting stem cell-derived neurons into a diseased patient environment does not guarantee functional integration, as the host niche may be compromised by aging, chemotherapy, or disease.\n\nA 'kill switch' was raised as a promising but not yet clinically implemented safety strategy. Slow-release beads loaded with morphogens and growth factors were discussed as a potential method to guide transplanted cells toward the desired fate within the host tissue.",
+          qa: [
+            { q: "Does it really matter how long stem cells remain effective, as long as they work in the short term?", a: "Ali acknowledged that treatment, even without a permanent cure, is still valuable and improves quality of life — provided the cells do not transform into teratomas or cancer. The key concern is safety, not just efficacy duration." },
+            { q: "Are Eastern European countries applying stem cell therapies for Parkinson's actually answering scientific questions, or operating in the unknown?", a: "Ali stated he was unfamiliar with specific trials but expressed genuine curiosity. Kenza shared the Famicode website, which lists stem cell clinics globally filtered by diagnosis. Ali noted that if neuronal progenitor transplantation has shown reversal of autism symptoms, it suggests the limitation may be policy rather than science." }
+          ]
+        },
+        {
+          title: "Topic 2 — Regulatory Landscape and Global Disparities",
+          body: "The regulatory environment varies dramatically across the world. In the US, the FDA maintains strict oversight, which Ali identified as a key reason investment has been stifled. No stem cell therapy has become standard clinical practice in the US, with the exception of a recently approved treatment for graft-versus-host disease — Ryan Sill — which costs $1.5 million and required a decade of clinical trials.\n\nBy contrast, Eastern Europe, Mexico, Panama, Costa Rica, and the Bahamas have become destinations for patients seeking treatments unavailable in the US. Public figures including Kylie Jenner, Bryan Johnson, and Tony Robbins have credited stem cell therapies received abroad. France and Italy largely ban stem cell use outside research, while Eastern Europe is considerably more permissive.\n\nA recent executive order permitting collection of menstrual blood for stem cell harvesting was discussed. Ali noted that menstrual blood-derived stem cells are adult-type with limited differentiation potential, making them suitable only for narrow applications — unlike iPSCs.",
+          qa: [
+            { q: "Why has investment in stem cells been slower than expected given the promises made a decade ago?", a: "Ali attributed this to strict US regulations, the absence of any stem cell therapy in common clinical practice, and the complexity of the science. He also noted that pharmaceutical companies may have conflicts of interest related to existing drug patents, making them reluctant to invest heavily in stem cell alternatives until those patents expire." },
+            { q: "Is the US in the worst position globally on stem cell regulation?", a: "Kenza clarified that France and Italy have full bans outside research, while Eastern Europe is the most permissive. The US occupies a middle ground, with some gray-area clinics operating under the guise of clinical research, such as a New Hampshire clinic offering cord blood and placenta-derived stem cell IVs." }
+          ]
+        },
+        {
+          title: "Topic 3 — Near-Term Commercial Opportunities: Disease Modeling and Drug Screening",
+          body: "Ali identified disease modeling and drug screening as the most immediately viable and commercially promising application of stem cell technology. The core value proposition: generate patient-specific cell types in vitro from a patient's own iPSCs and use them to test drug responses before administering treatment — enabling a more personalized and predictive approach to medicine.\n\nAli described a specific research workflow he is pursuing: GWAS on gut diseases → identifying genetic variants → CRISPR screens in intestinal organoids to understand phenotypic consequences at single-cell level → small molecule screens to identify compounds that rescue lost function.\n\nThe Trump administration's push against animal testing is creating regulatory tailwinds for stem cell-based disease modeling. Ali expressed confidence that pharma and large biotech firms would be interested in acquiring companies that successfully build these platforms. Kenza raised the practical challenge of turnaround time — for acute cancer, physicians cannot wait weeks. Ali acknowledged this but noted that for less urgent conditions, elective therapies, or preventive medicine, the model remains highly relevant.",
+          qa: [
+            { q: "How valuable is the 3D aspect of organoids or organs-on-a-chip for drug screening? Is it always necessary?", a: "Ali explained it depends on the disease being modeled. For gut-brain interaction studies, a 2D multi-chamber chip may be sufficient. For organs like the kidney, where spatial architecture is critical to function, 3D modeling becomes more important. The decision should be driven by the specific biological question." },
+            { q: "How does a patient's genetic background affect their stem cells, and why does this matter?", a: "Ali noted that subtle genetic differences between individuals affect how cells differentiate and respond to drugs. His lab works with 12 iPSC lines from donors of different ages, ethnicities, and geographic backgrounds, and observes measurable variation in differentiation outcomes. Most published stem cell research has been conducted on a single cell line (H9), which represents a narrow and potentially unrepresentative baseline." }
+          ]
+        },
+        {
+          title: "Topic 4 — Emerging and Speculative Applications",
+          body: "Kenza described a company led by Karsten Charlesworth (Stanford postdoctoral researcher) growing headless human bodies in vitro for organ harvesting, having raised hundreds of millions of dollars. Ali likened this to entering 'Frankenstein territory.'\n\nThe conversation covered gamete generation from stem cells — Ali mentioned the lab of Diana Laird at UCSF, which is actively working on producing eggs and sperm from iPSCs, which could eventually enable IVF without egg retrieval. Ovarian tissue banking and reinjection of younger ovarian stem cells to slow reproductive aging was also discussed, with Ali raising the caveat that aging of the surrounding niche environment may counteract the benefits of introducing younger cells.\n\nParabiosis-inspired approaches — separating plasma from younger donors and transfusing it into older recipients — were noted as currently in practice, with Ali expressing hope that lab-grown equivalents could eventually replace the need for young donor blood.",
+          qa: [
+            { q: "There's a startup trying to recreate fetal fluids from stem cells for clinical applications. What do you think of that?", a: "Ali drew a parallel to parabiosis research, noting that the concept aligns with existing work on young plasma transfusions. He expressed hope that such materials could eventually be produced entirely in the lab, removing the ethical and logistical complications of relying on young donors." },
+            { q: "What about stem cell therapies reportedly showing positive results for autism in Eastern Europe?", a: "Ali expressed genuine surprise and noted that as a developmental biologist, he would consider autism a more distant therapeutic target than a localized tissue deficiency. However, he acknowledged that if neuronal progenitor transplantation has produced measurable improvements, it may indicate that the primary barrier is regulatory policy rather than scientific feasibility." }
+          ]
+        }
+      ],
+      nextSteps: [
+        "Kenza to explore the Famicode website to review the global landscape of stem cell clinic applications, filtered by diagnosis.",
+        "Kenza to look up Diana Laird at UCSF regarding gamete generation from stem cells.",
+        "Kenza to research Karsten Charlesworth and his organ-growing company given its relevance to the stem cell startup ecosystem.",
+        "Kenza to evaluate whether joining the organoid/organs-on-a-chip team at her entrepreneurship house aligns with her interests, particularly in disease modeling and drug screening.",
+        "Ali to review the Famicode website shared by Kenza to explore international stem cell trial data.",
+        "If Kenza proceeds with the organoid team, both parties agreed to reconnect in person so Ali can provide a more detailed, visual walkthrough of the lab work.",
+        "Ali offered to connect Kenza with his advisor Faronak Katsahi, a stem cell scientist who is also running a company."
+      ],
+      resources: [
+        { name: "Famicode", description: "Global directory of stem cell clinics and applications, filterable by diagnosis; shared by Kenza during the meeting to track international stem cell therapy activity." },
+        { name: "Diana Laird, UCSF — OBGYN & Reproductive Sciences", description: "Researcher working on generating eggs and sperm from iPSCs; Ali offered to make an introduction." },
+        { name: "Karsten Charlesworth, Stanford", description: "Founder of a company growing headless human bodies for organ harvesting; raised hundreds of millions of dollars. Relevant reference point for large-scale stem cell investment." },
+        { name: "Dr. Irena Conboy, UC Berkeley", description: "Pioneer in parabiosis research (young blood transplantation to older organisms); recommended by Ali as a key figure in aging and stem cell space." },
+        { name: "Gartner Hype Cycle", description: "Technology adoption model referenced to describe the current position of stem cell therapeutics." },
+        { name: "Faronak Katsahi", description: "Ali's PhD advisor and stem cell scientist who is also running a company; offered as a potential contact for Kenza." }
+      ]
+    }
+  }
+];
+
+// ═══════════════════════════════════════════════
+//  INTERACTIONS DATA
+// ═══════════════════════════════════════════════
+const interactions = [
+  {
+    id: "int-joshua",
+    name: "Joshua",
+    role: null,
+    institution: null,
+    date: null,
+    tags: ["Biotech", "Personalized Medicine", "Longevity"],
+    personalNotes: [
+      "Sees the future of biotech as fully personalized",
+      "Key modalities he's excited about: peptides, mushrooms, radiant space"
+    ],
+    meetingNotes: null
+  },
+  {
+    id: "int-context",
+    name: "[Name TBD]",
+    role: "VC Partner",
+    institution: null,
+    date: null,
+    tags: ["Cancer Survivorship", "Longevity", "Exosomes", "Biotech"],
+    personalNotes: [
+      "Partner at OVC",
+      "Big into therapies that actually help people",
+      "Could get a letter of intent from Bo Brest — relevant if we go down the cancer survivorship route",
+      "Cancer survivorship angle: meditation center in Marin, yoga, controlling exosomes, cleaner air",
+      "Opportunity: finding a way to measure exosomes freely / more cheaply",
+      "Mentioned 'V cells' (V as in the letter V) — worth researching further"
+    ],
+    meetingNotes: null
+  }
+];
+
+// ═══════════════════════════════════════════════
+//  SPEAKERS DATA
+// ═══════════════════════════════════════════════
+const speakers = [
+  {
+    id: "spk-charlie-songhurst",
+    name: "Charlie Songhurst",
+    role: "Investor / Former McKinsey",
+    institution: null,
+    date: null,
+    tags: ["Startup Strategy", "Investor Mindset", "Healthcare Future", "Go-to-Market", "Longevity"],
+    personalNotes: [
+      "\"You have to learn to dance between the feet of giants\"",
+      "\"You're the fresh blood\"",
+      "\"Don't be trapped in the bubble of your own bullshit\"",
+      "Reference companies: FluidStack (GPU cloud for AI training/inference) and Colossus (xAI's 555K-GPU supercomputer in Memphis) — the point: look for something where the biggest companies won't compete with you directly, but will benefit from what you build",
+      "\"The culture of the company is set by the customers\"",
+      "\"The audience brings out the performance\"",
+      "Personal aside: what is Function Health? → Direct-to-consumer preventative diagnostics, 160+ biomarker tests, $2.5B valuation, raised $298M Series B (Nov 2025) — interesting comp but not top priority for us right now",
+      "Traction: you should never generate negative gross margin for revenue, whatever the justification",
+      "Less big-company revenue numbers, but they'll be bigger in market cap",
+      "\"People invest in shit they understand\"",
+      "\"You have to be driven, hungry, and aggressive\"",
+      "If there's a $100B+ market cap player in the space, they'll invest just to hedge — they can't afford to miss a big opportunity",
+      "Sees a future in healthcare where people fund the cure themselves in biotech — a billionaire who might have cancer will fund the solution for himself; it's the thing they most want to buy",
+      "Longevity, healthcare and bio — that's where the future is",
+      "Don't think about direct incremental stuff — think about massive increases in personal security services",
+      "Play the game: what does a utopian world look like? What does a dystopian world look like? Then extrapolate — what types of companies need to exist?"
+    ],
+    meetingNotes: null
+  },
+  {
+    id: "spk-kyla-barnes-lentz",
+    name: "Kyla Barnes Lentz",
+    role: "Speaker",
+    institution: null,
+    date: null,
+    tags: ["Female Longevity", "Hormonal Health", "Ovarian Aging", "Preventive Medicine", "Women's Health"],
+    personalNotes: [
+      "Women age differently — we're optimizing women's longevity with men's data",
+      "Two-thirds of Alzheimer's patients are women — linked to estrogen loss and neuroimmune differences",
+      "Women are at 4x the risk of developing osteoporosis vs. men; bone loss accelerates in perimenopause",
+      "80% of autoimmune cases are women: lupus, Hashimoto's, RRMS",
+      "Number one cause of death is heart disease — symptoms present atypically in women and are often missed",
+      "10 years of decline in one decade: perimenopause to postmenopause is a direct cliff in women's aging",
+      "To men in the room: 'This is your wife, your mother, your sister and daughter. They need a different protocol than you.'",
+      "She became the first woman to test her ovarian age five years younger than her actual age",
+      "STEP 1 — Test: AMH (ovarian reserve marker); FSH & LH (pituitary signals to ovaries — rising FSH means the system is shouting); Estradiol across the cycle, not just a single snapshot; Progesterone at day 21 (luteal phase — confirms ovulation actually happened); Inhibin B (granulosa cell function — an underordered, underused marker)",
+      "STEP 2 — Stop what accelerates aging: endocrine disruptors (BPA, PFAs, parabens, phthalates, metabolism-disrupting compounds); filter water; audit personal care products; reduce processed food load; women have higher subcutaneous fat that stores and releases these chemicals monthly; reduce heavy metals (mercury, lead, cadmium — test every few years, they concentrate in the ovaries)",
+      "Avoid chronic alcohol: downregulates hormones, raises breast cancer risk, disrupts sleep architecture",
+      "Stop smoking: drops menopause age by 1-2 years, accelerates follicle loss, raises oxidative stress — the #1 most modifiable driver of early ovarian aging",
+      "Address obesity: drives chronic inflammation and toxicity in follicles, insulin resistance damages oocyte quality and quantity, disrupts HPO axis; adipose tissue raises aromatase activity, skewing estrogen balance and accelerating ovarian aging",
+      "STEP 3 — Nutrition pillars (target: inflammation, mitochondrial dysfunction, genomic instability): anti-inflammatory diet with polyphenols, omega-3, fiber — protects granulosa cells and oocyte quality; stop eating too late; track micronutrients",
+      "STEP 4 — Get in shape: strength training 3-4x/week; walk daily",
+      "STEP 5 — Advanced testing: total toxic burden, mitochondrial function, micronutrient panel, Timeless Biotech, genetic SNPs",
+      "Sees value in companies predicting the age of menopause",
+      "100% agrees HRT (hormone replacement therapy) should be standard practice",
+      "Would love to see a comprehensive online gynecologist platform exist"
+    ],
+    meetingNotes: null
+  }
+];
+
+// ═══════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════
+let currentView = 'home';
+let currentTab = 'calls';
+
+// ═══════════════════════════════════════════════
+//  NAV
+// ═══════════════════════════════════════════════
+function initNav() { renderNavBody(); }
+
+function switchTab(tab) {
+  currentTab = tab;
+  ['calls','speakers','interactions'].forEach(t =>
+    document.getElementById('tab-' + t).classList.toggle('active', t === tab)
+  );
+  renderNavBody();
+  if (tab === 'calls') showCallsHome();
+  else if (tab === 'speakers') showSpeakersHome();
+  else showInteractionsHome();
+}
+
+function ensureTab(tab) {
+  if (currentTab === tab) return;
+  currentTab = tab;
+  ['calls','speakers','interactions'].forEach(t =>
+    document.getElementById('tab-' + t).classList.toggle('active', t === tab)
+  );
+  renderNavBody();
+}
+
+function renderNavBody() {
+  const body = document.getElementById('sidebar-body');
+  if (currentTab === 'calls') {
+    body.innerHTML = `
+      <div class="nav-label">Overview</div>
+      <div class="nav-item" id="nav-home" onclick="showCallsHome()">
+        <div class="nav-name">All Calls</div><div class="nav-sub">Dashboard &amp; themes</div>
+      </div>
+      <div class="nav-label">Interviewees</div>
+      ${interviews.map(iv => `<div class="nav-item" id="nav-${iv.id}" onclick="showInterview('${iv.id}')">
+        <div class="nav-name">${iv.name}</div><div class="nav-sub">${iv.role}</div>
+      </div>`).join('')}`;
+  } else if (currentTab === 'speakers') {
+    body.innerHTML = `
+      <div class="nav-label">Overview</div>
+      <div class="nav-item" id="nav-spk-home" onclick="showSpeakersHome()">
+        <div class="nav-name">All Speakers</div><div class="nav-sub">Notes &amp; themes</div>
+      </div>
+      <div class="nav-label">Speakers</div>
+      ${speakers.map(sp => `<div class="nav-item" id="nav-${sp.id}" onclick="showSpeaker('${sp.id}')">
+        <div class="nav-name">${sp.name}</div><div class="nav-sub">${sp.role}</div>
+      </div>`).join('')}`;
+  } else {
+    body.innerHTML = `
+      <div class="nav-label">Overview</div>
+      <div class="nav-item" id="nav-int-home" onclick="showInteractionsHome()">
+        <div class="nav-name">All Interactions</div><div class="nav-sub">Notes &amp; themes</div>
+      </div>
+      <div class="nav-label">People</div>
+      ${interactions.map(it => `<div class="nav-item" id="nav-${it.id}" onclick="showInteraction('${it.id}')">
+        <div class="nav-name">${it.name}</div><div class="nav-sub">${it.role}${it.institution ? ' · ' + it.institution : ''}</div>
+      </div>`).join('')}`;
+  }
+  setActive(currentView);
+}
+
+function setActive(id) {
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  const el = document.getElementById('nav-' + id);
+  if (el) el.classList.add('active');
+}
+
+// ═══════════════════════════════════════════════
+//  HOME VIEWS
+// ═══════════════════════════════════════════════
+function showCallsHome() {
+  currentView = 'home';
+  setActive('home');
+
+  const themeMap = {};
+  interviews.forEach(iv => {
+    iv.tags.forEach(t => {
+      if (!themeMap[t]) themeMap[t] = [];
+      themeMap[t].push(iv);
+    });
+  });
+  const totalInsights = interviews.reduce((s, iv) => s + iv.personalNotes.length, 0);
+
+  setMain(`
+    <div class="page-title">Customer Discovery Calls</div>
+    <div class="page-sub">${interviews.length} interview${interviews.length !== 1 ? 's' : ''} · The Bridge</div>
+
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num">${interviews.length}</div><div class="stat-lbl">Interviews conducted</div></div>
+      <div class="stat-card"><div class="stat-num">${Object.keys(themeMap).length}</div><div class="stat-lbl">Themes identified</div></div>
+      <div class="stat-card"><div class="stat-num">${totalInsights}</div><div class="stat-lbl">Total insights captured</div></div>
+    </div>
+
+    <div class="sec-label">Interviewees</div>
+    <div class="cards-grid">
+      ${interviews.map(iv => `
+        <div class="person-card" onclick="showInterview('${iv.id}')">
+          <div class="card-name">${iv.name}</div>
+          <div class="card-role">${iv.role}${iv.institution ? ' · ' + iv.institution : ''}</div>
+          <div class="tags">${iv.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+        </div>`).join('')}
+    </div>
+
+    <div class="sec-label">Themes Across Interviews</div>
+    <div class="themes-list">
+      ${Object.entries(themeMap).map(([theme, people]) => `
+        <div class="theme-row">
+          <div class="theme-name">${theme}</div>
+          <div class="theme-right">
+            <div class="theme-chips">${people.map(p => `<span class="theme-chip" onclick="showInterview('${p.id}')">${p.name}</span>`).join('')}</div>
+            <div class="theme-count">${people.length} interview${people.length !== 1 ? 's' : ''}</div>
+          </div>
+        </div>`).join('')}
+    </div>
+  `);
+}
+
+function showInteractionsHome() {
+  currentView = 'int-home';
+  setActive('int-home');
+  const themeMap = {};
+  interactions.forEach(it => {
+    it.tags.forEach(t => { if (!themeMap[t]) themeMap[t] = []; themeMap[t].push(it); });
+  });
+  const totalInsights = interactions.reduce((s, it) => s + it.personalNotes.length, 0);
+  setMain(`
+    <div class="page-title">Interactions</div>
+    <div class="page-sub">${interactions.length} interaction${interactions.length !== 1 ? 's' : ''} · The Bridge</div>
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num">${interactions.length}</div><div class="stat-lbl">People logged</div></div>
+      <div class="stat-card"><div class="stat-num">${Object.keys(themeMap).length}</div><div class="stat-lbl">Themes identified</div></div>
+      <div class="stat-card"><div class="stat-num">${totalInsights}</div><div class="stat-lbl">Total insights captured</div></div>
+    </div>
+    <div class="sec-label">People</div>
+    <div class="cards-grid">
+      ${interactions.map(it => `
+        <div class="person-card" onclick="showInteraction('${it.id}')">
+          <div class="card-name">${it.name}</div>
+          <div class="card-role">${it.role}${it.institution ? ' · ' + it.institution : ''}</div>
+          <div class="tags">${it.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+        </div>`).join('')}
+    </div>
+    <div class="sec-label">Themes</div>
+    <div class="themes-list">
+      ${Object.entries(themeMap).map(([theme, people]) => `
+        <div class="theme-row">
+          <div class="theme-name">${theme}</div>
+          <div class="theme-right">
+            <div class="theme-chips">${people.map(p => `<span class="theme-chip" onclick="showInteraction('${p.id}')">${p.name}</span>`).join('')}</div>
+            <div class="theme-count">${people.length}</div>
+          </div>
+        </div>`).join('')}
+    </div>
+  `);
+}
+
+function showInteraction(id) {
+  ensureTab('interactions');
+  currentView = id;
+  setActive(id);
+  const it = interactions.find(x => x.id === id);
+  if (!it) return;
+  setMain(`
+    <div class="interview-head">
+      <div class="iview-name">${it.name}</div>
+      <div class="iview-meta">${it.role}${it.institution ? ' · ' + it.institution : ''}${it.date ? ' · ' + it.date : ''}</div>
+      <div class="tags">${it.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+    </div>
+    ${pnotesHtml(it, 'interaction')}
+  `);
+}
+
+function showSpeakersHome() {
+  currentView = 'spk-home';
+  setActive('spk-home');
+
+  const themeMap = {};
+  speakers.forEach(sp => {
+    sp.tags.forEach(t => {
+      if (!themeMap[t]) themeMap[t] = [];
+      themeMap[t].push(sp);
+    });
+  });
+  const totalInsights = speakers.reduce((s, sp) => s + sp.personalNotes.length, 0);
+
+  setMain(`
+    <div class="page-title">Speaker Notes</div>
+    <div class="page-sub">${speakers.length} speaker${speakers.length !== 1 ? 's' : ''} · The Bridge</div>
+
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num">${speakers.length}</div><div class="stat-lbl">Speakers logged</div></div>
+      <div class="stat-card"><div class="stat-num">${Object.keys(themeMap).length}</div><div class="stat-lbl">Themes identified</div></div>
+      <div class="stat-card"><div class="stat-num">${totalInsights}</div><div class="stat-lbl">Total insights captured</div></div>
+    </div>
+
+    <div class="sec-label">Speakers</div>
+    <div class="cards-grid">
+      ${speakers.map(sp => `
+        <div class="person-card" onclick="showSpeaker('${sp.id}')">
+          <div class="card-name">${sp.name}</div>
+          <div class="card-role">${sp.role}${sp.institution ? ' · ' + sp.institution : ''}</div>
+          <div class="tags">${sp.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+        </div>`).join('')}
+    </div>
+
+    <div class="sec-label">Themes Across Talks</div>
+    <div class="themes-list">
+      ${Object.entries(themeMap).map(([theme, people]) => `
+        <div class="theme-row">
+          <div class="theme-name">${theme}</div>
+          <div class="theme-right">
+            <div class="theme-chips">${people.map(p => `<span class="theme-chip" onclick="showSpeaker('${p.id}')">${p.name}</span>`).join('')}</div>
+            <div class="theme-count">${people.length} talk${people.length !== 1 ? 's' : ''}</div>
+          </div>
+        </div>`).join('')}
+    </div>
+  `);
+}
+
+// ═══════════════════════════════════════════════
+//  INTERVIEW VIEW
+// ═══════════════════════════════════════════════
+function showSpeaker(id) {
+  ensureTab('speakers');
+  currentView = id;
+  setActive(id);
+  const sp = speakers.find(x => x.id === id);
+  if (!sp) return;
+  setMain(`
+    <div class="interview-head">
+      <div class="iview-name">${sp.name}</div>
+      <div class="iview-meta">${sp.role}${sp.institution ? ' · ' + sp.institution : ''}${sp.date ? ' · ' + sp.date : ''}</div>
+      <div class="tags">${sp.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+    </div>
+    ${pnotesHtml(sp, 'speaker')}
+  `);
+}
+
+// ═══════════════════════════════════════════════
+//  EDIT NOTES
+// ═══════════════════════════════════════════════
+function pnotesHtml(person, type) {
+  const label = type === 'speaker' ? 'Notes from Talk' : 'Personal Notes';
+  return `
+    <div class="pnotes">
+      <div class="pnotes-head">
+        <div class="pnotes-label">${label}</div>
+        <button class="edit-btn" onclick="startEdit('${person.id}','${type}')">✎ Edit</button>
+      </div>
+      <ul class="pnotes-list" id="pnotes-${person.id}">
+        ${person.personalNotes.map(n => `<li>${escHtml(n)}</li>`).join('')}
+      </ul>
+    </div>`;
+}
+
+function findPerson(id, type) {
+  if (type === 'call') return interviews.find(x => x.id === id);
+  if (type === 'speaker') return speakers.find(x => x.id === id);
+  if (type === 'interaction') return interactions.find(x => x.id === id);
+  return null;
+}
+
+function rerenderPerson(id, type) {
+  if (type === 'call') showInterview(id);
+  else if (type === 'speaker') showSpeaker(id);
+  else showInteraction(id);
+}
+
+function startEdit(id, type) {
+  const person = findPerson(id, type);
+  if (!person) return;
+  const el = document.getElementById('pnotes-' + id);
+  if (!el) return;
+  el.outerHTML = `
+    <div id="pnotes-${id}">
+      <div class="edit-hint">One note per line. Empty lines are ignored.</div>
+      <textarea class="edit-textarea" id="edit-ta-${id}">${person.personalNotes.join('\n')}</textarea>
+      <div class="edit-actions">
+        <button class="btn-cancel" onclick="rerenderPerson('${id}','${type}')">Cancel</button>
+        <button class="btn-save" onclick="saveEdit('${id}','${type}')">Save</button>
+      </div>
+    </div>`;
+  document.getElementById('edit-ta-' + id).focus();
+}
+
+function saveEdit(id, type) {
+  const ta = document.getElementById('edit-ta-' + id);
+  if (!ta) return;
+  const newNotes = ta.value.split('\n').map(s => s.trim()).filter(s => s.length > 0);
+  const person = findPerson(id, type);
+  if (!person) return;
+  person.personalNotes = newNotes;
+  try { localStorage.setItem('notes-' + id, JSON.stringify(newNotes)); } catch(e) {}
+  rerenderPerson(id, type);
+}
+
+function loadSavedNotes() {
+  [...interviews, ...speakers, ...interactions].forEach(p => {
+    try {
+      const saved = localStorage.getItem('notes-' + p.id);
+      if (saved) p.personalNotes = JSON.parse(saved);
+    } catch(e) {}
+  });
+}
+
+function showInterview(id) {
+  ensureTab('calls');
+  currentView = id;
+  setActive(id);
+  const iv = interviews.find(x => x.id === id);
+  if (!iv) return;
+  const mn = iv.meetingNotes;
+
+  setMain(`
+    <div class="interview-head">
+      <div class="iview-name">${iv.name}</div>
+      <div class="iview-meta">${iv.role} · ${iv.institution}${iv.date ? ' · ' + iv.date : ''}</div>
+      <div class="tags">${iv.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+    </div>
+
+    ${pnotesHtml(iv, 'call')}
+
+    ${mn ? `
+    <div class="mnotes-label">Meeting Notes</div>
+    ${block('Overview', `<p class="prose">${mn.overview}</p>`)}
+    ${block('Key Concepts', `<ul class="blist">${mn.keyConcepts.map(c => `<li>${c}</li>`).join('')}</ul>`)}
+    ${block('Important Questions', `<ul class="blist">${mn.importantQuestions.map(q => `<li>${q}</li>`).join('')}</ul>`)}
+    ${block('Key Takeaways', `<ul class="blist">${mn.keyTakeaways.map(t => `<li>${t}</li>`).join('')}</ul>`)}
+    ${block('Deep Dives', mn.topics.map(topic => `
+      <div class="topic-block">
+        <div class="topic-title">${topic.title}</div>
+        <div class="topic-body">${escHtml(topic.body)}</div>
+        ${topic.qa.length ? `<div class="qa-list">${topic.qa.map(qa => `
+          <div>
+            <div class="qa-q">Q: ${qa.q}</div>
+            <div class="qa-a">${qa.a}</div>
+          </div>`).join('')}</div>` : ''}
+      </div>`).join(''))}
+    ${block('Next Steps', `<ul class="blist">${mn.nextSteps.map(s => `<li>${s}</li>`).join('')}</ul>`)}
+    ${mn.resources && mn.resources.length ? block('Supplemental Resources', `<ul class="blist">${mn.resources.map(r => `<li><strong>${r.name}:</strong> ${r.description}</li>`).join('')}</ul>`) : ''}
+    ` : ''}
+  `);
+}
+
+let blockCounter = 0;
+function block(title, content) {
+  const id = 'blk-' + (blockCounter++);
+  return `
+    <div class="mblock">
+      <div class="mblock-head" id="h-${id}" onclick="toggleBlock('h-${id}', 'b-${id}')">
+        <span class="chevron">▶</span>
+        <span class="mblock-title">${title}</span>
+      </div>
+      <div class="mblock-body" id="b-${id}">${content}</div>
+    </div>`;
+}
+
+function toggleBlock(headId, bodyId) {
+  const h = document.getElementById(headId);
+  const b = document.getElementById(bodyId);
+  h.classList.toggle('open');
+  b.style.display = h.classList.contains('open') ? 'block' : 'none';
+}
+
+// ═══════════════════════════════════════════════
+//  SEARCH
+// ═══════════════════════════════════════════════
+function handleSearch(raw) {
+  const q = raw.trim().toLowerCase();
+  if (!q) {
+    if (currentTab === 'speakers') showSpeakersHome(); else showCallsHome();
+    return;
+  }
+
+  const results = [];
+  const esc = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const rx = new RegExp(esc, 'gi');
+
+  function push(person, text, type, kind) { results.push({ person, text, type, kind }); }
+
+  interviews.forEach(iv => {
+    iv.personalNotes.forEach(n => { if (n.toLowerCase().includes(q)) push(iv, n, 'Personal Note', 'call'); });
+    if (iv.meetingNotes) {
+      const mn = iv.meetingNotes;
+      if (mn.overview.toLowerCase().includes(q)) {
+        const idx = mn.overview.toLowerCase().indexOf(q);
+        push(iv, '…' + mn.overview.substring(Math.max(0,idx-60), idx+120) + '…', 'Overview', 'call');
+      }
+      mn.keyTakeaways.forEach(t => { if (t.toLowerCase().includes(q)) push(iv, t, 'Key Takeaway', 'call'); });
+      mn.importantQuestions.forEach(s => { if (s.toLowerCase().includes(q)) push(iv, s, 'Question', 'call'); });
+      mn.keyConcepts.forEach(c => { if (c.toLowerCase().includes(q)) push(iv, c, 'Key Concept', 'call'); });
+      mn.nextSteps.forEach(s => { if (s.toLowerCase().includes(q)) push(iv, s, 'Next Step', 'call'); });
+      mn.topics.forEach(topic => {
+        if (topic.body.toLowerCase().includes(q)) {
+          const idx = topic.body.toLowerCase().indexOf(q);
+          push(iv, '…' + topic.body.substring(Math.max(0,idx-60), idx+120) + '…', topic.title, 'call');
+        }
+        topic.qa.forEach(qa => {
+          if (qa.q.toLowerCase().includes(q)) push(iv, 'Q: ' + qa.q, 'Q&A', 'call');
+          if (qa.a.toLowerCase().includes(q)) {
+            const idx = qa.a.toLowerCase().indexOf(q);
+            push(iv, '…' + qa.a.substring(Math.max(0,idx-60), idx+120) + '…', 'Q&A', 'call');
+          }
+        });
+      });
+    }
+  });
+
+  speakers.forEach(sp => {
+    sp.personalNotes.forEach(n => { if (n.toLowerCase().includes(q)) push(sp, n, 'Speaker Note', 'speaker'); });
+  });
+
+  interactions.forEach(it => {
+    it.personalNotes.forEach(n => { if (n.toLowerCase().includes(q)) push(it, n, 'Interaction Note', 'interaction'); });
+  });
+
+  function hl(text) { return text.replace(rx, m => `<mark>${m}</mark>`); }
+
+  setMain(`
+    <div class="page-title" style="margin-bottom:6px">Search Results</div>
+    <div class="page-sub" style="margin-bottom:28px">${results.length} result${results.length !== 1 ? 's' : ''} for "<strong>${escHtml(raw)}</strong>"</div>
+    ${results.length === 0
+      ? `<div class="empty"><div class="empty-icon">🔍</div><div class="empty-text">No results found</div></div>`
+      : results.map(r => `
+        <div class="sresult" onclick="${r.kind === 'speaker' ? `showSpeaker('${r.person.id}')` : r.kind === 'interaction' ? `showInteraction('${r.person.id}')` : `showInterview('${r.person.id}')`}">
+          <div class="sresult-who">${r.person.name} · ${r.type}</div>
+          <div class="sresult-text">${hl(escHtml(r.text))}</div>
+        </div>`).join('')}
+  `);
+}
+
+// ═══════════════════════════════════════════════
+//  UTILS
+// ═══════════════════════════════════════════════
+function setMain(html) {
+  const el = document.getElementById('main');
+  el.innerHTML = html;
+  el.scrollTop = 0;
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ═══════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════
+loadSavedNotes();
+initNav();
+showCallsHome();
+</script>
+</body>
+</html>
